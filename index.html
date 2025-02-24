@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hematology & Oncology Society Union - Advancing cancer care through research, education, and collaboration">
+    <title>HOSU - Hematology & Oncology Society Union</title>
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #004080;
+            --text-color: #333;
+            --background-light: #f0f8ff;
+            --background-dark: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Header Styles */
+        .navbar {
+            background: transparent;
+            backdrop-filter: blur(40px);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/1600x900/?hospital') center/cover;
+            color: white;
+            padding: 8rem 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Featured News Section */
+        .news-section {
+            padding: 4rem 5%;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            padding: 4rem 5%;
+            background: var(--background-light);
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--background-dark);
+            color: white;
+            padding: 4rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://via.placeholder.com/50x50.png?text=HOSU" alt="HOSU Logo">
+            <span>HOSU</span>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/membership">Membership</a>
+            <a href="/events">Events</a>
+            <a href="/research">Research</a>
+            <a href="/contact">Contact</a>
+            <a href="/login" class="cta-button">Member Portal</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Advancing Cancer Care Worldwide</h1>
+        <p>The Hematology & Oncology Society Union (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and global advocacy.</p>
+        <div class="cta-buttons">
+            <a href="/join" class="cta-button">Join Our Community</a>
+            <a href="/conference" class="cta-button">Annual Conference 2024</a>
+        </div>
+    </section>
+
+    <!-- Featured News -->
+    <section class="news-section">
+        <h2 class="section-title">Latest Updates</h2>
+        <div class="news-grid">
+            <article class="news-card">
+                <div class="news-content">
+                    <span class="news-date">March 20, 2024</span>
+                    <h3>New Treatment Guidelines Released</h3>
+                    <p>Updated protocols for hematologic malignancies now available to members.</p>
+                    <a href="/guidelines" class="cta-button">Learn More</a>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-content">
+                    <span class="news-date">March 18, 2024</span>
+                    <h3>2024 Research Grants Announced</h3>
+                    <p>$2M in funding available for innovative oncology research projects.</p>
+                    <a href="/grants" class="cta-button">Apply Now</a>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-content">
+                    <span class="news-date">March 15, 2024</span>
+                    <h3>Global Summit Registration Open</h3>
+                    <p>Join world leaders in cancer research this September in London.</p>
+                    <a href="/summit" class="cta-button">Register</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <h2 class="section-title">Make a Difference</h2>
+        <div class="cta-buttons">
+            <a href="/donate" class="cta-button">Support Our Mission</a>
+            <a href="/volunteer" class="cta-button">Become a Volunteer</a>
+            <a href="/webinars" class="cta-button">Upcoming Webinars</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/about">About HOSU</a></li>
+                    <li><a href="/membership">Membership Benefits</a></li>
+                    <li><a href="/research">Research Initiatives</a></li>
+                    <li><a href="/leadership">Society Leadership</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>HOSU Headquarters<br>
+                123 Medical Innovation Way<br>
+                Global Health City, GH 54321<br>
+                ☎ +1 (800) 123-4567<br>
+                ✉ info@hosu.org</p>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Connected</h4>
+                <div class="social-links">
+                    <a href="https://linkedin.com/hosu" target="_blank">LinkedIn</a>
+                    <a href="https://twitter.com/hosu_org" target="_blank">Twitter</a>
+                    <a href="https://facebook.com/hosu.org" target="_blank">Facebook</a>
+                    <a href="https://youtube.com/hosu" target="_blank">YouTube</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
