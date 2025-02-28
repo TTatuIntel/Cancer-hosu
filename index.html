@@ -14,7 +14,7 @@
             --background-dark: #1d3557;
             --white: #fff;
             --accent-color: #a8dadc;
-            --shadow: 0 4px 6px rgb(107, 107, 107);
+            --shadow: transparent;
             --transition: all 0.3s ease;
         }
 
@@ -50,7 +50,7 @@
 
         /* Header Styles */
         .navbar {
-            background: var(--white);
+            background: transparent;
             padding: 1rem 5%;
             box-shadow: var(--shadow);
             display: flex;
@@ -64,7 +64,8 @@
         }
 
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.767);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
@@ -461,9 +462,11 @@
                     <div class="dna-strand"></div>
                 </div>
             </div>
-            <div class="logo-text">
-                <span>HOSU</span>
-                <span>Discover | Prevent | Cure</span>
+            <div class="logo">
+                <div class="logo-text">
+                    <div class="logo-name">HEMATOLOGY & ONCOLOGY<br>SOCIETY OF UGANDA</div>
+                    <div class="tagline">Discover | Prevent | Cure</div>
+                </div>
             </div>
         </div>
         <div class="nav-links">
