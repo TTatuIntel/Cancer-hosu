@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hematology & Oncology Society Union - Advancing cancer care through research, education, and collaboration">
-    <title>HOSU - Hematology & Oncology Society Union</title>
+    <meta name="description" content="Hematology & Oncology Society of Uganda - Discover | Prevent | Cure">
+    <title>HOSU - Hematology & Oncology Society of Uganda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
+        @font-face {
+            font-family: 'Bahnschrift';
+            src: url('https://db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.eot');
+            src: url('https://db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.eot?#iefix') format('embedded-opentype'),
+                url('https://db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.woff2') format('woff2'),
+                url('https://db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.woff') format('woff'),
+                url('https://db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
-            --primary-color: #0066cc;
-            --secondary-color: #004080;
-            --text-color: #333;
-            --background-light: #f0f8ff;
-            --background-dark: #333;
+            --primary-color: #e44555; /* HOSU Red */
+            --secondary-color: #3393dc; /* HOSU Blue */
+            --accent-color: #2a4a76; /* Dark Blue */
+            --background-light: #f8fafc;
+            --text-color: #241313;
             --white: #fff;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
@@ -24,7 +38,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Bahnschrift', 'Arial Narrow', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--white);
@@ -60,8 +74,26 @@
         }
 
         .logo img {
-            height: 50px;
+            height: 60px;
             width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            color: var(--secondary-color);
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
         }
 
         .nav-links {
@@ -94,20 +126,57 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?hospital') center/cover;
+            position: relative;
             color: var(--white);
             padding: 8rem 5%;
             text-align: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: -1;
+        }
+
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(29, 53, 87, 0.6);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 800px;
             margin: 0 auto 2rem;
         }
@@ -129,6 +198,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .cta-button:hover {
@@ -138,15 +209,28 @@
 
         /* Featured News Section */
         .news-section {
-            padding: 4rem 5%;
+            padding: 5rem 5%;
             background: var(--white);
         }
 
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 2rem;
-            color: var(--primary-color);
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
         }
 
         .news-grid {
@@ -163,10 +247,27 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
         }
 
         .news-card:hover {
             transform: translateY(-5px);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
         }
 
         .news-content {
@@ -179,16 +280,51 @@
             margin-bottom: 0.5rem;
         }
 
+        .news-content h3 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .news-content .cta-button {
+            background: var(--secondary-color);
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .news-content .cta-button:hover {
+            background: var(--primary-color);
+        }
+
         /* Call to Action Section */
         .cta-section {
-            padding: 4rem 5%;
+            padding: 5rem 5%;
             background: var(--background-light);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://source.unsplash.com/1600x900/?medical,team') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
         }
 
         /* Footer Styles */
         footer {
-            background: var(--background-dark);
+            background: var(--accent-color);
             color: var(--white);
             padding: 4rem 5%;
             margin-top: 4rem;
@@ -205,6 +341,7 @@
         .footer-section h4 {
             margin-bottom: 1.5rem;
             color: var(--primary-color);
+            font-size: 1.3rem;
         }
 
         .footer-section ul {
@@ -234,7 +371,7 @@
             text-align: center;
             margin-top: 3rem;
             padding-top: 2rem;
-            border-top: 1px solid #444;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Design */
@@ -267,27 +404,38 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <img src="https://via.placeholder.com/50x50.png?text=HOSU" alt="HOSU Logo">
-            <span>HOSU</span>
+            <img src="https://i.ibb.co/Jt1BVWL/dna-logo.png" alt="HOSU Logo">
+            <div class="logo-text">
+                <div class="logo-name">HEMATOLOGY & ONCOLOGY<br>SOCIETY OF UGANDA</div>
+                <div class="tagline">Discover | Prevent | Cure</div>
+            </div>
         </div>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/membership">Membership</a>
-            <a href="/events">Events</a>
-            <a href="/research">Research</a>
-            <a href="/contact">Contact</a>
-            <a href="/login" class="cta-button">Member Portal</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="committee.html">Leadership</a>
+            <a href="member.html">Membership</a>
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a>
+            <a href="contact.html">Contact</a>
+            <a href="portal.html" class="cta-button">Member Portal</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Advancing Cancer Care Worldwide</h1>
-        <p>The Hematology & Oncology Society Union (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and global advocacy.</p>
-        <div class="cta-buttons">
-            <a href="/join" class="cta-button">Join Our Community</a>
-            <a href="/conference" class="cta-button">Annual Conference 2024</a>
+        <div class="hero-slide" style="background-image: url('https://source.unsplash.com/1600x900/?hospital,doctor');"></div>
+        <div class="hero-slide" style="background-image: url('https://source.unsplash.com/1600x900/?medical,research');"></div>
+        <div class="hero-slide" style="background-image: url('https://source.unsplash.com/1600x900/?laboratory,cancer');"></div>
+        <div class="hero-slide" style="background-image: url('https://source.unsplash.com/1600x900/?healthcare,africa');"></div>
+        
+        <div class="hero-content">
+            <h1>Advancing Cancer Care in Uganda</h1>
+            <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and national advocacy.</p>
+            <div class="cta-buttons">
+                <a href="/join" class="cta-button">Join Our Community</a>
+                <a href="/conference" class="cta-button">Annual Conference 2024</a>
+            </div>
         </div>
     </section>
 
@@ -296,6 +444,9 @@
         <h2 class="section-title">Latest Updates</h2>
         <div class="news-grid">
             <article class="news-card">
+                <div class="news-image">
+                    <img src="https://source.unsplash.com/600x400/?medical,guidelines" alt="Treatment Guidelines">
+                </div>
                 <div class="news-content">
                     <span class="news-date">March 20, 2024</span>
                     <h3>New Treatment Guidelines Released</h3>
@@ -304,6 +455,9 @@
                 </div>
             </article>
             <article class="news-card">
+                <div class="news-image">
+                    <img src="https://source.unsplash.com/600x400/?research,grant" alt="Research Grants">
+                </div>
                 <div class="news-content">
                     <span class="news-date">March 18, 2024</span>
                     <h3>2024 Research Grants Announced</h3>
@@ -312,10 +466,13 @@
                 </div>
             </article>
             <article class="news-card">
+                <div class="news-image">
+                    <img src="https://source.unsplash.com/600x400/?conference,medical" alt="Global Summit">
+                </div>
                 <div class="news-content">
                     <span class="news-date">March 15, 2024</span>
                     <h3>Global Summit Registration Open</h3>
-                    <p>Join world leaders in cancer research this September in London.</p>
+                    <p>Join leaders in cancer research this September in Kampala.</p>
                     <a href="/summit" class="cta-button">Register</a>
                 </div>
             </article>
@@ -324,11 +481,13 @@
 
     <!-- Call to Action Section -->
     <section class="cta-section">
-        <h2 class="section-title">Make a Difference</h2>
-        <div class="cta-buttons">
-            <a href="/donate" class="cta-button">Support Our Mission</a>
-            <a href="/volunteer" class="cta-button">Become a Volunteer</a>
-            <a href="/webinars" class="cta-button">Upcoming Webinars</a>
+        <div class="cta-content">
+            <h2 class="section-title">Make a Difference</h2>
+            <div class="cta-buttons">
+                <a href="/donate" class="cta-button">Support Our Mission</a>
+                <a href="/volunteer" class="cta-button">Become a Volunteer</a>
+                <a href="/webinars" class="cta-button">Upcoming Webinars</a>
+            </div>
         </div>
     </section>
 
@@ -338,8 +497,8 @@
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/about">About HOSU</a></li>
-                    <li><a href="/membership">Membership Benefits</a></li>
+                    <li><a href="about.html">About HOSU</a></li>
+                    <li><a href="member.html">Membership Benefits</a></li>
                     <li><a href="/research">Research Initiatives</a></li>
                     <li><a href="/leadership">Society Leadership</a></li>
                 </ul>
@@ -348,8 +507,8 @@
                 <h4>Contact Us</h4>
                 <p>HOSU Headquarters<br>
                 123 Medical Innovation Way<br>
-                Global Health City, GH 54321<br>
-                ☎ +1 (800) 123-4567<br>
+                Kampala, Uganda<br>
+                ☎ +256 (800) 123-4567<br>
                 ✉ info@hosu.org</p>
             </div>
             <div class="footer-section">
@@ -363,8 +522,34 @@
             </div>
         </div>
         <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Dynamic background slideshow for hero section
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            
+            // Show the first slide initially
+            slides[0].style.opacity = 1;
+            
+            // Function to change slides
+            function nextSlide() {
+                // Fade out current slide
+                slides[currentSlide].style.opacity = 0;
+                
+                // Move to next slide or back to first
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Fade in next slide
+                slides[currentSlide].style.opacity = 1;
+            }
+            
+            // Change slides every 5 seconds
+            setInterval(nextSlide, 5000);
+        });
+    </script>
 </body>
 </html>
