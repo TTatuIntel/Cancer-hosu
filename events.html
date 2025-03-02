@@ -38,7 +38,8 @@
 
         /* Navbar styles (same as other pages) */
         .navbar {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.521);
+            backdrop-filter: blur(10px);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -49,7 +50,6 @@
             z-index: 1000;
             transition: var(--transition);
             height: var(--navbar-height);
-            box-shadow: var(--shadow);
         }
 
         .logo img {
@@ -99,7 +99,6 @@
             background: var(--secondary-color);
             transform: translateY(-2px);
         }
-        
         .menu-toggle {
             display: none;
             cursor: pointer;
