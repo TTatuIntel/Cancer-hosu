@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HOSU Events - Conferences, workshops, and webinars for oncology professionals">
+    <title>Events - HOSU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles (same as other pages) */
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #0d4593;
+            --text-color: #12294a;
+            --background-light: #f1faee;
+            --background-dark: #1d3557;
+            --white: #ffffff;
+            --accent-color: #a8dadc;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+            --navbar-height: 90px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        /* Navbar styles (same as other pages) */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            height: var(--navbar-height);
+            box-shadow: var(--shadow);
+        }
+
+        .logo img {
+            width: 250px;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:not(.cta-button)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.cta-button):hover::after {
+            width: 100%;
+        }
+
+        .nav-links .cta-button {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .nav-links .cta-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Events Page Specific Styles */
+        .events-hero {
+            padding-top: calc(var(--navbar-height) + 2rem);
+            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .events-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .events-hero h1 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .events-hero p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .events-filter {
+            padding: 2rem 5%;
+            background: var(--white);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-button {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .events-grid {
+            padding: 4rem 5%;
+            background: var(--background-light);
+        }
+
+        .events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-type {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-date {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .register-button {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .register-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .past-events {
+            padding: 4rem 5%;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 1rem auto 0;
+        }
+
+        .past-events-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .past-event-card {
+            background: var(--background-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .past-event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .resources-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .resources-button:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer styles (same as other pages) */
+        footer {
+            background: var(--background-dark);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --navbar-height: 70px;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo img {
+                width: 200px;
+                height: 70px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .events-hero h1 {
+                font-size: 2rem;
+            }
+
+            .events-hero p {
+                font-size: 1.1rem;
+            }
+
+            .events-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="membership.html">Membership</a>
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="cta-button">Member Portal</a>
+        </div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
+    </nav>
+
+    <section class="events-hero">
+        <div class="events-hero-content">
+            <h1>Upcoming Events</h1>
+            <p>Join us for conferences, workshops, and webinars designed to advance oncology care and research.</p>
+        </div>
+    </section>
+
+    <section class="events-filter">
+        <div class="filter-container">
+            <button class="filter-button active" data-filter="all">All Events</button>
+            <button class="filter-button" data-filter="conference">Conferences</button>
+            <button class="filter-button" data-filter="workshop">Workshops</button>
+            <button class="filter-button" data-filter="webinar">Webinars</button>
+        </div>
+    </section>
+
+    <section class="events-grid">
+        <div class="events-container">
+            <article class="event-card" data-type="conference">
+                <img src="/placeholder.svg?height=200&width=350" alt="Annual Oncology Conference 2024" class="event-image">
+                <div class="event-content">
+                    <span class="event-type">Conference</span>
+                    <div class="event-date">September 15-18, 2024</div>
+                    <h3 class="event-title">Annual Oncology Conference 2024</h3>
+                    <p class="event-description">Join leading oncologists and researchers for our flagship conference featuring keynote speakers, research presentations, and networking opportunities.</p>
+                    <div class="event-footer">
+                        <div class="event-location">
+                            📍 London, UK
+                        </div>
+                        <a href="#register" class="register-button">Register Now</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-type="workshop">
+                <img src="/placeholder.svg?height=200&width=350" alt="Immunotherapy Workshop" class="event-image">
+                <div class="event-content">
+                    <span class="event-type">Workshop</span>
+                    <div class="event-date">July 8-9, 2024</div>
+                    <h3 class="event-title">Advanced Immunotherapy Workshop</h3>
+                    <p class="event-description">A hands-on workshop focusing on the latest developments in cancer immunotherapy treatments and techniques.</p>
+                    <div class="event-footer">
+                        <div class="event-location">
+                            📍 Boston, USA
+                        </div>
+                        <a href="#register" class="register-button">Register Now</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-type="webinar">
+                <img src="/placeholder.svg?height=200&width=350" alt="Digital Pathology Webinar" class="event-image">
+                <div class="event-content">
+                    <span class="event-type">Webinar</span>
+                    <div class="event-date">June 25, 2024</div>
+                    <h3 class="event-title">Digital Pathology in Oncology</h3>
+                    <p class="event-description">Learn about the latest advances in digital pathology and its applications in cancer diagnosis and treatment.</p>
+                    <div class="event-footer">
+                        <div class="event-location">
+                            🌐 Online
+                        </div>
+                        <a href="#register" class="register-button">Register Now</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="past-events">
+        <h2 class="section-title">Past Events</h2>
+        <div class="past-events-grid">
+            <div class="past-event-card">
+                <div class="event-date">March 10-12, 2024</div>
+                <h3 class="event-title">Precision Medicine Symposium</h3>
+                <p class="event-description">Explored the latest advances in precision medicine and targeted therapies.</p>
+                <a href="#resources" class="resources-button">
+                    View Resources →
+                </a>
+            </div>
+
+            <div class="past-event-card">
+                <div class="event-date">February 15, 2024</div>
+                <h3 class="event-title">Clinical Trials Workshop</h3>
+                <p class="event-description">Focused on best practices in clinical trial design and management.</p>
+                <a href="#resources" class="resources-button">
+                    View Resources →
+                </a>
+            </div>
+
+            <div class="past-event-card">
+                <div class="event-date">January 20, 2024</div>
+                <h3 class="event-title">Cancer Research Updates</h3>
+                <p class="event-description">Quarterly webinar covering the latest research developments.</p>
+                <a href="#resources" class="resources-button">
+                    View Recording →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About HOSU</a></li>
+                    <li><a href="membership.html">Membership Benefits</a></li>
+                    <li><a href="research.html">Research Initiatives</a></li>
+                    <li><a href="leadership.html">Society Leadership</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <address>
+                    HOSU Headquarters<br>
+                    123 Medical Innovation Way<br>
+                    Global Health City, GH 54321<br>
+                    ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
+                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                </address>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Connected</h4>
+                <div class="social-links">
+                    <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Event filtering
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const eventCards = document.querySelectorAll('.event-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                eventCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-type') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

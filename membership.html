@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join HOSU - Membership benefits, tiers, and application process for healthcare professionals">
+    <title>Membership - HOSU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles (same as other pages) */
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #0d4593;
+            --text-color: #12294a;
+            --background-light: #f1faee;
+            --background-dark: #1d3557;
+            --white: #ffffff;
+            --accent-color: #a8dadc;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+            --navbar-height: 90px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        /* Navbar styles (same as other pages) */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            height: var(--navbar-height);
+            box-shadow: var(--shadow);
+        }
+
+        .logo img {
+            width: 250px;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:not(.cta-button)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.cta-button):hover::after {
+            width: 100%;
+        }
+
+        .nav-links .cta-button {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .nav-links .cta-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Membership Page Specific Styles */
+        .membership-hero {
+            padding-top: calc(var(--navbar-height) + 2rem);
+            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .membership-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .membership-hero h1 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .membership-hero p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .pricing-section {
+            padding: 4rem 5%;
+            background: var(--white);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--background-light);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 1.5rem;
+            right: -4rem;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.5rem 4rem;
+            transform: rotate(45deg);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card h3 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .benefits-section {
+            padding: 4rem 5%;
+            background: var(--background-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .testimonials-section {
+            padding: 4rem 5%;
+            background: var(--white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--background-light);
+            border-radius: 15px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info span {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .faq-section {
+            padding: 4rem 5%;
+            background: var(--background-light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 1rem auto 0;
+        }
+
+        /* Footer styles (same as other pages) */
+        footer {
+            background: var(--background-dark);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --navbar-height: 70px;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo img {
+                width: 200px;
+                height: 70px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .membership-hero h1 {
+                font-size: 2rem;
+            }
+
+            .membership-hero p {
+                font-size: 1.1rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="membership.html">Membership</a>
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="cta-button">Member Portal</a>
+        </div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
+    </nav>
+
+    <section class="membership-hero">
+        <div class="membership-hero-content">
+            <h1>Join Our Global Community</h1>
+            <p>Connect with leading oncology professionals, access exclusive resources, and contribute to groundbreaking research in cancer care.</p>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <h2 class="section-title">Membership Tiers</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Associate</h3>
+                <div class="price">$199<span>/year</span></div>
+                <ul class="features-list">
+                    <li>Digital Journal Access</li>
+                    <li>Online Learning Platform</li>
+                    <li>Member Directory Access</li>
+                    <li>Quarterly Newsletter</li>
+                </ul>
+                <a href="#apply" class="cta-button">Apply Now</a>
+            </div>
+            <div class="pricing-card popular">
+                <h3>Professional</h3>
+                <div class="price">$399<span>/year</span></div>
+                <ul class="features-list">
+                    <li>All Associate Benefits</li>
+                    <li>Conference Discounts</li>
+                    <li>Research Grant Eligibility</li>
+                    <li>Mentorship Program</li>
+                    <li>Voting Rights</li>
+                </ul>
+                <a href="#apply" class="cta-button">Apply Now</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Fellow</h3>
+                <div class="price">$599<span>/year</span></div>
+                <ul class="features-list">
+                    <li>All Professional Benefits</li>
+                    <li>Leadership Opportunities</li>
+                    <li>Research Collaboration</li>
+                    <li>Priority Publication</li>
+                    <li>Expert Panel Participation</li>
+                </ul>
+                <a href="#apply" class="cta-button">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section">
+        <h2 class="section-title">Member Benefits</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">📚</div>
+                <h3>Education</h3>
+                <p>Access to continuing education, workshops, and specialized training programs.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🔬</div>
+                <h3>Research</h3>
+                <p>Opportunities to participate in and lead groundbreaking research initiatives.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🤝</div>
+                <h3>Networking</h3>
+                <p>Connect with peers and leaders in the oncology community worldwide.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">💼</div>
+                <h3>Career Growth</h3>
+                <p>Access to job boards, mentorship programs, and leadership opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <h2 class="section-title">Member Testimonials</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "Being a HOSU member has transformed my career. The networking opportunities and research collaborations have been invaluable."
+                </div>
+                <div class="testimonial-author">
+                    <img src="/placeholder.svg?height=50&width=50" alt="Dr. James Wilson" class="author-image">
+                    <div class="author-info">
+                        <h4>Dr. James Wilson</h4>
+                        <span>Oncologist, Mayo Clinic</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    "The educational resources and mentorship program have helped me stay at the forefront of oncology practice."
+                </div>
+                <div class="testimonial-author">
+                    <img src="/placeholder.svg?height=50&width=50" alt="Dr. Maria Garcia" class="author-image">
+                    <div class="author-info">
+                        <h4>Dr. Maria Garcia</h4>
+                        <span>Research Director, Memorial Sloan Kettering</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I apply for membership?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Complete the online application form, provide required documentation including your medical license and CV, and submit the application fee. Our membership committee reviews applications monthly.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What are the membership requirements?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Applicants must be licensed healthcare professionals working in oncology or related fields. Additional requirements vary by membership tier and are detailed in our membership guidelines.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I upgrade my membership?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, members can upgrade their membership tier at any time. The difference in fees will be prorated for the remainder of your membership year.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About HOSU</a></li>
+                    <li><a href="membership.html">Membership Benefits</a></li>
+                    <li><a href="research.html">Research Initiatives</a></li>
+                    <li><a href="leadership.html">Society Leadership</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <address>
+                    HOSU Headquarters<br>
+                    123 Medical Innovation Way<br>
+                    Global Health City, GH 54321<br>
+                    ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
+                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                </address>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Connected</h4>
+                <div class="social-links">
+                    <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.toggle').textContent = '+';
+                });
+
+                // Open clicked FAQ item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    question.querySelector('.toggle').textContent = '−';
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
