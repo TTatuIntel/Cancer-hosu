@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hematology & Oncology Society Union - Advancing cancer care through research, education, and collaboration">
     <title>HOSU - Hematology & Oncology Society Union</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #e63946;
@@ -14,8 +17,8 @@
             --background-dark: #1d3557;
             --white: #ffffff;
             --accent-color: #a8dadc;
-            --shadow: transparent;
             --transition: all 0.3s ease;
+            --navbar-height: 90px;
         }
 
         * {
@@ -25,7 +28,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--white);
@@ -48,11 +51,10 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
+        /* Navbar Styles */
         .navbar {
             background: transparent;
             padding: 1rem 5%;
-            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -61,72 +63,20 @@
             top: 0;
             z-index: 1000;
             transition: var(--transition);
+            height: var(--navbar-height);
         }
 
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.676);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .dna-helix {
-            width: 30px;
-            height: 30px;
-            position: relative;
-            animation: rotate 5s linear infinite;
-        }
-
-        .dna-strand {
-            position: absolute;
-            width: 2px;
-            height: 100%;
-            background-color: var(--white);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .dna-strand:nth-child(2) {
-            transform: translateX(-50%) rotate(60deg);
-        }
-
-        .dna-strand:nth-child(3) {
-            transform: translateX(-50%) rotate(120deg);
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text span:first-child {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .logo-text span:last-child {
-            font-size: 0.8em;
-            color: var(--secondary-color);
+        .logo img {
+            width: 250px;
+            height: 90px;
+            object-fit: contain;
+            transition: var(--transition);
         }
 
         .nav-links {
@@ -138,23 +88,35 @@
         .nav-links a {
             font-weight: 500;
             transition: var(--transition);
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: var(--primary-color);
+        .nav-links a:not(.cta-button)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.cta-button):hover::after {
+            width: 100%;
         }
 
         .nav-links .cta-button {
             background: var(--primary-color);
             color: var(--white);
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 30px;
             transition: var(--transition);
         }
 
         .nav-links .cta-button:hover {
             background: var(--secondary-color);
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
 
         .menu-toggle {
@@ -162,77 +124,139 @@
             cursor: pointer;
             font-size: 1.5rem;
         }
-
         /* Hero Section */
         .hero {
-            background-size: cover;
-            background-position: center;
-            color: #103696;
-            padding: 10rem 5% 8rem;
-            text-align: center;
+            height: 80vh;
+            min-height: 500px;
             position: relative;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
             overflow: hidden;
+            padding-top: var(--navbar-height);
         }
-
-        .hero::before {
-            content: '';
+        .hero-background {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgb(255, 255, 255);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1.5s ease;
+            opacity: 0;
+        }
+        .hero-background.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.95) 40%,
+                rgba(255, 255, 255, 0.7) 60%,
+                rgba(255, 255, 255, 0.3) 80%,
+                rgba(255, 255, 255, 0) 100%
+            );
             z-index: 1;
         }
-
         .hero-content {
             position: relative;
             z-index: 2;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            background: transparent;
+            border-radius: 20px;
+            backdrop-filter: blur(3px);
         }
-
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+            animation: fadeInUp 0.5s ease;
         }
-
         .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.75rem;
+            color: var(--text-color);
             animation: fadeInUp 1s ease 0.3s;
             opacity: 0;
             animation-fill-mode: forwards;
+            line-height: 1.8;
         }
-
-        .cta-buttons {
+        .hero .cta-buttons {
             display: flex;
+            gap: 1.25rem;
             justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
             animation: fadeInUp 1s ease 0.6s;
             opacity: 0;
             animation-fill-mode: forwards;
         }
-
+        /* Button Styles */
         .cta-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 0.875rem 1.75rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .cta-button:active::before {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+        .hero .cta-button:first-child {
             background: var(--primary-color);
             color: var(--white);
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            border: none;
         }
-
-        .cta-button:hover {
+        .hero .cta-button:first-child:hover {
+           background: #0d4593;
+           border: 2px solid var(--secondary-color);
+           
+           
+        }
+        .hero .cta-button:last-child {
+            background: transparent;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+        .hero .cta-button:last-child:hover {
             background: var(--secondary-color);
-            transform: scale(1.05);
+            color: var(--white);
         }
-
-        /* Featured News Section */
+        /* News Section */
         .news-section {
             padding: 6rem 5%;
             background: var(--background-light);
@@ -249,10 +273,10 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 50px;
+            width: 60px;
             height: 3px;
             background: var(--primary-color);
-            margin: 10px auto 0;
+            margin: 1rem auto 0;
         }
 
         .news-grid {
@@ -265,7 +289,7 @@
 
         .news-card {
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -283,51 +307,62 @@
         .news-date {
             color: var(--primary-color);
             font-size: 0.9rem;
+            font-weight: 500;
             margin-bottom: 0.5rem;
             display: block;
         }
 
         .news-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 1rem;
             color: var(--secondary-color);
+            font-weight: 600;
         }
 
         .news-card p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
         }
 
-        .news-card .cta-button {
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-        }
-
-        /* Call to Action Section */
+        /* CTA Section */
         .cta-section {
             padding: 6rem 5%;
-            text-align: center;
+            background-color: var(--secondary-color);
             color: var(--white);
+            text-align: center;
         }
 
         .cta-section .section-title {
             color: var(--white);
         }
 
+        .cta-section .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
         .cta-section .cta-button {
             background: var(--white);
-            color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
         .cta-section .cta-button:hover {
             background: var(--accent-color);
-            color: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
-        /* Footer Styles */
+        /* Footer */
         footer {
             background: var(--background-dark);
             color: var(--white);
-            padding: 4rem 5%;
+            padding: 4rem 5% 2rem;
         }
 
         .footer-content {
@@ -339,9 +374,10 @@
         }
 
         .footer-section h4 {
-            margin-bottom: 1.5rem;
             color: var(--accent-color);
             font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
 
         .footer-section ul {
@@ -364,7 +400,7 @@
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
@@ -374,21 +410,22 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.644);
+            background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
         }
 
         .social-links a:hover {
             background: var(--accent-color);
-            color: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
         .copyright {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 4rem;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Animations */
@@ -403,8 +440,37 @@
             }
         }
 
+        @keyframes buttonClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cta-button.clicking {
+            animation: buttonClick 0.3s ease;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
+            :root {
+                --navbar-height: 70px;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo img {
+                width: 200px;
+                height: 70px;
+            }
+
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -425,35 +491,58 @@
                 display: block;
             }
 
+            .hero {
+                height: 70vh;
+                min-height: 450px;
+            }
+
+            .hero-content {
+                margin: 0 1rem;
+                padding: 1.5rem;
+            }
+
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .hero p {
                 font-size: 1rem;
             }
 
-            .cta-buttons {
+            .hero .cta-buttons {
                 flex-direction: column;
+                align-items: stretch;
                 gap: 1rem;
             }
 
-            .cta-button {
+            .hero .cta-button {
                 width: 100%;
-                justify-content: center;
+                text-align: center;
             }
 
             .section-title {
                 font-size: 2rem;
             }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-section .cta-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 250px; height: 90px; transition: transform 0.3s ease;">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
         </div>
         <div class="nav-links">
             <a href="#home">Home</a>
@@ -464,11 +553,13 @@
             <a href="#contact">Contact</a>
             <a href="/login" class="cta-button">Member Portal</a>
         </div>
-        <div class="menu-toggle">☰</div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-background active" style="background-image: url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&auto=format&fit=crop&w=2091&q=80')"></div>
+        <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1579165466741-7f35e4755660?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Advancing Cancer Care Worldwide</h1>
             <p>The Hematology & Oncology Society Union (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and global advocacy.</p>
@@ -479,7 +570,6 @@
         </div>
     </section>
 
-    <!-- Featured News -->
     <section id="news" class="news-section">
         <div class="container">
             <h2 class="section-title">Latest Updates</h2>
@@ -512,7 +602,6 @@
         </div>
     </section>
 
-    <!-- Call to Action Section -->
     <section class="cta-section">
         <div class="container">
             <h2 class="section-title">Make a Difference</h2>
@@ -524,7 +613,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -539,19 +627,29 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contact Us</h4>
-                    <p>HOSU Headquarters<br>
-                    123 Medical Innovation Way<br>
-                    Global Health City, GH 54321<br>
-                    ☎ +1 (800) 123-4567<br>
-                    ✉ info@hosu.org</p>
+                    <address>
+                        HOSU Headquarters<br>
+                        123 Medical Innovation Way<br>
+                        Global Health City, GH 54321<br>
+                        ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
+                        ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                    </address>
                 </div>
                 <div class="footer-section">
                     <h4>Stay Connected</h4>
                     <div class="social-links">
-                        <a href="https://linkedin.com/hosu" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://twitter.com/hosu_org" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="https://facebook.com/hosu.org" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="https://youtube.com/hosu" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -564,38 +662,103 @@
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Dynamic background images for hero section
-        const heroSection = document.querySelector('.hero');
         const images = [
-            'https://source.unsplash.com/1600x900/?medical',
-            'https://source.unsplash.com/1600x900/?hospital',
-            'https://source.unsplash.com/1600x900/?doctor'
+            'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&auto=format&fit=crop&w=2091&q=80',
+            'https://images.unsplash.com/photo-1579165466741-7f35e4755660?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1576671081837-49000212a370?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1581093458791-4a2b2a671ad0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
         ];
-        let currentImage = 0;
+
+        let currentIndex = 0;
+        const backgrounds = document.querySelectorAll('.hero-background');
 
         function changeBackground() {
-            heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${images[currentImage]})`;
-            currentImage = (currentImage + 1) % images.length;
+            const nextIndex = (currentIndex + 1) % images.length;
+            
+            // Prepare the next background
+            const inactiveBackground = Array.from(backgrounds).find(bg => !bg.classList.contains('active'));
+            inactiveBackground.style.backgroundImage = `url(${images[nextIndex]})`;
+            
+            // Trigger the crossfade
+            backgrounds.forEach(bg => bg.classList.toggle('active'));
+            
+            currentIndex = nextIndex;
         }
 
+        // Preload images
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+            img.crossOrigin = "anonymous";
+        });
+
+        // Start the slideshow
         setInterval(changeBackground, 5000);
-        changeBackground(); // Initial call
+
+        // Enhanced Button Interactions
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('clicking');
+            });
+
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('clicking');
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('clicking');
+            });
+
+            // Add touch support
+            button.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.classList.add('clicking');
+            });
+
+            button.addEventListener('touchend', function() {
+                this.classList.remove('clicking');
+            });
+        });
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Mobile menu toggle
+        // Mobile menu toggle with enhanced interaction
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Enhanced scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
