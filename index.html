@@ -143,7 +143,7 @@
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
-            overflow: hidden; /* Add this to contain everything */
+            overflow: hidden;
         }
 
         .hero-content {
@@ -153,7 +153,7 @@
             justify-content: center;
             padding: 2rem 0 2rem 5%;
             max-width: 650px;
-            z-index: 10; /* Increase z-index to be higher than image */
+            z-index: 10;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -163,12 +163,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .hero-content::before {
@@ -303,55 +299,40 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(10deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
         }
 
         @keyframes moveLine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.5;
-            }
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.5); opacity: 0.5; }
         }
 
         .hero-image-container {
             flex: 1.2;
-            position: absolute; /* Change to absolute positioning */
+            position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
-            width: 60%; /* Set width instead of using flex */
+            width: 60%;
             overflow: hidden;
             box-shadow: none;
-            z-index: 1; /* Lower z-index to be behind content */
+            z-index: 1;
         }
 
-        /* Enhanced dissolve effect between content and image */
         .hero-image-container::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0; /* Position on the left side */
+            left: 0;
             width: 200px;
             height: 100%;
-            background: linear-gradient(to right, /* Change direction to right */
+            background: linear-gradient(to right, 
                 rgba(255, 255, 255, 1) 0%, 
                 rgba(255, 255, 255, 0.9) 20%, 
                 rgba(255, 255, 255, 0.7) 40%, 
@@ -362,7 +343,6 @@
             pointer-events: none;
         }
 
-        /* Add a second gradient for the right side if needed */
         .hero-image-container::after {
             content: '';
             position: absolute;
@@ -394,7 +374,7 @@
         }
 
         .hero h1 {
-            font-size: 2rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             line-height: 1;
             margin-bottom: 1.25rem;
             color: var(--secondary-color);
@@ -402,11 +382,11 @@
             animation: fadeInUp 0.5s ease;
             position: relative;
             z-index: 3;
-            padding-right: 80px; /* Allows text to extend into image area */
+            padding-right: 80px;
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             margin-bottom: 1.75rem;
             color: var(--text-color);
             animation: fadeInUp 1s ease 0.3s;
@@ -415,7 +395,7 @@
             line-height: 1.8;
             position: relative;
             z-index: 3;
-            padding-right: 60px; /* Allows text to extend into image area */
+            padding-right: 60px;
         }
 
         .hero .cta-buttons {
@@ -473,6 +453,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            min-height: 44px; /* Touch-friendly size */
+            min-width: 44px;
         }
 
         .cta-button::before {
@@ -545,7 +527,7 @@
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             color: var(--secondary-color);
             position: relative;
         }
@@ -681,7 +663,7 @@
         .cta-section p {
             max-width: 800px;
             margin: 0 auto 2rem;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             line-height: 1.8;
         }
 
@@ -791,33 +773,21 @@
 
         /* Animations */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes buttonClick {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(0.95);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
         }
 
         .cta-button.clicking {
             animation: buttonClick 0.3s ease;
         }
 
-        /* Responsive Design */
+        /* Enhanced Mobile Responsive Design */
         @media (max-width: 1024px) {
             .hero-container {
                 height: auto;
@@ -825,7 +795,7 @@
             }
 
             .hero-image-container {
-                width: 55%; /* Adjust width for this breakpoint */
+                width: 55%;
             }
 
             .hero-image-container::before {
@@ -863,8 +833,14 @@
                 display: flex;
             }
 
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.75rem 0;
+            }
+
             .menu-toggle {
                 display: block;
+                font-size: 2rem;
             }
 
             .hero {
@@ -882,31 +858,22 @@
                 text-align: center;
                 max-width: 100%;
                 margin-left: 0;
-                z-index: 10;
             }
 
             .hero-image-container {
-                position: relative; /* Change back to relative for mobile */
-                height: 300px;
-                width: 100%; /* Full width on mobile */
+                position: relative;
+                height: 350px;
+                width: 100%;
                 margin-left: 0;
             }
 
             .hero-image-container::before,
             .hero-image-container::after {
-                display: none; /* Hide gradients on mobile */
+                display: none;
             }
 
             .hero h1, .hero p {
                 padding-right: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
             }
 
             .hero .cta-buttons {
@@ -918,7 +885,8 @@
 
             .hero .cta-button {
                 width: 100%;
-                text-align: center;
+                max-width: 300px;
+                margin: 0 auto;
             }
 
             .section-title {
@@ -932,10 +900,13 @@
             .cta-section .cta-buttons {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 1.25rem;
             }
 
             .cta-section .cta-button {
                 width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
             }
 
             .hero-stats {
@@ -950,9 +921,18 @@
             .stat-label {
                 font-size: 0.8rem;
             }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
+            .logo img {
+                width: 160px;
+                height: 60px;
+            }
+
             .hero h1 {
                 font-size: 1.8rem;
             }
@@ -963,6 +943,43 @@
 
             .news-card {
                 margin-bottom: 1.5rem;
+            }
+
+            .hero-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero-image-container {
+                height: 250px;
+            }
+
+            .news-content {
+                padding: 1rem;
+            }
+
+            .cta-section {
+                padding: 4rem 5%;
+            }
+
+            .social-links a {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 768px) {
+            .hero-container {
+                height: 60vh;
+            }
+
+            .hero-image-container {
+                height: 100%;
             }
         }
     </style>
@@ -983,11 +1000,10 @@
         </div>
         <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
     </nav>
+    
     <section id="home" class="hero">
         <div class="hero-container">
-            <!-- Content Side -->
             <div class="hero-content">
-                <!-- Animated background elements -->
                 <div class="animated-bg">
                     <div class="animated-circle" style="animation-delay: 0s;"></div>
                     <div class="animated-circle" style="animation-delay: -5s;"></div>
@@ -1008,37 +1024,20 @@
                     <a href="#join" class="cta-button">
                         Join Our Community
                         <span class="icon">→</span>
-                    </a>                    
                     </a>
                     <a href="#conference" class="cta-button">Annual Symposium 2024</a>
                 </div>
             </div>            
-            <!-- Image Side -->
             <div class="hero-image-container">
                 <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
-                <div class="hero-background" style="background-image:url('img/IMG_7900.webp')"></div>
+                <div class="hero-background" style="background-image: url('img/IMG_7900.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8022.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8005.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8317.webp')"></div>
-                   <!-- Stats overlay -->
-                <!-- <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Members</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Research Projects</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24</div>
-                        <div class="stat-label">Partner Hospitals</div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </section>
@@ -1049,7 +1048,7 @@
             <div class="news-grid">
                 <article class="news-card">
                     <div class="news-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8039.webp-Rn2rin54gih1QKluYC3bHWzPziVWFG.jpeg" alt="Medication image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8039.webp-Rn2rin54gih1QKluYC3bHWzPziVWFG.jpeg" alt="Medication image" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 20, 2024</span>
@@ -1060,7 +1059,7 @@
                 </article>
                 <article class="news-card">
                     <div class="news-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp" alt="HOSU members at launch event">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp" alt="HOSU members at launch event" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 18, 2024</span>
@@ -1071,7 +1070,7 @@
                 </article>
                 <article class="news-card">
                     <div class="news-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8317.jpg-42QrlU3maSv4n7SKkSTPhpcJvOKLfW.jpeg" alt="HOSU group photo">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8317.jpg-42QrlU3maSv4n7SKkSTPhpcJvOKLfW.jpeg" alt="HOSU group photo" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 15, 2024</span>
@@ -1115,7 +1114,7 @@
                         123 Medical Innovation Way<br>
                         Kampala, Uganda<br>
                         ☎ <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                        ✉ <a href="/cdn-cgi/l/email-protection#fc95929a93bc94938f89d2938e9b"><span class="__cf_email__" data-cfemail="5d34333b321d35322e2873322f3a">[email&#160;protected]</span></a>
+                        ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
                     </address>
                 </div>
                 <div class="footer-section">
@@ -1142,7 +1141,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Dynamic background images for hero section
         let currentIndex = 0;
@@ -1150,15 +1149,11 @@
 
         function changeBackground() {
             const nextIndex = (currentIndex + 1) % backgrounds.length;
-            
-            // Trigger the crossfade
             backgrounds[currentIndex].classList.remove('active');
             backgrounds[nextIndex].classList.add('active');
-            
             currentIndex = nextIndex;
         }
 
-        // Start the slideshow
         setInterval(changeBackground, 5000);
 
         // Enhanced Button Interactions
@@ -1175,7 +1170,6 @@
                 this.classList.remove('clicking');
             });
 
-            // Add touch support
             button.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 this.classList.add('clicking');
@@ -1214,14 +1208,11 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
                 if (targetElement) {
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    
-                    // Close mobile menu if open
                     navLinks.classList.remove('active');
                 }
             });
@@ -1229,4 +1220,3 @@
     </script>
 </body>
 </html>
-
