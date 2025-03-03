@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hematology & Oncology Society Union - Advancing cancer care through research, education, and collaboration">
-    <title>HOSU - Hematology & Oncology Society Union</title>
+    <meta name="description" content="Hematology & Oncology Society of Uganda - Advancing cancer care through research, education, and collaboration">
+    <title>HOSU - Hematology & Oncology Society of Uganda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,7 +53,8 @@
 
         /* Navbar Styles */
         .navbar {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(15px);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -69,7 +70,7 @@
         .navbar.scrolled {
             background: rgba(255, 255, 255, 0.79);
             backdrop-filter: blur(15px);
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .logo img {
@@ -124,17 +125,242 @@
             cursor: pointer;
             font-size: 1.5rem;
         }
+        
         /* Hero Section */
         .hero {
-            height: 80vh;
-            min-height: 500px;
+            min-height: 600px;
             position: relative;
             color: var(--text-color);
-            display: flex;
-            align-items: center;
-            overflow: hidden;
             padding-top: var(--navbar-height);
+            overflow: hidden;
         }
+
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            height: 80vh;
+            min-height: 500px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 2rem 5%;
+            max-width: 650px;
+            z-index: 2;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.468) 0%, 
+                rgba(255, 255, 255, 0.116) 50%, 
+                rgba(255, 255, 255, 0.5) 100%);
+            z-index: -1;
+        }
+
+        /* Animated background elements */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .animated-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .animated-circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .animated-circle:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: -5s;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+        }
+
+        .animated-circle:nth-child(3) {
+            width: 70px;
+            height: 70px;
+            top: 40%;
+            left: 20%;
+            animation-delay: -10s;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+        }
+
+        .animated-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(13, 69, 147, 0.1), 
+                rgba(13, 69, 147, 0.2), 
+                rgba(13, 69, 147, 0.1), 
+                transparent);
+            animation: moveLine 15s infinite linear;
+        }
+
+        .animated-line:nth-child(4) {
+            width: 100%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .animated-line:nth-child(5) {
+            width: 80%;
+            top: 50%;
+            animation-delay: -5s;
+        }
+
+        .animated-line:nth-child(6) {
+            width: 60%;
+            top: 80%;
+            animation-delay: -10s;
+        }
+
+        .animated-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(13, 69, 147, 0.2);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .animated-dot:nth-child(7) {
+            top: 15%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .animated-dot:nth-child(8) {
+            top: 45%;
+            left: 30%;
+            animation-delay: -1s;
+        }
+
+        .animated-dot:nth-child(9) {
+            top: 75%;
+            left: 20%;
+            animation-delay: -2s;
+        }
+
+        .animated-dot:nth-child(10) {
+            top: 25%;
+            left: 60%;
+            animation-delay: -0.5s;
+        }
+
+        .animated-dot:nth-child(11) {
+            top: 65%;
+            left: 70%;
+            animation-delay: -1.5s;
+        }
+
+        .animated-dot:nth-child(12) {
+            top: 85%;
+            left: 40%;
+            animation-delay: -2.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @keyframes moveLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        .hero-image-container {
+            flex: 1.2;
+            position: relative;
+            overflow: hidden;
+            box-shadow: none;
+            margin-left: -100px; /* Creates overlap */
+        }
+
+        /* Enhanced dissolve effect between content and image */
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(to right, 
+                rgba(255, 255, 255, 1) 0%, 
+                rgba(255, 255, 255, 0.9) 20%, 
+                rgba(255, 255, 255, 0.7) 40%, 
+                rgba(255, 255, 255, 0.4) 60%, 
+                rgba(255, 255, 255, 0.1) 80%, 
+                rgba(255, 255, 255, 0) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
         .hero-background {
             position: absolute;
             top: 0;
@@ -146,36 +372,11 @@
             transition: opacity 1.5s ease;
             opacity: 0;
         }
+
         .hero-background.active {
             opacity: 1;
         }
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0.95) 0%,
-                rgba(255, 255, 255, 0.95) 40%,
-                rgba(255, 255, 255, 0.7) 60%,
-                rgba(255, 255, 255, 0.3) 80%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            z-index: 1;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 650px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            background: transparent;
-            border-radius: 20px;
-            backdrop-filter: blur(3px);
-        }
+
         .hero h1 {
             font-size: 2.8rem;
             line-height: 1.2;
@@ -183,7 +384,11 @@
             color: var(--secondary-color);
             font-weight: 700;
             animation: fadeInUp 0.5s ease;
+            position: relative;
+            z-index: 3;
+            padding-right: 80px; /* Allows text to extend into image area */
         }
+
         .hero p {
             font-size: 1.1rem;
             margin-bottom: 1.75rem;
@@ -192,15 +397,54 @@
             opacity: 0;
             animation-fill-mode: forwards;
             line-height: 1.8;
+            position: relative;
+            z-index: 3;
+            padding-right: 60px; /* Allows text to extend into image area */
         }
+
         .hero .cta-buttons {
             display: flex;
             gap: 1.25rem;
-            justify-content: center;
             animation: fadeInUp 1s ease 0.6s;
             opacity: 0;
             animation-fill-mode: forwards;
+            position: relative;
+            z-index: 3;
         }
+
+        /* Stats overlay for hero image */
+        .hero-stats {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 0 15px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--white);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
         /* Button Styles */
         .cta-button {
             position: relative;
@@ -210,6 +454,9 @@
             border-radius: 30px;
             font-weight: 500;
             font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .cta-button::before {
@@ -224,38 +471,55 @@
             transform: translate(-50%, -50%);
             transition: width 0.6s ease, height 0.6s ease;
         }
+        
         .cta-button:active::before {
             width: 300px;
             height: 300px;
             opacity: 0;
         }
+        
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+        
         .cta-button:active {
             transform: translateY(1px);
         }
+        
         .hero .cta-button:first-child {
             background: var(--primary-color);
             color: var(--white);
             border: none;
         }
+        
         .hero .cta-button:first-child:hover {
-           background: #0d4593;
-           border: 2px solid var(--secondary-color);
-           
-           
+           background: var(--secondary-color);
+           border: none;
         }
+        
         .hero .cta-button:last-child {
             background: transparent;
             color: var(--secondary-color);
             border: 2px solid var(--secondary-color);
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.2);
         }
+        
         .hero .cta-button:last-child:hover {
             background: var(--secondary-color);
             color: var(--white);
         }
+
+        .cta-button .icon {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .icon {
+            transform: translateX(4px);
+        }
+
         /* News Section */
         .news-section {
             padding: 6rem 5%;
@@ -291,8 +555,11 @@
             background: var(--white);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .news-card:hover {
@@ -300,8 +567,27 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+
         .news-content {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .news-date {
@@ -322,6 +608,21 @@
         .news-card p {
             margin-bottom: 1.5rem;
             color: var(--text-color);
+            flex-grow: 1;
+        }
+
+        .news-card .cta-button {
+            align-self: flex-start;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.9rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            margin-top: auto;
+        }
+
+        .news-card .cta-button:hover {
+            background: var(--primary-color);
         }
 
         /* CTA Section */
@@ -330,10 +631,42 @@
             background-color: var(--secondary-color);
             color: var(--white);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .cta-section .container {
+            position: relative;
+            z-index: 2;
         }
 
         .cta-section .section-title {
             color: var(--white);
+        }
+
+        .cta-section .section-title::after {
+            background: var(--white);
+        }
+
+        .cta-section p {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
         .cta-section .cta-buttons {
@@ -351,11 +684,23 @@
             border-radius: 30px;
             font-weight: 500;
             transition: var(--transition);
+            border: 2px solid var(--white);
         }
 
         .cta-section .cta-button:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
+            background: transparent;
+            color: var(--white);
+        }
+
+        .cta-section .cta-button.outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .cta-section .cta-button.outline:hover {
+            background: var(--white);
+            color: var(--secondary-color);
         }
 
         /* Footer */
@@ -457,6 +802,21 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-container {
+                height: auto;
+                min-height: 600px;
+            }
+
+            .hero-image-container {
+                margin-left: -50px;
+            }
+
+            .hero-image-container::before {
+                width: 150px;
+            }
+        }
+
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 70px;
@@ -480,7 +840,7 @@
                 width: 100%;
                 background: var(--white);
                 padding: 1rem;
-                box-shadow: var(--shadow);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             }
 
             .nav-links.active {
@@ -492,13 +852,33 @@
             }
 
             .hero {
-                height: 70vh;
+                height: auto;
                 min-height: 450px;
             }
 
+            .hero-container {
+                flex-direction: column;
+                height: auto;
+            }
+
             .hero-content {
-                margin: 0 1rem;
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
+                text-align: center;
+                max-width: 100%;
+                margin-left: 0;
+            }
+
+            .hero-image-container {
+                height: 300px;
+                margin-left: 0;
+            }
+
+            .hero-image-container::before {
+                display: none;
+            }
+
+            .hero h1, .hero p {
+                padding-right: 0;
             }
 
             .hero h1 {
@@ -513,6 +893,7 @@
                 flex-direction: column;
                 align-items: stretch;
                 gap: 1rem;
+                justify-content: center;
             }
 
             .hero .cta-button {
@@ -536,6 +917,33 @@
             .cta-section .cta-button {
                 width: 100%;
             }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .news-card {
+                margin-bottom: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -556,15 +964,56 @@
         <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
     </nav>
     <section id="home" class="hero">
-        <div class="hero-background active" style="background-image: url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&auto=format&fit=crop&w=2091&q=80')"></div>
-        <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1579165466741-7f35e4755660?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Advancing Cancer Care Worldwide</h1>
-            <p>The Hematology & Oncology Society Union (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and global advocacy.</p>
-            <div class="cta-buttons">
-                <a href="#join" class="cta-button">Join Our Community</a>
-                <a href="#conference" class="cta-button">Annual Conference 2024</a>
+        <div class="hero-container">
+            <!-- Content Side -->
+            <div class="hero-content">
+                <!-- Animated background elements -->
+                <div class="animated-bg">
+                    <div class="animated-circle" style="animation-delay: 0s;"></div>
+                    <div class="animated-circle" style="animation-delay: -5s;"></div>
+                    <div class="animated-circle" style="animation-delay: -10s;"></div>
+                    <div class="animated-line" style="animation-delay: 0s;"></div>
+                    <div class="animated-line" style="animation-delay: -5s;"></div>
+                    <div class="animated-line" style="animation-delay: -10s;"></div>
+                    <div class="animated-dot" style="animation-delay: 0s;"></div>
+                    <div class="animated-dot" style="animation-delay: -1s;"></div>
+                    <div class="animated-dot" style="animation-delay: -2s;"></div>
+                    <div class="animated-dot" style="animation-delay: -0.5s;"></div>
+                    <div class="animated-dot" style="animation-delay: -1.5s;"></div>
+                    <div class="animated-dot" style="animation-delay: -2.5s;"></div>
+                </div>                
+                <h1>Transforming Cancer Care in Uganda</h1>
+                <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
+                <div class="cta-buttons">
+                    <a href="#join" class="cta-button">
+                        Join Our Community
+                        <span class="icon">→</span>
+                    </a>
+                    <a href="#conference" class="cta-button">Annual Symposium 2024</a>
+                </div>
+            </div>            
+            <!-- Image Side -->
+            <div class="hero-image-container">
+                <div class="hero-background active" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7825-YfgFfbKwZ4ZroAe3Lwb4oKfJfnjpkK.webp')"></div>
+                <div class="hero-background" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7977-YcZExCX6uZFrucyPKODcplHV01BVRO.webp')"></div>
+                <div class="hero-background" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8022-OzlEnNM1tXygHamnwZZXiya0RbzRXS.webp')"></div>
+                <div class="hero-background" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8005-DM4SPlPiwzITMhvpxVPIuLRH19CtLs.webp')"></div>
+                <div class="hero-background" style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8317-iQudck3gKkAZFUGyOqxiyHT8Hf82op.webp')"></div>
+                   <!-- Stats overlay -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Members</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Research Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Partner Hospitals</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -574,26 +1023,35 @@
             <h2 class="section-title">Latest Updates</h2>
             <div class="news-grid">
                 <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8039.webp-Rn2rin54gih1QKluYC3bHWzPziVWFG.jpeg" alt="Panel discussion at HOSU symposium">
+                    </div>
                     <div class="news-content">
                         <span class="news-date">March 20, 2024</span>
                         <h3>New Treatment Guidelines Released</h3>
-                        <p>Updated protocols for hematologic malignancies now available to members.</p>
+                        <p>Updated protocols for hematologic malignancies now available to members, developed through collaborative efforts with international partners.</p>
                         <a href="#guidelines" class="cta-button">Learn More</a>
                     </div>
                 </article>
                 <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp" alt="HOSU members at launch event">
+                    </div>
                     <div class="news-content">
                         <span class="news-date">March 18, 2024</span>
                         <h3>2024 Research Grants Announced</h3>
-                        <p>$2M in funding available for innovative oncology research projects.</p>
+                        <p>$2M in funding available for innovative oncology research projects focused on improving cancer care in Uganda and East Africa.</p>
                         <a href="#grants" class="cta-button">Apply Now</a>
                     </div>
                 </article>
                 <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8317.jpg-42QrlU3maSv4n7SKkSTPhpcJvOKLfW.jpeg" alt="HOSU group photo">
+                    </div>
                     <div class="news-content">
                         <span class="news-date">March 15, 2024</span>
                         <h3>Global Summit Registration Open</h3>
-                        <p>Join world leaders in cancer research this September in London.</p>
+                        <p>Join world leaders in cancer research this September in Kampala. Early bird registration now available for members.</p>
                         <a href="#summit" class="cta-button">Register</a>
                     </div>
                 </article>
@@ -604,9 +1062,10 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="section-title">Make a Difference</h2>
+            <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy. Together, we can improve outcomes for patients and advance the field of oncology.</p>
             <div class="cta-buttons">
                 <a href="#donate" class="cta-button">Support Our Mission</a>
-                <a href="#volunteer" class="cta-button">Become a Volunteer</a>
+                <a href="#volunteer" class="cta-button outline">Become a Volunteer</a>
                 <a href="#webinars" class="cta-button">Upcoming Webinars</a>
             </div>
         </div>
@@ -629,8 +1088,8 @@
                     <address>
                         HOSU Headquarters<br>
                         123 Medical Innovation Way<br>
-                        Global Health City, GH 54321<br>
-                        ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
+                        Kampala, Uganda<br>
+                        ☎ <a href="tel:+256123456789">+256 (123) 456-789</a><br>
                         ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
                     </address>
                 </div>
@@ -653,7 +1112,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+                <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -661,35 +1120,18 @@
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Dynamic background images for hero section
-        const images = [
-            'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&auto=format&fit=crop&w=2091&q=80',
-            'https://images.unsplash.com/photo-1579165466741-7f35e4755660?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-            'https://images.unsplash.com/photo-1576671081837-49000212a370?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-            'https://images.unsplash.com/photo-1581093458791-4a2b2a671ad0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-        ];
-
         let currentIndex = 0;
         const backgrounds = document.querySelectorAll('.hero-background');
 
         function changeBackground() {
-            const nextIndex = (currentIndex + 1) % images.length;
-            
-            // Prepare the next background
-            const inactiveBackground = Array.from(backgrounds).find(bg => !bg.classList.contains('active'));
-            inactiveBackground.style.backgroundImage = `url(${images[nextIndex]})`;
+            const nextIndex = (currentIndex + 1) % backgrounds.length;
             
             // Trigger the crossfade
-            backgrounds.forEach(bg => bg.classList.toggle('active'));
+            backgrounds[currentIndex].classList.remove('active');
+            backgrounds[nextIndex].classList.add('active');
             
             currentIndex = nextIndex;
         }
-
-        // Preload images
-        images.forEach(src => {
-            const img = new Image();
-            img.src = src;
-            img.crossOrigin = "anonymous";
-        });
 
         // Start the slideshow
         setInterval(changeBackground, 5000);
