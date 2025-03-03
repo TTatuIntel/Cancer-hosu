@@ -143,6 +143,7 @@
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
+            overflow: hidden; /* Add this to contain everything */
         }
 
         .hero-content {
@@ -152,16 +153,14 @@
             justify-content: center;
             padding: 2rem 0 2rem 5%;
             max-width: 650px;
-            z-index: 2;
+            z-index: 10; /* Increase z-index to be higher than image */
             text-align: left;
             position: relative;
             overflow: hidden;
-            background: transparent;
-            backdrop-filter: blur(15px);
+            background: transparent; /* Add transparent background */            
             border-radius: 10px;
             animation: fadeIn 1s ease-in-out;
         }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -336,10 +335,14 @@
 
         .hero-image-container {
             flex: 1.2;
-            position: relative;
+            position: absolute; /* Change to absolute positioning */
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 60%; /* Set width instead of using flex */
             overflow: hidden;
             box-shadow: none;
-            margin-left: -100px; /* Creates overlap */
+            z-index: 1; /* Lower z-index to be behind content */
         }
 
         /* Enhanced dissolve effect between content and image */
@@ -347,10 +350,10 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            right: 0; /* Change from left to right */
             width: 200px;
             height: 100%;
-            background: linear-gradient(to right, 
+            background: linear-gradient(to left, /* Change direction to left */
                 rgba(255, 255, 255, 1) 0%, 
                 rgba(255, 255, 255, 0.9) 20%, 
                 rgba(255, 255, 255, 0.7) 40%, 
@@ -809,7 +812,8 @@
             }
 
             .hero-image-container {
-                margin-left: -50px;
+                margin-left: 0; /* Remove negative margin */
+                width: 55%; /* Adjust width for this breakpoint */
             }
 
             .hero-image-container::before {
@@ -866,10 +870,13 @@
                 text-align: center;
                 max-width: 100%;
                 margin-left: 0;
+                z-index: 10;
             }
 
             .hero-image-container {
+                position: relative; /* Change back to relative for mobile */
                 height: 300px;
+                width: 100%; /* Full width on mobile */
                 margin-left: 0;
             }
 
@@ -997,9 +1004,9 @@
                 <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_7900.webp')"></div>
+                <div class="hero-background" style="url('img/IMG_7900.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_8039.webp')"></div>
+                <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8022.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8005.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_8317.webp')"></div>
@@ -1094,7 +1101,7 @@
                         123 Medical Innovation Way<br>
                         Kampala, Uganda<br>
                         ☎ <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                        ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                        ✉ <a href="/cdn-cgi/l/email-protection#fc95929a93bc94938f89d2938e9b"><span class="__cf_email__" data-cfemail="5d34333b321d35322e2873322f3a">[email&#160;protected]</span></a>
                     </address>
                 </div>
                 <div class="footer-section">
@@ -1121,7 +1128,7 @@
         </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Dynamic background images for hero section
         let currentIndex = 0;
@@ -1208,3 +1215,4 @@
     </script>
 </body>
 </html>
+
