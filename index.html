@@ -157,10 +157,12 @@
             text-align: left;
             position: relative;
             overflow: hidden;
-            background: transparent; /* Add transparent background */            
+            background: transparent;
+            backdrop-filter: blur(15px);
             border-radius: 10px;
             animation: fadeIn 1s ease-in-out;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -350,15 +352,30 @@
             content: '';
             position: absolute;
             top: 0;
-            right: 0; /* Change from left to right */
+            left: 0; /* Position on the left side */
             width: 200px;
             height: 100%;
-            background: linear-gradient(to left, /* Change direction to left */
+            background: linear-gradient(to right, /* Change direction to right */
                 rgba(255, 255, 255, 1) 0%, 
                 rgba(255, 255, 255, 0.9) 20%, 
                 rgba(255, 255, 255, 0.7) 40%, 
                 rgba(255, 255, 255, 0.4) 60%, 
                 rgba(255, 255, 255, 0.1) 80%, 
+                rgba(255, 255, 255, 0) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Add a second gradient for the right side if needed */
+        .hero-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(to left,
+                rgba(255, 255, 255, 0.7) 0%,
                 rgba(255, 255, 255, 0) 100%);
             z-index: 2;
             pointer-events: none;
@@ -812,7 +829,6 @@
             }
 
             .hero-image-container {
-                margin-left: 0; /* Remove negative margin */
                 width: 55%; /* Adjust width for this breakpoint */
             }
 
@@ -880,8 +896,9 @@
                 margin-left: 0;
             }
 
-            .hero-image-container::before {
-                display: none;
+            .hero-image-container::before,
+            .hero-image-container::after {
+                display: none; /* Hide gradients on mobile */
             }
 
             .hero h1, .hero p {
@@ -995,6 +1012,8 @@
                     <a href="#join" class="cta-button">
                         Join Our Community
                         <span class="icon">→</span>
+                    </a>
+                    <a href="#conference                        <span class="icon">→</span>
                     </a>
                     <a href="#conference" class="cta-button">Annual Symposium 2024</a>
                 </div>
