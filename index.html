@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Improved viewport meta tag with user-scalable property to ensure proper zooming -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Hematology & Oncology Society of Uganda - Advancing cancer care through research, education, and collaboration">
+    <meta name="description" content="HOSU - Advancing cancer care in Uganda">
     <title>HOSU - Hematology & Oncology Society of Uganda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,13 +18,10 @@
             --white: #ffffff;
             --accent-color: #a8dadc;
             --transition: all 0.3s ease;
-            --navbar-height: 90px;
-            /* Added responsive spacing variables for consistent spacing across devices */
-            --spacing-xs: 0.5rem;
+            --navbar-height: 70px;
             --spacing-sm: 1rem;
             --spacing-md: 1.5rem;
             --spacing-lg: 2rem;
-            --spacing-xl: 3rem;
         }
 
         * {
@@ -34,20 +30,17 @@
             box-sizing: border-box;
         }
 
-        /* Added text size adjustment to prevent iOS Safari from enlarging text */
         html {
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
-            /* Added smooth scrolling for better user experience */
             scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--text-color);
             background-color: var(--white);
-            /* Added to prevent horizontal scrolling on mobile */
             overflow-x: hidden;
             width: 100%;
         }
@@ -57,27 +50,25 @@
             color: inherit;
         }
 
-        /* Improved image handling for responsive layouts */
         img {
             max-width: 100%;
             height: auto;
-            display: block; /* Prevents inline image gaps */
+            display: block;
         }
 
-        /* Improved container with more responsive padding */
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 clamp(var(--spacing-sm), 5vw, var(--spacing-lg));
+            padding: 0 var(--spacing-sm);
         }
 
-        /* Navbar Styles - Enhanced for better mobile experience */
+        /* Navbar */
         .navbar {
-            background: transparent;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); /* Safari support */
-            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -87,26 +78,18 @@
             z-index: 1000;
             transition: var(--transition);
             height: var(--navbar-height);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.79);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); /* Safari support */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Improved logo sizing for better responsiveness */
         .logo img {
-            width: clamp(160px, 25vw, 250px);
-            height: clamp(60px, 10vh, 90px);
+            width: 160px;
+            height: 60px;
             object-fit: contain;
-            transition: var(--transition);
         }
 
         .nav-links {
             display: flex;
-            gap: clamp(1rem, 2vw, 2rem); /* Responsive gap */
+            gap: 1.5rem;
             align-items: center;
         }
 
@@ -114,35 +97,20 @@
             font-weight: 500;
             transition: var(--transition);
             position: relative;
-            /* Added padding for better touch targets */
             padding: 0.5rem 0.25rem;
         }
 
-        .nav-links a:not(.cta-button)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: var(--transition);
+        .nav-links a:not(.cta-button):hover {
+            color: var(--primary-color);
         }
 
-        .nav-links a:not(.cta-button):hover::after {
-            width: 100%;
-        }
-
-        /* Improved button sizing for better touch targets */
         .nav-links .cta-button {
             background: var(--primary-color);
             color: var(--white);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 30px;
-            transition: var(--transition);
-            /* Minimum touch target size for accessibility */
-            min-height: 44px;
-            min-width: 44px;
+            min-height: 40px;
+            min-width: 40px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -150,27 +118,22 @@
 
         .nav-links .cta-button:hover {
             background: var(--secondary-color);
-            transform: translateY(-2px);
         }
 
-        /* Improved menu toggle for better mobile experience */
         .menu-toggle {
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
-            /* Improved touch target */
-            width: 44px;
-            height: 44px;
-            display: none;
+            width: 40px;
+            height: 40px;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            transition: var(--transition);
         }
         
-        /* Hero Section - Enhanced for better responsiveness */
+        /* Hero Section */
         .hero {
-            min-height: 600px;
+            min-height: 500px;
             position: relative;
             color: var(--text-color);
             padding-top: var(--navbar-height);
@@ -180,225 +143,67 @@
         .hero-container {
             display: flex;
             flex-direction: row;
-            height: 80vh;
-            min-height: 500px;
+            height: 70vh;
+            min-height: 450px;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
         }
 
-        /* Improved hero content positioning for better responsiveness */
         .hero-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: clamp(1.5rem, 5vw, 2rem) 0 clamp(1.5rem, 5vw, 2rem) 5%;
-            max-width: 650px;
+            padding: var(--spacing-md) 0 var(--spacing-md) 5%;
+            max-width: 600px;
             z-index: 10;
             text-align: left;
             position: relative;
-            overflow: hidden;
-            background: transparent;
-            border-radius: 10px;
-            animation: fadeIn 1s ease-in-out;
+            padding-bottom: 2rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @media (min-width: 768px) {
+            .hero-content {
+                padding-bottom: var(--spacing-md);
+            }
         }
 
-        .hero-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: -1;
-        }
-
-        /* Animated background elements */
-        .animated-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .animated-circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .animated-circle:nth-child(1) {
-            width: 150px;
-            height: 150px;
-            top: -50px;
-            left: -50px;
-            animation-delay: 0s;
-        }
-
-        .animated-circle:nth-child(2) {
-            width: 100px;
-            height: 100px;
-            bottom: 10%;
-            right: 10%;
-            animation-delay: -5s;
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-        }
-
-        .animated-circle:nth-child(3) {
-            width: 70px;
-            height: 70px;
-            top: 40%;
-            left: 20%;
-            animation-delay: -10s;
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-        }
-
-        .animated-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(13, 69, 147, 0.1), 
-                rgba(13, 69, 147, 0.2), 
-                rgba(13, 69, 147, 0.1), 
-                transparent);
-            animation: moveLine 15s infinite linear;
-        }
-
-        .animated-line:nth-child(4) {
-            width: 100%;
-            top: 20%;
-            animation-delay: 0s;
-        }
-
-        .animated-line:nth-child(5) {
-            width: 80%;
-            top: 50%;
-            animation-delay: -5s;
-        }
-
-        .animated-line:nth-child(6) {
-            width: 60%;
-            top: 80%;
-            animation-delay: -10s;
-        }
-
-        .animated-dot {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: rgba(11, 68, 147, 0.2);
-            animation: pulse 3s infinite ease-in-out;
-        }
-
-        .animated-dot:nth-child(7) {
-            top: 15%;
-            left: 15%;
-            animation-delay: 0s;
-        }
-
-        .animated-dot:nth-child(8) {
-            top: 45%;
-            left: 30%;
-            animation-delay: -1s;
-        }
-
-        .animated-dot:nth-child(9) {
-            top: 75%;
-            left: 20%;
-            animation-delay: -2s;
-        }
-
-        .animated-dot:nth-child(10) {
-            top: 25%;
-            left: 60%;
-            animation-delay: -0.5s;
-        }
-
-        .animated-dot:nth-child(11) {
-            top: 65%;
-            left: 70%;
-            animation-delay: -1.5s;
-        }
-
-        .animated-dot:nth-child(12) {
-            top: 85%;
-            left: 40%;
-            animation-delay: -2.5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-
-        @keyframes moveLine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-        }
-
-        /* Improved hero image container for better responsiveness */
+        /* Hero image container */
         .hero-image-container {
-            flex: 1.2;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 60%;
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 250px;
             overflow: hidden;
-            box-shadow: none;
-            z-index: 1;
         }
 
-        .hero-image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background: linear-gradient(to right, 
-                rgba(255, 255, 255, 1) 0%, 
-                rgba(255, 255, 255, 0.9) 20%, 
-                rgba(255, 255, 255, 0.7) 40%, 
-                rgba(255, 255, 255, 0.4) 60%, 
-                rgba(255, 255, 255, 0.1) 80%, 
-                rgba(255, 255, 255, 0) 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
+        @media (min-width: 768px) {
+            .hero-image-container {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 55%;
+                height: auto;
+                z-index: 1;
+            }
 
-        .hero-image-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100%;
-            background: linear-gradient(to left,
-                rgba(255, 255, 255, 0.7) 0%,
-                rgba(255, 255, 255, 0) 100%);
-            z-index: 2;
-            pointer-events: none;
+            .hero-image-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 150px;
+                height: 100%;
+                background: linear-gradient(to right, 
+                    rgba(255, 255, 255, 1) 0%, 
+                    rgba(255, 255, 255, 0) 100%);
+                z-index: 2;
+                pointer-events: none;
+            }
         }
 
         .hero-background {
@@ -409,7 +214,7 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            transition: opacity 1.5s ease;
+            transition: opacity 1s ease;
             opacity: 0;
         }
 
@@ -417,135 +222,53 @@
             opacity: 1;
         }
 
-        /* Improved typography with fluid font sizes using clamp */
+        /* Typography */
         .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            line-height: 1.2; /* Improved line height for readability */
-            margin-bottom: clamp(1rem, 3vw, 1.25rem);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
             color: var(--secondary-color);
             font-weight: 700;
-            animation: fadeInUp 0.5s ease;
-            position: relative;
-            z-index: 3;
-            padding-right: clamp(20px, 10vw, 80px);
         }
 
         .hero p {
-            font-size: clamp(1rem, 3vw, 1.1rem);
-            margin-bottom: clamp(1.25rem, 4vw, 1.75rem);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--text-color);
-            animation: fadeInUp 1s ease 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-            line-height: 1.8;
-            position: relative;
-            z-index: 3;
-            padding-right: clamp(0px, 8vw, 60px);
+            line-height: 1.6;
         }
 
-        /* Improved CTA buttons with better spacing and touch targets */
+        /* CTA buttons */
         .hero .cta-buttons {
             display: flex;
-            gap: clamp(0.75rem, 3vw, 1.25rem);
-            animation: fadeInUp 1s ease 0.6s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-            position: relative;
-            z-index: 3;
-            /* Added flex-wrap for better mobile layout */
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
-        /* Stats overlay for hero image */
-        .hero-stats {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
-            padding: clamp(10px, 3vw, 20px);
-            color: white;
-            display: flex;
-            justify-content: space-around;
-            z-index: 3;
-            text-align: center;
-            /* Added flex-wrap for better mobile layout */
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            padding: 0 15px;
-            /* Added minimum width for better spacing on small screens */
-            min-width: 100px;
-            /* Added flex-basis for better distribution */
-            flex: 1 1 auto;
-            margin: 5px 0;
-        }
-
-        .stat-number {
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--white);
-        }
-
-        .stat-label {
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        /* Button Styles - Improved for better touch targets and accessibility */
         .cta-button {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.25rem, 3vw, 1.75rem);
+            padding: 0.75rem 1.25rem;
             border-radius: 30px;
             font-weight: 500;
-            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-size: 0.95rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px; /* Touch-friendly size */
-            min-width: 44px;
-            /* Added for better focus visibility */
+            min-height: 40px;
+            min-width: 40px;
             outline: none;
         }
 
-        /* Added focus styles for accessibility */
         .cta-button:focus-visible {
             outline: 2px solid var(--primary-color);
             outline-offset: 2px;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-        
-        .cta-button:active::before {
-            width: 300px;
-            height: 300px;
-            opacity: 0;
         }
         
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .cta-button:active {
-            transform: translateY(1px);
         }
         
         .hero .cta-button:first-child {
@@ -556,16 +279,12 @@
         
         .hero .cta-button:first-child:hover {
            background: var(--secondary-color);
-           border: none;
         }
         
         .hero .cta-button:last-child {
             background: transparent;
             color: var(--secondary-color);
             border: 2px solid var(--secondary-color);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px); /* Safari support */
-            background: rgba(255, 255, 255, 0.2);
         }
         
         .hero .cta-button:last-child:hover {
@@ -575,23 +294,18 @@
 
         .cta-button .icon {
             margin-left: 8px;
-            transition: transform 0.3s ease;
         }
 
-        .cta-button:hover .icon {
-            transform: translateX(4px);
-        }
-
-        /* News Section - Improved for better responsiveness */
+        /* News Section */
         .news-section {
-            padding: clamp(3rem, 10vw, 6rem) 5%;
+            padding: var(--spacing-lg) 5%;
             background: var(--background-light);
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: clamp(2rem, 6vw, 3rem);
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: var(--spacing-lg);
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
             color: var(--secondary-color);
             position: relative;
         }
@@ -599,26 +313,26 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 50px;
             height: 3px;
             background: var(--primary-color);
-            margin: 1rem auto 0;
+            margin: 0.75rem auto 0;
         }
 
-        /* Improved news grid with better responsive behavior */
+        /* News grid */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            gap: clamp(1.5rem, 4vw, 2rem);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .news-card {
             background: var(--white);
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
             display: flex;
             flex-direction: column;
@@ -630,10 +344,9 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        /* Improved image aspect ratio handling */
         .news-image {
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             position: relative;
             overflow: hidden;
         }
@@ -646,8 +359,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            /* Added to prevent layout shifts during loading */
-            will-change: transform;
+            loading: lazy;
         }
 
         .news-card:hover .news-image img {
@@ -655,7 +367,7 @@
         }
 
         .news-content {
-            padding: clamp(1rem, 3vw, 1.5rem);
+            padding: 1rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -663,29 +375,29 @@
 
         .news-date {
             color: var(--primary-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
-            display: block;
         }
 
         .news-card h3 {
-            font-size: clamp(1.1rem, 3vw, 1.25rem);
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
             color: var(--secondary-color);
             font-weight: 600;
         }
 
         .news-card p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--text-color);
             flex-grow: 1;
+            font-size: 0.9rem;
         }
 
         .news-card .cta-button {
             align-self: flex-start;
-            padding: 0.5rem 1.25rem;
-            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
             background: var(--secondary-color);
             color: var(--white);
             border: none;
@@ -696,9 +408,9 @@
             background: var(--primary-color);
         }
 
-        /* CTA Section - Improved for better responsiveness */
+        /* CTA Section */
         .cta-section {
-            padding: clamp(4rem, 10vw, 6rem) 5%;
+            padding: var(--spacing-lg) 5%;
             background-color: var(--secondary-color);
             color: var(--white);
             text-align: center;
@@ -734,31 +446,29 @@
         }
 
         .cta-section p {
-            max-width: 800px;
-            margin: 0 auto clamp(1.5rem, 4vw, 2rem);
-            font-size: clamp(1rem, 3vw, 1.1rem);
-            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-        /* Improved CTA buttons layout for better responsiveness */
         .cta-section .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: clamp(1rem, 3vw, 1.5rem);
+            gap: 1rem;
             flex-wrap: wrap;
-            margin-top: clamp(1.5rem, 4vw, 2rem);
+            margin-top: 1.5rem;
         }
 
         .cta-section .cta-button {
             background: var(--white);
             color: var(--secondary-color);
-            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            padding: 0.75rem 1.5rem;
             border-radius: 30px;
             font-weight: 500;
             transition: var(--transition);
             border: 2px solid var(--white);
-            /* Added for better mobile layout */
-            margin: 0.5rem;
+            margin: 0.25rem;
         }
 
         .cta-section .cta-button:hover {
@@ -777,26 +487,25 @@
             color: var(--secondary-color);
         }
 
-        /* Footer - Improved for better responsiveness */
+        /* Footer */
         footer {
             background: var(--background-dark);
             color: var(--white);
-            padding: clamp(3rem, 8vw, 4rem) 5% clamp(1.5rem, 4vw, 2rem);
+            padding: var(--spacing-lg) 5% var(--spacing-md);
         }
 
-        /* Improved footer grid for better responsiveness */
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-            gap: clamp(2rem, 5vw, 3rem);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .footer-section h4 {
             color: var(--accent-color);
-            font-size: clamp(1.1rem, 3vw, 1.2rem);
-            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
 
@@ -805,13 +514,12 @@
         }
 
         .footer-section li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .footer-section a {
             color: var(--white);
             transition: var(--transition);
-            /* Improved touch target */
             display: inline-block;
             padding: 0.25rem 0;
         }
@@ -820,17 +528,15 @@
             color: var(--accent-color);
         }
 
-        /* Added focus styles for accessibility */
         .footer-section a:focus-visible {
             outline: 2px solid var(--accent-color);
             outline-offset: 2px;
         }
 
-        /* Improved social links for better touch targets */
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.75rem;
+            margin-top: 1rem;
             flex-wrap: wrap;
         }
 
@@ -838,8 +544,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: clamp(40px, 10vw, 48px);
-            height: clamp(40px, 10vw, 48px);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
@@ -852,105 +558,23 @@
 
         .copyright {
             text-align: center;
-            margin-top: clamp(3rem, 6vw, 4rem);
-            padding-top: clamp(1.5rem, 4vw, 2rem);
+            margin-top: 2rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes buttonClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-            100% { transform: scale(1); }
-        }
-
-        .cta-button.clicking {
-            animation: buttonClick 0.3s ease;
-        }
-
-        /* Enhanced Mobile Responsive Design */
-        /* Large screens - improved layout for wide screens */
-        @media (min-width: 1400px) {
-            /* Added to improve layout on extra large screens */
-            .hero-container {
-                max-width: 1600px;
-                height: 70vh;
-            }
-            
-            .hero-content {
-                max-width: 750px;
-                padding-left: 8%;
-            }
-            
-            /* Improved spacing for large screens */
-            .section-title {
-                margin-bottom: 4rem;
-            }
-            
-            .news-grid {
-                gap: 3rem;
-            }
-            
-            /* Improved container width for large screens */
-            .container {
-                max-width: 1400px;
-            }
-        }
-
-        /* Medium-large screens */
-        @media (max-width: 1024px) {
-            :root {
-                /* Adjusted navbar height for medium screens */
-                --navbar-height: 80px;
-            }
-            
-            .hero-container {
-                height: auto;
-                min-height: 600px;
-            }
-
-            .hero-image-container {
-                width: 55%;
-            }
-
-            .hero-image-container::before {
-                width: 150px;
-            }
-            
-            /* Improved spacing for medium screens */
-            .news-section, .cta-section {
-                padding: 5rem 5%;
-            }
-            
-            /* Adjusted font sizes for medium screens */
-            .hero h1 {
-                font-size: clamp(1.8rem, 4vw, 2.5rem);
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-        }
-
-        /* Tablets and small laptops */
+        /* Media Queries */
         @media (max-width: 768px) {
             :root {
-                /* Adjusted navbar height for smaller screens */
-                --navbar-height: 70px;
+                --navbar-height: 60px;
             }
 
             .navbar {
-                padding: 0.75rem 1rem;
+                padding: 0.5rem 1rem;
             }
 
-            /* Improved mobile menu */
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -962,7 +586,6 @@
                 padding: 1rem;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
-                /* Added for smoother animation */
                 opacity: 0;
                 visibility: hidden;
                 transform: translateY(-10px);
@@ -976,9 +599,8 @@
                 transform: translateY(0);
             }
 
-            /* Improved mobile navigation links */
             .nav-links a {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 padding: 0.75rem 0;
                 width: 100%;
                 text-align: center;
@@ -989,91 +611,62 @@
                 border-bottom: none;
             }
             
-            /* Improved menu toggle button */
             .menu-toggle {
                 display: flex;
-                font-size: 1.75rem;
+                font-size: 1.5rem;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 50%;
-                transition: var(--transition);
-            }
-            
-            .menu-toggle:hover {
-                background: rgba(255, 255, 255, 0.2);
             }
 
-            /* Improved hero section for tablets */
             .hero {
-                height: auto;
-                min-height: 450px;
+                min-height: 400px;
             }
 
             .hero-container {
                 flex-direction: column;
                 height: auto;
+                min-height: 400px;
             }
 
             .hero-content {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem 1rem;
                 text-align: center;
                 max-width: 100%;
                 margin-left: 0;
-                /* Added to ensure content is fully visible */
-                margin-bottom: 350px;
-            }
-
-            .hero-image-container {
-                position: absolute;
-                height: 350px;
-                width: 100%;
-                margin-left: 0;
-                /* Positioned at the bottom of hero content */
-                top: auto;
-                bottom: 0;
-            }
-
-            .hero-image-container::before,
-            .hero-image-container::after {
-                display: none;
+                padding-bottom: 1.5rem;
             }
 
             .hero h1, .hero p {
                 padding-right: 0;
-                /* Center text on mobile */
                 text-align: center;
             }
 
-            /* Improved CTA buttons for mobile */
             .hero .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
-                justify-content: center;
+                gap: 0.75rem;
             }
 
             .hero .cta-button {
                 width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
+                max-width: 250px;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
             }
 
-            /* Improved news grid for tablets */
             .news-grid {
-                grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-                gap: 1.5rem;
+                grid-template-columns: 1fr;
             }
 
-            /* Improved CTA section for tablets */
             .cta-section .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 1.25rem;
-                max-width: 300px;
-                margin: 2rem auto 0;
+                gap: 0.75rem;
+                max-width: 250px;
+                margin: 1.5rem auto 0;
             }
 
             .cta-section .cta-button {
@@ -1081,22 +674,6 @@
                 margin: 0;
             }
 
-            /* Improved hero stats for tablets */
-            .hero-stats {
-                flex-direction: column;
-                gap: 10px;
-                padding: 15px;
-            }
-
-            .stat-number {
-                font-size: 1.5rem;
-            }
-
-            .stat-label {
-                font-size: 0.8rem;
-            }
-
-            /* Improved footer for tablets */
             .footer-content {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -1107,166 +684,43 @@
             }
         }
 
-        /* Mobile phones */
-        @media (max-width: 480px) {
-            :root {
-                /* Further adjusted navbar height for mobile */
-                --navbar-height: 60px;
-            }
-            
-            .logo img {
-                width: 160px;
-                height: 60px;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-                /* Improved line height for readability on small screens */
-                line-height: 1.3;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .news-card {
-                margin-bottom: 1.5rem;
-            }
-
-            .hero-content {
-                padding: 1.5rem 1rem;
-                /* Adjusted for smaller hero image on mobile */
-                margin-bottom: 250px;
-            }
-
-            .hero-image-container {
-                height: 250px;
-            }
-
-            .news-content {
-                padding: 1rem;
-            }
-
-            .cta-section {
-                padding: 4rem 5% 3rem;
-            }
-
-            /* Improved social links for mobile */
-            .social-links {
-                gap: 0.75rem;
-            }
-            
-            .social-links a {
-                width: 48px;
-                height: 48px;
-            }
-            
-            /* Improved footer spacing for mobile */
-            .footer-section {
-                margin-bottom: 2rem;
-            }
-            
-            .footer-section:last-child {
-                margin-bottom: 0;
-            }
-            
-            /* Improved copyright text for mobile */
-            .copyright {
-                font-size: 0.8rem;
-                margin-top: 2rem;
-            }
-        }
-
-        /* Landscape orientation on mobile devices */
         @media (orientation: landscape) and (max-width: 768px) {
             .hero-container {
-                height: auto;
-                min-height: 450px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .hero-content {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                text-align: left;
             }
 
             .hero-image-container {
-                height: 300px;
+                position: relative;
+                height: 100%;
+                width: 100%;
+                order: 2;
+                grid-column: 2;
+                grid-row: 1;
             }
             
-            .hero-content {
-                margin-bottom: 300px;
-                padding-top: 1.5rem;
-            }
-            
-            /* Improved button layout for landscape */
             .hero .cta-buttons {
                 flex-direction: row;
-                justify-content: center;
-                max-width: 500px;
-                margin: 0 auto;
+                justify-content: flex-start;
+                flex-wrap: wrap;
             }
             
             .hero .cta-button {
-                max-width: 200px;
+                max-width: 180px;
+            }
+
+            .hero h1, .hero p {
+                text-align: left;
             }
         }
-        
-        /* Added for high-resolution screens (Retina displays) */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            /* Optimize images for high-resolution displays */
-            .hero-background, 
-            .news-image img,
-            .cta-section::before {
-                image-rendering: -webkit-optimize-contrast;
-            }
-        }
-        
-        /* Added for print media */
-        @media print {
-            .navbar, 
-            .cta-section, 
-            .cta-buttons,
-            .menu-toggle {
-                display: none !important;
-            }
-            
-            .hero, 
-            .hero-container, 
-            .hero-content {
-                height: auto;
-                min-height: auto;
-                padding: 1rem 0;
-                margin: 0;
-            }
-            
-            .hero-image-container {
-                position: relative;
-                height: 300px;
-                width: 100%;
-                margin: 1rem 0;
-            }
-            
-            body {
-                color: #000;
-                background: #fff;
-            }
-            
-            .news-card {
-                break-inside: avoid;
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
-            
-            footer {
-                background: none;
-                color: #000;
-                border-top: 1px solid #ddd;
-                padding: 1rem 0;
-            }
-            
-            .footer-section a,
-            .footer-section h4 {
-                color: #000;
-            }
-        }
-        
-        /* Added for users who prefer reduced motion */
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -1275,26 +729,19 @@
                 scroll-behavior: auto !important;
             }
             
-            .animated-circle,
-            .animated-line,
-            .animated-dot {
-                animation: none !important;
-            }
-            
             .hero-background {
                 transition: none !important;
             }
         }
         
-        /* Added support for dark mode preference */
         @media (prefers-color-scheme: dark) {
             :root {
                 --background-light: #1a2639;
                 --text-color: #f1faee;
             }
             
-            .navbar.scrolled {
-                background: rgba(26, 38, 57, 0.85);
+            .navbar {
+                background: rgba(26, 38, 57, 0.9);
             }
             
             .news-card {
@@ -1304,16 +751,6 @@
             
             .news-card p {
                 color: #ddd;
-            }
-            
-            .hero-image-container::before {
-                background: linear-gradient(to right, 
-                    rgba(26, 38, 57, 1) 0%, 
-                    rgba(26, 38, 57, 0.9) 20%, 
-                    rgba(26, 38, 57, 0.7) 40%, 
-                    rgba(26, 38, 57, 0.4) 60%, 
-                    rgba(26, 38, 57, 0.1) 80%, 
-                    rgba(26, 38, 57, 0) 100%);
             }
         }
     </style>
@@ -1337,41 +774,21 @@
     
     <section id="home" class="hero">
         <div class="hero-container">
-            <div class="hero-content">
-                <div class="animated-bg">
-                    <div class="animated-circle" style="animation-delay: 0s;"></div>
-                    <div class="animated-circle" style="animation-delay: -5s;"></div>
-                    <div class="animated-circle" style="animation-delay: -10s;"></div>
-                    <div class="animated-line" style="animation-delay: 0s;"></div>
-                    <div class="animated-line" style="animation-delay: -5s;"></div>
-                    <div class="animated-line" style="animation-delay: -10s;"></div>
-                    <div class="animated-dot" style="animation-delay: 0s;"></div>
-                    <div class="animated-dot" style="animation-delay: -1s;"></div>
-                    <div class="animated-dot" style="animation-delay: -2s;"></div>
-                    <div class="animated-dot" style="animation-delay: -0.5s;"></div>
-                    <div class="animated-dot" style="animation-delay: -1.5s;"></div>
-                    <div class="animated-dot" style="animation-delay: -2.5s;"></div>
-                </div>                
+            <div class="hero-content">             
                 <h1>Transforming Cancer Care in Uganda</h1>
-                <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
+                <p>HOSU is dedicated to improving patient outcomes through research, education, and advocacy for accessible cancer treatment.</p>
                 <div class="cta-buttons">
                     <a href="#join" class="cta-button">
-                        Join Our Community
+                        Join Us
                         <span class="icon">→</span>
                     </a>
-                    <a href="#conference" class="cta-button">Annual Symposium 2024</a>
+                    <a href="#conference" class="cta-button">Annual Symposium</a>
                 </div>
             </div>            
             <div class="hero-image-container">
                 <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_7900.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_8022.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_8005.webp')"></div>
-                <div class="hero-background" style="background-image: url('img/IMG_8317.webp')"></div>
             </div>
         </div>
     </section>
@@ -1386,8 +803,8 @@
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 20, 2024</span>
-                        <h3>New Treatment Guidelines Released</h3>
-                        <p>Updated protocols for hematologic malignancies now available to members, developed through collaborative efforts with international partners.</p>
+                        <h3>New Treatment Guidelines</h3>
+                        <p>Updated protocols for hematologic malignancies now available to members.</p>
                         <a href="#guidelines" class="cta-button">Learn More</a>
                     </div>
                 </article>
@@ -1397,8 +814,8 @@
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 18, 2024</span>
-                        <h3>2024 Research Grants Announced</h3>
-                        <p>$2M in funding available for innovative oncology research projects focused on improving cancer care in Uganda and East Africa.</p>
+                        <h3>2024 Research Grants</h3>
+                        <p>$2M in funding available for innovative oncology research projects.</p>
                         <a href="#grants" class="cta-button">Apply Now</a>
                     </div>
                 </article>
@@ -1408,8 +825,8 @@
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 15, 2024</span>
-                        <h3>Global Summit Registration Open</h3>
-                        <p>Join world leaders in cancer research this September in Kampala. Early bird registration now available for members.</p>
+                        <h3>Global Summit Registration</h3>
+                        <p>Join world leaders in cancer research this September in Kampala.</p>
                         <a href="#summit" class="cta-button">Register</a>
                     </div>
                 </article>
@@ -1420,11 +837,11 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="section-title">Make a Difference</h2>
-            <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy. Together, we can improve outcomes for patients and advance the field of oncology.</p>
+            <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
             <div class="cta-buttons">
-                <a href="#donate" class="cta-button">Support Our Mission</a>
-                <a href="#volunteer" class="cta-button outline">Become a Volunteer</a>
-                <a href="#webinars" class="cta-button">Upcoming Webinars</a>
+                <a href="#donate" class="cta-button">Support Us</a>
+                <a href="#volunteer" class="cta-button outline">Volunteer</a>
+                <a href="#webinars" class="cta-button">Webinars</a>
             </div>
         </div>
     </section>
@@ -1436,34 +853,33 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#about">About HOSU</a></li>
-                        <li><a href="#membership">Membership Benefits</a></li>
-                        <li><a href="#research">Research Initiatives</a></li>
-                        <li><a href="#leadership">Society Leadership</a></li>
+                        <li><a href="#membership">Membership</a></li>
+                        <li><a href="#research">Research</a></li>
+                        <li><a href="#leadership">Leadership</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Contact Us</h4>
                     <address>
                         HOSU Headquarters<br>
-                        123 Medical Innovation Way<br>
                         Kampala, Uganda<br>
-                        ☎ <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                        ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                        <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                        <a href="mailto:info@hosu.org">info@hosu.org</a>
                     </address>
                 </div>
                 <div class="footer-section">
-                    <h4>Stay Connected</h4>
+                    <h4>Connect</h4>
                     <div class="social-links">
-                        <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <a href="#linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                             <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <a href="#twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <a href="#facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <a href="#youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
@@ -1476,7 +892,7 @@
     </footer>
 
     <script>
-        // Dynamic background images for hero section
+        // Dynamic background images
         let currentIndex = 0;
         const backgrounds = document.querySelectorAll('.hero-background');
 
@@ -1487,52 +903,9 @@
             currentIndex = nextIndex;
         }
 
-        // Reduced interval for better performance on mobile devices
-        const backgroundInterval = window.innerWidth < 768 ? 7000 : 5000;
-        setInterval(changeBackground, backgroundInterval);
+        setInterval(changeBackground, 5000);
 
-        // Enhanced Button Interactions with better touch support
-        document.querySelectorAll('.cta-button').forEach(button => {
-            // Mouse events
-            button.addEventListener('mousedown', function() {
-                this.classList.add('clicking');
-            });
-
-            button.addEventListener('mouseup', function() {
-                this.classList.remove('clicking');
-            });
-
-            button.addEventListener('mouseleave', function() {
-                this.classList.remove('clicking');
-            });
-
-            // Touch events with improved handling
-            button.addEventListener('touchstart', function(e) {
-                // Don't prevent default to allow scrolling
-                this.classList.add('clicking');
-            }, {passive: true});
-
-            button.addEventListener('touchend', function() {
-                this.classList.remove('clicking');
-                // Add small delay to improve touch feedback
-                setTimeout(() => {
-                    this.blur();
-                }, 100);
-            });
-        });
-
-        // Improved navbar scroll effect with throttling for performance
-        let lastScrollTime = 0;
-        window.addEventListener('scroll', () => {
-            const now = Date.now();
-            if (now - lastScrollTime > 50) { // Throttle to 50ms
-                const navbar = document.querySelector('.navbar');
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-                lastScrollTime = now;
-            }
-        });
-
-        // Mobile menu toggle with enhanced interaction and accessibility
+        // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
@@ -1540,7 +913,6 @@
             e.stopPropagation();
             const isExpanded = navLinks.classList.contains('active');
             navLinks.classList.toggle('active');
-            // Update ARIA attributes for accessibility
             menuToggle.setAttribute('aria-expanded', !isExpanded);
             menuToggle.innerHTML = isExpanded ? '☰' : '✕';
         });
@@ -1554,15 +926,14 @@
             }
         });
 
-        // Enhanced scroll behavior with better performance
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // Use requestAnimationFrame for smoother scrolling
-                    const headerOffset = 100;
+                    const headerOffset = 70;
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                     
@@ -1579,7 +950,7 @@
             });
         });
         
-        // Add resize handler for better responsive behavior
+        // Resize handler
         window.addEventListener('resize', function() {
             // Reset mobile menu on resize
             if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
@@ -1588,32 +959,28 @@
                 menuToggle.innerHTML = '☰';
             }
             
-            // Adjust hero content margin based on image container height
-            if (window.innerWidth <= 768) {
-                const imageHeight = document.querySelector('.hero-image-container').offsetHeight;
-                document.querySelector('.hero-content').style.marginBottom = `${imageHeight}px`;
-            } else {
-                document.querySelector('.hero-content').style.marginBottom = '0';
-            }
+            // Handle image display based on screen size
+            handleImageDisplay();
         });
         
-        // Add page load optimization
+        // Function to handle image display based on screen size
+        function handleImageDisplay() {
+            const heroImageContainer = document.querySelector('.hero-image-container');
+            const heroContent = document.querySelector('.hero-content');
+            
+            // Check if screen is mobile size
+            if (window.innerWidth < 768) {
+                heroImageContainer.style.display = 'none';
+                heroContent.style.paddingBottom = '1.5rem';
+            } else {
+                heroImageContainer.style.display = 'block';
+                heroContent.style.paddingBottom = '';
+            }
+        }
+        
+        // Run on page load
         window.addEventListener('load', function() {
-            // Add loaded class to body for potential load animations
-            document.body.classList.add('loaded');
-            
-            // Preload next background image for smoother transitions
-            if (backgrounds.length > 1) {
-                const nextImage = new Image();
-                const nextBg = backgrounds[1].style.backgroundImage;
-                nextImage.src = nextBg.replace(/url$$['"]?([^'"]*)['"]?$$/i, '$1');
-            }
-            
-            // Initial adjustment for hero content margin on mobile
-            if (window.innerWidth <= 768) {
-                const imageHeight = document.querySelector('.hero-image-container').offsetHeight;
-                document.querySelector('.hero-content').style.marginBottom = `${imageHeight}px`;
-            }
+            handleImageDisplay();
             
             // Check for dark mode preference
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1628,7 +995,7 @@
             });
         }
         
-        // Add support for keyboard navigation
+        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             // Close mobile menu on Escape key
             if (e.key === 'Escape' && navLinks.classList.contains('active')) {
