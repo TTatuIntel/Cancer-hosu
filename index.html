@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Improved viewport meta tag with user-scalable property to ensure proper zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Hematology & Oncology Society of Uganda - Advancing cancer care through research, education, and collaboration">
     <title>HOSU - Hematology & Oncology Society of Uganda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +20,12 @@
             --accent-color: #a8dadc;
             --transition: all 0.3s ease;
             --navbar-height: 90px;
+            /* Added responsive spacing variables for consistent spacing across devices */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
         }
 
         * {
@@ -27,11 +34,22 @@
             box-sizing: border-box;
         }
 
+        /* Added text size adjustment to prevent iOS Safari from enlarging text */
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            /* Added smooth scrolling for better user experience */
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--white);
+            /* Added to prevent horizontal scrolling on mobile */
+            overflow-x: hidden;
+            width: 100%;
         }
 
         a {
@@ -39,22 +57,26 @@
             color: inherit;
         }
 
+        /* Improved image handling for responsive layouts */
         img {
             max-width: 100%;
             height: auto;
+            display: block; /* Prevents inline image gaps */
         }
 
+        /* Improved container with more responsive padding */
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 clamp(var(--spacing-sm), 5vw, var(--spacing-lg));
         }
 
-        /* Navbar Styles */
+        /* Navbar Styles - Enhanced for better mobile experience */
         .navbar {
             background: transparent;
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Safari support */
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -70,19 +92,21 @@
         .navbar.scrolled {
             background: rgba(255, 255, 255, 0.79);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Safari support */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* Improved logo sizing for better responsiveness */
         .logo img {
-            width: 250px;
-            height: 90px;
+            width: clamp(160px, 25vw, 250px);
+            height: clamp(60px, 10vh, 90px);
             object-fit: contain;
             transition: var(--transition);
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: clamp(1rem, 2vw, 2rem); /* Responsive gap */
             align-items: center;
         }
 
@@ -90,6 +114,8 @@
             font-weight: 500;
             transition: var(--transition);
             position: relative;
+            /* Added padding for better touch targets */
+            padding: 0.5rem 0.25rem;
         }
 
         .nav-links a:not(.cta-button)::after {
@@ -107,12 +133,19 @@
             width: 100%;
         }
 
+        /* Improved button sizing for better touch targets */
         .nav-links .cta-button {
             background: var(--primary-color);
             color: var(--white);
             padding: 0.75rem 1.5rem;
             border-radius: 30px;
             transition: var(--transition);
+            /* Minimum touch target size for accessibility */
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-links .cta-button:hover {
@@ -120,13 +153,22 @@
             transform: translateY(-2px);
         }
 
+        /* Improved menu toggle for better mobile experience */
         .menu-toggle {
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
+            /* Improved touch target */
+            width: 44px;
+            height: 44px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
         }
         
-        /* Hero Section */
+        /* Hero Section - Enhanced for better responsiveness */
         .hero {
             min-height: 600px;
             position: relative;
@@ -146,12 +188,13 @@
             overflow: hidden;
         }
 
+        /* Improved hero content positioning for better responsiveness */
         .hero-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 2rem 0 2rem 5%;
+            padding: clamp(1.5rem, 5vw, 2rem) 0 clamp(1.5rem, 5vw, 2rem) 5%;
             max-width: 650px;
             z-index: 10;
             text-align: left;
@@ -313,6 +356,7 @@
             50% { transform: scale(1.5); opacity: 0.5; }
         }
 
+        /* Improved hero image container for better responsiveness */
         .hero-image-container {
             flex: 1.2;
             position: absolute;
@@ -373,21 +417,22 @@
             opacity: 1;
         }
 
+        /* Improved typography with fluid font sizes using clamp */
         .hero h1 {
             font-size: clamp(1.8rem, 5vw, 2.8rem);
-            line-height: 1;
-            margin-bottom: 1.25rem;
+            line-height: 1.2; /* Improved line height for readability */
+            margin-bottom: clamp(1rem, 3vw, 1.25rem);
             color: var(--secondary-color);
             font-weight: 700;
             animation: fadeInUp 0.5s ease;
             position: relative;
             z-index: 3;
-            padding-right: 80px;
+            padding-right: clamp(20px, 10vw, 80px);
         }
 
         .hero p {
             font-size: clamp(1rem, 3vw, 1.1rem);
-            margin-bottom: 1.75rem;
+            margin-bottom: clamp(1.25rem, 4vw, 1.75rem);
             color: var(--text-color);
             animation: fadeInUp 1s ease 0.3s;
             opacity: 0;
@@ -395,17 +440,20 @@
             line-height: 1.8;
             position: relative;
             z-index: 3;
-            padding-right: 60px;
+            padding-right: clamp(0px, 8vw, 60px);
         }
 
+        /* Improved CTA buttons with better spacing and touch targets */
         .hero .cta-buttons {
             display: flex;
-            gap: 1.25rem;
+            gap: clamp(0.75rem, 3vw, 1.25rem);
             animation: fadeInUp 1s ease 0.6s;
             opacity: 0;
             animation-fill-mode: forwards;
             position: relative;
             z-index: 3;
+            /* Added flex-wrap for better mobile layout */
+            flex-wrap: wrap;
         }
 
         /* Stats overlay for hero image */
@@ -415,46 +463,61 @@
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
-            padding: 20px;
+            padding: clamp(10px, 3vw, 20px);
             color: white;
             display: flex;
             justify-content: space-around;
             z-index: 3;
             text-align: center;
+            /* Added flex-wrap for better mobile layout */
+            flex-wrap: wrap;
         }
 
         .stat-item {
             padding: 0 15px;
+            /* Added minimum width for better spacing on small screens */
+            min-width: 100px;
+            /* Added flex-basis for better distribution */
+            flex: 1 1 auto;
+            margin: 5px 0;
         }
 
         .stat-number {
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
             font-weight: 700;
             margin-bottom: 5px;
             color: var(--white);
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
         }
 
-        /* Button Styles */
+        /* Button Styles - Improved for better touch targets and accessibility */
         .cta-button {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            padding: 0.875rem 1.75rem;
+            padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.25rem, 3vw, 1.75rem);
             border-radius: 30px;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-height: 44px; /* Touch-friendly size */
             min-width: 44px;
+            /* Added for better focus visibility */
+            outline: none;
+        }
+
+        /* Added focus styles for accessibility */
+        .cta-button:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
 
         .cta-button::before {
@@ -501,6 +564,7 @@
             color: var(--secondary-color);
             border: 2px solid var(--secondary-color);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
             background: rgba(255, 255, 255, 0.2);
         }
         
@@ -518,15 +582,15 @@
             transform: translateX(4px);
         }
 
-        /* News Section */
+        /* News Section - Improved for better responsiveness */
         .news-section {
-            padding: 6rem 5%;
+            padding: clamp(3rem, 10vw, 6rem) 5%;
             background: var(--background-light);
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: clamp(2rem, 6vw, 3rem);
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             color: var(--secondary-color);
             position: relative;
@@ -541,10 +605,11 @@
             margin: 1rem auto 0;
         }
 
+        /* Improved news grid with better responsive behavior */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -565,16 +630,24 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* Improved image aspect ratio handling */
         .news-image {
-            height: 200px;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            position: relative;
             overflow: hidden;
         }
 
         .news-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+            /* Added to prevent layout shifts during loading */
+            will-change: transform;
         }
 
         .news-card:hover .news-image img {
@@ -582,7 +655,7 @@
         }
 
         .news-content {
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -597,7 +670,7 @@
         }
 
         .news-card h3 {
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 3vw, 1.25rem);
             margin-bottom: 1rem;
             color: var(--secondary-color);
             font-weight: 600;
@@ -623,9 +696,9 @@
             background: var(--primary-color);
         }
 
-        /* CTA Section */
+        /* CTA Section - Improved for better responsiveness */
         .cta-section {
-            padding: 6rem 5%;
+            padding: clamp(4rem, 10vw, 6rem) 5%;
             background-color: var(--secondary-color);
             color: var(--white);
             text-align: center;
@@ -662,27 +735,30 @@
 
         .cta-section p {
             max-width: 800px;
-            margin: 0 auto 2rem;
+            margin: 0 auto clamp(1.5rem, 4vw, 2rem);
             font-size: clamp(1rem, 3vw, 1.1rem);
             line-height: 1.8;
         }
 
+        /* Improved CTA buttons layout for better responsiveness */
         .cta-section .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: clamp(1rem, 3vw, 1.5rem);
             flex-wrap: wrap;
-            margin-top: 2rem;
+            margin-top: clamp(1.5rem, 4vw, 2rem);
         }
 
         .cta-section .cta-button {
             background: var(--white);
             color: var(--secondary-color);
-            padding: 1rem 2rem;
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
             border-radius: 30px;
             font-weight: 500;
             transition: var(--transition);
             border: 2px solid var(--white);
+            /* Added for better mobile layout */
+            margin: 0.5rem;
         }
 
         .cta-section .cta-button:hover {
@@ -701,25 +777,26 @@
             color: var(--secondary-color);
         }
 
-        /* Footer */
+        /* Footer - Improved for better responsiveness */
         footer {
             background: var(--background-dark);
             color: var(--white);
-            padding: 4rem 5% 2rem;
+            padding: clamp(3rem, 8vw, 4rem) 5% clamp(1.5rem, 4vw, 2rem);
         }
 
+        /* Improved footer grid for better responsiveness */
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(2rem, 5vw, 3rem);
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .footer-section h4 {
             color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
             font-weight: 600;
         }
 
@@ -734,24 +811,35 @@
         .footer-section a {
             color: var(--white);
             transition: var(--transition);
+            /* Improved touch target */
+            display: inline-block;
+            padding: 0.25rem 0;
         }
 
         .footer-section a:hover {
             color: var(--accent-color);
         }
 
+        /* Added focus styles for accessibility */
+        .footer-section a:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Improved social links for better touch targets */
         .social-links {
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: clamp(40px, 10vw, 48px);
+            height: clamp(40px, 10vw, 48px);
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
@@ -764,8 +852,8 @@
 
         .copyright {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
+            margin-top: clamp(3rem, 6vw, 4rem);
+            padding-top: clamp(1.5rem, 4vw, 2rem);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
@@ -788,7 +876,41 @@
         }
 
         /* Enhanced Mobile Responsive Design */
+        /* Large screens - improved layout for wide screens */
+        @media (min-width: 1400px) {
+            /* Added to improve layout on extra large screens */
+            .hero-container {
+                max-width: 1600px;
+                height: 70vh;
+            }
+            
+            .hero-content {
+                max-width: 750px;
+                padding-left: 8%;
+            }
+            
+            /* Improved spacing for large screens */
+            .section-title {
+                margin-bottom: 4rem;
+            }
+            
+            .news-grid {
+                gap: 3rem;
+            }
+            
+            /* Improved container width for large screens */
+            .container {
+                max-width: 1400px;
+            }
+        }
+
+        /* Medium-large screens */
         @media (max-width: 1024px) {
+            :root {
+                /* Adjusted navbar height for medium screens */
+                --navbar-height: 80px;
+            }
+            
             .hero-container {
                 height: auto;
                 min-height: 600px;
@@ -801,22 +923,34 @@
             .hero-image-container::before {
                 width: 150px;
             }
+            
+            /* Improved spacing for medium screens */
+            .news-section, .cta-section {
+                padding: 5rem 5%;
+            }
+            
+            /* Adjusted font sizes for medium screens */
+            .hero h1 {
+                font-size: clamp(1.8rem, 4vw, 2.5rem);
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
         }
 
+        /* Tablets and small laptops */
         @media (max-width: 768px) {
             :root {
+                /* Adjusted navbar height for smaller screens */
                 --navbar-height: 70px;
             }
 
             .navbar {
-                padding: 1rem;
+                padding: 0.75rem 1rem;
             }
 
-            .logo img {
-                width: 200px;
-                height: 70px;
-            }
-
+            /* Improved mobile menu */
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -827,22 +961,48 @@
                 background: var(--white);
                 padding: 1rem;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                /* Added for smoother animation */
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
             }
 
             .nav-links.active {
                 display: flex;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
             }
 
+            /* Improved mobile navigation links */
             .nav-links a {
                 font-size: 1.1rem;
                 padding: 0.75rem 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             }
-
+            
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+            
+            /* Improved menu toggle button */
             .menu-toggle {
-                display: block;
-                font-size: 2rem;
+                display: flex;
+                font-size: 1.75rem;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                transition: var(--transition);
+            }
+            
+            .menu-toggle:hover {
+                background: rgba(255, 255, 255, 0.2);
             }
 
+            /* Improved hero section for tablets */
             .hero {
                 height: auto;
                 min-height: 450px;
@@ -858,13 +1018,18 @@
                 text-align: center;
                 max-width: 100%;
                 margin-left: 0;
+                /* Added to ensure content is fully visible */
+                margin-bottom: 350px;
             }
 
             .hero-image-container {
-                position: relative;
+                position: absolute;
                 height: 350px;
                 width: 100%;
                 margin-left: 0;
+                /* Positioned at the bottom of hero content */
+                top: auto;
+                bottom: 0;
             }
 
             .hero-image-container::before,
@@ -874,11 +1039,14 @@
 
             .hero h1, .hero p {
                 padding-right: 0;
+                /* Center text on mobile */
+                text-align: center;
             }
 
+            /* Improved CTA buttons for mobile */
             .hero .cta-buttons {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: center;
                 gap: 1rem;
                 justify-content: center;
             }
@@ -893,25 +1061,31 @@
                 font-size: 2rem;
             }
 
+            /* Improved news grid for tablets */
             .news-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+                gap: 1.5rem;
             }
 
+            /* Improved CTA section for tablets */
             .cta-section .cta-buttons {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: center;
                 gap: 1.25rem;
+                max-width: 300px;
+                margin: 2rem auto 0;
             }
 
             .cta-section .cta-button {
                 width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
+                margin: 0;
             }
 
+            /* Improved hero stats for tablets */
             .hero-stats {
                 flex-direction: column;
                 gap: 10px;
+                padding: 15px;
             }
 
             .stat-number {
@@ -922,12 +1096,24 @@
                 font-size: 0.8rem;
             }
 
+            /* Improved footer for tablets */
             .footer-content {
                 grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
             }
         }
 
+        /* Mobile phones */
         @media (max-width: 480px) {
+            :root {
+                /* Further adjusted navbar height for mobile */
+                --navbar-height: 60px;
+            }
+            
             .logo img {
                 width: 160px;
                 height: 60px;
@@ -935,6 +1121,8 @@
 
             .hero h1 {
                 font-size: 1.8rem;
+                /* Improved line height for readability on small screens */
+                line-height: 1.3;
             }
 
             .section-title {
@@ -947,6 +1135,8 @@
 
             .hero-content {
                 padding: 1.5rem 1rem;
+                /* Adjusted for smaller hero image on mobile */
+                margin-bottom: 250px;
             }
 
             .hero-image-container {
@@ -958,28 +1148,172 @@
             }
 
             .cta-section {
-                padding: 4rem 5%;
+                padding: 4rem 5% 3rem;
             }
 
+            /* Improved social links for mobile */
+            .social-links {
+                gap: 0.75rem;
+            }
+            
             .social-links a {
                 width: 48px;
                 height: 48px;
             }
-        }
-
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .news-grid {
-                grid-template-columns: repeat(2, 1fr);
+            
+            /* Improved footer spacing for mobile */
+            .footer-section {
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section:last-child {
+                margin-bottom: 0;
+            }
+            
+            /* Improved copyright text for mobile */
+            .copyright {
+                font-size: 0.8rem;
+                margin-top: 2rem;
             }
         }
 
+        /* Landscape orientation on mobile devices */
         @media (orientation: landscape) and (max-width: 768px) {
             .hero-container {
-                height: 60vh;
+                height: auto;
+                min-height: 450px;
             }
 
             .hero-image-container {
-                height: 100%;
+                height: 300px;
+            }
+            
+            .hero-content {
+                margin-bottom: 300px;
+                padding-top: 1.5rem;
+            }
+            
+            /* Improved button layout for landscape */
+            .hero .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .hero .cta-button {
+                max-width: 200px;
+            }
+        }
+        
+        /* Added for high-resolution screens (Retina displays) */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            /* Optimize images for high-resolution displays */
+            .hero-background, 
+            .news-image img,
+            .cta-section::before {
+                image-rendering: -webkit-optimize-contrast;
+            }
+        }
+        
+        /* Added for print media */
+        @media print {
+            .navbar, 
+            .cta-section, 
+            .cta-buttons,
+            .menu-toggle {
+                display: none !important;
+            }
+            
+            .hero, 
+            .hero-container, 
+            .hero-content {
+                height: auto;
+                min-height: auto;
+                padding: 1rem 0;
+                margin: 0;
+            }
+            
+            .hero-image-container {
+                position: relative;
+                height: 300px;
+                width: 100%;
+                margin: 1rem 0;
+            }
+            
+            body {
+                color: #000;
+                background: #fff;
+            }
+            
+            .news-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            footer {
+                background: none;
+                color: #000;
+                border-top: 1px solid #ddd;
+                padding: 1rem 0;
+            }
+            
+            .footer-section a,
+            .footer-section h4 {
+                color: #000;
+            }
+        }
+        
+        /* Added for users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .animated-circle,
+            .animated-line,
+            .animated-dot {
+                animation: none !important;
+            }
+            
+            .hero-background {
+                transition: none !important;
+            }
+        }
+        
+        /* Added support for dark mode preference */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-light: #1a2639;
+                --text-color: #f1faee;
+            }
+            
+            .navbar.scrolled {
+                background: rgba(26, 38, 57, 0.85);
+            }
+            
+            .news-card {
+                background: #2c3e50;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .news-card p {
+                color: #ddd;
+            }
+            
+            .hero-image-container::before {
+                background: linear-gradient(to right, 
+                    rgba(26, 38, 57, 1) 0%, 
+                    rgba(26, 38, 57, 0.9) 20%, 
+                    rgba(26, 38, 57, 0.7) 40%, 
+                    rgba(26, 38, 57, 0.4) 60%, 
+                    rgba(26, 38, 57, 0.1) 80%, 
+                    rgba(26, 38, 57, 0) 100%);
             }
         }
     </style>
@@ -998,7 +1332,7 @@
             <a href="contact.html">Contact</a>
             <a href="login.html" class="cta-button">Member Portal</a>
         </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
     </nav>
     
     <section id="home" class="hero">
@@ -1141,7 +1475,6 @@
         </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Dynamic background images for hero section
         let currentIndex = 0;
@@ -1154,10 +1487,13 @@
             currentIndex = nextIndex;
         }
 
-        setInterval(changeBackground, 5000);
+        // Reduced interval for better performance on mobile devices
+        const backgroundInterval = window.innerWidth < 768 ? 7000 : 5000;
+        setInterval(changeBackground, backgroundInterval);
 
-        // Enhanced Button Interactions
+        // Enhanced Button Interactions with better touch support
         document.querySelectorAll('.cta-button').forEach(button => {
+            // Mouse events
             button.addEventListener('mousedown', function() {
                 this.classList.add('clicking');
             });
@@ -1170,52 +1506,136 @@
                 this.classList.remove('clicking');
             });
 
+            // Touch events with improved handling
             button.addEventListener('touchstart', function(e) {
-                e.preventDefault();
+                // Don't prevent default to allow scrolling
                 this.classList.add('clicking');
-            });
+            }, {passive: true});
 
             button.addEventListener('touchend', function() {
                 this.classList.remove('clicking');
+                // Add small delay to improve touch feedback
+                setTimeout(() => {
+                    this.blur();
+                }, 100);
             });
         });
 
-        // Navbar scroll effect
+        // Improved navbar scroll effect with throttling for performance
+        let lastScrollTime = 0;
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            const now = Date.now();
+            if (now - lastScrollTime > 50) { // Throttle to 50ms
+                const navbar = document.querySelector('.navbar');
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+                lastScrollTime = now;
+            }
         });
 
-        // Mobile menu toggle with enhanced interaction
+        // Mobile menu toggle with enhanced interaction and accessibility
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
         menuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
+            const isExpanded = navLinks.classList.contains('active');
             navLinks.classList.toggle('active');
+            // Update ARIA attributes for accessibility
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.innerHTML = isExpanded ? '☰' : '✕';
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
                 navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '☰';
             }
         });
 
-        // Enhanced scroll behavior
+        // Enhanced scroll behavior with better performance
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    // Use requestAnimationFrame for smoother scrolling
+                    const headerOffset = 100;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
+                    
+                    // Close mobile menu after clicking
                     navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.innerHTML = '☰';
                 }
             });
+        });
+        
+        // Add resize handler for better responsive behavior
+        window.addEventListener('resize', function() {
+            // Reset mobile menu on resize
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '☰';
+            }
+            
+            // Adjust hero content margin based on image container height
+            if (window.innerWidth <= 768) {
+                const imageHeight = document.querySelector('.hero-image-container').offsetHeight;
+                document.querySelector('.hero-content').style.marginBottom = `${imageHeight}px`;
+            } else {
+                document.querySelector('.hero-content').style.marginBottom = '0';
+            }
+        });
+        
+        // Add page load optimization
+        window.addEventListener('load', function() {
+            // Add loaded class to body for potential load animations
+            document.body.classList.add('loaded');
+            
+            // Preload next background image for smoother transitions
+            if (backgrounds.length > 1) {
+                const nextImage = new Image();
+                const nextBg = backgrounds[1].style.backgroundImage;
+                nextImage.src = nextBg.replace(/url$$['"]?([^'"]*)['"]?$$/i, '$1');
+            }
+            
+            // Initial adjustment for hero content margin on mobile
+            if (window.innerWidth <= 768) {
+                const imageHeight = document.querySelector('.hero-image-container').offsetHeight;
+                document.querySelector('.hero-content').style.marginBottom = `${imageHeight}px`;
+            }
+            
+            // Check for dark mode preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+        
+        // Listen for dark mode changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                document.body.classList.toggle('dark-mode', e.matches);
+            });
+        }
+        
+        // Add support for keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            // Close mobile menu on Escape key
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.innerHTML = '☰';
+            }
         });
     </script>
 </body>
