@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,12 +37,19 @@
             --spacing-md: 1.5rem;
             --spacing-lg: 2rem;
             --spacing-xl: 3rem;
+            
+            /* Aspect ratios for consistent scaling */
+            --hero-aspect-ratio: 0.5625; /* 16:9 */
+            --card-aspect-ratio: 0.75; /* 4:3 */
+            --logo-aspect-ratio: 0.375; /* 160:60 */
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         html {
@@ -52,6 +58,8 @@
             scroll-behavior: smooth;
             scroll-padding-top: var(--navbar-height);
             font-size: 16px; /* Base font size for rem units */
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -61,10 +69,11 @@
             background-color: var(--white);
             overflow-x: hidden;
             width: 100%;
-            min-height: 100vh; /* Ensure full height */
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh;
             position: relative;
+            /* Prevent content reflow during zoom */
+            transform-origin: center top;
+            margin: 0 auto;
         }
 
         a {
@@ -77,6 +86,9 @@
             max-width: 100%;
             height: auto;
             display: block;
+            object-fit: contain;
+            /* Prevent image distortion */
+            transform-origin: center center;
         }
 
         .container {
@@ -85,6 +97,8 @@
             margin: 0 auto;
             padding: 0 var(--spacing-sm);
             position: relative;
+            /* Maintain proportions during zoom */
+            transform-origin: center center;
         }
 
         /* Utility Classes */
@@ -97,6 +111,22 @@
         .shadow { box-shadow: var(--shadow-md); }
         .rounded { border-radius: var(--border-radius); }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        
+        /* Maintain aspect ratio class */
+        .maintain-ratio {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .maintain-ratio > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -121,7 +151,9 @@
             transition: var(--transition);
             height: var(--navbar-height);
             box-shadow: var(--shadow-sm);
-            transform: translateZ(0); /* Force hardware acceleration */
+            /* Force hardware acceleration for smooth scaling */
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .navbar.scrolled {
@@ -131,13 +163,19 @@
         .logo {
             display: flex;
             align-items: center;
+            height: 60px;
+            width: 160px;
+            /* Maintain aspect ratio */
+            aspect-ratio: calc(1 / var(--logo-aspect-ratio));
         }
 
         .logo img {
-            width: 160px;
-            height: 60px;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             transition: transform 0.3s ease;
+            /* Prevent distortion */
+            transform-origin: left center;
         }
 
         .logo:hover img {
@@ -155,6 +193,7 @@
             transition: var(--transition);
             position: relative;
             padding: 0.5rem 0.25rem;
+            white-space: nowrap;
         }
 
         .nav-links a:not(.cta-button)::after {
@@ -212,7 +251,7 @@
             background-color: var(--gray-200);
         }
         
-        /* Hero Section */
+        /* Hero Section - Special attention to maintain exact appearance */
         .hero {
             min-height: 500px;
             position: relative;
@@ -220,9 +259,9 @@
             padding-top: var(--navbar-height);
             overflow: hidden;
             background-color: var(--gray-100);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* Maintain exact proportions */
+            transform-origin: center top;
+            will-change: transform;
         }
 
         .hero-container {
@@ -235,6 +274,9 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            /* Preserve aspect ratio during zoom */
+            transform-origin: center center;
+            will-change: transform;
         }
 
         .hero-content {
@@ -249,6 +291,8 @@
             position: relative;
             padding-bottom: 2rem;
             animation: slideInLeft 0.8s ease-out;
+            /* Maintain position during zoom */
+            transform-origin: left center;
         }
 
         @keyframes slideInLeft {
@@ -272,6 +316,9 @@
             z-index: 1;
             overflow: hidden;
             opacity: 0.5;
+            /* Maintain position during zoom */
+            transform-origin: center center;
+            pointer-events: none;
         }
 
         .animated-circle {
@@ -281,6 +328,8 @@
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             animation: float 15s infinite ease-in-out;
             transform-origin: center center;
+            /* Maintain aspect ratio */
+            aspect-ratio: 1/1;
         }
 
         .animated-circle:nth-child(1) {
@@ -325,6 +374,8 @@
             box-shadow: var(--shadow-lg);
             animation: fadeIn 1s ease-out 0.3s forwards;
             opacity: 0;
+            /* Maintain aspect ratio */
+            transform-origin: center center;
         }
 
         @keyframes fadeIn {
@@ -342,6 +393,8 @@
                 width: 55%;
                 height: auto;
                 z-index: 1;
+                /* Maintain position during zoom */
+                transform-origin: right center;
             }
 
             .hero-image-container::before {
@@ -370,6 +423,8 @@
             transition: opacity 1s ease, transform 8s ease;
             opacity: 0;
             transform: scale(1.05);
+            /* Prevent distortion */
+            transform-origin: center center;
         }
 
         .hero-background.active {
@@ -386,6 +441,9 @@
             font-weight: 700;
             position: relative;
             display: inline-block;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .hero h1::after {
@@ -403,6 +461,9 @@
             margin-bottom: 1.5rem;
             color: var(--text-light);
             line-height: 1.6;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         /* CTA buttons */
@@ -428,6 +489,9 @@
             outline: none;
             cursor: pointer;
             box-shadow: var(--shadow-sm);
+            /* Prevent distortion */
+            transform-origin: center center;
+            white-space: nowrap;
         }
 
         .cta-button:focus-visible {
@@ -476,9 +540,8 @@
             background: var(--background-light);
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            /* Maintain proportions */
+            transform-origin: center center;
         }
 
         .section-title {
@@ -487,6 +550,9 @@
             font-size: clamp(1.6rem, 4vw, 2.2rem);
             color: var(--secondary-color);
             position: relative;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .section-title::after {
@@ -506,6 +572,8 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            /* Maintain grid proportions */
+            transform-origin: center center;
         }
 
         .news-card {
@@ -518,6 +586,7 @@
             flex-direction: column;
             height: 100%;
             transform: translateY(0);
+            /* Maintain card proportions */
             transform-origin: center center;
         }
 
@@ -528,7 +597,7 @@
 
         .news-image {
             height: 0;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             position: relative;
             overflow: hidden;
         }
@@ -542,6 +611,8 @@
             object-fit: cover;
             transition: transform 0.5s ease;
             loading: lazy;
+            /* Prevent image distortion */
+            transform-origin: center center;
         }
 
         .news-card:hover .news-image img {
@@ -573,6 +644,8 @@
             background-color: var(--primary-color);
             border-radius: 50%;
             margin-right: 8px;
+            /* Maintain aspect ratio */
+            aspect-ratio: 1/1;
         }
 
         .news-card h3 {
@@ -580,6 +653,9 @@
             margin-bottom: 0.75rem;
             color: var(--secondary-color);
             font-weight: 600;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .news-card p {
@@ -587,6 +663,9 @@
             color: var(--text-light);
             flex-grow: 1;
             font-size: 0.9rem;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .news-card .cta-button {
@@ -611,9 +690,8 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            /* Maintain proportions */
+            transform-origin: center center;
         }
 
         .cta-section::before {
@@ -629,6 +707,8 @@
             opacity: 0.15;
             z-index: 1;
             filter: blur(2px);
+            /* Prevent background distortion */
+            transform-origin: center center;
         }
 
         .cta-section .container {
@@ -653,6 +733,8 @@
             margin: 0 auto 1.5rem;
             font-size: 1.05rem;
             line-height: 1.6;
+            /* Prevent text wrapping issues */
+            word-wrap: break-word;
         }
 
         .cta-section .cta-buttons {
@@ -695,9 +777,8 @@
             padding: var(--spacing-lg) 5%;
             background: var(--white);
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            /* Maintain proportions */
+            transform-origin: center center;
         }
 
         .stats-container {
@@ -719,6 +800,7 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Maintain proportions */
             transform-origin: center center;
         }
 
@@ -739,6 +821,9 @@
             font-size: 1rem;
             color: var(--text-light);
             font-weight: 500;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         /* Footer */
@@ -747,10 +832,9 @@
             color: var(--white);
             padding: var(--spacing-xl) 5% var(--spacing-md);
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: 100%;
+            /* Maintain proportions */
+            transform-origin: center center;
         }
 
         footer::before {
@@ -779,6 +863,9 @@
             font-weight: 600;
             position: relative;
             display: inline-block;
+            /* Prevent text wrapping issues */
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .footer-section h4::after {
@@ -833,6 +920,8 @@
             background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
             color: var(--white);
+            /* Maintain aspect ratio */
+            aspect-ratio: 1/1;
         }
 
         .social-links a:hover {
@@ -870,7 +959,11 @@
             transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
             z-index: 999;
             box-shadow: var(--shadow-md);
-            transform: translateZ(0); /* Force hardware acceleration */
+            /* Force hardware acceleration */
+            transform: translateZ(0);
+            will-change: transform;
+            /* Maintain aspect ratio */
+            aspect-ratio: 1/1;
         }
 
         .back-to-top.visible {
@@ -1057,6 +1150,32 @@
             }
         }
 
+        /* Special zoom handling */
+        @media (min-resolution: 1dppx) {
+            /* Base styles for zoom handling */
+            html, body {
+                min-width: 320px; /* Minimum width to prevent layout breaking */
+                overflow-x: hidden;
+            }
+            
+            /* Force hardware acceleration for smoother scaling */
+            .container, 
+            .hero-container, 
+            .news-grid, 
+            .stats-container, 
+            .footer-content {
+                transform: translateZ(0);
+                will-change: transform;
+            }
+            
+            /* Ensure text remains readable at all zoom levels */
+            p, h1, h2, h3, h4, .stat-number, .stat-label {
+                max-width: 100%;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -1101,32 +1220,6 @@
             
             .stat-item {
                 background: #2d3748;
-            }
-        }
-
-        /* Zoom-specific styles to maintain proportions and centering */
-        @media (min-resolution: 1dppx) {
-            /* Ensures content scales properly at different zoom levels */
-            html, body {
-                min-width: 320px; /* Minimum width to prevent layout breaking */
-                overflow-x: hidden;
-            }
-            
-            /* Force hardware acceleration for smoother scaling */
-            .container, 
-            .hero-container, 
-            .news-grid, 
-            .stats-container, 
-            .footer-content {
-                transform: translateZ(0);
-                will-change: transform;
-            }
-            
-            /* Ensure text remains readable at all zoom levels */
-            p, h1, h2, h3, h4, .stat-number, .stat-label {
-                max-width: 100%;
-                overflow-wrap: break-word;
-                word-wrap: break-word;
             }
         }
     </style>
@@ -1420,7 +1513,7 @@
             statsObserver.observe(statsSection);
         }
         
-        // Resize handler
+        // Resize and zoom handler
         window.addEventListener('resize', function() {
             // Reset mobile menu on resize
             if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
@@ -1431,6 +1524,9 @@
             
             // Handle image display based on screen size
             handleImageDisplay();
+            
+            // Maintain proportions during zoom
+            maintainProportions();
         });
         
         // Function to handle image display based on screen size
@@ -1448,9 +1544,29 @@
             }
         }
         
+        // Function to maintain proportions during zoom
+        function maintainProportions() {
+            // Force redraw to maintain proportions
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+            
+            // Ensure all sections maintain their center alignment
+            document.querySelectorAll('section, .container').forEach(el => {
+                el.style.transformOrigin = 'center center';
+            });
+            
+            // Ensure hero section maintains exact appearance
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transformOrigin = 'center top';
+            }
+        }
+        
         // Run on page load
         window.addEventListener('load', function() {
             handleImageDisplay();
+            maintainProportions();
             
             // Check for dark mode preference
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1461,9 +1577,6 @@
             document.querySelectorAll('.news-card, .stat-item').forEach(el => {
                 el.classList.add('fade-in');
             });
-            
-            // Ensure content stays centered during zoom
-            document.body.style.zoom = 1; // Reset zoom level if browser supports it
         });
         
         // Listen for dark mode changes
@@ -1489,20 +1602,26 @@
             }
         });
         
-        // Handle zoom events to maintain proportions
-        window.addEventListener('resize', function() {
-            // Force redraw to maintain proportions
-            document.body.style.display = 'none';
-            document.body.offsetHeight; // Trigger reflow
-            document.body.style.display = '';
+        // Special handling for zoom events
+        let lastWidth = window.innerWidth;
+        let lastHeight = window.innerHeight;
+        
+        // Check for zoom changes
+        function checkZoom() {
+            const widthChange = Math.abs(window.innerWidth - lastWidth);
+            const heightChange = Math.abs(window.innerHeight - lastHeight);
             
-            // Recenter all content
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = 'flex';
-                section.style.justifyContent = 'center';
-                section.style.alignItems = 'center';
-            });
-        });
+            // If dimensions changed but not by a significant amount, it's likely a zoom
+            if ((widthChange > 0 && widthChange < 20) || (heightChange > 0 && heightChange < 20)) {
+                maintainProportions();
+            }
+            
+            lastWidth = window.innerWidth;
+            lastHeight = window.innerHeight;
+        }
+        
+        // Poll for zoom changes
+        setInterval(checkZoom, 500);
     </script>
 </body>
 </html>
