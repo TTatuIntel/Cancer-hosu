@@ -39,8 +39,14 @@
             --spacing-lg: 2rem;
             --spacing-xl: 3rem;
             --content-width: 1200px;
-            --hero-height: 500px;
+            --section-width: 90%;
+            --section-max-width: 1000px;
+            /* UPDATED: Increased hero height for larger hero section */
+            --hero-height: 600px;
             --section-padding: 3rem;
+            /* ADDED: Hero content/image balance ratio */
+            --hero-content-width: 45%; /* Content takes 45% of the container */
+            --hero-image-width: 50%;   /* Image takes 50% of the container */
         }
 
         * {
@@ -81,14 +87,17 @@
         }
 
         .container {
-            width: 90%;
-            max-width: var(--content-width);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
             margin: 0 auto;
             padding: 0 var(--spacing-sm);
         }
 
         section {
             padding: var(--section-padding) 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
         /* Utility Classes */
@@ -109,33 +118,37 @@
 
         /* Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 0;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             display: flex;
             justify-content: center;
             align-items: center;
             position: fixed;
             width: 100%;
-            top: 0;
             z-index: 1000;
             transition: var(--transition);
             height: var(--navbar-height);
-            box-shadow: var(--shadow-sm);
         }
 
         .navbar-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 90%;
-            max-width: var(--content-width);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
             padding: 0 var(--spacing-sm);
         }
 
         .navbar.scrolled {
             box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.85); /* Semi-transparent white background when scrolled */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .navbar.scrolled {
+                background: rgba(26, 38, 57, 0.85); /* Semi-transparent dark background when scrolled */
+            }
         }
 
         .logo {
@@ -143,9 +156,10 @@
             align-items: center;
         }
 
+        /* UPDATED: Increased logo size */
         .logo img {
-            width: 160px;
-            height: 60px;
+            width: 180px;
+            height: 65px;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
@@ -226,7 +240,7 @@
         .hero {
             position: relative;
             color: var(--text-color);
-            padding-top: var(--navbar-height);
+            padding-top: 0; /* Removed space below navbar */
             overflow: hidden;
             background-color: var(--gray-100);
             display: flex;
@@ -234,31 +248,39 @@
             align-items: center;
             min-height: var(--hero-height);
             padding-bottom: 0; /* Override section padding */
+            margin-top: 0; /* Ensure no gap at the top */
         }
 
+        /* UPDATED: Adjusted hero container to better balance content and image */
         .hero-container {
             display: flex;
             flex-direction: row;
-            max-width: var(--content-width);
-            width: 90%;
+            max-width: var(--section-max-width);
+            width: var(--section-width);
             margin: 0 auto;
             position: relative;
             overflow: visible;
             padding: var(--spacing-lg) 0;
+            /* ADDED: Added gap between content and image for better spacing */
+            gap: 5%; /* 5% gap between content and image */
+            justify-content: space-between; /* Ensures proper spacing between elements */
         }
 
+        /* UPDATED: Adjusted hero content width for better balance */
         .hero-content {
-            flex: 1;
+            /* UPDATED: Changed from flex: 1 to specific width for better control */
+            width: var(--hero-content-width); /* Uses the defined content width variable */
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: var(--spacing-md) 0;
-            max-width: 600px;
+            /* UPDATED: Removed max-width constraint to use percentage-based width */
             z-index: 10;
-            text-align: center;
+            /* UPDATED: Changed from center to left alignment for better readability */
+            text-align: left; /* Left-aligned text for better readability */
             position: relative;
             animation: slideInLeft 0.8s ease-out;
-            margin: 0 auto;
+            /* UPDATED: Removed margin auto to allow proper positioning */
         }
 
         @keyframes slideInLeft {
@@ -317,10 +339,11 @@
             50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Hero image container - Improved responsive behavior */
+        /* UPDATED: Adjusted hero image container positioning and size */
         .hero-image-container {
             position: relative;
-            width: 50%;
+            /* UPDATED: Changed width to use the defined image width variable */
+            width: var(--hero-image-width); /* Uses the defined image width variable */
             aspect-ratio: 16/9;
             overflow: hidden;
             border-radius: 0 0 0 80px;
@@ -328,8 +351,10 @@
             animation: fadeIn 1s ease-out 0.3s forwards;
             opacity: 0;
             z-index: 1;
-            max-height: 400px;
-            margin-left: auto;
+            max-height: 500px;
+            /* UPDATED: Removed margin-left auto to allow proper positioning */
+            /* ADDED: Added right margin to push image more to the right */
+            margin-right: 0; /* Pushes the image to the right edge of the container */
         }
 
         @keyframes fadeIn {
@@ -351,6 +376,7 @@
             pointer-events: none;
         }
 
+        /* UPDATED: Improved background image rendering */
         .hero-background {
             position: absolute;
             top: 0;
@@ -362,6 +388,8 @@
             transition: opacity 1s ease, transform 8s ease;
             opacity: 0;
             transform: scale(1.05);
+            /* Added object-fit-like behavior */
+            object-position: center;
         }
 
         .hero-background.active {
@@ -370,40 +398,45 @@
         }
 
         /* Typography */
+        /* UPDATED: Adjusted hero heading styles for better readability */
         .hero h1 {
-            font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
             line-height: 1.2;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--secondary-color);
             font-weight: 700;
             position: relative;
             display: inline-block;
         }
 
+        /* UPDATED: Adjusted heading underline for left alignment */
         .hero h1::after {
             content: '';
             position: absolute;
             bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
+            /* UPDATED: Changed from centered to left-aligned */
+            left: 0;
+            transform: none; /* Removed transform that was centering the line */
             width: 80px;
             height: 3px;
             background: var(--primary-color);
         }
 
         .hero p {
-            font-size: clamp(0.95rem, 2vw, 1.05rem);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1rem, 2.2vw, 1.15rem);
+            margin-bottom: 1.8rem;
             color: var(--text-light);
             line-height: 1.6;
         }
 
         /* CTA buttons */
+        /* UPDATED: Adjusted CTA buttons alignment to match text */
         .hero .cta-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            justify-content: center;
+            /* UPDATED: Changed from center to flex-start for left alignment */
+            justify-content: flex-start; /* Aligns buttons to the left to match text */
         }
 
         .cta-button {
@@ -551,16 +584,17 @@
             flex-wrap: wrap;
             justify-content: space-around;
             gap: 2rem;
-            width: 90%;
-            max-width: var(--content-width);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
             margin: 0 auto;
         }
 
+        /* UPDATED: Increased stat item size */
         .stat-item {
             flex: 1;
-            min-width: 200px;
+            min-width: 220px; /* Increased from 200px */
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.75rem; /* Increased from 1.5rem */
             background: var(--gray-100);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
@@ -572,8 +606,9 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* UPDATED: Increased stat number size */
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2.75rem; /* Increased from 2.5rem */
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
@@ -581,7 +616,7 @@
         }
 
         .stat-label {
-            font-size: 1rem;
+            font-size: 1.1rem; /* Increased from 1rem */
             color: var(--text-light);
             font-weight: 500;
         }
@@ -614,12 +649,13 @@
         }
 
         /* News grid */
+        /* UPDATED: Adjusted news grid for larger cards */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Increased from 280px */
+            gap: 1.75rem; /* Increased from 1.5rem */
             width: 100%;
-            max-width: var(--content-width);
+            max-width: var(--section-max-width);
             margin: 0 auto;
         }
 
@@ -640,9 +676,10 @@
             box-shadow: var(--shadow-lg);
         }
 
+        /* UPDATED: Increased news image height */
         .news-image {
             height: 0;
-            padding-bottom: 56.25%;
+            padding-bottom: 62.5%; /* Increased from 56.25% for taller images */
             position: relative;
             overflow: hidden;
         }
@@ -689,8 +726,9 @@
             margin-right: 8px;
         }
 
+        /* UPDATED: Increased news card title size */
         .news-card h3 {
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* Increased from 1.1rem */
             margin-bottom: 0.75rem;
             color: var(--secondary-color);
             font-weight: 600;
@@ -700,7 +738,7 @@
             margin-bottom: 1.25rem;
             color: var(--text-light);
             flex-grow: 1;
-            font-size: 0.9rem;
+            font-size: 0.95rem; /* Increased from 0.9rem */
         }
 
         .news-card .cta-button {
@@ -727,8 +765,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            /* UPDATED: Added min-height for taller CTA section */
+            min-height: 350px;
         }
 
+        /* UPDATED: Improved background image handling in CTA section */
         .cta-section::before {
             content: '';
             position: absolute;
@@ -739,30 +781,60 @@
             background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
             background-size: cover;
             background-position: center;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            width: 100%;
+            max-width: var(--section-max-width);
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
+            background-size: cover;
+            background-position: center;
             opacity: 0.15;
             z-index: 1;
-            filter: blur(2px);
+            filter: blur(1px);
         }
 
         .cta-section .container {
             position: relative;
             z-index: 2;
-            width: 90%;
-            max-width: var(--content-width);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+        }
+
+        /* UPDATED: Increased padding in CTA inner container */
+        .cta-inner {
+            background-color: transparent;
+            padding: 2.5rem; /* Increased from 2rem */
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(4px);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .cta-section .section-title {
             color: var(--white);
+            margin-bottom: 1rem;
         }
 
         .cta-section .section-title::after {
             background: var(--white);
         }
 
+        /* UPDATED: Increased paragraph size in CTA section */
         .cta-section p {
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto 1.5rem;
-            font-size: 1.05rem;
+            font-size: 1.15rem; /* Increased from 1.05rem */
             line-height: 1.6;
         }
 
@@ -774,15 +846,17 @@
             margin-top: 1.5rem;
         }
 
+        /* UPDATED: Increased CTA button size */
         .cta-section .cta-button {
             background: var(--white);
             color: var(--secondary-color);
-            padding: 0.75rem 1.5rem;
+            padding: 0.85rem 1.75rem; /* Increased from 0.75rem 1.5rem */
             border-radius: 30px;
             font-weight: 500;
             transition: var(--transition);
             border: 2px solid var(--white);
             margin: 0.25rem;
+            font-size: 1rem; /* Increased from default */
         }
 
         .cta-section .cta-button:hover {
@@ -810,6 +884,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
         footer::before {
@@ -826,14 +901,15 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            width: 90%;
-            max-width: var(--content-width);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
             margin: 0 auto;
         }
 
+        /* UPDATED: Increased footer heading size */
         .footer-section h4 {
             color: var(--accent-color);
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* Increased from 1.1rem */
             margin-bottom: 1.25rem;
             font-weight: 600;
             position: relative;
@@ -875,6 +951,7 @@
             outline-offset: 2px;
         }
 
+        /* UPDATED: Increased social links size */
         .social-links {
             display: flex;
             gap: 0.75rem;
@@ -886,8 +963,9 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            /* UPDATED: Increased social icon size */
+            width: 45px; /* Increased from 40px */
+            height: 45px; /* Increased from 40px */
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
@@ -900,6 +978,12 @@
             color: var(--background-dark);
         }
 
+        /* UPDATED: Increased social icon size */
+        .social-links svg {
+            width: 22px; /* Increased from default */
+            height: 22px; /* Increased from default */
+        }
+
         .copyright {
             text-align: center;
             margin-top: 2.5rem;
@@ -907,6 +991,10 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Back to top button */
@@ -914,8 +1002,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 40px;
-            height: 40px;
+            /* UPDATED: Increased back-to-top button size */
+            width: 45px; /* Increased from 40px */
+            height: 45px; /* Increased from 40px */
             border-radius: 50%;
             background: var(--primary-color);
             color: var(--white);
@@ -928,6 +1017,7 @@
             transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
             z-index: 999;
             box-shadow: var(--shadow-md);
+            font-size: 1.2rem; /* Increased from default */
         }
 
         .back-to-top.visible {
@@ -941,13 +1031,14 @@
 
         /* Media Queries */
         @media (max-width: 1200px) {
-            .hero-container, .container, .news-grid, .stats-container, .footer-content {
-                width: 95%;
-                max-width: var(--content-width);
+            .hero-container, .container, .news-grid, .stats-container, .footer-content, .copyright {
+                width: var(--section-width);
+                max-width: var(--section-max-width);
             }
             
+            /* UPDATED: Adjusted for larger hero image on medium screens */
             .hero-image-container {
-                max-height: 350px;
+                max-height: 400px;
             }
 
             :root {
@@ -960,8 +1051,9 @@
                 gap: 2rem;
             }
             
+            /* UPDATED: Adjusted for larger hero image on smaller screens */
             .hero-image-container {
-                max-height: 300px;
+                max-height: 350px;
             }
 
             :root {
@@ -969,11 +1061,15 @@
             }
         }
 
+        /* UPDATED: Adjusted responsive layout for mobile devices */
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 60px;
                 --hero-height: auto;
                 --section-padding: 1.5rem;
+                /* ADDED: Adjust content/image ratio for mobile */
+                --hero-content-width: 100%;
+                --hero-image-width: 100%;
             }
 
             .navbar-container {
@@ -1023,37 +1119,44 @@
                 border-radius: 50%;
             }
 
+            /* UPDATED: Adjusted hero container for mobile */
             .hero-container {
                 flex-direction: column;
                 height: auto;
                 min-height: 400px;
                 width: 95%;
                 padding: var(--spacing-md) 0;
+                gap: 2rem; /* Reduced gap for mobile */
             }
 
+            /* UPDATED: Adjusted hero content for mobile */
             .hero-content {
                 padding: 1.5rem 0;
-                text-align: center;
-                max-width: 100%;
+                text-align: center; /* Center text on mobile */
+                width: 100%;
                 margin: 0 auto;
             }
 
+            /* UPDATED: Center align text and elements on mobile */
             .hero h1, .hero p {
                 text-align: center;
             }
 
+            /* UPDATED: Center the heading underline on mobile */
             .hero h1::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
 
+            /* UPDATED: Center align buttons on mobile */
             .hero .cta-buttons {
                 justify-content: center;
             }
 
+            /* UPDATED: Adjusted mobile hero image size */
             .hero-image-container {
                 width: 100%;
-                max-width: 500px;
+                max-width: 550px; /* Increased from 500px */
                 aspect-ratio: 16/9;
                 margin: 1rem auto 0;
                 border-radius: 8px;
@@ -1068,8 +1171,8 @@
                 margin-bottom: 1.5rem;
             }
 
-            .news-grid, .stats-container, .footer-content {
-                width: 95%;
+            .news-grid, .stats-container, .footer-content, .copyright {
+                width: 90%;
             }
 
             .footer-content {
@@ -1090,21 +1193,31 @@
             .copyright {
                 margin-top: 1.5rem;
             }
+            
+            .cta-inner {
+                padding: 1.5rem 1rem;
+            }
         }
 
         /* Ensure consistent layout at all screen sizes */
         @media (min-width: 769px) and (max-width: 1024px) {
-            .hero-container, .news-grid, .stats-container, .footer-content {
-                width: 95%;
+            .hero-container, .news-grid, .stats-container, .footer-content, .copyright {
+                width: 90%;
             }
             
             .hero-container {
                 gap: 2rem;
             }
+
+            /* ADDED: Adjust content/image ratio for tablets */
+            :root {
+                --hero-content-width: 45%;
+                --hero-image-width: 50%;
+            }
         }
 
         @media (min-width: 1025px) {
-            .hero-container, .news-grid, .stats-container, .footer-content {
+            .hero-container, .news-grid, .stats-container, .footer-content, .copyright {
                 width: 90%;
             }
         }
@@ -1151,8 +1264,8 @@
 
         /* Ensure everything scales properly with zoom */
         @media (max-width: 480px) {
-            .container, .navbar-container, .hero-container, .news-grid, .stats-container, .footer-content {
-                width: 95%;
+            .container, .navbar-container, .hero-container, .news-grid, .stats-container, .footer-content, .copyright {
+                width: 90%;
             }
             
             .stat-item {
@@ -1167,18 +1280,19 @@
         /* Fix for zoomed out desktop view */
         @media (min-width: 1400px) {
             :root {
-                --hero-height: 600px;
+                /* UPDATED: Increased hero height for larger screens */
+                --hero-height: 650px; /* Increased from 600px */
                 --section-padding: 4rem;
             }
             
             .hero-container {
-                max-width: var(--content-width);
+                max-width: var(--section-max-width);
                 padding: var(--spacing-xl) 0;
             }
             
+            /* UPDATED: Increased hero image size on large screens */
             .hero-image-container {
-                max-height: 450px;
-                width: 45%;
+                max-height: 500px; /* Increased from 450px */
             }
             
             .footer-content {
@@ -1238,6 +1352,7 @@
     <!-- Custom cursor element -->
     <div class="custom-cursor" id="custom-cursor"></div>
 
+    <!-- UPDATED: Transparent navbar with adaptive background -->
     <nav class="navbar">
         <div class="navbar-container">
             <div class="logo">
@@ -1255,8 +1370,11 @@
             <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
         </div>
     </nav>
+
+    <!-- UPDATED: Hero section with balanced content and image -->
     <section id="home" class="hero">
         <div class="hero-container">
+            <!-- UPDATED: Left-aligned content with more room -->
             <div class="hero-content">
                 <div class="animated-bg">
                     <div class="animated-circle" style="animation-delay: 0s;"></div>
@@ -1272,7 +1390,7 @@
                     <div class="animated-dot" style="animation-delay: -1.5s;"></div>
                     <div class="animated-dot" style="animation-delay: -2.5s;"></div>
                 </div>                
-                <h1>Transforming Cancer Care in Uganda</h1>
+                <h1 style="text-align: center;">Transforming Cancer Care in Uganda</h1>
                 <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
                 <div class="cta-buttons">
                     <a href="membership.html" class="interactive-button" id="join-button">
@@ -1281,7 +1399,9 @@
                     </a>
                 </div>
             </div>            
+            <!-- UPDATED: Pushed image to the right -->
             <div class="hero-image-container">
+                <!-- UPDATED: Added higher quality images with better sizing -->
                 <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
@@ -1322,6 +1442,7 @@
             <div class="news-grid">
                 <article class="news-card">
                     <div class="news-image">
+                        <!-- UPDATED: Using higher quality images with better sizing -->
                         <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8039.webp-Rn2rin54gih1QKluYC3bHWzPziVWFG.jpeg" alt="Medication image" loading="lazy">
                     </div>
                     <div class="news-content">
@@ -1357,66 +1478,68 @@
         </div>
     </section>
 
+    <!-- UPDATED: Enhanced CTA section with better image handling and larger content -->
     <section class="cta-section">
         <div class="container">
-            <h2 class="section-title">Make a Difference</h2>
-            <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
-            <div class="cta-buttons">
-                <a href="#donate" class="cta-button">Support Us</a>
-                <a href="#volunteer" class="cta-button outline">Volunteer</a>
-                <a href="#webinars" class="cta-button">Webinars</a>
+            <div class="cta-inner">
+                <h2 class="section-title">Make a Difference</h2>
+                <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
+                <div class="cta-buttons">
+                    <a href="#donate" class="cta-button">Support Us</a>
+                    <a href="#volunteer" class="cta-button outline">Volunteer</a>
+                    <a href="#webinars" class="cta-button">Webinars</a>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#about">About HOSU</a></li>
-                        <li><a href="#membership">Membership</a></li>
-                        <li><a href="#research">Research</a></li>
-                        <li><a href="#leadership">Leadership</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact Us</h4>
-                    <address>
-                        HOSU Headquarters<br>
-                        Kampala, Uganda<br>
-                        <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                        <a href="mailto:info@hosu.org">info@hosu.org</a>
-                    </address>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About HOSU</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#leadership">Leadership</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <address>
+                    HOSU Headquarters<br>
+                    Kampala, Uganda<br>
+                    <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                    <a href="/cdn-cgi/l/email-protection#f990979f96b991968a8cd7968b9e"><span class="__cf_email__" data-cfemail="80e9eee6efc0e8eff3f5aeeff2e7">[email&#160;protected]</span></a>
+                </address>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <!-- UPDATED: Using larger SVG icons -->
+                    <a href="#linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <a href="#twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    </a>
+                    <a href="#facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    </a>
                 </div>
             </div>
-            <div class="copyright">
-                <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
-            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
 
     <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Custom cursor effect
         const cursor = document.getElementById('custom-cursor');
         const joinButton = document.getElementById('join-button');
@@ -1514,9 +1637,16 @@
                 backToTopButton.classList.remove('visible');
             }
             
-            // Navbar scroll effect
+            // Navbar scroll effect with adaptive background
             const navbar = document.querySelector('.navbar');
             navbar.classList.toggle('scrolled', window.pageYOffset > 50);
+            
+            // Adaptive background based on scroll position
+            if (window.pageYOffset > 50) {
+                navbar.style.backdropFilter = 'blur(15px)';
+            } else {
+                navbar.style.backdropFilter = 'blur(5px)';
+            }
         });
         
         // Animate stats counter
@@ -1575,3 +1705,4 @@
     </script>
 </body>
 </html>
+
