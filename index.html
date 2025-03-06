@@ -39,6 +39,7 @@
             --spacing-lg: 2rem;
             --spacing-xl: 3rem;
             --content-width: 1200px;
+            --hero-height: 500px;
         }
 
         * {
@@ -218,7 +219,6 @@
         
         /* Hero Section */
         .hero {
-            min-height: 500px;
             position: relative;
             color: var(--text-color);
             padding-top: var(--navbar-height);
@@ -227,18 +227,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: var(--hero-height);
         }
 
         .hero-container {
             display: flex;
             flex-direction: row;
-            height: 70vh;
-            min-height: 450px;
             max-width: var(--content-width);
             width: 90%;
             margin: 0 auto;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            padding: var(--spacing-lg) 0;
         }
 
         .hero-content {
@@ -249,9 +249,10 @@
             padding: var(--spacing-md) 0;
             max-width: 600px;
             z-index: 10;
-            text-align: left;
+            text-align: center;
             position: relative;
             animation: slideInLeft 0.8s ease-out;
+            margin: 0 auto;
         }
 
         @keyframes slideInLeft {
@@ -310,17 +311,19 @@
             50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Hero image container */
+        /* Hero image container - Improved responsive behavior */
         .hero-image-container {
             position: relative;
-            width: 55%;
-            height: 100%;
+            width: 50%;
+            aspect-ratio: 16/9;
             overflow: hidden;
             border-radius: 0 0 0 80px;
             box-shadow: var(--shadow-lg);
             animation: fadeIn 1s ease-out 0.3s forwards;
             opacity: 0;
             z-index: 1;
+            max-height: 400px;
+            margin-left: auto;
         }
 
         @keyframes fadeIn {
@@ -375,7 +378,8 @@
             content: '';
             position: absolute;
             bottom: -8px;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 80px;
             height: 3px;
             background: var(--primary-color);
@@ -393,6 +397,7 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .cta-button {
@@ -423,25 +428,98 @@
             box-shadow: var(--shadow-md);
         }
         
-        .hero .cta-button:first-child {
+        .hero .cta-button {
             background: var(--primary-color);
             color: var(--white);
             border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         
-        .hero .cta-button:first-child:hover {
+        .hero .cta-button:hover {
            background: var(--primary-dark);
         }
-        
-        .hero .cta-button:last-child {
-            background: transparent;
-            color: var(--secondary-color);
-            border: 2px solid var(--secondary-color);
-        }
-        
-        .hero .cta-button:last-child:hover {
-            background: var(--secondary-color);
+
+        /* New interactive button styles */
+        .interactive-button {
+            position: relative;
+            overflow: hidden;
+            background: var(--primary-color);
             color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .interactive-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .interactive-button:hover::before {
+            transform: scaleX(1);
+        }
+
+        .interactive-button .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-button:hover .icon {
+            transform: translateX(4px);
+        }
+
+        /* Pulse effect */
+        .pulse-effect {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+            }
+        }
+
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.3) 0%, rgba(230, 57, 70, 0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+            z-index: 9999;
+            transition: transform 0.1s ease-out, opacity 0.2s ease-out;
         }
 
         .cta-button .icon {
@@ -855,9 +933,30 @@
         }
 
         /* Media Queries */
+        @media (max-width: 1200px) {
+            .hero-container {
+                width: 95%;
+            }
+            
+            .hero-image-container {
+                max-height: 350px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                gap: 2rem;
+            }
+            
+            .hero-image-container {
+                max-height: 300px;
+            }
+        }
+
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 60px;
+                --hero-height: auto;
             }
 
             .navbar-container {
@@ -912,6 +1011,7 @@
                 height: auto;
                 min-height: 400px;
                 width: 95%;
+                padding: var(--spacing-md) 0;
             }
 
             .hero-content {
@@ -936,8 +1036,9 @@
 
             .hero-image-container {
                 width: 100%;
-                height: 250px;
-                margin-top: 1rem;
+                max-width: 500px;
+                aspect-ratio: 16/9;
+                margin: 1rem auto 0;
                 border-radius: 8px;
             }
 
@@ -971,9 +1072,11 @@
         /* Ensure consistent layout at all screen sizes */
         @media (min-width: 769px) and (max-width: 1024px) {
             .hero-container, .news-grid, .stats-container, .footer-content {
-                width: 95%;  {
-            .hero-container, .news-grid, .stats-container, .footer-content {
                 width: 95%;
+            }
+            
+            .hero-container {
+                gap: 2rem;
             }
         }
 
@@ -990,6 +1093,7 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
                 height: auto;
+                align-items: center;
             }
 
             .hero-content {
@@ -1009,11 +1113,11 @@
 
             .hero-image-container {
                 position: relative;
-                height: 100%;
-                min-height: 250px;
+                aspect-ratio: 16/9;
                 width: 100%;
                 grid-column: 2;
                 margin-top: 0;
+                max-height: none;
             }
             
             .hero .cta-buttons {
@@ -1030,6 +1134,23 @@
             
             .stat-item {
                 min-width: 150px;
+            }
+        }
+
+        /* Fix for zoomed out desktop view */
+        @media (min-width: 1400px) {
+            :root {
+                --hero-height: 600px;
+            }
+            
+            .hero-container {
+                max-width: var(--content-width);
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .hero-image-container {
+                max-height: 450px;
+                width: 45%;
             }
         }
 
@@ -1082,6 +1203,9 @@
     </style>
 </head>
 <body>
+    <!-- Custom cursor element -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+
     <nav class="navbar">
         <div class="navbar-container">
             <div class="logo">
@@ -1119,11 +1243,10 @@
                 <h1>Transforming Cancer Care in Uganda</h1>
                 <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
                 <div class="cta-buttons">
-                    <a href="#join" class="cta-button">
+                    <a href="membership.html" class="interactive-button" id="join-button">
                         Join Our Community
                         <span class="icon">→</span>
                     </a>
-                    <a href="#conference" class="cta-button">Annual Symposium 2024</a>
                 </div>
             </div>            
             <div class="hero-image-container">
@@ -1232,7 +1355,7 @@
                         HOSU Headquarters<br>
                         Kampala, Uganda<br>
                         <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                        <a href="/cdn-cgi/l/email-protection#bbd2d5ddd4fbd3d4c8ce95d4c9dc"><span class="__cf_email__" data-cfemail="573e393138173f38242279382530">[email&#160;protected]</span></a>
+                        <a href="mailto:info@hosu.org">info@hosu.org</a>
                     </address>
                 </div>
                 <div class="footer-section">
@@ -1261,7 +1384,34 @@
 
     <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
+        // Custom cursor effect
+        const cursor = document.getElementById('custom-cursor');
+        const joinButton = document.getElementById('join-button');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Check if mouse is over the join button
+            const buttonRect = joinButton.getBoundingClientRect();
+            const isOverButton = 
+                e.clientX >= buttonRect.left && 
+                e.clientX <= buttonRect.right && 
+                e.clientY >= buttonRect.top && 
+                e.clientY <= buttonRect.bottom;
+            
+            // Update cursor position
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(${isOverButton ? 1 : 0.5})`;
+            cursor.style.opacity = isOverButton ? '1' : '0';
+        });
+        
+        // Add pulse effect to join button on hover
+        joinButton.addEventListener('mouseenter', () => {
+            joinButton.classList.add('pulse-effect');
+        });
+        
+        joinButton.addEventListener('mouseleave', () => {
+            joinButton.classList.remove('pulse-effect');
+        });
+
         // Dynamic background images
         let currentIndex = 0;
         const backgrounds = document.querySelectorAll('.hero-background');
@@ -1390,15 +1540,6 @@
         
         window.addEventListener('resize', handleResize);
         window.addEventListener('load', handleResize);
-        
-        // Ensure consistent appearance during zoom
-        function handleZoom() {
-            const scale = Math.max(0.5, Math.min(window.innerWidth / 1200, 1));
-            document.documentElement.style.setProperty('--scale-factor', scale);
-        }
-        
-        window.addEventListener('resize', handleZoom);
-        window.addEventListener('load', handleZoom);
     </script>
 </body>
 </html>
