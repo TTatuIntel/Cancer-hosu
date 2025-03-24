@@ -294,6 +294,23 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+
         .form-section, .payment-section {
             padding: 20px;
             flex: 1;
@@ -444,6 +461,22 @@
             color: var(--secondary-color);
             margin-bottom: 15px;
             font-size: 1.3rem;
+        }
+
+        .bank-details-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .bank-details-close:hover {
+            color: var(--primary-color);
         }
 
         /* Updated Payment Styles */
@@ -758,6 +791,9 @@
 
     <div class="modal" id="subscriptionModal">
         <div class="modal-content">
+            <button class="close-modal" onclick="closeSubscriptionForm()">
+                <i class="fas fa-times"></i>
+            </button>
             <div class="form-section">
                 <h2>Membership Application</h2>
                 <form id="membershipForm">
@@ -774,11 +810,27 @@
                         <select id="profession" required>
                             <option value="">Select profession</option>
                             <option value="hematologist">Hematologist</option>
-                            <option value="oncologist">Oncologist</option>
-                            <option value="nurse">Oncology Nurse</option>
+                            <option value="medical-oncologist">Medical Oncologist</option>
+                            <option value="pediatric-oncologist">Pediatric Oncologist</option>
+                            <option value="surgical-oncologist">Surgical Oncologist</option>
+                            <option value="radiation-oncologist">Radiation Oncologist</option>
+                            <option value="pathologist">Pathologist</option>
+                            <option value="cancer-biologist">Cancer Biologist</option>
+                            <option value="pharmacist">Pharmacist</option>
+                            <option value="oncology-nurse">Oncology Nurse</option>
+                            <option value="gynecology-oncologist">Gynecology Oncologist</option>
+                            <option value="medical-physicist">Medical Physicist</option>
+                            <option value="radiologist">Radiologist</option>
+                            <option value="anesthesiologist">Anesthesiologist</option>
                             <option value="researcher">Researcher</option>
+                            <option value="palliative-care">Palliative Care Specialist</option>
+                            <option value="civil-society">Civil Society Organization</option>
                             <option value="other">Other</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="otherProfessionGroup" style="display: none;">
+                        <label for="otherProfession">Specify Your Profession</label>
+                        <input type="text" id="otherProfession" required>
                     </div>
                     <div class="form-group">
                         <label for="contact">Phone Number</label>
@@ -819,6 +871,9 @@
 
     <div class="bank-details-modal" id="bankDetailsModal">
         <div class="bank-details-content">
+            <button class="bank-details-close" onclick="closeBankDetails()">
+                <i class="fas fa-times"></i>
+            </button>
             <h3>Bank Transfer Details</h3>
             <p>Account: HOSU Limited</p>
             <p>No: 9030025235214</p>
@@ -875,6 +930,16 @@
 
     <script>
         let selectedMethod = null;
+        const professionRelations = {
+            'medical-oncologist': ['oncologist'],
+            'pediatric-oncologist': ['oncologist'],
+            'surgical-oncologist': ['oncologist'],
+            'radiation-oncologist': ['oncologist'],
+            'gynecology-oncologist': ['oncologist'],
+            'oncologist': ['medical-oncologist', 'pediatric-oncologist', 'surgical-oncologist', 'radiation-oncologist', 'gynecology-oncologist'],
+            'oncology-nurse': ['nurse'],
+            'nurse': ['oncology-nurse']
+        };
 
         // Open subscription form modal
         function openSubscriptionForm() {
@@ -891,12 +956,12 @@
         function selectProfession(profession) {
             const professionSelect = document.getElementById('profession');
             const simplifiedProfession = {
-                'medical-oncologist': 'oncologist',
-                'pediatric-oncologist': 'oncologist',
-                'surgical-oncologist': 'oncologist',
-                'radiation-oncologist': 'oncologist',
-                'gynecology-oncologist': 'oncologist',
-                'oncology-nurse': 'nurse'
+                'medical-oncologist': 'medical-oncologist',
+                'pediatric-oncologist': 'pediatric-oncologist',
+                'surgical-oncologist': 'surgical-oncologist',
+                'radiation-oncologist': 'radiation-oncologist',
+                'gynecology-oncologist': 'gynecology-oncologist',
+                'oncology-nurse': 'oncology-nurse'
             };
 
             const mappedProfession = simplifiedProfession[profession] || profession;
@@ -911,12 +976,26 @@
 
             const cards = document.querySelectorAll('.profession-card');
             cards.forEach(card => {
-                if (card.getAttribute('data-profession') === profession) {
+                card.classList.remove('selected');
+            });
+
+            // Get all related professions
+            const relatedProfessions = professionRelations[profession] || [];
+            relatedProfessions.push(profession); // Add the selected profession itself
+
+            relatedProfessions.forEach(rp => {
+                const card = document.querySelector(`.profession-card[data-profession="${rp}"]`);
+                if (card) {
                     card.classList.add('selected');
-                } else {
-                    card.classList.remove('selected');
                 }
             });
+
+            // Show/hide other profession input
+            if (profession === 'other') {
+                document.getElementById('otherProfessionGroup').style.display = 'block';
+            } else {
+                document.getElementById('otherProfessionGroup').style.display = 'none';
+            }
         }
 
         // Select payment method
@@ -958,8 +1037,15 @@
         // Handle form submission
         function submitSubscription() {
             const form = document.getElementById('membershipForm');
+            const otherProfession = document.getElementById('otherProfession');
+            
             if (!form.checkValidity()) {
                 form.reportValidity();
+                return;
+            }
+            
+            if (document.getElementById('profession').value === 'other' && !otherProfession.value) {
+                alert('Please specify your profession');
                 return;
             }
 
@@ -985,6 +1071,7 @@
                 option.classList.remove('selected');
             });
             selectedMethod = null;
+            document.getElementById('otherProfessionGroup').style.display = 'none';
         }
 
         // Bank details modal functions
@@ -1033,6 +1120,15 @@
         document.getElementById('subscriptionModal')?.addEventListener('click', (e) => {
             if (e.target === document.getElementById('subscriptionModal')) {
                 closeSubscriptionForm();
+            }
+        });
+
+        // Add event listener to the profession select
+        document.getElementById('profession').addEventListener('change', function() {
+            if (this.value === 'other') {
+                document.getElementById('otherProfessionGroup').style.display = 'block';
+            } else {
+                document.getElementById('otherProfessionGroup').style.display = 'none';
             }
         });
     </script>
