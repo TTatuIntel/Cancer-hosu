@@ -479,6 +479,35 @@
             color: var(--primary-color);
         }
 
+        /* Updated Payment Styles */
+        .payment-logo {
+            width: 50px;
+            height: auto;
+        }
+
+        .mtn-payment {
+            background-color: #ffcc00; /* Yellow for MTN */
+        }
+
+        .airtel-payment {
+            background-color: #e63946; /* Red for Airtel */
+        }
+
+        .tell-merchant-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .tell-merchant-btn:hover {
+            background-color: #555;
+        }
+
         /* Footer styles */
         footer {
             background: var(--background-dark);
@@ -800,16 +829,20 @@
                         <h3>Bank Transfer</h3>
                     </div>
                 </div>
-                <div class="payment-option" onclick="selectPayment('mtn')">
-                    <i class="fas fa-mobile-alt payment-icon"></i>
+                <div class="payment-option mtn-payment" onclick="selectPayment('mtn')">
+                    <img src="mtn-logo.png" alt="MTN Logo" class="payment-logo">
                     <div>
-                        <h3>MTN Mobile Money</h3>
+                        <p class="payment-code">*165*3#</p>
+                        <p class="payment-instruction">Code: 721212</p>
+                        <button class="tell-merchant-btn" onclick="event.stopPropagation(); tellMerchant('mtn')">Tell the Merchant</button>
                     </div>
                 </div>
-                <div class="payment-option" onclick="selectPayment('airtel')">
-                    <i class="fas fa-mobile-alt payment-icon"></i>
+                <div class="payment-option airtel-payment" onclick="selectPayment('airtel')">
+                    <img src="airtel-logo.png" alt="Airtel Logo" class="payment-logo">
                     <div>
-                        <h3>Airtel Money</h3>
+                        <p class="payment-code">*185*9#</p>
+                        <p class="payment-instruction">ID: 4373226</p>
+                        <button class="tell-merchant-btn" onclick="event.stopPropagation(); tellMerchant('airtel')">Tell the Merchant</button>
                     </div>
                 </div>
                 <div id="paymentDetails" class="payment-details hidden"></div>
@@ -1003,6 +1036,15 @@
                 closeBankDetails();
             } else {
                 alert('Please enter your bank account number');
+            }
+        }
+
+        // Tell the Merchant function
+        function tellMerchant(method) {
+            const transactionId = prompt('Please enter your transaction ID:');
+            if (transactionId) {
+                const detailsDiv = document.getElementById('paymentDetails');
+                detailsDiv.innerHTML += `<br>Transaction ID for ${method}: ${transactionId}`;
             }
         }
 
