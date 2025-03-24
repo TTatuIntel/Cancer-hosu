@@ -22,6 +22,8 @@
             --shadow: 0 2px 4px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
             --navbar-height: 90px;
+            --mtn-yellow: #ffcc00;
+            --airtel-red: #e40000;
         }
 
         * {
@@ -305,10 +307,18 @@
             color: #666;
             transition: color 0.2s;
             z-index: 10;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #f1f1f1;
         }
 
         .close-modal:hover {
             color: var(--primary-color);
+            background-color: #e5e5e5;
         }
 
         .form-section, .payment-section {
@@ -482,30 +492,62 @@
         /* Updated Payment Styles */
         .payment-logo {
             width: 50px;
-            height: auto;
+            height: 50px;
+            object-fit: contain;
         }
 
         .mtn-payment {
-            background-color: #ffcc00; /* Yellow for MTN */
+            background-color: rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--mtn-yellow);
+        }
+
+        .mtn-payment.selected {
+            background-color: rgba(255, 204, 0, 0.2);
         }
 
         .airtel-payment {
-            background-color: #e63946; /* Red for Airtel */
+            background-color: rgba(228, 0, 0, 0.05);
+            border: 2px solid var(--airtel-red);
         }
 
-        .tell-merchant-btn {
+        .airtel-payment.selected {
+            background-color: rgba(228, 0, 0, 0.1);
+        }
+
+        .payment-code {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .payment-instruction {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .ussd-button {
             background-color: #333;
             color: #fff;
             border: none;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             cursor: pointer;
             margin-top: 5px;
+            display: inline-block;
+            text-decoration: none;
         }
 
-        .tell-merchant-btn:hover {
+        .ussd-button:hover {
             background-color: #555;
+        }
+
+        .payment-confirmation {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
         }
 
         /* Footer styles */
@@ -636,6 +678,14 @@
 
             .section-title {
                 font-size: 2rem;
+            }
+
+            .modal-content {
+                flex-direction: column;
+            }
+
+            .form-section {
+                border-radius: 15px 15px 0 0;
             }
         }
     </style>
@@ -791,7 +841,7 @@
 
     <div class="modal" id="subscriptionModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeSubscriptionForm()">
+            <button class="close-modal" onclick="closeSubscriptionForm()" aria-label="Close form">
                 <i class="fas fa-times"></i>
             </button>
             <div class="form-section">
@@ -830,11 +880,11 @@
                     </div>
                     <div class="form-group" id="otherProfessionGroup" style="display: none;">
                         <label for="otherProfession">Specify Your Profession</label>
-                        <input type="text" id="otherProfession" required>
+                        <input type="text" id="otherProfession">
                     </div>
                     <div class="form-group">
                         <label for="contact">Phone Number</label>
-                        <input type="tel" id="contact" required>
+                        <input type="tel" id="contact" required placeholder="e.g., 0772123456">
                     </div>
                 </form>
             </div>
@@ -848,22 +898,29 @@
                     </div>
                 </div>
                 <div class="payment-option mtn-payment" onclick="selectPayment('mtn')">
-                    <img src="mtn-logo.png" alt="MTN Logo" class="payment-logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBmaWxsPSIjZmZjYzAwIiBkPSJNMCAwaDI0MHYyNDBIMHoiLz48cGF0aCBkPSJNMTIwIDUwLjhjLTM4LjIgMC02OS4yIDMxLTY5LjIgNjkuMnMzMSA2OS4yIDY5LjIgNjkuMiA2OS4yLTMxIDY5LjItNjkuMi0zMS02OS4yLTY5LjItNjkuMnptMCAxMjYuNWMtMzEuNiAwLTU3LjMtMjUuNy01Ny4zLTU3LjNzMjUuNy01Ny4zIDU3LjMtNTcuMyA1Ny4zIDI1LjcgNTcuMyA1Ny4zLTI1LjcgNTcuMy01Ny4zIDU3LjN6IiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTEyMCA3Ni41Yy0yNCAwLTQzLjUgMTkuNS00My41IDQzLjVzMTkuNSA0My41IDQzLjUgNDMuNSA0My41LTE5LjUgNDMuNS00My41LTE5LjUtNDMuNS00My41LTQzLjV6IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="MTN Logo" class="payment-logo">
                     <div>
                         <p class="payment-code">*165*3#</p>
-                        <p class="payment-instruction">Code: 721212</p>
-                        <button class="tell-merchant-btn" onclick="event.stopPropagation(); tellMerchant('mtn')">Tell the Merchant</button>
+                        <p class="payment-instruction">Merchant Code: 721212</p>
+                        <a href="tel:*165*3*721212#" class="ussd-button">Dial USSD Code</a>
                     </div>
                 </div>
                 <div class="payment-option airtel-payment" onclick="selectPayment('airtel')">
-                    <img src="airtel-logo.png" alt="Airtel Logo" class="payment-logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBmaWxsPSIjZTQwMDAwIiBkPSJNMCAwaDI0MHYyNDBIMHoiLz48cGF0aCBkPSJNMTIwIDUwYy0zOC42IDAtNzAgMzEuNC03MCA3MHMzMS40IDcwIDcwIDcwIDcwLTMxLjQgNzAtNzAtMzEuNC03MC03MC03MHptMCAxMjBjLTI3LjYgMC01MC0yMi40LTUwLTUwczIyLjQtNTAgNTAtNTAgNTAgMjIuNCA1MCA1MC0yMi40IDUwLTUwIDUweiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMjAgODBjLTIyLjEgMC00MCAxNy45LTQwIDQwczE3LjkgNDAgNDAgNDAgNDAtMTcuOSA0MC00MC0xNy45LTQwLTQwLTQweiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="Airtel Logo" class="payment-logo">
                     <div>
                         <p class="payment-code">*185*9#</p>
-                        <p class="payment-instruction">ID: 4373226</p>
-                        <button class="tell-merchant-btn" onclick="event.stopPropagation(); tellMerchant('airtel')">Tell the Merchant</button>
+                        <p class="payment-instruction">Merchant ID: 4373226</p>
+                        <a href="tel:*185*9*4373226#" class="ussd-button">Dial USSD Code</a>
                     </div>
                 </div>
                 <div id="paymentDetails" class="payment-details hidden"></div>
+                <div id="paymentConfirmation" class="payment-confirmation hidden">
+                    <p>After completing your payment, please enter the transaction reference below:</p>
+                    <div class="form-group">
+                        <label for="transactionRef">Transaction Reference</label>
+                        <input type="text" id="transactionRef" placeholder="Enter transaction reference">
+                    </div>
+                </div>
                 <button onclick="submitSubscription()" id="submitButton" disabled>Submit Application</button>
             </div>
         </div>
@@ -882,6 +939,10 @@
             <div class="form-group">
                 <label for="bankAccount">Your Bank Account Number</label>
                 <input type="text" id="bankAccount" required>
+            </div>
+            <div class="form-group">
+                <label for="bankTransactionRef">Transaction Reference (if available)</label>
+                <input type="text" id="bankTransactionRef">
             </div>
             <button onclick="confirmBankDetails()">Confirm</button>
         </div>
@@ -1012,6 +1073,7 @@
                 document.getElementById('bankDetailsModal').style.display = 'flex';
             } else {
                 showPaymentDetails(method);
+                document.getElementById('paymentConfirmation').classList.remove('hidden');
             }
         }
 
@@ -1024,20 +1086,35 @@
             detailsDiv.classList.remove('hidden');
             submitButton.disabled = false;
 
-            if (method === 'mtn' || method === 'airtel') {
-                if (!contact || contact.length < 10) {
-                    detailsDiv.innerHTML = 'Please enter a valid phone number first';
-                    submitButton.disabled = true;
-                } else {
-                    detailsDiv.innerHTML = `Payment prompt will be sent to: ${contact}`;
-                }
+            if (method === 'mtn') {
+                detailsDiv.innerHTML = `
+                    <p>1. Dial <strong>*165*3#</strong> on your MTN line</p>
+                    <p>2. Select "Pay Bill"</p>
+                    <p>3. Enter Merchant Code: <strong>721212</strong></p>
+                    <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
+                    <p>5. Confirm with your PIN</p>
+                `;
+            } else if (method === 'airtel') {
+                detailsDiv.innerHTML = `
+                    <p>1. Dial <strong>*185*9#</strong> on your Airtel line</p>
+                    <p>2. Select "Pay Merchant"</p>
+                    <p>3. Enter Merchant ID: <strong>4373226</strong></p>
+                    <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
+                    <p>5. Confirm with your PIN</p>
+                `;
             }
+        }
+
+        // Direct USSD dialing
+        function dialUSSD(code) {
+            window.location.href = `tel:${code}`;
         }
 
         // Handle form submission
         function submitSubscription() {
             const form = document.getElementById('membershipForm');
             const otherProfession = document.getElementById('otherProfession');
+            const transactionRef = document.getElementById('transactionRef');
             
             if (!form.checkValidity()) {
                 form.reportValidity();
@@ -1054,6 +1131,13 @@
                 return;
             }
 
+            // For mobile payments, check transaction reference
+            if ((selectedMethod === 'mtn' || selectedMethod === 'airtel') && 
+                (!transactionRef || !transactionRef.value)) {
+                alert('Please enter the transaction reference number');
+                return;
+            }
+
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const contact = document.getElementById('contact').value;
@@ -1066,6 +1150,7 @@
         function resetForm() {
             document.getElementById('membershipForm').reset();
             document.getElementById('paymentDetails').classList.add('hidden');
+            document.getElementById('paymentConfirmation').classList.add('hidden');
             document.getElementById('submitButton').disabled = true;
             document.querySelectorAll('.payment-option').forEach(option => {
                 option.classList.remove('selected');
@@ -1081,22 +1166,19 @@
 
         function confirmBankDetails() {
             const bankAccount = document.getElementById('bankAccount').value;
+            const bankTransactionRef = document.getElementById('bankTransactionRef').value;
+            
             if (bankAccount) {
                 document.getElementById('paymentDetails').classList.remove('hidden');
-                document.getElementById('paymentDetails').innerHTML = `Your bank account: ${bankAccount}`;
+                document.getElementById('paymentDetails').innerHTML = `
+                    <p>Your bank account: ${bankAccount}</p>
+                    ${bankTransactionRef ? `<p>Transaction reference: ${bankTransactionRef}</p>` : ''}
+                    <p>Please transfer UGX 100,000 to the HOSU account.</p>
+                `;
                 document.getElementById('submitButton').disabled = false;
                 closeBankDetails();
             } else {
                 alert('Please enter your bank account number');
-            }
-        }
-
-        // Tell the Merchant function
-        function tellMerchant(method) {
-            const transactionId = prompt('Please enter your transaction ID:');
-            if (transactionId) {
-                const detailsDiv = document.getElementById('paymentDetails');
-                detailsDiv.innerHTML += `<br>Transaction ID for ${method}: ${transactionId}`;
             }
         }
 
