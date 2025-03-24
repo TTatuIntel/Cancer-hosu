@@ -318,6 +318,25 @@
             text-decoration: underline;
         }
 
+        /* Featured event styles */
+        .featured-event {
+            border: 2px solid var(--primary-color);
+            position: relative;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+
         /* Footer styles (same as other pages) */
         footer {
             background: var(--background-dark);
@@ -499,6 +518,24 @@
 
     <section class="events-grid">
         <div class="events-container">
+            <!-- New Featured Event: UCI – PCAU – HOSU Conference -->
+            <article class="event-card featured-event" data-type="conference">
+                <span class="featured-badge">Featured</span>
+                <img src="/placeholder.svg?height=200&width=350" alt="UCI – PCAU – HOSU Conference" class="event-image">
+                <div class="event-content">
+                    <span class="event-type">Conference</span>
+                    <div class="event-date">September 10-12, 2025</div>
+                    <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
+                    <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care brings together clinicians, researchers, policymakers, and advocates to explore innovative solutions, share evidence-based practices, and promote patient-centered care.</p>
+                    <div class="event-footer">
+                        <div class="event-location">
+                            📍 Speke Resort Munyonyo, Kampala, Uganda
+                        </div>
+                        <a href="#register" class="register-button">Register Now</a>
+                    </div>
+                </div>
+            </article>
+
             <article class="event-card" data-type="conference">
                 <img src="/placeholder.svg?height=200&width=350" alt="Annual Oncology Conference 2024" class="event-image">
                 <div class="event-content">
@@ -599,7 +636,7 @@
                     123 Medical Innovation Way<br>
                     Global Health City, GH 54321<br>
                     ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
-                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                    ✉ <a href="/cdn-cgi/l/email-protection#9ef7f0f8f1def6f1edebb0f1ecf9"><span class="__cf_email__" data-cfemail="71181f171e31191e02045f1e0316">[email&#160;protected]</span></a>
                 </address>
             </div>
             <div class="footer-section">
@@ -625,7 +662,7 @@
         </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
