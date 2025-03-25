@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="HOSU - Advancing cancer care in Uganda through research, education, and advocacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOSU - Hematology & Oncology Society of Uganda</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS for home page */
         :root {
             --primary-color: #e63946;
             --primary-light: #f8d7da;
@@ -41,12 +38,10 @@
             --content-width: 1200px;
             --section-width: 90%;
             --section-max-width: 1000px;
-            /* UPDATED: Increased hero height for larger hero section */
             --hero-height: 600px;
             --section-padding: 3rem;
-            /* ADDED: Hero content/image balance ratio */
-            --hero-content-width: 45%; /* Content takes 45% of the container */
-            --hero-image-width: 50%;   /* Image takes 50% of the container */
+            --hero-content-width: 45%;
+            --hero-image-width: 50%;
         }
 
         * {
@@ -56,34 +51,25 @@
         }
 
         html {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
             scroll-behavior: smooth;
-            scroll-padding-top: var(--navbar-height);
             overflow-x: hidden;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.5;
+            line-height: 1.6;
             color: var(--text-color);
             background-color: var(--white);
-            overflow-x: hidden;
-            width: 100%;
-            min-width: 320px;
-            position: relative;
         }
 
         a {
             text-decoration: none;
             color: inherit;
-            transition: color 0.2s ease;
         }
 
         img {
             max-width: 100%;
             height: auto;
-            display: block;
         }
 
         .container {
@@ -120,7 +106,6 @@
         .navbar {
             background: transparent;
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -140,32 +125,11 @@
             padding: 0 var(--spacing-sm);
         }
 
-        .navbar.scrolled {
-            box-shadow: var(--shadow-md);
-            background: transparent; /* Semi-transparent white background when scrolled */
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .navbar.scrolled {
-                background: rgba(26, 38, 57, 0.85); /* Semi-transparent dark background when scrolled */
-            }
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        /* UPDATED: Increased logo size */
         .logo img {
             width: 180px;
             height: 65px;
             object-fit: contain;
             transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
         }
 
         .nav-links {
@@ -240,18 +204,17 @@
         .hero {
             position: relative;
             color: var(--text-color);
-            padding-top: 10px; /* Removed space below navbar */
+            padding-top: 10px;
             overflow: hidden;
             background-color: var(--gray-100);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: var(--hero-height);
-            padding-bottom: 0; /* Override section padding */
-            margin-top: 20; /* Ensure no gap at the top */
+            padding-bottom: 0;
+            margin-top: 20;
         }
 
-        /* UPDATED: Adjusted hero container to better balance content and image */
         .hero-container {
             display: flex;
             flex-direction: row;
@@ -261,26 +224,20 @@
             position: relative;
             overflow: visible;
             padding: var(--spacing-lg) 0;
-            /* ADDED: Added gap between content and image for better spacing */
-            gap: 5%; /* 5% gap between content and image */
-            justify-content: space-between; /* Ensures proper spacing between elements */
+            gap: 5%;
+            justify-content: space-between;
         }
 
-        /* UPDATED: Adjusted hero content width for better balance */
         .hero-content {
-            /* UPDATED: Changed from flex: 1 to specific width for better control */
-            width: var(--hero-content-width); /* Uses the defined content width variable */
+            width: var(--hero-content-width);
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: var(--spacing-md) 0;
-            /* UPDATED: Removed max-width constraint to use percentage-based width */
             z-index: 10;
-            /* UPDATED: Changed from center to left alignment for better readability */
-            text-align: left; /* Left-aligned text for better readability */
+            text-align: left;
             position: relative;
             animation: slideInLeft 0.8s ease-out;
-            /* UPDATED: Removed margin auto to allow proper positioning */
         }
 
         @keyframes slideInLeft {
@@ -288,62 +245,9 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Animated background elements */
-        .animated-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-            opacity: 0.5;
-        }
-
-        .animated-circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .animated-circle:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            top: -30px;
-            left: -30px;
-            animation-delay: 0s;
-        }
-
-        .animated-circle:nth-child(2) {
-            width: 70px;
-            height: 70px;
-            bottom: 10%;
-            right: 10%;
-            animation-delay: -5s;
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-        }
-
-        .animated-circle:nth-child(3) {
-            width: 50px;
-            height: 50px;
-            top: 40%;
-            left: 20%;
-            animation-delay: -10s;
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        /* UPDATED: Adjusted hero image container positioning and size */
         .hero-image-container {
             position: relative;
-            /* UPDATED: Changed width to use the defined image width variable */
-            width: var(--hero-image-width); /* Uses the defined image width variable */
+            width: var(--hero-image-width);
             aspect-ratio: 16/9;
             overflow: hidden;
             border-radius: 0 0 0 80px;
@@ -352,9 +256,7 @@
             opacity: 0;
             z-index: 1;
             max-height: 500px;
-            /* UPDATED: Removed margin-left auto to allow proper positioning */
-            /* ADDED: Added right margin to push image more to the right */
-            margin-right: 0; /* Pushes the image to the right edge of the container */
+            margin-right: 0;
         }
 
         @keyframes fadeIn {
@@ -362,21 +264,6 @@
             to { opacity: 1; }
         }
 
-        .hero-image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 150px;
-            height: 100%;
-            background: linear-gradient(to right, 
-                rgba(255, 255, 255, 1) 0%, 
-                rgba(255, 255, 255, 0) 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* UPDATED: Improved background image rendering */
         .hero-background {
             position: absolute;
             top: 0;
@@ -388,8 +275,6 @@
             transition: opacity 1s ease, transform 8s ease;
             opacity: 0;
             transform: scale(1.05);
-            /* Added object-fit-like behavior */
-            object-position: center;
         }
 
         .hero-background.active {
@@ -398,7 +283,6 @@
         }
 
         /* Typography */
-        /* UPDATED: Adjusted hero heading styles for better readability */
         .hero h1 {
             font-size: clamp(1.8rem, 3.8vw, 2.5rem);
             line-height: 1.2;
@@ -409,14 +293,11 @@
             display: inline-block;
         }
 
-        /* UPDATED: Adjusted heading underline for left alignment */
         .hero h1::after {
             content: '';
             position: absolute;
             bottom: -8px;
-            /* UPDATED: Changed from centered to left-aligned */
             left: 0;
-            transform: none; /* Removed transform that was centering the line */
             width: 80px;
             height: 3px;
             background: var(--primary-color);
@@ -430,13 +311,11 @@
         }
 
         /* CTA buttons */
-        /* UPDATED: Adjusted CTA buttons alignment to match text */
         .hero .cta-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            /* UPDATED: Changed from center to flex-start for left alignment */
-            justify-content: flex-start; /* Aligns buttons to the left to match text */
+            justify-content: flex-start;
         }
 
         .cta-button {
@@ -480,96 +359,6 @@
            background: var(--primary-dark);
         }
 
-        /* New interactive button styles */
-        .interactive-button {
-            position: relative;
-            overflow: hidden;
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-            border: none;
-            cursor: pointer;
-            z-index: 1;
-        }
-
-        .interactive-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-dark);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-            z-index: -1;
-        }
-
-        .interactive-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
-        }
-
-        .interactive-button:hover::before {
-            transform: scaleX(1);
-        }
-
-        .interactive-button .icon {
-            transition: transform 0.3s ease;
-        }
-
-        .interactive-button:hover .icon {
-            transform: translateX(4px);
-        }
-
-        /* Pulse effect */
-        .pulse-effect {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
-            }
-        }
-
-        /* Custom cursor */
-        .custom-cursor {
-            position: fixed;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(230, 57, 70, 0.3) 0%, rgba(230, 57, 70, 0) 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%) scale(0.5);
-            opacity: 0;
-            z-index: 9999;
-            transition: transform 0.1s ease-out, opacity 0.2s ease-out;
-        }
-
-        .cta-button .icon {
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .cta-button:hover .icon {
-            transform: translateX(4px);
-        }
-
         /* Stats Section */
         .stats-section {
             padding: var(--spacing-lg) 0;
@@ -589,12 +378,11 @@
             margin: 0 auto;
         }
 
-        /* UPDATED: Increased stat item size */
         .stat-item {
             flex: 1;
-            min-width: 220px; /* Increased from 200px */
+            min-width: 220px;
             text-align: center;
-            padding: 1.75rem; /* Increased from 1.5rem */
+            padding: 1.75rem;
             background: var(--gray-100);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
@@ -606,9 +394,8 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* UPDATED: Increased stat number size */
         .stat-number {
-            font-size: 2.75rem; /* Increased from 2.5rem */
+            font-size: 2.75rem;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
@@ -616,7 +403,7 @@
         }
 
         .stat-label {
-            font-size: 1.1rem; /* Increased from 1rem */
+            font-size: 1.1rem;
             color: var(--text-light);
             font-weight: 500;
         }
@@ -649,11 +436,10 @@
         }
 
         /* News grid */
-        /* UPDATED: Adjusted news grid for larger cards */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Increased from 280px */
-            gap: 1.75rem; /* Increased from 1.5rem */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.75rem;
             width: 100%;
             max-width: var(--section-max-width);
             margin: 0 auto;
@@ -676,10 +462,9 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* UPDATED: Increased news image height */
         .news-image {
             height: 0;
-            padding-bottom: 62.5%; /* Increased from 56.25% for taller images */
+            padding-bottom: 62.5%;
             position: relative;
             overflow: hidden;
         }
@@ -716,19 +501,8 @@
             align-items: center;
         }
 
-        .news-date::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        /* UPDATED: Increased news card title size */
         .news-card h3 {
-            font-size: 1.2rem; /* Increased from 1.1rem */
+            font-size: 1.2rem;
             margin-bottom: 0.75rem;
             color: var(--secondary-color);
             font-weight: 600;
@@ -738,7 +512,7 @@
             margin-bottom: 1.25rem;
             color: var(--text-light);
             flex-grow: 1;
-            font-size: 0.95rem; /* Increased from 0.9rem */
+            font-size: 0.95rem;
         }
 
         .news-card .cta-button {
@@ -766,11 +540,9 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /* UPDATED: Added min-height for taller CTA section */
             min-height: 350px;
         }
 
-        /* UPDATED: Improved background image handling in CTA section */
         .cta-section::before {
             content: '';
             position: absolute;
@@ -778,7 +550,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
+            background-image: url('img/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
             background-size: cover;
             background-position: center;
             opacity: 0.2;
@@ -796,7 +568,7 @@
             width: 100%;
             max-width: var(--section-max-width);
             height: 100%;
-            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
+            background-image: url('img/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
             background-size: cover;
             background-position: center;
             opacity: 0.15;
@@ -811,10 +583,9 @@
             max-width: var(--section-max-width);
         }
 
-        /* UPDATED: Increased padding in CTA inner container */
         .cta-inner {
             background-color: transparent;
-            padding: 2.5rem; /* Increased from 2rem */
+            padding: 2.5rem;
             border-radius: var(--border-radius);
             backdrop-filter: blur(4px);
             max-width: 700px;
@@ -830,11 +601,10 @@
             background: var(--white);
         }
 
-        /* UPDATED: Increased paragraph size in CTA section */
         .cta-section p {
             max-width: 600px;
             margin: 0 auto 1.5rem;
-            font-size: 1.15rem; /* Increased from 1.05rem */
+            font-size: 1.15rem;
             line-height: 1.6;
         }
 
@@ -846,17 +616,16 @@
             margin-top: 1.5rem;
         }
 
-        /* UPDATED: Increased CTA button size */
         .cta-section .cta-button {
             background: var(--white);
             color: var(--secondary-color);
-            padding: 0.85rem 1.75rem; /* Increased from 0.75rem 1.5rem */
+            padding: 0.85rem 1.75rem;
             border-radius: 30px;
             font-weight: 500;
             transition: var(--transition);
             border: 2px solid var(--white);
             margin: 0.25rem;
-            font-size: 1rem; /* Increased from default */
+            font-size: 1rem;
         }
 
         .cta-section .cta-button:hover {
@@ -906,10 +675,9 @@
             margin: 0 auto;
         }
 
-        /* UPDATED: Increased footer heading size */
         .footer-section h4 {
             color: var(--accent-color);
-            font-size: 1.2rem; /* Increased from 1.1rem */
+            font-size: 1.2rem;
             margin-bottom: 1.25rem;
             font-weight: 600;
             position: relative;
@@ -951,7 +719,6 @@
             outline-offset: 2px;
         }
 
-        /* UPDATED: Increased social links size */
         .social-links {
             display: flex;
             gap: 0.75rem;
@@ -963,9 +730,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            /* UPDATED: Increased social icon size */
-            width: 45px; /* Increased from 40px */
-            height: 45px; /* Increased from 40px */
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transition: var(--transition);
@@ -976,12 +742,6 @@
             background: var(--accent-color);
             transform: translateY(-2px);
             color: var(--background-dark);
-        }
-
-        /* UPDATED: Increased social icon size */
-        .social-links svg {
-            width: 22px; /* Increased from default */
-            height: 22px; /* Increased from default */
         }
 
         .copyright {
@@ -1002,9 +762,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            /* UPDATED: Increased back-to-top button size */
-            width: 45px; /* Increased from 40px */
-            height: 45px; /* Increased from 40px */
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: var(--primary-color);
             color: var(--white);
@@ -1017,7 +776,7 @@
             transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
             z-index: 999;
             box-shadow: var(--shadow-md);
-            font-size: 1.2rem; /* Increased from default */
+            font-size: 1.2rem;
         }
 
         .back-to-top.visible {
@@ -1036,7 +795,6 @@
                 max-width: var(--section-max-width);
             }
             
-            /* UPDATED: Adjusted for larger hero image on medium screens */
             .hero-image-container {
                 max-height: 400px;
             }
@@ -1051,7 +809,6 @@
                 gap: 2rem;
             }
             
-            /* UPDATED: Adjusted for larger hero image on smaller screens */
             .hero-image-container {
                 max-height: 350px;
             }
@@ -1061,13 +818,11 @@
             }
         }
 
-        /* UPDATED: Adjusted responsive layout for mobile devices */
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 60px;
                 --hero-height: auto;
                 --section-padding: 1.5rem;
-                /* ADDED: Adjust content/image ratio for mobile */
                 --hero-content-width: 100%;
                 --hero-image-width: 100%;
             }
@@ -1119,51 +874,41 @@
                 border-radius: 50%;
             }
 
-            /* UPDATED: Adjusted hero container for mobile */
             .hero-container {
                 flex-direction: column;
                 height: auto;
                 min-height: 400px;
                 width: 95%;
                 padding: var(--spacing-md) 0;
-                gap: 2rem; /* Reduced gap for mobile */
+                gap: 2rem;
             }
 
-            /* UPDATED: Adjusted hero content for mobile */
             .hero-content {
                 padding: 1.5rem 0;
-                text-align: center; /* Center text on mobile */
+                text-align: center;
                 width: 100%;
                 margin: 0 auto;
             }
 
-            /* UPDATED: Center align text and elements on mobile */
             .hero h1, .hero p {
                 text-align: center;
             }
 
-            /* UPDATED: Center the heading underline on mobile */
             .hero h1::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
 
-            /* UPDATED: Center align buttons on mobile */
             .hero .cta-buttons {
                 justify-content: center;
             }
 
-            /* UPDATED: Adjusted mobile hero image size */
             .hero-image-container {
                 width: 100%;
-                max-width: 550px; /* Increased from 500px */
+                max-width: 550px;
                 aspect-ratio: 16/9;
                 margin: 1rem auto 0;
                 border-radius: 8px;
-            }
-
-            .hero-image-container::before {
-                display: none;
             }
 
             .section-title {
@@ -1199,7 +944,6 @@
             }
         }
 
-        /* Ensure consistent layout at all screen sizes */
         @media (min-width: 769px) and (max-width: 1024px) {
             .hero-container, .news-grid, .stats-container, .footer-content, .copyright {
                 width: 90%;
@@ -1209,7 +953,6 @@
                 gap: 2rem;
             }
 
-            /* ADDED: Adjust content/image ratio for tablets */
             :root {
                 --hero-content-width: 45%;
                 --hero-image-width: 50%;
@@ -1222,7 +965,6 @@
             }
         }
 
-        /* Landscape mode for mobile */
         @media (orientation: landscape) and (max-width: 768px) {
             .hero-container {
                 display: grid;
@@ -1262,7 +1004,6 @@
             }
         }
 
-        /* Ensure everything scales properly with zoom */
         @media (max-width: 480px) {
             .container, .navbar-container, .hero-container, .news-grid, .stats-container, .footer-content, .copyright {
                 width: 90%;
@@ -1277,11 +1018,9 @@
             }
         }
 
-        /* Fix for zoomed out desktop view */
         @media (min-width: 1400px) {
             :root {
-                /* UPDATED: Increased hero height for larger screens */
-                --hero-height: 650px; /* Increased from 600px */
+                --hero-height: 650px;
                 --section-padding: 4rem;
             }
             
@@ -1290,9 +1029,8 @@
                 padding: var(--spacing-xl) 0;
             }
             
-            /* UPDATED: Increased hero image size on large screens */
             .hero-image-container {
-                max-height: 500px; /* Increased from 450px */
+                max-height: 500px;
             }
             
             .footer-content {
@@ -1352,7 +1090,7 @@
     <!-- Custom cursor element -->
     <div class="custom-cursor" id="custom-cursor"></div>
 
-    <!-- UPDATED: Transparent navbar with adaptive background -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
             <div class="logo">
@@ -1371,25 +1109,10 @@
         </div>
     </nav>
 
-    <!-- UPDATED: Hero section with balanced content and image -->
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-container">
-            <!-- UPDATED: Left-aligned content with more room -->
             <div class="hero-content">
-                <div class="animated-bg">
-                    <div class="animated-circle" style="animation-delay: 0s;"></div>
-                    <div class="animated-circle" style="animation-delay: -5s;"></div>
-                    <div class="animated-circle" style="animation-delay: -10s;"></div>
-                    <div class="animated-line" style="animation-delay: 0s;"></div>
-                    <div class="animated-line" style="animation-delay: -5s;"></div>
-                    <div class="animated-line" style="animation-delay: -10s;"></div>
-                    <div class="animated-dot" style="animation-delay: 0s;"></div>
-                    <div class="animated-dot" style="animation-delay: -1s;"></div>
-                    <div class="animated-dot" style="animation-delay: -2s;"></div>
-                    <div class="animated-dot" style="animation-delay: -0.5s;"></div>
-                    <div class="animated-dot" style="animation-delay: -1.5s;"></div>
-                    <div class="animated-dot" style="animation-delay: -2.5s;"></div>
-                </div>                
                 <h1 style="text-align: center;">Transforming Cancer Care in Uganda</h1>
                 <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
                 <div class="cta-buttons">
@@ -1399,9 +1122,7 @@
                     </a>
                 </div>
             </div>            
-            <!-- UPDATED: Pushed image to the right -->
             <div class="hero-image-container">
-                <!-- UPDATED: Added higher quality images with better sizing -->
                 <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
                 <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
@@ -1415,6 +1136,7 @@
         </div>
     </section>
 
+    <!-- Stats Section -->
     <section id="stats" class="stats-section">
         <div class="stats-container">
             <div class="stat-item">
@@ -1436,14 +1158,14 @@
         </div>
     </section>
 
+    <!-- News Section -->
     <section id="news" class="news-section">
         <div class="container">
             <h2 class="section-title">Latest Updates</h2>
             <div class="news-grid">
                 <article class="news-card">
                     <div class="news-image">
-                        <!-- UPDATED: Using higher quality images with better sizing -->
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8039.webp-Rn2rin54gih1QKluYC3bHWzPziVWFG.jpeg" alt="Medication image" loading="lazy">
+                        <img src="img/IMG_8039.webp" alt="Medication image" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 20, 2024</span>
@@ -1454,7 +1176,7 @@
                 </article>
                 <article class="news-card">
                     <div class="news-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp" alt="HOSU members at launch event" loading="lazy">
+                        <img src="img/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp" alt="HOSU members at launch event" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 18, 2024</span>
@@ -1465,7 +1187,7 @@
                 </article>
                 <article class="news-card">
                     <div class="news-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8317.jpg-42QrlU3maSv4n7SKkSTPhpcJvOKLfW.jpeg" alt="HOSU group photo" loading="lazy">
+                        <img src="img/IMG_8317.jpg" alt="HOSU group photo" loading="lazy">
                     </div>
                     <div class="news-content">
                         <span class="news-date">March 15, 2024</span>
@@ -1478,7 +1200,7 @@
         </div>
     </section>
 
-    <!-- UPDATED: Enhanced CTA section with better image handling and larger content -->
+    <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
             <div class="cta-inner">
@@ -1493,6 +1215,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -1510,24 +1233,17 @@
                     HOSU Headquarters<br>
                     Kampala, Uganda<br>
                     <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                    <a href="/cdn-cgi/l/email-protection#f990979f96b991968a8cd7968b9e"><span class="__cf_email__" data-cfemail="80e9eee6efc0e8eff3f5aeeff2e7">[email&#160;protected]</span></a>
+                    <a href="mailto:hematologyoncologysocietyug@gmail.com">hematologyoncologysocietyug@gmail.com</a>
                 </address>
             </div>
             <div class="footer-section">
                 <h4>Connect</h4>
                 <div class="social-links">
-                    <!-- UPDATED: Using larger SVG icons -->
-                    <a href="#linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                    <a href="#twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <a href="https://twitter.com/HemOnc_Uganda" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
                     </a>
-                    <a href="#facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                    </a>
-                    <a href="#youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    <a href="https://linkedin.com/Hematology-Oncology-Society-of-Uganda" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
                 </div>
             </div>
@@ -1539,7 +1255,7 @@
 
     <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Custom cursor effect
         const cursor = document.getElementById('custom-cursor');
         const joinButton = document.getElementById('join-button');
@@ -1705,4 +1421,3 @@
     </script>
 </body>
 </html>
-
