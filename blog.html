@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - Hematology & Oncology Society of Uganda</title>
+<style>
+    /* CSS for blog page - ensuring uniform colors with home page */
+    :root {
+        --primary-color: #e63946;
+        --primary-light: #f8d7da;
+        --primary-dark: #c81d2a;
+        --secondary-color: #0d4593;
+        --secondary-light: #e6f0ff;
+        --secondary-dark: #072a5e;
+        --text-color: #001848;
+        --text-light: #4a5568;
+        --background-light: #f1faee;
+        --background-dark: #1d3557;
+        --white: #ffffff;
+        --accent-color: #a8dadc;
+        --gray-100: #f7fafc;
+        --gray-200: #edf2f7;
+        --gray-300: #e2e8f0;
+        --gray-400: #cbd5e0;
+        --gray-500: #a0aec0;
+        --transition: all 0.3s ease;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --navbar-height: 70px;
+        --border-radius: 8px;
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        --content-width: 1200px;
+        --section-width: 90%;
+        --section-max-width: 1000px;
+        --section-padding: 3rem;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--white);
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .container {
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin: 0 auto;
+        padding: 0 var(--spacing-sm);
+    }
+
+    section {
+        padding: var(--section-padding) 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Utility Classes */
+    .text-center { text-align: center; }
+    .text-primary { color: var(--primary-color); }
+    .text-secondary { color: var(--secondary-color); }
+    .bg-primary { background-color: var(--primary-color); }
+    .bg-secondary { background-color: var(--secondary-color); }
+    .bg-light { background-color: var(--background-light); }
+    .shadow { box-shadow: var(--shadow-md); }
+    .rounded { border-radius: var(--border-radius); }
+    .fade-in { animation: fadeIn 0.5s ease-in-out; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Navbar */
+    .navbar {
+        background: transparent;
+        backdrop-filter: blur(15px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        transition: var(--transition);
+        height: var(--navbar-height);
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        padding: 0 var(--spacing-sm);
+    }
+
+    .logo img {
+        width: 180px;
+        height: 65px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        font-weight: 500;
+        transition: var(--transition);
+        position: relative;
+        padding: 0.5rem 0.25rem;
+    }
+
+    .nav-links a:not(.cta-button)::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:not(.cta-button):hover::after {
+        width: 100%;
+    }
+
+    .nav-links a:not(.cta-button):hover {
+        color: var(--primary-color);
+    }
+
+    .nav-links .cta-button {
+        background: var(--primary-color);
+        color: var(--white);
+        padding: 0.5rem 1.25rem;
+        border-radius: 30px;
+        min-height: 40px;
+        min-width: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        border: none;
+    }
+
+    .nav-links .cta-button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        background-color: var(--gray-200);
+    }
+
+    /* Blog Header */
+    .blog-header {
+        background-color: var(--secondary-color);
+        color: var(--white);
+        padding: calc(var(--navbar-height) + 3rem) 0 3rem;
+        text-align: center;
+    }
+
+    .blog-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-header p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+    }
+
+    /* Blog Layout */
+    .blog-layout {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .blog-main {
+        flex: 1;
+    }
+
+    .blog-sidebar {
+        width: 300px;
+    }
+
+    /* Featured Post */
+    .featured-post {
+        margin-bottom: 3rem;
+        background: var(--white);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+    }
+
+    .featured-image {
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .featured-post:hover .featured-image img {
+        transform: scale(1.05);
+    }
+
+    .featured-content {
+        padding: 2rem;
+    }
+
+    .featured-tag {
+        display: inline-block;
+        background: var(--primary-light);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    .featured-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .featured-excerpt {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .featured-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    .featured-author {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .featured-author img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        font-weight: 600;
+        transition: var(--transition);
+        margin-top: 1rem;
+    }
+
+    .read-more:hover {
+        gap: 0.8rem;
+    }
+
+    /* Blog Posts Grid */
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .blog-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .blog-image {
+        height: 0;
+        padding-bottom: 56.25%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .blog-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .blog-card:hover .blog-image img {
+        transform: scale(1.05);
+    }
+
+    .blog-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blog-category {
+        color: var(--primary-color);
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .blog-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+    }
+
+    .blog-card p {
+        margin-bottom: 1.25rem;
+        color: var(--text-light);
+        flex-grow: 1;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .blog-meta-author {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .blog-meta-author img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .blog-meta-date {
+        font-style: italic;
+    }
+
+    /* Sidebar */
+    .sidebar-widget {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .widget-title {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--gray-200);
+        position: relative;
+    }
+
+    .widget-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--primary-color);
+    }
+
+    .search-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+        border-radius: var(--border-radius);
+        font-size: 0.95rem;
+    }
+
+    .search-button {
+        background: var(--secondary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .search-button:hover {
+        background: var(--secondary-dark);
+    }
+
+    .categories-list {
+        list-style: none;
+    }
+
+    .categories-list li {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .categories-list li:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .categories-list a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-light);
+        transition: var(--transition);
+    }
+
+    .categories-list a:hover {
+        color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    .categories-list .count {
+        background: var(--gray-200);
+        color: var(--text-light);
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        transition: var(--transition);
+    }
+
+    .categories-list a:hover .count {
+        background: var(--primary-light);
+        color: var(--primary-color);
+    }
+
+    .recent-post {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .recent-post:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .recent-post-image {
+        width: 70px;
+        height: 70px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .recent-post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .recent-post-content h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .recent-post-content .date {
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        background: var(--gray-200);
+        color: var(--text-light);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        transition: var(--transition);
+    }
+
+    .tag:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    /* Newsletter */
+    .newsletter-section {
+        background-color: var(--secondary-light);
+        padding: 3rem 0;
+        text-align: center;
+    }
+
+    .newsletter-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .newsletter-title {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .newsletter-description {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .newsletter-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+        border-radius: 30px;
+        font-size: 0.95rem;
+    }
+
+    .newsletter-button {
+        background: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 30px;
+        padding: 0 1.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+    }
+
+    .newsletter-button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+    }
+
+    .pagination-item {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--white);
+        color: var(--text-light);
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .pagination-item:hover {
+        background: var(--secondary-light);
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .pagination-item.active {
+        background: var(--secondary-color);
+        color: var(--white);
+    }
+
+    .pagination-arrow {
+        background: var(--white);
+        color: var(--text-light);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .pagination-arrow:hover {
+        background: var(--secondary-color);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    /* Footer */
+    footer {
+        background: var(--background-dark);
+        color: var(--white);
+        padding: var(--section-padding) 0 var(--spacing-md);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin: 0 auto;
+    }
+
+    .footer-section h4 {
+        color: var(--accent-color);
+        font-size: 1.2rem;
+        margin-bottom: 1.25rem;
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-section h4::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: var(--accent-color);
+    }
+
+    .footer-section ul {
+        list-style: none;
+    }
+
+    .footer-section li {
+        margin-bottom: 0.75rem;
+    }
+
+    .footer-section a {
+        color: var(--gray-400);
+        transition: var(--transition);
+        display: inline-block;
+        padding: 0.25rem 0;
+    }
+
+    .footer-section a:hover {
+        color: var(--accent-color);
+        transform: translateX(3px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        transition: var(--transition);
+        color: var(--white);
+    }
+
+    .social-links a:hover {
+        background: var(--accent-color);
+        transform: translateY(-2px);
+        color: var(--background-dark);
+    }
+
+    .copyright {
+        text-align: center;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+        z-index: 999;
+        box-shadow: var(--shadow-md);
+        font-size: 1.2rem;
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .back-to-top:hover {
+        background: var(--primary-dark);
+    }
+
+    /* Media Queries */
+    @media (max-width: 1024px) {
+        .blog-layout {
+            flex-direction: column;
+        }
+
+        .blog-sidebar {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar-container {
+            width: 95%;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 0;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-links.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-links a {
+            font-size: 1rem;
+            padding: 0.75rem 0;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .nav-links a:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .blog-header {
+            padding-top: calc(var(--navbar-height) + 2rem);
+            padding-bottom: 2rem;
+        }
+
+        .blog-header h1 {
+            font-size: 2rem;
+        }
+
+        .featured-image {
+            height: 250px;
+        }
+
+        .featured-content {
+            padding: 1.5rem;
+        }
+
+        .featured-title {
+            font-size: 1.5rem;
+        }
+
+        .blog-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .newsletter-form {
+            flex-direction: column;
+        }
+
+        .newsletter-button {
+            width: 100%;
+            padding: 0.75rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .featured-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .pagination {
+            gap: 0.25rem;
+        }
+
+        .pagination-item, .pagination-arrow {
+            width: 35px;
+            height: 35px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>           
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a> 
+            <a href="membership.html">Membership</a>           
+            <a href="about.html">About</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="cta-button">Member Portal</a>
+        </div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+    </div>
+</nav>
+
+<!-- Blog Header -->
+<header class="blog-header">
+    <div class="container">
+        <h1>HOSU Blog</h1>
+        <p>Latest insights, research updates, and stories from the Hematology & Oncology Society of Uganda</p>
+    </div>
+</header>
+
+<!-- Blog Content -->
+<section class="blog-content">
+    <div class="container">
+        <!-- Featured Post -->
+        <div class="featured-post">
+            <div class="featured-image">
+                <img src="img/IMG_7825.webp" alt="Featured Post" loading="lazy">
+            </div>
+            <div class="featured-content">
+                <span class="featured-tag">Featured</span>
+                <h2 class="featured-title">Advances in Cancer Treatment: New Hope for Ugandan Patients</h2>
+                <p class="featured-excerpt">Recent developments in cancer treatment protocols are bringing new hope to patients across Uganda. With improved access to targeted therapies and immunotherapies, oncologists are seeing better outcomes and quality of life for patients with previously difficult-to-treat cancers.</p>
+                <div class="featured-meta">
+                    <div class="featured-author">
+                        <img src="img/IMG_7926.webp" alt="Dr. Nixon Niyonzima" loading="lazy">
+                        <span>Dr. Nixon Niyonzima</span>
+                    </div>
+                    <div class="featured-date">June 15, 2024</div>
+                </div>
+                <a href="#" class="read-more">Read Full Article <span>→</span></a>
+            </div>
+        </div>
+
+        <div class="blog-layout">
+            <div class="blog-main">
+                <h2 class="section-title">Latest Articles</h2>
+                
+                <div class="blog-grid">
+                    <!-- Blog Post 1 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_7958.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Research</span>
+                            <h3><a href="#">Understanding the Rising Incidence of Colorectal Cancer in Young Adults</a></h3>
+                            <p>A concerning trend has emerged in recent years with colorectal cancer rates increasing among adults under 50. Our researchers examine potential causes and screening recommendations.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_7977.webp" alt="Dr. Fred Okuku" loading="lazy">
+                                    <span>Dr. Fred Okuku</span>
+                                </div>
+                                <div class="blog-meta-date">June 10, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_7900.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Patient Care</span>
+                            <h3><a href="#">Navigating Cancer Treatment: A Guide for Patients and Families</a></h3>
+                            <p>Receiving a cancer diagnosis can be overwhelming. This comprehensive guide helps patients and their families understand what to expect during treatment and how to prepare.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_8005.webp" alt="Sr. Ritah Bafumba" loading="lazy">
+                                    <span>Sr. Ritah Bafumba</span>
+                                </div>
+                                <div class="blog-meta-date">June 5, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Blog Post 3 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_8022.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Education</span>
+                            <h3><a href="#">Training the Next Generation of Oncologists in Uganda</a></h3>
+                            <p>HOSU's fellowship program is addressing the critical shortage of oncology specialists in Uganda. Learn about our comprehensive training approach and the impact of our graduates.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_8317.webp" alt="Dr. Jackson Orem" loading="lazy">
+                                    <span>Dr. Jackson Orem</span>
+                                </div>
+                                <div class="blog-meta-date">May 28, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Blog Post 4 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_7977.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Community</span>
+                            <h3><a href="#">Cancer Awareness Campaigns: Reaching Rural Communities</a></h3>
+                            <p>Our mobile screening initiatives are bringing cancer awareness and early detection services to underserved rural areas. See how these programs are saving lives through education and access.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_7926.webp" alt="Dr. Grace Tumwine" loading="lazy">
+                                    <span>Dr. Grace Tumwine</span>
+                                </div>
+                                <div class="blog-meta-date">May 20, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Blog Post 5 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_8005.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Treatment</span>
+                            <h3><a href="#">Radiation Therapy Advancements at Uganda Cancer Institute</a></h3>
+                            <p>The recent installation of advanced linear accelerators at UCI has revolutionized radiation treatment capabilities. Learn about the new precision techniques now available to patients.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_7958.webp" alt="Dr. Ssekagya Christine" loading="lazy">
+                                    <span>Dr. Ssekagya Christine</span>
+                                </div>
+                                <div class="blog-meta-date">May 15, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Blog Post 6 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="img/IMG_7825.webp" alt="Blog Post" loading="lazy">
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Research</span>
+                            <h3><a href="#">Genomic Profiling in African Populations: Implications for Cancer Treatment</a></h3>
+                            <p>Our collaborative research is uncovering unique genetic markers in African populations that may influence cancer risk and treatment response. This work is paving the way for more personalized approaches.</p>
+                            <div class="blog-meta">
+                                <div class="blog-meta-author">
+                                    <img src="img/IMG_8022.webp" alt="Dr. Solomon Kibudde" loading="lazy">
+                                    <span>Dr. Solomon Kibudde</span>
+                                </div>
+                                <div class="blog-meta-date">May 8, 2024</div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="pagination-arrow">←</a>
+                    <a href="#" class="pagination-item active">1</a>
+                    <a href="#" class="pagination-item">2</a>
+                    <a href="#" class="pagination-item">3</a>
+                    <a href="#" class="pagination-item">4</a>
+                    <a href="#" class="pagination-arrow">→</a>
+                </div>
+            </div>
+            
+            <aside class="blog-sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Search</h3>
+                    <form class="search-form">
+                        <input type="text" class="search-input" placeholder="Search articles...">
+                        <button type="submit" class="search-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="categories-list">
+                        <li><a href="#">Research <span class="count">12</span></a></li>
+                        <li><a href="#">Patient Care <span class="count">8</span></a></li>
+                        <li><a href="#">Treatment <span class="count">15</span></a></li>
+                        <li><a href="#">Education <span class="count">6</span></a></li>
+                        <li><a href="#">Community <span class="count">9</span></a></li>
+                        <li><a href="#">Events <span class="count">4</span></a></li>
+                    </ul>
+                </div>
+                
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Recent Posts</h3>
+                    <div class="recent-posts">
+                        <div class="recent-post">
+                            <div class="recent-post-image">
+                                <img src="img/IMG_7825.webp" alt="Recent Post" loading="lazy">
+                            </div>
+                            <div class="recent-post-content">
+                                <h4><a href="#">Advances in Cancer Treatment: New Hope for Ugandan Patients</a></h4>
+                                <span class="date">June 15, 2024</span>
+                            </div>
+                        </div>
+                        <div class="recent-post">
+                            <div class="recent-post-image">
+                                <img src="img/IMG_7958.webp" alt="Recent Post" loading="lazy">
+                            </div>
+                            <div class="recent-post-content">
+                                <h4><a href="#">Understanding the Rising Incidence of Colorectal Cancer</a></h4>
+                                <span class="date">June 10, 2024</span>
+                            </div>
+                        </div>
+                        <div class="recent-post">
+                            <div class="recent-post-image">
+                                <img src="img/IMG_7900.webp" alt="Recent Post" loading="lazy">
+                            </div>
+                            <div class="recent-post-content">
+                                <h4><a href="#">Navigating Cancer Treatment: A Guide for Patients</a></h4>
+                                <span class="date">June 5, 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Tags</h3>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">Cancer</a>
+                        <a href="#" class="tag">Research</a>
+                        <a href="#" class="tag">Treatment</a>
+                        <a href="#" class="tag">Oncology</a>
+                        <a href="#" class="tag">Hematology</a>
+                        <a href="#" class="tag">Patients</a>
+                        <a href="#" class="tag">Healthcare</a>
+                        <a href="#" class="tag">Uganda</a>
+                        <a href="#" class="tag">Africa</a>
+                        <a href="#" class="tag">Education</a>
+                        <a href="#" class="tag">Awareness</a>
+                        <a href="#" class="tag">Screening</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="newsletter-container">
+        <h2 class="newsletter-title">Subscribe to Our Newsletter</h2>
+        <p class="newsletter-description">Stay updated with the latest research, events, and cancer care advancements in Uganda</p>
+        <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-button">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About HOSU</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="research.html">Research</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <address>
+                HOSU Headquarters<br>
+                Kampala, Uganda<br>
+                <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                <a href="mailto:info@hosu.org">info@hosu.org</a>
+            </address>
+        </div>
+        <div class="footer-section">
+            <h4>Connect</h4>
+            <div class="social-links">
+                <a href="https://twitter.com/HemOnc_Uganda" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                </a>
+                <a href="https://linkedin.com/Hematology-Oncology-Society-of-Uganda" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://facebook.com/HOSU" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+    </div>
+</footer>
+
+<a href="#" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = navLinks.classList.contains('active');
+        navLinks.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        menuToggle.innerHTML = isExpanded ? '☰' : '✕';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+            navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.innerHTML = '☰';
+        }
+    });
+
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+        
+        // Navbar scroll effect with adaptive background
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('scrolled', window.pageYOffset > 50);
+        
+        // Adaptive background based on scroll position
+        if (window.pageYOffset > 50) {
+            navbar.style.backdropFilter = 'blur(15px)';
+            navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+        } else {
+            navbar.style.backdropFilter = 'blur(5px)';
+            navbar.style.background = 'transparent';
+        }
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 70;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
