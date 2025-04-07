@@ -375,6 +375,341 @@
             }
         }
 
+        /* Executive Council Styles (from index.html) */
+        .members-section {
+            padding: 4rem 5%;
+            background: var(--background-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .members-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .members-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .members-carousel {
+            position: relative;
+            height: 380px;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .member-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .member-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .member-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            width: 220px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .member-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .member-card:hover .member-image img {
+            transform: scale(1.05);
+        }
+
+        .member-info {
+            padding: 1rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(to bottom, var(--white), #f7fafc);
+        }
+
+        .member-title {
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .member-name {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .member-profession {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .read-more-button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .read-more-button:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            z-index: 10;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .carousel-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            pointer-events: auto;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .carousel-arrow.prev {
+            left: 10px;
+        }
+
+        .carousel-arrow.next {
+            right: 10px;
+        }
+
+        /* Member details overlay */
+        .member-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .member-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .member-details-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .member-overlay.active .member-details-card {
+            transform: translateY(0);
+        }
+
+        .close-overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #edf2f7;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: background-color 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .close-overlay:hover {
+            background: #e2e8f0;
+        }
+
+        .detail-member-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .detail-member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-member-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .detail-member-name {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .member-bio {
+            margin-top: 1.5rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .member-bio h4 {
+            color: var(--secondary-color);
+            margin: 1.25rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .member-contact-info {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            background: #f7fafc;
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .contact-item svg {
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             :root {
@@ -429,11 +764,23 @@
             .leadership-grid {
                 grid-template-columns: 1fr;
             }
+
+            /* Adjust responsive behavior for members carousel */
+            .members-carousel {
+                height: 600px; /* Adjusted for stacked layout */
+            }
+
+            .member-slide {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
+   <!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-container">
         <div class="logo">
             <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
         </div>
@@ -443,10 +790,12 @@
             <a href="research.html">Research</a> 
             <a href="membership.html">Membership</a>           
             <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
             <a href="login.html" class="cta-button">Member Portal</a>
         </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+    </div>
     </nav>
 
     <section class="about-hero">
@@ -515,10 +864,233 @@
         </div>
     </section>
 
-    <section class="leadership-section">
+    <!-- Leadership Section with Executive Council -->
+    <section class="leadership-section" id="leadership">
         <h2 class="section-title">Our Leadership</h2>
-        <div class="leadership-grid">
-            <!-- Leadership cards would go here -->
+        
+        <!-- Executive Council Section (moved from index.html) -->
+        <div class="members-container">
+            <p class="members-subtitle">Meet the leaders shaping the future of cancer care in Uganda</p>
+            
+            <div class="members-carousel">
+                <!-- Carousel Navigation Arrows -->
+                <div class="carousel-arrows">
+                    <button class="carousel-arrow prev" aria-label="Previous slide">&#8249;</button>
+                    <button class="carousel-arrow next" aria-label="Next slide">&#8250;</button>
+                </div>
+                
+                <!-- Slide 1 -->
+                <div class="member-slide active">
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Ddungu Henry" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">President</div>
+                            <h3 class="member-name">Dr. Ddungu Henry</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('ddungu-henry')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Nabbosa Valeria" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">President Elect</div>
+                            <h3 class="member-name">Dr. Nabbosa Valeria</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('nabbosa-valeria')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Odhiambo Clara Atieno" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">General Secretary</div>
+                            <h3 class="member-name">Dr. Odhiambo Clara Atieno</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('odhiambo-clara')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="member-slide">
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Niyonzima Nixon" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Treasurer</div>
+                            <h3 class="member-name">Dr. Niyonzima Nixon</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('niyonzima-nixon')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kakungulu Edward" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Publicity Secretary</div>
+                            <h3 class="member-name">Dr. Kakungulu Edward</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('kakungulu-edward')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Namazzi Ruth" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Hematology</div>
+                            <h3 class="member-name">Dr. Namazzi Ruth</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('namazzi-ruth')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="member-slide">
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Akullo Anne" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Pediatric Oncology</div>
+                            <h3 class="member-name">Dr. Akullo Anne</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('akullo-anne')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Bogere Naghib" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Medical Oncology</div>
+                            <h3 class="member-name">Dr. Bogere Naghib</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('bogere-naghib')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Asiimwe Lois" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Surgical Oncology</div>
+                            <h3 class="member-name">Dr. Asiimwe Lois</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('asiimwe-lois')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 4 -->
+                <div class="member-slide">
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kibudde Solomon" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Radiation Oncology</div>
+                            <h3 class="member-name">Dr. Kibudde Solomon</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('kibudde-solomon')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Ssali Francis" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Research</div>
+                            <h3 class="member-name">Dr. Ssali Francis</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('ssali-francis')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Lukande Robert" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Pathology</div>
+                            <h3 class="member-name">Dr. Lukande Robert</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('lukande-robert')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional slides for other council members -->
+                <!-- Slide 5 -->
+                <div class="member-slide">
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kadhumbula Sylvester" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Laboratory</div>
+                            <h3 class="member-name">Dr. Kadhumbula Sylvester</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('kadhumbula-sylvester')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Ms. Irumba Lisa" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Palliative Care</div>
+                            <h3 class="member-name">Ms. Irumba Lisa</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('irumba-lisa')">Read More</button>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-image">
+                            <img src="/placeholder.svg?height=180&width=220" alt="Mr. Moses Echodu" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <div class="member-title">Representative Civil Society Organizations</div>
+                            <h3 class="member-name">Mr. Moses Echodu</h3>
+                            <div class="member-profession"></div>
+                            <button class="read-more-button" onclick="showMemberDetails('moses-echodu')">Read More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <div class="carousel-dot active" data-slide="0"></div>
+                <div class="carousel-dot" data-slide="1"></div>
+                <div class="carousel-dot" data-slide="2"></div>
+                <div class="carousel-dot" data-slide="3"></div>
+                <div class="carousel-dot" data-slide="4"></div>
+            </div>
+        </div>
+        
+        <!-- Member Details Overlay -->
+        <div id="member-overlay" class="member-overlay">
+            <div class="member-details-card">
+                <button class="close-overlay" onclick="closeMemberDetails()">×</button>
+                <div class="detail-member-image">
+                    <img id="detail-image" src="/placeholder.svg?height=150&width=150" alt="Council Member" loading="lazy">
+                </div>
+                <div class="detail-member-title" id="detail-title">Position</div>
+                <h2 class="detail-member-name" id="detail-name">Member Name</h2>
+                <div class="member-bio" id="detail-bio">
+                    <p>Loading member information...</p>
+                </div>
+                <div class="member-contact-info" id="detail-contact">
+                    <!-- Contact info will be populated by JavaScript -->
+                </div>
+            </div>
         </div>
     </section>
 
@@ -530,17 +1102,16 @@
                     <li><a href="about.html">About HOSU</a></li>
                     <li><a href="membership.html">Membership Benefits</a></li>
                     <li><a href="research.html">Research Initiatives</a></li>
-                    <li><a href="leadership.html">Society Leadership</a></li>
+                    <li><a href="#leadership">Society Leadership</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <address>
                     HOSU Headquarters<br>
-                    [Physical Address]<br>
-                    Uganda<br>
-                    ☎ <a href="tel:+256XXX">+256 XXX</a><br>
-                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                    Kampala, Uganda<br>
+                    ☎ <a href="tel:+256123456789">+256 123 456 789</a><br>
+                    ✉ <a href="/cdn-cgi/l/email-protection#eb82858d84ab8384989ec584998c"><span class="__cf_email__" data-cfemail="4821262e270820273b3d66273a2f">[email&#160;protected]</span></a>
                 </address>
             </div>
             <div class="footer-section">
@@ -562,10 +1133,11 @@
             </div>
         </div>
         <div class="copyright">
-            <p>© 2023 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Mobile menu toggle
@@ -601,6 +1173,66 @@
                     navLinks.classList.remove('active');
                 }
             });
+        });
+
+        // Member carousel functionality
+        let currentSlide = 0;
+        const memberSlides = document.querySelectorAll('.member-slide');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        const prevButton = document.querySelector('.carousel-arrow.prev');
+        const nextButton = document.querySelector('.carousel-arrow.next');
+
+        function showSlide(index) {
+            memberSlides.forEach(slide => slide.classList.remove('active'));
+            carouselDots.forEach(dot => dot.classList.remove('active'));
+            
+            memberSlides[index].classList.add('active');
+            carouselDots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % memberSlides.length;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + memberSlides.length) % memberSlides.length;
+            showSlide(prev);
+        }
+
+        // Set up event listeners for arrow buttons
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+
+        // Click events for dots
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Member details overlay functionality
+        function showMemberDetails(memberId) {
+            const overlay = document.getElementById('member-overlay');
+            overlay.classList.add('active');
+            
+            // In a real implementation, you would fetch member data here
+            // For now, we'll just show the overlay
+            document.getElementById('detail-name').textContent = document.querySelector(`[onclick="showMemberDetails('${memberId}')"]`).closest('.member-card').querySelector('.member-name').textContent;
+            document.getElementById('detail-title').textContent = document.querySelector(`[onclick="showMemberDetails('${memberId}')"]`).closest('.member-card').querySelector('.member-title').textContent;
+        }
+
+        function closeMemberDetails() {
+            const overlay = document.getElementById('member-overlay');
+            overlay.classList.remove('active');
+        }
+
+        // Close overlay when clicking outside the details card
+        document.getElementById('member-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMemberDetails();
+            }
         });
     </script>
 </body>

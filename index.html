@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HOSU - Hematology & Oncology Society of Uganda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* CSS for home page - ensuring uniform colors with blog page */
 :root {
@@ -39,7 +42,7 @@
     --section-width: 90%;
     --section-max-width: 1000px;
     --hero-height: 600px;
-    --section-padding: 3rem;
+    --section-padding: 2.5rem; /* Reduced from 3rem */
     --hero-content-width: 45%;
     --hero-image-width: 50%;
 }
@@ -296,7 +299,7 @@ section {
 
 /* Typography */
 .hero h1 {
-    font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+    font-size: clamp(1.7rem, 3.5vw, 2.3rem); /* Slightly reduced */
     line-height: 1.2;
     margin-bottom: 1.2rem;
     color: var(--secondary-color);
@@ -316,7 +319,7 @@ section {
 }
 
 .hero p {
-    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-size: clamp(0.95rem, 2vw, 1.1rem); /* Slightly reduced */
     margin-bottom: 1.8rem;
     color: var(--text-light);
     line-height: 1.6;
@@ -409,9 +412,9 @@ section {
     box-shadow: 0 0 10px 2px rgba(230, 57, 70, 0.5);
 }
 
-/* Partner Logos Section */
+/* Partner Logos Section - UPDATED: Compact with left-aligned title */
 .partners-section {
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-sm) 0; /* Reduced padding */
     background: var(--white);
     position: relative;
     display: flex;
@@ -422,27 +425,34 @@ section {
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
-    text-align: center;
+}
+
+.partners-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 .partners-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Smaller font */
     color: var(--text-light);
-    margin-bottom: 1.5rem;
     font-weight: 500;
+    text-align: left;
+    margin: 0;
 }
 
 .partners-grid {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Left-aligned */
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem; /* Reduced gap */
 }
 
 .partner-logo {
-    height: 80px;
-    max-width: 180px;
+    height: 70px; /* Smaller height */
+    max-width: 150px; /* Smaller width */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -462,15 +472,15 @@ section {
     object-fit: contain;
 }
 
-/* Members Carousel Section */
-.members-section {
-    padding: var(--spacing-lg) 0;
+/* Events Section - ENHANCED with new features */
+.events-section {
+    padding: var(--spacing-md) 0 var(--spacing-sm);
     background: var(--background-light);
     position: relative;
     overflow: hidden;
 }
 
-.members-container {
+.events-container {
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
@@ -479,8 +489,8 @@ section {
 
 .section-title {
     text-align: center;
-    margin-bottom: var(--spacing-lg);
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(1.5rem, 3.8vw, 2rem);
     color: var(--secondary-color);
     position: relative;
 }
@@ -491,354 +501,419 @@ section {
     width: 50px;
     height: 3px;
     background: var(--primary-color);
-    margin: 0.75rem auto 0;
+    margin: 0.5rem auto 0;
 }
 
-.members-subtitle {
-    font-size: 1.1rem;
+.events-subtitle {
+    font-size: 0.95rem;
     color: var(--text-light);
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Members Carousel Section - Adjusted Size */
-.members-carousel {
-    position: relative;
-    height: 380px; /* Adjusted height for better proportions */
-    margin: 0 auto;
-    max-width: 1000px; /* Added max-width to control overall size */
-}
-
-.member-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+/* Event filters */
+.event-filters {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
     flex-wrap: wrap;
 }
 
-.member-slide.active {
-    opacity: 1;
-    visibility: visible;
+.filter-button {
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-light);
 }
 
-.member-card {
+.filter-button:hover {
+    background: var(--gray-200);
+    transform: translateY(-2px);
+}
+
+.filter-button.active {
+    background: var(--secondary-color);
+    color: var(--white);
+    border-color: var(--secondary-color);
+}
+
+/* Events Carousel - ENHANCED with progress indicator */
+.events-carousel-container {
+    position: relative;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background-color: var(--primary-color);
+    z-index: 5;
+    transition: width 3s linear;
+}
+
+.events-carousel {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.carousel-slide {
+    display: flex;
+    flex: 0 0 100%;
+    justify-content: center;
+    gap: 1rem;
+    transition: transform 0.5s ease;
+    min-height: 320px;
+}
+
+/* Enhanced event cards with color coding and countdown */
+.event-card {
     background: var(--white);
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    width: 200px; /* Slightly reduced width */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 280px; /* Slightly reduced height */
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    max-height: 300px;
+    width: 200px;
+    flex: 0 0 auto;
+    transform: scale(0.98);
+    opacity: 0.9;
+    cursor: pointer;
     position: relative;
 }
 
-.member-card:hover {
-    transform: translateY(-5px);
+.event-card:hover, .event-card.active-card {
+    transform: translateY(-5px) scale(1);
     box-shadow: var(--shadow-md);
+    opacity: 1;
 }
 
-.member-image {
-    height: 160px; /* Adjusted height */
+/* Color coding for event types */
+.event-card[data-type="conference"] {
+    border-left: 3px solid var(--secondary-color);
+}
+
+.event-card[data-type="workshop"] {
+    border-left: 3px solid #2a9d8f;
+}
+
+.event-card[data-type="webinar"] {
+    border-left: 3px solid #8338ec;
+}
+
+.event-image {
+    height: 110px;
     overflow: hidden;
     position: relative;
 }
 
-.member-image img {
+.event-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.member-card:hover .member-image img {
+.event-card:hover .event-image img {
     transform: scale(1.05);
 }
 
-.member-info {
-    padding: 1rem;
-    text-align: center;
+.event-content {
+    padding: 0.6rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-.member-title {
-    color: var(--primary-color);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    text-transform: uppercase;
-}
-
-.member-name {
+.event-type {
+    display: inline-block;
+    padding: 0.15rem 0.4rem;
+    background: var(--accent-color);
     color: var(--secondary-color);
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    margin-bottom: 0.2rem;
 }
 
-.member-profession {
+.event-date {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    font-size: 0.7rem;
+}
+
+.event-title {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+}
+
+.event-description {
+    margin-bottom: 0.4rem;
     color: var(--text-light);
-    font-size: 0.85rem;
+    flex-grow: 1;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.read-more-button {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
+/* Event countdown timer */
+.event-countdown {
+    margin: 0.4rem 0;
+    font-size: 0.7rem;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.countdown-label {
     font-weight: 500;
 }
 
-.read-more-button:hover {
-    background-color: var(--secondary-light);
-}
-
-/* Member details overlay */
-.member-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1050;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.member-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.member-details-card {
-    background: var(--white);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-}
-
-.member-overlay.active .member-details-card {
-    transform: translateY(0);
-}
-
-.close-overlay {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--gray-200);
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-}
-
-.close-overlay:hover {
-    background: var(--gray-300);
-}
-
-.detail-member-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 0 auto 1.5rem;
-    overflow: hidden;
-    border: 3px solid var(--accent-color);
-}
-
-.detail-member-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.detail-member-title {
-    color: var(--primary-color);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.detail-member-name {
-    color: var(--secondary-color);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-
-.member-bio {
-    margin-top: 1.5rem;
-    color: var(--text-light);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.member-bio h4 {
-    color: var(--secondary-color);
-    margin: 1rem 0 0.5rem;
-    font-size: 1.1rem;
-}
-
-.member-contact-info {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.contact-item svg {
-    color: var(--primary-color);
-    flex-shrink: 0;
-}
-
-.carousel-controls {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.carousel-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--gray-300);
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-}
-
-.carousel-dot.active {
-    background: var(--primary-color);
-    transform: scale(1.2);
-}
-
-.carousel-dot.active::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+.countdown-time {
     background: var(--primary-light);
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 1.5s infinite;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
-@keyframes pulse {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1.5);
-        opacity: 0;
-    }
-}
-
-.carousel-arrows {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
+.event-footer {
     display: flex;
     justify-content: space-between;
-    padding: 0 1rem;
-    z-index: 10;
-    width: 100%;
-    pointer-events: none;
+    align-items: center;
+    padding-top: 0.3rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: auto;
 }
 
-.carousel-arrow {
-    width: 50px;
-    height: 50px;
+.event-location {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--text-light);
+    font-size: 0.65rem;
+}
+
+.register-button {
+    padding: 0.2rem 0.4rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 0.65rem;
+}
+
+.register-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Calendar button */
+.calendar-button {
+    background: var(--secondary-light);
+    border: none;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: var(--white);
-    color: var(--secondary-color);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    pointer-events: auto;
-    border: none;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    margin-left: 0.3rem;
 }
 
-.carousel-arrow:hover {
+.calendar-button:hover {
     background: var(--secondary-color);
-    color: var(--white);
+    color: white;
     transform: scale(1.1);
 }
 
-.carousel-arrow:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+.featured-event {
+    border: 2px solid var(--primary-color);
+    position: relative;
+}
+
+.featured-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.6rem;
+    z-index: 10;
+}
+
+/* Enhanced carousel navigation */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--white);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border: none;
+    opacity: 0.7;
+}
+
+.carousel-arrow:hover {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    opacity: 1;
+}
+
+.carousel-arrow.clicked {
+    transform: translateY(-50%) scale(0.95);
+    background-color: var(--primary-color);
+    color: var(--white);
 }
 
 .carousel-arrow.prev {
-    left: 10px;
+    left: 0;
 }
 
 .carousel-arrow.next {
-    right: 10px;
+    right: 0;
+}
+
+/* Enhanced carousel dots */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--gray-300);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.carousel-dot:hover {
+    opacity: 0.8;
+    transform: scale(1.2);
+}
+
+.carousel-dot.active {
+    background-color: var(--primary-color);
+    opacity: 1;
+}
+
+.carousel-dot.clicked {
+    transform: scale(1.3);
+    background-color: var(--primary-color);
+}
+
+/* Past events highlight */
+.past-events-highlight {
+    margin: 1.5rem auto;
+    max-width: 600px;
+    background: var(--gray-100);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.highlight-title {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.highlight-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.highlight-image {
+    flex: 0 0 120px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.highlight-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.highlight-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.view-all-events {
+    margin-top: 1.25rem;
+    text-align: center;
+}
+
+.view-all-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.view-all-button:hover {
+    background: var(--secondary-dark);
+    transform: translateY(-2px);
 }
 
 /* Tabs Section */
 .tabs-section {
-    padding: var(--spacing-sm) 0;
+    padding: var(--spacing-xs) 0;
     background: var(--gray-100);
     position: relative;
     display: flex;
@@ -855,12 +930,12 @@ section {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
 .tab-button {
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1.25rem;
     background: var(--white);
     border: none;
     border-radius: var(--border-radius);
@@ -869,6 +944,7 @@ section {
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    font-size: 0.9rem;
 }
 
 .tab-button:hover {
@@ -904,7 +980,7 @@ section {
 }
 
 .surgical-oncology-intro {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
@@ -912,21 +988,21 @@ section {
     max-width: 800px;
     margin: 0 auto;
     color: var(--text-light);
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.7;
 }
 
 .role-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
 }
 
 .role-card {
     background: var(--gray-100);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
+    padding: 1.25rem;
     box-shadow: var(--shadow-sm);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
@@ -940,10 +1016,10 @@ section {
 
 .role-card h3 {
     color: var(--secondary-color);
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
     position: relative;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
 }
 
 .role-card h3::after {
@@ -958,7 +1034,7 @@ section {
 
 .role-card p {
     color: var(--text-light);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
 }
 
@@ -974,14 +1050,14 @@ section {
 }
 
 .myths-list {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .myth-item {
     background: var(--white);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
     box-shadow: var(--shadow-sm);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -993,8 +1069,8 @@ section {
 
 .myth-item h3 {
     color: var(--primary-color);
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
     display: flex;
     align-items: center;
 }
@@ -1002,22 +1078,22 @@ section {
 .myth-item h3 span {
     background: var(--primary-light);
     color: var(--primary-color);
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
+    margin-right: 0.6rem;
+    font-size: 0.85rem;
     font-weight: 700;
 }
 
 .myth-item p {
     color: var(--text-light);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
-    padding-left: 2.5rem;
+    padding-left: 2.25rem;
 }
 
 .testimonials-section {
@@ -1034,14 +1110,14 @@ section {
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .testimonial-card {
     background: var(--gray-100);
     border-radius: var(--border-radius);
-    padding: 2rem;
+    padding: 1.75rem;
     box-shadow: var(--shadow-sm);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
@@ -1057,7 +1133,7 @@ section {
     position: absolute;
     top: 1rem;
     left: 1.5rem;
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: var(--primary-color);
     opacity: 0.2;
     line-height: 1;
@@ -1070,21 +1146,21 @@ section {
 
 .testimonial-text {
     color: var(--text-light);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.7;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     font-style: italic;
 }
 
 .testimonial-author {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .testimonial-author-image {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -1097,277 +1173,13 @@ section {
 
 .testimonial-author-info h4 {
     color: var(--secondary-color);
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
 }
 
 .testimonial-author-info p {
     color: var(--text-light);
-    font-size: 0.85rem;
-}
-
-.blog-section {
-    background-color: var(--background-light);
-    padding: var(--section-padding) 0;
-}
-
-.blog-container {
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
-}
-
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.blog-card {
-    background: var(--white);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.blog-image {
-    height: 0;
-    padding-bottom: 56.25%;
-    position: relative;
-    overflow: hidden;
-}
-
-.blog-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.blog-card:hover .blog-image img {
-    transform: scale(1.05);
-}
-
-.blog-content {
-    padding: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.blog-category {
-    color: var(--primary-color);
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-}
-
-.blog-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-    color: var(--secondary-color);
-    font-weight: 600;
-}
-
-.blog-card p {
-    margin-bottom: 1.25rem;
-    color: var(--text-light);
-    flex-grow: 1;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.blog-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-    font-size: 0.85rem;
-    color: var(--text-light);
-}
-
-.blog-meta-author {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.blog-meta-author img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.blog-meta-date {
-    font-style: italic;
-}
-
-.directory-section {
-    background-color: var(--white);
-    padding: var(--section-padding) 0;
-}
-
-.directory-container {
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
-}
-
-.directory-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.directory-card {
-    background: var(--gray-100);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.directory-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.directory-image {
-    height: 0;
-    padding-bottom: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.directory-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.directory-card:hover .directory-image img {
-    transform: scale(1.05);
-}
-
-.directory-info {
-    padding: 1.25rem;
-    text-align: center;
-}
-
-.directory-info h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-    color: var(--secondary-color);
-    font-weight: 600;
-}
-
-.directory-info h4 {
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
-    color: var(--primary-color);
-    font-weight: 500;
-}
-
-.directory-info p {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-bottom: 0.75rem;
-}
-
-.directory-contact {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-}
-
-.directory-contact a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: var(--secondary-light);
-    color: var(--secondary-color);
-    transition: var(--transition);
-}
-
-.directory-contact a:hover {
-    background: var(--secondary-color);
-    color: var(--white);
-    transform: translateY(-2px);
-}
-
-/* Stats Section */
-.stats-section {
-    padding: var(--spacing-lg) 0;
-    background: var(--white);
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.stats-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 2rem;
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
-}
-
-.stat-item {
-    flex: 1;
-    min-width: 220px;
-    text-align: center;
-    padding: 1.75rem;
-    background: var(--gray-100);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.stat-number {
-    font-size: 2.75rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    line-height: 1;
-}
-
-.stat-label {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    font-weight: 500;
+    font-size: 0.8rem;
 }
 
 /* CTA Section */
@@ -1381,7 +1193,7 @@ section {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    min-height: 350px;
+    min-height: 320px;
 }
 
 .cta-section::before {
@@ -1426,7 +1238,7 @@ section {
 
 .cta-inner {
     background-color: transparent;
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: var(--border-radius);
     backdrop-filter: blur(4px);
     max-width: 700px;
@@ -1435,7 +1247,7 @@ section {
 
 .cta-section .section-title {
     color: var(--white);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .cta-section .section-title::after {
@@ -1444,31 +1256,31 @@ section {
 
 .cta-section p {
     max-width: 600px;
-    margin: 0 auto 1.5rem;
-    font-size: 1.15rem;
+    margin: 0 auto 1.25rem;
+    font-size: 1.1rem;
     line-height: 1.6;
 }
 
 .cta-section .cta-buttons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
 }
 
 .cta-section .cta-button {
     background: var(--white);
     color: var(--secondary-color);
-    padding: 0.85rem 1.75rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 30px;
     min-height: 44px;
     min-width: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0.25rem;
-    font-size: 1rem;
+    margin: 0.2rem;
+    font-size: 0.95rem;
     transition: var(--transition);
     border: 2px solid var(--white);
 }
@@ -1514,7 +1326,7 @@ footer::before {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+    gap: 1.5rem;
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
@@ -1522,8 +1334,8 @@ footer::before {
 
 .footer-section h4 {
     color: var(--accent-color);
-    font-size: 1.2rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
     font-weight: 600;
     position: relative;
     display: inline-block;
@@ -1544,14 +1356,14 @@ footer::before {
 }
 
 .footer-section li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
 }
 
 .footer-section a {
     color: var(--gray-400);
     transition: var(--transition);
     display: inline-block;
-    padding: 0.25rem 0;
+    padding: 0.2rem 0;
 }
 
 .footer-section a:hover {
@@ -1566,8 +1378,8 @@ footer::before {
 
 .social-links {
     display: flex;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
+    gap: 0.6rem;
+    margin-top: 1rem;
     flex-wrap: wrap;
 }
 
@@ -1575,8 +1387,8 @@ footer::before {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     transition: var(--transition);
@@ -1591,10 +1403,10 @@ footer::before {
 
 .copyright {
     text-align: center;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
     width: var(--section-width);
     max-width: var(--section-max-width);
@@ -1607,8 +1419,8 @@ footer::before {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: var(--primary-color);
     color: var(--white);
@@ -1621,7 +1433,7 @@ footer::before {
     transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
     z-index: 999;
     box-shadow: var(--shadow-md);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .back-to-top.visible {
@@ -1631,6 +1443,40 @@ footer::before {
 
 .back-to-top:hover {
     background: var(--primary-dark);
+}
+
+/* Floating Donation Button */
+.floating-donate {
+    position: fixed;
+    right: 20px;
+    bottom: 80px;
+    z-index: 999;
+}
+
+.donate-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 0.6rem 1.25rem;
+    border-radius: 30px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    border: none;
+    font-size: 0.9rem;
+}
+
+.donate-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.donate-icon {
+    font-size: 1.1rem;
 }
 
 /* Custom cursor */
@@ -1659,7 +1505,7 @@ footer::before {
     }
 
     :root {
-        --section-padding: 2.5rem;
+        --section-padding: 2.25rem;
     }
 }
 
@@ -1675,19 +1521,13 @@ footer::before {
     :root {
         --navbar-height: 60px;
         --hero-height: auto;
-        --section-padding: 2rem;
+        --section-padding: 1.75rem;
         --hero-content-width: 100%;
         --hero-image-width: 100%;
     }
 
-    /* Adjust responsive behavior */
-    .members-carousel {
-        height: 600px; /* Adjusted for stacked layout */
-    }
-
-    .member-slide {
-        flex-direction: column;
-        align-items: center;
+    .carousel-slide {
+        flex-wrap: wrap;
     }
 }
 
@@ -1695,7 +1535,7 @@ footer::before {
     :root {
         --navbar-height: 60px;
         --hero-height: auto;
-        --section-padding: 1.5rem;
+        --section-padding: 1.25rem;
         --hero-content-width: 100%;
         --hero-image-width: 100%;
     }
@@ -1773,7 +1613,7 @@ footer::before {
     }
 
     .hero h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .hero .cta-buttons {
@@ -1789,126 +1629,32 @@ footer::before {
     }
 
     .section-title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
     }
 
-    .stats-container, .footer-content, .copyright {
-        width: 90%;
-    }
-
-    .footer-content {
-        text-align: center;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 1.5rem;
-    }
-    
-    .footer-section h4::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .social-links {
+    .event-filters {
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
     }
-    
-    .copyright {
-        margin-top: 1.5rem;
-    }
-    
-    .cta-inner {
-        padding: 1.5rem 1rem;
+
+    .filter-button {
+        margin-bottom: 0.5rem;
     }
 
-    .role-cards, .testimonials-grid, .directory-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .myth-item h3 {
-        font-size: 1.1rem;
-    }
-
-    .myth-item p {
-        padding-left: 2rem;
-    }
-    
-    .tabs-nav {
+    .highlight-content {
         flex-direction: column;
         align-items: center;
     }
-    
-    .tab-button {
+
+    .highlight-image {
         width: 100%;
+        max-width: 200px;
+    }
+
+    .highlight-text {
         text-align: center;
-    }
-    
-    .partners-grid {
-        gap: 1rem;
-    }
-    
-    .partner-logo {
-        height: 60px;
-        max-width: 140px;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .hero-container, .stats-container, .footer-content, .copyright {
-        width: 90%;
-    }
-    
-    .hero-container {
-        gap: 2rem;
-    }
-
-    :root {
-        --hero-content-width: 45%;
-        --hero-image-width: 50%;
-    }
-}
-
-@media (min-width: 1025px) {
-    .hero-container, .stats-container, .footer-content, .copyright {
-        width: 90%;
-    }
-}
-
-@media (orientation: landscape) and (max-width: 768px) {
-    .hero-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        height: auto;
-        align-items: center;
-    }
-
-    .hero-content {
-        padding: 1rem 0;
-        text-align: left;
-        grid-column: 1;
-    }
-
-    .hero h1::after {
-        left: 0;
-        transform: none;
-    }
-
-    .hero h1, .hero p {
-        text-align: left;
-    }
-
-    .hero-image-container {
-        position: relative;
-        aspect-ratio: 16/9;
-        width: 100%;
-        grid-column: 2;
-        margin-top: 0;
-        max-height: none;
-    }
-    
-    .hero .cta-buttons {
-        flex-direction: row;
-        justify-content: flex-start;
     }
 }
 
@@ -1917,23 +1663,26 @@ footer::before {
         width: 90%;
     }
     
-    .stat-item {
-        min-width: 150px;
-    }
-    
     :root {
-        --section-padding: 1.25rem;
+        --section-padding: 1.1rem;
     }
-}
 
-@media (min-width: 1400px) {
-    :root {
-        --hero-height: 650px;
-        --section-padding: 4rem;
+    .floating-donate {
+        right: 10px;
+        bottom: 70px;
+    }
+
+    .donate-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
     
-    .hero-container, .stats-container, .footer-content, .copyright {
-        max-width: var(--section-max-width);
+    .carousel-slide {
+        justify-content: center;
+    }
+    
+    .event-card {
+        width: 180px;
     }
 }
 
@@ -1951,42 +1700,35 @@ footer::before {
         transition: none !important;
         animation: none !important;
     }
-}
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background-light: #1a2639;
-        --text-color: #f1faee;
-        --text-light: #cbd5e0;
-        --gray-100: #2d3748;
-        --gray-200: #4a5568;
+    .events-carousel {
+        scroll-behavior: auto;
     }
     
-    .navbar {
-        background: rgba(26, 38, 57, 0.3);
+    .event-card {
+        transition: none;
     }
     
-    .navbar.scrolled {
-        background: rgba(26, 38, 57, 0.85);
-    }
-    
-    .blog-card {
-        background: #2c3e50;
-    }
-    
-    .blog-card p {
-        color: #ddd;
-    }
-    
-    .stat-item {
-        background: #2d3748;
+    .carousel-progress {
+        display: none;
     }
 }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- Custom cursor element -->
 <div class="custom-cursor" id="custom-cursor"></div>
+
+<!-- Floating Donation Button -->
+<div class="floating-donate">
+    <a href="#donate" class="donate-button">
+        <span class="donate-icon">❤</span>
+        Support Us
+    </a>
+</div>
 
 <!-- Navbar -->
 <nav class="navbar">
@@ -2027,7 +1769,6 @@ footer::before {
         <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
         <div class="hero-background" style="background-image: url('img/IMG_7900.webp')"></div>
         <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
         <div class="hero-background" style="background-image: url('img/IMG_8022.webp')"></div>
         <div class="hero-background" style="background-image: url('img/IMG_8005.webp')"></div>
         <div class="hero-background" style="background-image: url('img/IMG_8317.webp')"></div>
@@ -2038,7 +1779,9 @@ footer::before {
 <!-- Partner Logos Section -->
 <section id="partners" class="partners-section">
 <div class="partners-container">
-    <h3 class="partners-title">Our Partners</h3>
+    <div class="partners-header">
+        <h3 class="partners-title">Our Partners</h3>
+    </div>
     <div class="partners-grid">
         <div class="partner-logo">
             <img src="/placeholder.svg?height=60&width=120" alt="Uganda Cancer Institute" loading="lazy">
@@ -2059,321 +1802,200 @@ footer::before {
 </div>
 </section>
 
-<!-- Executive Council Section -->
-<section id="members" class="members-section">
-  <div class="members-container">
-      <h2 class="section-title">HOSU Executive Council</h2>
-      <p class="members-subtitle">Meet the leaders shaping the future of cancer care in Uganda</p>
+<!-- New and Upcoming Events Section with Enhanced Carousel -->
+<section id="events" class="events-section">
+  <div class="events-container">
+      <h2 class="section-title">New and Upcoming Events</h2>
+      <p class="events-subtitle">Join us for conferences, workshops, and webinars designed to advance oncology care and research</p>
       
-      <div class="members-carousel">
-          <!-- Carousel Navigation Arrows -->
-          <div class="carousel-arrows">
-              <button class="carousel-arrow prev" aria-label="Previous slide">&#8249;</button>
-              <button class="carousel-arrow next" aria-label="Next slide">&#8250;</button>
+      <!-- Event type filters -->
+      <div class="event-filters">
+          <button class="filter-button active" data-filter="all">All Events</button>
+          <button class="filter-button" data-filter="conference">Conferences</button>
+          <button class="filter-button" data-filter="workshop">Workshops</button>
+          <button class="filter-button" data-filter="webinar">Webinars</button>
+      </div>
+      
+      <div class="events-carousel-container">
+          <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
+          <button class="carousel-arrow next" aria-label="Next slide">❯</button>
+          
+          <div class="events-carousel">
+              <!-- Slide 1 -->
+              <div class="carousel-slide">
+                  <!-- Featured Event -->
+                  <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu">
+                      <span class="featured-badge">Featured</span>
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="UCI – PCAU – HOSU Conference" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Conference</span>
+                          <div class="event-date">Sept 10-12, 2025</div>
+                          <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
+                          <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">1 year, 5 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  📍 Kampala
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+
+                  <!-- Regular Event -->
+                  <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024">
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="Annual Oncology Conference 2024" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Conference</span>
+                          <div class="event-date">Sept 15-18, 2024</div>
+                          <h3 class="event-title">Annual Oncology Conference</h3>
+                          <p class="event-description">Join leading oncologists and researchers for our flagship conference.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">5 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  📍 London
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+
+                  <!-- Workshop Event -->
+                  <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop">
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="Immunotherapy Workshop" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Workshop</span>
+                          <div class="event-date">July 8-9, 2024</div>
+                          <h3 class="event-title">Immunotherapy Workshop</h3>
+                          <p class="event-description">A hands-on workshop on the latest developments in immunotherapy.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">3 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  📍 Boston
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+              
+              <!-- Slide 2 -->
+              <div class="carousel-slide">
+                  <!-- Webinar Event -->
+                  <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology">
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="Digital Pathology Webinar" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Webinar</span>
+                          <div class="event-date">June 25, 2024</div>
+                          <h3 class="event-title">Digital Pathology in Oncology</h3>
+                          <p class="event-description">Learn about advances in digital pathology for cancer diagnosis.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">2 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  🌐 Online
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+                  
+                  <!-- Workshop Event -->
+                  <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology">
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="Surgical Oncology Techniques" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Workshop</span>
+                          <div class="event-date">Aug 12-13, 2024</div>
+                          <h3 class="event-title">Surgical Oncology Techniques</h3>
+                          <p class="event-description">A workshop on the latest surgical techniques for oncology specialists.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">4 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  📍 Kampala
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+                  
+                  <!-- Webinar Event -->
+                  <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates">
+                      <div class="event-image">
+                          <img src="/placeholder.svg?height=110&width=200" alt="Cancer Research Updates" loading="lazy">
+                      </div>
+                      <div class="event-content">
+                          <span class="event-type">Webinar</span>
+                          <div class="event-date">July 20, 2024</div>
+                          <h3 class="event-title">Cancer Research Updates</h3>
+                          <p class="event-description">Stay up-to-date with the latest research findings in oncology.</p>
+                          <div class="event-countdown">
+                              <span class="countdown-label">Starts in:</span>
+                              <span class="countdown-time">3 months</span>
+                          </div>
+                          <div class="event-footer">
+                              <div class="event-location">
+                                  🌐 Online
+                              </div>
+                              <span class="register-button">Details</span>
+                          </div>
+                      </div>
+                  </a>
+              </div>
           </div>
           
-          <!-- Slide 1 -->
-          <div class="member-slide active">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Ddungu Henry" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">President</div>
-                      <h3 class="member-name">Dr. Ddungu Henry</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('ddungu-henry')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Nabbosa Valeria" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">President Elect</div>
-                      <h3 class="member-name">Dr. Nabbosa Valeria</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('nabbosa-valeria')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Odhiambo Clara Atieno" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">General Secretary</div>
-                      <h3 class="member-name">Dr. Odhiambo Clara Atieno</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('odhiambo-clara')">Read More</button>
-                  </div>
-              </div>
+          <!-- Carousel Navigation Dots -->
+          <div class="carousel-nav">
+              <span class="carousel-dot active" data-slide="0"></span>
+              <span class="carousel-dot" data-slide="1"></span>
           </div>
           
-          <!-- Slide 2 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Niyonzima Nixon" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Treasurer</div>
-                      <h3 class="member-name">Dr. Niyonzima Nixon</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('niyonzima-nixon')">Read More</button>
-                  </div>
+          <!-- Progress indicator for auto-scroll -->
+          <div class="carousel-progress"></div>
+      </div>
+      
+      <!-- Past events highlight -->
+      <div class="past-events-highlight">
+          <h3 class="highlight-title">Past Event Highlights</h3>
+          <div class="highlight-content">
+              <div class="highlight-image">
+                  <img src="/placeholder.svg?height=80&width=120" alt="2023 Conference Highlights" loading="lazy">
               </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kakungulu Edward" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Publicity Secretary</div>
-                      <h3 class="member-name">Dr. Kakungulu Edward</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kakungulu-edward')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Namazzi Ruth" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Hematology</div>
-                      <h3 class="member-name">Dr. Namazzi Ruth</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('namazzi-ruth')">Read More</button>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Akullo Anne" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Pediatric Oncology</div>
-                      <h3 class="member-name">Dr. Akullo Anne</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('akullo-anne')">Read More</button>
-                  </div>
-              </div>
-               <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Bogere Naghib" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Medical Oncology</div>
-                      <h3 class="member-name">Dr. Bogere Naghib</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('bogere-naghib')">Read More</button>
-                  </div>
-              </div>
-               <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Asiimwe Lois" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Surgical Oncology</div>
-                      <h3 class="member-name">Dr. Asiimwe Lois</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('asiimwe-lois')">Read More</button>
-                  </div>
-              </div>
-          </div>
-          
-           <!-- Slide 4 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kibudde Solomon" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Radiation Oncology</div>
-                      <h3 class="member-name">Dr. Kibudde Solomon</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kibudde-solomon')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Ssali Francis" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Research</div>
-                      <h3 class="member-name">Dr. Ssali Francis</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('ssali-francis')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Lukande Robert" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Pathology</div>
-                      <h3 class="member-name">Dr. Lukande Robert</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('lukande-robert')">Read More</button>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 5 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kadhumbula Sylvester" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Laboratory</div>
-                      <h3 class="member-name">Dr. Kadhumbula Sylvester</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kadhumbula-sylvester')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Ms. Irumba Lisa" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Palliative Care</div>
-                      <h3 class="member-name">Ms. Irumba Lisa</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('irumba-lisa')">Read More</button>
-                  </div>
-              </div>
-               <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Mr. Moses Echodu" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Civil Society Organizations</div>
-                      <h3 class="member-name">Mr. Moses Echodu</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('moses-echodu')">Read More</button>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 6 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Natukunda Barbra" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Students</div>
-                      <h3 class="member-name">Dr. Natukunda Barbra</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('natukunda-barbra')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Bafumba Rita" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Nursing Oncology</div>
-                      <h3 class="member-name">Dr. Bafumba Rita</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('bafumba-rita')">Read More</button>
-                  </div>
-              </div>
-               <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kavuma Awusi" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Medical Physicists</div>
-                      <h3 class="member-name">Dr. Kavuma Awusi</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kavuma-awusi')">Read More</button>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 7 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kyambadde Deogracious" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Pharmacy</div>
-                      <h3 class="member-name">Dr. Kyambadde Deogracious</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kyambadde-deogracious')">Read More</button>
-                  </div>
-              </div>
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Kyomuhangi Agnes" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Radiology</div>
-                      <h3 class="member-name">Dr. Kyomuhangi Agnes</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('kyomuhangi-agnes')">Read More</button>
-                  </div>
-              </div>
-               <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Mr. Karim Mawerere" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Radiation therapists</div>
-                      <h3 class="member-name">Mr. Karim Mawerere</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('karim-mawerere')">Read More</button>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 8 -->
-          <div class="member-slide">
-              <div class="member-card">
-                  <div class="member-image">
-                      <img src="/placeholder.svg?height=180&width=220" alt="Dr. Origa Martin" loading="lazy">
-                  </div>
-                  <div class="member-info">
-                      <div class="member-title">Representative Gynaecology Oncology</div>
-                      <h3 class="member-name">Dr. Origa Martin</h3>
-                      <div class="member-profession"></div>
-                      <button class="read-more-button" onclick="showMemberDetails('origa-martin')">Read More</button>
-                  </div>
+              <div class="highlight-text">
+                  <p>Our 2023 Annual Conference brought together 250+ oncology professionals from 15 countries.</p>
+                  <a href="events.html#past-events" class="highlight-link">View Past Events</a>
               </div>
           </div>
       </div>
       
-      <div class="carousel-controls">
-          <div class="carousel-dot active" data-slide="0"></div>
-          <div class="carousel-dot" data-slide="1"></div>
-          <div class="carousel-dot" data-slide="2"></div>
-          <div class="carousel-dot" data-slide="3"></div>
-          <div class="carousel-dot" data-slide="4"></div>
-          <div class="carousel-dot" data-slide="5"></div>
-          <div class="carousel-dot" data-slide="6"></div>
-          <div class="carousel-dot" data-slide="7"></div>
-      </div>
-  </div>
-  
-  <!-- Member Details Overlay -->
-  <div id="member-overlay" class="member-overlay">
-      <div class="member-details-card">
-          <button class="close-overlay" onclick="closeMemberDetails()">×</button>
-          <div class="detail-member-image">
-              <img id="detail-image" src="/placeholder.svg?height=150&width=150" alt="Council Member" loading="lazy">
-          </div>
-          <div class="detail-member-title" id="detail-title">Position</div>
-          <h2 class="detail-member-name" id="detail-name">Member Name</h2>
-          <div class="member-bio" id="detail-bio">
-              <p>Loading member information...</p>
-          </div>
-          <div class="member-contact-info" id="detail-contact">
-              <!-- Contact info will be populated by JavaScript -->
-          </div>
+      <div class="view-all-events">
+          <a href="events.html" class="view-all-button">
+              View All Events
+              <span>→</span>
+          </a>
       </div>
   </div>
 </section>
@@ -2505,75 +2127,6 @@ footer::before {
 </div>
 </section>
 
-<!-- Directory Section for Surgical Oncology -->
-<section id="surgical-directory" class="tab-content active directory-section">
-<div class="directory-container">
-    <h2 class="section-title">Directory of Surgical Oncologists</h2>
-    <div class="directory-grid">
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7926.webp" alt="Dr. Sarah Nakimuli" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Sarah Nakimuli</h3>
-                <h4>Head & Neck Oncology</h4>
-                <p>Uganda Cancer Institute, Kampala</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#d7a4f9b9b6bcbebaa2bbbe97a2b4bef9a2b0" aria-label="Email Dr. Sarah Nakimuli">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7977.webp" alt="Dr. James Okello" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. James Okello</h3>
-                <h4>Breast Oncology</h4>
-                <p>Mulago National Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#503a7e3f3b353c3c3f103d253c31373f7e2537" aria-label="Email Dr. James Okello">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8005.webp" alt="Dr. Peter Mutumba" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Peter Mutumba</h3>
-                <h4>GI Oncology</h4>
-                <p>Makerere University Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#41316f2c3435342c2320012c202a6f20226f3426" aria-label="Email Dr. Peter Mutumba">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8022.webp" alt="Dr. Grace Tumwine" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Grace Tumwine</h3>
-                <h4>Thoracic Oncology</h4>
-                <p>Mbarara Regional Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#b4d39ac0c1d9c3dddad1f4d9c6c6dc9ac1d3" aria-label="Email Dr. Grace Tumwine">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
 <!-- Medical Oncology Section -->
 <section id="medical-oncology" class="tab-content medical-oncology-section">
 <div class="surgical-oncology-container">
@@ -2608,524 +2161,6 @@ footer::before {
 </div>
 </section>
 
-<!-- Myths Section for Medical Oncology -->
-<section id="medical-myths" class="tab-content myths-section">
-<div class="myths-container">
-    <h2 class="section-title">Common Misconceptions about Medical Oncology</h2>
-    <div class="myths-list">
-        <div class="myth-item">
-            <h3><span>1</span> Chemotherapy is the only treatment option for cancer</h3>
-            <p>While chemotherapy is a common treatment, medical oncology now includes many other approaches such as immunotherapy, targeted therapy, and hormone therapy that may be more appropriate depending on the cancer type.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>2</span> All chemotherapy causes severe side effects</h3>
-            <p>Modern chemotherapy regimens are often better tolerated than in the past. Side effects vary greatly depending on the specific drugs, dosage, and individual factors. Many side effects can be managed effectively.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>3</span> Cancer treatments always make you lose your hair</h3>
-            <p>Not all cancer treatments cause hair loss. Many targeted therapies and immunotherapies do not cause significant hair loss, and even with some chemotherapies, hair thinning rather than complete loss may occur.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>4</span> Medical treatments for cancer are always worse than the disease</h3>
-            <p>Modern cancer treatments are increasingly effective with manageable side effects. The goal is always to provide treatments where benefits outweigh risks, and quality of life is an important consideration.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>5</span> Once you start treatment, you can never stop</h3>
-            <p>Many cancer treatments have defined durations. Some patients may receive maintenance therapy, but others complete their treatment course and move to surveillance without ongoing medication.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Testimonials Section for Medical Oncology -->
-<section id="medical-testimonials" class="tab-content testimonials-section">
-<div class="testimonials-container">
-    <h2 class="section-title">Patient Experiences</h2>
-    <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem; color: var(--text-light);">Stories of hope and resilience from patients who received medical oncology treatments</p>
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">When I was diagnosed with lymphoma, I was terrified of chemotherapy. Dr. Kibudde took the time to explain my treatment plan and what to expect. The care team managed my side effects so well that I was able to continue working part-time throughout my treatment.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_8005.webp" alt="David N." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>David N.</h4>
-                        <p>Lymphoma Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">I received immunotherapy for melanoma after standard treatments failed. The targeted approach had minimal side effects compared to my previous treatments, and I've been in remission for three years now. The advances in medical oncology gave me a second chance at life.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7958.webp" alt="Patricia M." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Patricia M.</h4>
-                        <p>Melanoma Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">My breast cancer was hormone-receptor positive, and I've been on hormone therapy for two years. The side effects have been manageable, and I'm grateful for a treatment that's helping prevent recurrence while allowing me to maintain my quality of life.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7825.webp" alt="Jane K." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Jane K.</h4>
-                        <p>Breast Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Directory Section for Medical Oncology -->
-<section id="medical-directory" class="tab-content directory-section">
-<div class="directory-container">
-    <h2 class="section-title">Directory of Medical Oncologists</h2>
-    <div class="directory-grid">
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7977.webp" alt="Dr. Fred Okuku" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Fred Okuku</h3>
-                <h4>Breast & GI Oncology</h4>
-                <p>Uganda Cancer Institute, Kampala</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#d7a4f9b9b6bcbebaa2bbbe97a2b4bef9a2b0" aria-label="Email Dr. Fred Okuku">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7926.webp" alt="Dr. Naghib Bogere" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Naghib Bogere</h3>
-                <h4>Hematologic Malignancies</h4>
-                <p>Mulago National Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#503a7e3f3b353c3c3f103d253c31373f7e2537" aria-label="Email Dr. Naghib Bogere">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8022.webp" alt="Dr. Nixon Niyonzima" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Nixon Niyonzima</h3>
-                <h4>Solid Tumors</h4>
-                <p>Uganda Cancer Institute</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#41316f2c3435342c2320012c202a6f20226f3426" aria-label="Email Dr. Nixon Niyonzima">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8317.webp" alt="Dr. Jackson Orem" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Jackson Orem</h3>
-                <h4>Director, UCI</h4>
-                <p>Uganda Cancer Institute</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#b4d39ac0c1d9c3dddad1f4d9c6c6dc9ac1d3" aria-label="Email Dr. Jackson Orem">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Radiation Oncology Section -->
-<section id="radiation-oncology" class="tab-content surgical-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Radiation Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Radiation Oncology is a medical specialty that uses high-energy radiation to treat cancer by damaging the DNA of cancer cells, preventing them from dividing and growing. Radiation therapy can be delivered externally (external beam radiation) or internally (brachytherapy). Radiation oncologists are physicians who specialize in designing and overseeing radiation treatment plans for cancer patients.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Types of Radiation Therapy</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>External Beam Radiation</h3>
-            <p>Radiation delivered from a machine outside the body, precisely targeting cancer cells while minimizing exposure to healthy tissue</p>
-        </div>
-        <div class="role-card">
-            <h3>Brachytherapy</h3>
-            <p>Internal radiation therapy where radioactive sources are placed in or near the tumor, delivering a high dose of radiation to a specific area</p>
-        </div>
-        <div class="role-card">
-            <h3>Stereotactic Radiosurgery</h3>
-            <p>Highly focused radiation beams used to treat small tumors with extreme precision, often in a single or few sessions</p>
-        </div>
-        <div class="role-card">
-            <h3>Proton Therapy</h3>
-            <p>Advanced form of radiation that uses protons instead of x-rays, allowing for more precise targeting with less damage to surrounding tissues</p>
-        </div>
-        <div class="role-card">
-            <h3>Palliative Radiation</h3>
-            <p>Radiation used to relieve symptoms and improve quality of life for patients with advanced cancer</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Myths Section for Radiation Oncology -->
-<section id="radiation-myths" class="tab-content myths-section">
-<div class="myths-container">
-    <h2 class="section-title">Myths about Radiation Therapy</h2>
-    <div class="myths-list">
-        <div class="myth-item">
-            <h3><span>1</span> Radiation therapy makes you radioactive</h3>
-            <p>External beam radiation therapy does not make patients radioactive. The radiation passes through the body and does not remain. With certain types of internal radiation, temporary precautions may be needed, but these are carefully managed by the medical team.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>2</span> Radiation therapy always causes severe burns</h3>
-            <p>While skin reactions can occur, modern radiation techniques have significantly reduced their severity. Most patients experience mild to moderate skin changes similar to sunburn, which typically heal within a few weeks after treatment.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>3</span> Radiation therapy is painful during treatment</h3>
-            <p>The actual delivery of radiation is painless - you don't feel the radiation beams. The treatment is similar to having an X-ray. Some patients may experience side effects that cause discomfort, but the treatment itself is not painful.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>4</span> Radiation therapy always causes hair loss</h3>
-            <p>Hair loss occurs only in the specific area being treated. For example, brain radiation may cause hair loss on the head, but breast radiation will not affect hair on the head.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>5</span> Radiation therapy is dangerous to others around you</h3>
-            <p>Patients receiving external beam radiation do not pose any radiation risk to family, friends, or caregivers. The radiation does not remain in the body after treatment sessions.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Testimonials Section for Radiation Oncology -->
-<section id="radiation-testimonials" class="tab-content testimonials-section">
-<div class="testimonials-container">
-    <h2 class="section-title">Patient Stories</h2>
-    <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem; color: var(--text-light);">Experiences from patients who have undergone radiation therapy</p>
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">After my prostate cancer diagnosis, I chose radiation therapy. Dr. Ssekagya designed a treatment plan that minimized side effects. The daily treatments were quick, and the staff made me feel comfortable. Three years later, I'm cancer-free and enjoying retirement.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7900.webp" alt="Joseph M." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Joseph M.</h4>
-                        <p>Prostate Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">I received radiation therapy after my lumpectomy for breast cancer. The precision of the treatment was impressive - they used special techniques to protect my heart and lungs. I continued working throughout my treatment with minimal disruption to my daily life.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7825.webp" alt="Rebecca N." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Rebecca N.</h4>
-                        <p>Breast Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">When my brain tumor returned, I underwent stereotactic radiosurgery. The treatment was completed in just one session, with no incision or pain. The precision targeting gave me hope when I thought I had run out of options. Today, I'm back to teaching and enjoying life.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7958.webp" alt="Michael K." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Michael K.</h4>
-                        <p>Brain Tumor Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Directory Section for Radiation Oncology -->
-<section id="radiation-directory" class="tab-content directory-section">
-<div class="directory-container">
-    <h2 class="section-title">Directory of Radiation Oncologists</h2>
-    <div class="directory-grid">
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7926.webp" alt="Dr. Ssekagya Christine" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Ssekagya Christine</h3>
-                <h4>Head of Radiation Oncology</h4>
-                <p>Uganda Cancer Institute, Kampala</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#d7a4f9b9b6bcbebaa2bbbe97a2b4bef9a2b0" aria-label="Email Dr. Sarah Nakimuli">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8005.webp" alt="Dr. Daniel Kanyike" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Daniel Kanyike</h3>
-                <h4>Gynecologic Oncology</h4>
-                <p>Mulago National Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#503a7e3f3b353c3c3f103d253c31373f7e2537" aria-label="Email Dr. Daniel Kanyike">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8022.webp" alt="Dr. Florence Nalwoga" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Florence Nalwoga</h3>
-                <h4>Breast & Thoracic</h4>
-                <p>Uganda Cancer Institute</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#41316f2c3435342c2320012c202a6f20226f3426" aria-label="Email Dr. Florence Nalwoga">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7977.webp" alt="Dr. Emmanuel Mugisha" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Emmanuel Mugisha</h3>
-                <h4>Pediatric Radiation</h4>
-                <p>Mbarara Regional Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#b4d39ac0c1d9c3dddad1f4d9c6c6dc9ac1d3" aria-label="Email Dr. Emmanuel Mugisha">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Pediatric Oncology Section -->
-<section id="pediatric-oncology" class="tab-content surgical-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Pediatric Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Pediatric Oncology is a medical specialty focused on the diagnosis and treatment of cancer in children and adolescents. Pediatric oncologists are specially trained to address the unique needs of young patients, considering their developing bodies, emotional well-being, and long-term health. Treatment approaches are tailored to minimize long-term effects while maximizing cure rates.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Common Childhood Cancers</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>Leukemia</h3>
-            <p>The most common childhood cancer, affecting the blood and bone marrow, with acute lymphoblastic leukemia (ALL) being the most prevalent type</p>
-        </div>
-        <div class="role-card">
-            <h3>Brain Tumors</h3>
-            <p>The second most common childhood cancer, with various types affecting different parts of the brain and requiring specialized treatment approaches</p>
-        </div>
-        <div class="role-card">
-            <h3>Lymphoma</h3>
-            <p>Cancer of the lymphatic system, including Hodgkin lymphoma and non-Hodgkin lymphoma, affecting the immune system</p>
-        </div>
-        <div class="role-card">
-            <h3>Neuroblastoma</h3>
-            <p>A cancer that develops from immature nerve cells, typically affecting children under 5 years of age</p>
-        </div>
-        <div class="role-card">
-            <h3>Wilms Tumor</h3>
-            <p>A kidney cancer that primarily affects children under 5 years of age, often presenting as an abdominal mass</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Myths Section for Pediatric Oncology -->
-<section id="pediatric-myths" class="tab-content myths-section">
-<div class="myths-container">
-    <h2 class="section-title">Myths about Childhood Cancer</h2>
-    <div class="myths-list">
-        <div class="myth-item">
-            <h3><span>1</span> Childhood cancer is contagious</h3>
-            <p>Cancer is never contagious. Children with cancer can interact normally with other children and adults without any risk of spreading their disease.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>2</span> Children can't survive cancer</h3>
-            <p>With modern treatments, the overall 5-year survival rate for childhood cancers is over 80%. Many childhood cancers are highly curable, especially when detected early.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>3</span> Children with cancer should be kept isolated</h3>
-            <p>While children undergoing treatment may need to avoid crowds during periods of low immunity, social interaction is crucial for their emotional well-being. Most children can continue school and normal activities with appropriate precautions.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>4</span> Children are too young to understand their diagnosis</h3>
-            <p>Children often understand more than adults realize. Age-appropriate explanations about their illness help children cope better and build trust with their healthcare team.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>5</span> Childhood cancer is caused by something parents did wrong</h3>
-            <p>The causes of most childhood cancers are unknown and not related to parental actions or environmental factors. Parents should never blame themselves for their child's diagnosis.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Testimonials Section for Pediatric Oncology -->
-<section id="pediatric-testimonials" class="tab-content testimonials-section">
-<div class="testimonials-container">
-    <h2 class="section-title">Family Stories</h2>
-    <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem; color: var(--text-light);">Experiences from families whose children have battled cancer</p>
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">When our 4-year-old son was diagnosed with leukemia, our world shattered. Dr. Balagadde and her team not only provided excellent medical care but also emotional support for our entire family. Today, he's a healthy 10-year-old who loves football and doesn't remember much of his treatment.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7900.webp" alt="The Okello Family" loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>The Okello Family</h4>
-                        <p>Parents of ALL Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">Our daughter was diagnosed with a brain tumor at age 7. The pediatric oncology team coordinated with neurosurgery and radiation oncology to provide comprehensive care. The child life specialists helped her understand her treatment through play therapy, which made a huge difference in her coping.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7825.webp" alt="The Namugwanya Family" loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>The Namugwanya Family</h4>
-                        <p>Parents of Brain Tumor Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">As a teenager with Hodgkin lymphoma, I appreciated how my doctors spoke directly to me about my treatment. They helped me maintain some control by involving me in decisions and accommodating my school schedule when possible. Five years cancer-free now, and I'm studying to become a pediatric oncology nurse.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7958.webp" alt="Sarah K." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Sarah K.</h4>
-                        <p>Hodgkin Lymphoma Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Directory Section for Pediatric Oncology -->
-<section id="pediatric-directory" class="tab-content directory-section">
-<div class="directory-container">
-    <h2 class="section-title">Directory of Pediatric Oncologists</h2>
-    <div class="directory-grid">
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7926.webp" alt="Dr. Joyce Balagadde"  loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Joyce Balagadde</h3>
-                <h4>Head of Pediatric Oncology</h4>
-                <p>Uganda Cancer Institute, Kampala</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#d7a4f9b9b6bcbebaa2bbbe97a2b4bef9a2b0" aria-label="Email Dr. Joyce Balagadde">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8005.webp" alt="Dr. Ruth Namazzi" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Ruth Namazzi</h3>
-                <h4>Pediatric Hematology</h4>
-                <p>Mulago National Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#503a7e3f3b353c3c3f103d253c31373f7e2537" aria-label="Email Dr. Ruth Namazzi">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_8022.webp" alt="Dr. Isaac Ssewanyana" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Isaac Ssewanyana</h3>
-                <h4>Pediatric Solid Tumors</h4>
-                <p>Uganda Cancer Institute</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#41316f2c3435342c2320012c202a6f20226f3426" aria-label="Email Dr. Isaac Ssewanyana">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="member-image">
-                <img src="img/IMG_7977.webp" alt="Dr. Mercy Kamulegeya" loading="lazy">
-            </div>
-            <div class="member-info">
-                <h3>Dr. Mercy Kamulegeya</h3>
-                <h4>Pediatric Neuro-oncology</h4>
-                <p>Mbarara Regional Referral Hospital</p>
-                <div class="member-contact">
-                    <a href="/cdn-cgi/l/email-protection#b4d39ac0c1d9c3dddad1f4d9c6c6dc9ac1d3" aria-label="Email Dr. Mercy Kamulegeya">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
 <!-- CTA Section -->
 <section class="cta-section">
 <div class="container">
@@ -3133,7 +2168,7 @@ footer::before {
         <h2 class="section-title">Make a Difference</h2>
         <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
         <div class="cta-buttons">
-            <a href="#donate" class="cta-button">Support Us</a>
+            <a href="#donate" id="donate" class="cta-button">Support Us</a>
             <a href="#volunteer" class="cta-button outline">Volunteer</a>
             <a href="#webinars" class="cta-button">Webinars</a>
         </div>
@@ -3159,7 +2194,7 @@ footer::before {
             HOSU Headquarters<br>
             Kampala, Uganda<br>
             <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-            <a href="/cdn-cgi/l/email-protection#87eee9e1e8c7efe8f4f2a9e8f5e0"><span class="__cf_email__" data-cfemail="2d44434b426d45425e5803425f4a">[email&#160;protected]</span></a>
+            <a href="mailto:info@hosu.org">info@hosu.org</a>
         </address>
     </div>
     <div class="footer-section">
@@ -3184,7 +2219,7 @@ footer::before {
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Custom cursor effect
 const cursor = document.getElementById('custom-cursor');
 const joinButton = document.getElementById('join-button');
@@ -3199,10 +2234,8 @@ document.addEventListener('mousemove', (e) => {
         e.clientY <= buttonRect.bottom;
     
     // Update cursor position
-    if (cursor) {
-        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(${isOverButton ? 1 : 0.5})`;
-        cursor.style.opacity = isOverButton ? '1' : '0';
-    }
+    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(${isOverButton ? 1 : 0.5})`;
+    cursor.style.opacity = isOverButton ? '1' : '0';
 });
 
 // Add glow effect to join button on hover
@@ -3221,99 +2254,34 @@ let currentIndex = 0;
 const backgrounds = document.querySelectorAll('.hero-background');
 
 function changeBackground() {
-    if (backgrounds.length > 1) {
-        const nextIndex = (currentIndex + 1) % backgrounds.length;
-        backgrounds[currentIndex].classList.remove('active');
-        backgrounds[nextIndex].classList.add('active');
-        currentIndex = nextIndex;
-    }
+    const nextIndex = (currentIndex + 1) % backgrounds.length;
+    backgrounds[currentIndex].classList.remove('active');
+    backgrounds[nextIndex].classList.add('active');
+    currentIndex = nextIndex;
 }
 
 setInterval(changeBackground, 5000);
-
-// Members carousel
-let currentSlide = 0;
-const memberSlides = document.querySelectorAll('.member-slide');
-const carouselDots = document.querySelectorAll('.carousel-dot');
-const prevButton = document.querySelector('.carousel-arrow.prev');
-const nextButton = document.querySelector('.carousel-arrow.next');
-
-function showSlide(index) {
-    memberSlides.forEach(slide => slide.classList.remove('active'));
-    carouselDots.forEach(dot => dot.classList.remove('active'));
-    
-    memberSlides[index].classList.add('active');
-    carouselDots[index].classList.add('active');
-    currentSlide = index;
-}
-
-function nextSlide() {
-    const next = (currentSlide + 1) % memberSlides.length;
-    showSlide(next);
-}
-
-function prevSlide() {
-    const prev = (currentSlide - 1 + memberSlides.length) % memberSlides.length;
-    showSlide(prev);
-}
-
-// Set up event listeners for arrow buttons
-if (prevButton && nextButton) {
-    prevButton.addEventListener('click', () => {
-        clearInterval(autoSlideInterval); // Stop auto rotation when user interacts
-        prevSlide();
-    });
-
-    nextButton.addEventListener('click', () => {
-        clearInterval(autoSlideInterval); // Stop auto rotation when user interacts
-        nextSlide();
-    });
-}
-
-// Auto rotate slides with interval variable so we can clear it
-const autoSlideInterval = setInterval(nextSlide, 5000);
-
-// Click events for dots
-carouselDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        clearInterval(autoSlideInterval); // Stop auto rotation when user interacts
-        showSlide(index);
-    });
-});
-
-// Keyboard navigation for carousel
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        clearInterval(autoSlideInterval);
-        prevSlide();
-    } else if (e.key === 'ArrowRight') {
-        clearInterval(autoSlideInterval);
-        nextSlide();
-    }
-});
 
 // Mobile menu toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isExpanded = navLinks.classList.contains('active');
-        navLinks.classList.toggle('active');
-        menuToggle.setAttribute('aria-expanded', !isExpanded);
-        menuToggle.innerHTML = isExpanded ? '☰' : '✕';
-    });
+menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isExpanded = navLinks.classList.contains('active');
+    navLinks.classList.toggle('active');
+    menuToggle.setAttribute('aria-expanded', !isExpanded);
+    menuToggle.innerHTML = isExpanded ? '☰' : '✕';
+});
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
-            navLinks.classList.remove('active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.innerHTML = '☰';
-        }
-    });
-}
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+        navLinks.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.innerHTML = '☰';
+    }
+});
 
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3334,11 +2302,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
             
             // Close mobile menu after clicking
-            if (navLinks && menuToggle) {
-                navLinks.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.innerHTML = '☰';
-            }
+            navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.innerHTML = '☰';
         }
     });
 });
@@ -3347,65 +2313,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const backToTopButton = document.querySelector('.back-to-top');
 
 window.addEventListener('scroll', () => {
-    if (backToTopButton) {
-        if (window.pageYOffset > 300) {
-            backToTopButton.classList.add('visible');
-        } else {
-            backToTopButton.classList.remove('visible');
-        }
+    if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+    } else {
+        backToTopButton.classList.remove('visible');
     }
     
     // Navbar scroll effect with adaptive background
     const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        navbar.classList.toggle('scrolled', window.pageYOffset > 50);
-        
-        // Adaptive background based on scroll position
-        if (window.pageYOffset > 50) {
-            navbar.style.backdropFilter = 'blur(15px)';
-            navbar.style.background = 'rgba(255, 255, 255, 0.7)';
-        } else {
-            navbar.style.backdropFilter = 'blur(10px)';
-            navbar.style.background = 'rgba(255, 255, 255, 0.1)';
-        }
+    navbar.classList.toggle('scrolled', window.pageYOffset > 50);
+    
+    // Adaptive background based on scroll position
+    if (window.pageYOffset > 50) {
+        navbar.style.backdropFilter = 'blur(15px)';
+        navbar.style.background = 'rgba(255, 255, 255, 0.7)';
+    } else {
+        navbar.style.backdropFilter = 'blur(10px)';
+        navbar.style.background = 'rgba(255, 255, 255, 0.1)';
     }
 });
-
-// Animate stats counter
-function animateCounter(el) {
-    const target = parseInt(el.getAttribute('data-count'));
-    const duration = 2000; // ms
-    const step = target / (duration / 16); // 60fps
-    let current = 0;
-    
-    const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-            clearInterval(timer);
-            el.textContent = target.toLocaleString();
-        } else {
-            el.textContent = Math.floor(current).toLocaleString();
-        }
-    }, 16);
-}
-
-// Intersection Observer for stats animation
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const statNumbers = entry.target.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                animateCounter(stat);
-            });
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-const statsSection = document.querySelector('.stats-section');
-if (statsSection) {
-    statsObserver.observe(statsSection);
-}
 
 // Tab navigation functionality
 const tabButtons = document.querySelectorAll('.tab-button');
@@ -3461,132 +2387,315 @@ if (activeTab) {
     showTabContent(initialTabId);
 }
 
-// Handle window resize
-function handleResize() {
-    // Ensure content stays centered and responsive
-    document.querySelectorAll('section').forEach(section => {
-        section.style.width = '100%';
+// Enhanced Carousel functionality with auto-scroll and selection features
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.events-carousel');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevButton = document.querySelector('.carousel-arrow.prev');
+    const nextButton = document.querySelector('.carousel-arrow.next');
+    const eventCards = document.querySelectorAll('.event-card');
+    const progressBar = document.querySelector('.carousel-progress');
+
+    let currentSlide = 0;
+    let autoScrollInterval;
+    const totalSlides = slides.length;
+    let isAutoScrollPaused = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // Function to show a specific slide with smooth transition
+    function showSlide(index, smooth = true) {
+        // Implement proper looping
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        
+        // Update current slide
+        currentSlide = index;
+        
+        // Update carousel position with smooth transition
+        if (smooth) {
+            carousel.style.transition = 'transform 0.5s ease';
+        } else {
+            carousel.style.transition = 'none';
+        }
+        
+        carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+        
+        // Add active class to visible cards for subtle highlight effect
+        const allCards = document.querySelectorAll('.event-card');
+        allCards.forEach(card => card.classList.remove('active-card'));
+        
+        const visibleCards = slides[currentSlide].querySelectorAll('.event-card');
+        visibleCards.forEach(card => card.classList.add('active-card'));
+        
+        // Check URL hash to see if we should highlight a specific card
+        if (window.location.hash) {
+            const eventId = window.location.hash.substring(1);
+            const matchingCard = slides[currentSlide].querySelector(`.event-card[data-event-id="${eventId}"]`);
+            if (matchingCard) {
+                allCards.forEach(card => card.classList.remove('active-card'));
+                matchingCard.classList.add('active-card');
+            }
+        }
+    }
+
+    // Initialize auto-scrolling with progress bar
+    function startAutoScroll() {
+        // Clear any existing interval
+        if (autoScrollInterval) clearInterval(autoScrollInterval);
+        
+        // Reset and start progress animation
+        progressBar.style.width = '0%';
+        progressBar.style.transition = 'width 3s linear';
+        progressBar.style.width = '100%';
+        
+        // Set new interval - 3 seconds per slide as requested
+        autoScrollInterval = setInterval(() => {
+            if (!isAutoScrollPaused) {
+                // Reset progress bar
+                progressBar.style.width = '0%';
+                progressBar.style.transition = 'width 3s linear';
+                progressBar.style.width = '100%';
+                
+                showSlide(currentSlide + 1);
+            }
+        }, 3000);
+    }
+
+    // Pause auto-scroll
+    function pauseAutoScroll() {
+        isAutoScrollPaused = true;
+        
+        // Pause progress bar animation
+        const width = getComputedStyle(progressBar).width;
+        progressBar.style.transition = 'none';
+        progressBar.style.width = width;
+    }
+
+    // Resume auto-scroll
+    function resumeAutoScroll() {
+        isAutoScrollPaused = false;
+        
+        // Calculate remaining time based on progress bar width
+        const progressWidth = parseInt(getComputedStyle(progressBar).width) / 
+                            parseInt(getComputedStyle(progressBar.parentElement).width) * 100;
+        const remainingTime = (100 - progressWidth) / 100 * 3000;
+        
+        // Complete current progress animation
+        progressBar.style.transition = `width ${remainingTime}ms linear`;
+        progressBar.style.width = '100%';
+        
+        // Set timeout to start next slide after remaining time
+        setTimeout(() => {
+            if (!isAutoScrollPaused) {
+                showSlide(currentSlide + 1);
+                startAutoScroll();
+            }
+        }, remainingTime);
+    }
+
+    // Event listeners for navigation
+    prevButton.addEventListener('click', () => {
+        prevButton.classList.add('clicked');
+        setTimeout(() => prevButton.classList.remove('clicked'), 200);
+        showSlide(currentSlide - 1);
+        pauseAutoScroll();
+        setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
     });
-    
-    // Reset mobile menu on resize
-    if (window.innerWidth > 768 && navLinks && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        if (menuToggle) {
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.innerHTML = '☰';
+
+    nextButton.addEventListener('click', () => {
+        nextButton.classList.add('clicked');
+        setTimeout(() => nextButton.classList.remove('clicked'), 200);
+        showSlide(currentSlide + 1);
+        pauseAutoScroll();
+        setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
+    });
+
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            dot.classList.add('clicked');
+            setTimeout(() => dot.classList.remove('clicked'), 200);
+            showSlide(index);
+            pauseAutoScroll();
+            setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
+        });
+    });
+
+    // Pause auto-scroll when user interacts with carousel
+    const carouselContainer = document.querySelector('.events-carousel-container');
+    carouselContainer.addEventListener('mouseenter', () => {
+        pauseAutoScroll();
+    });
+
+    carouselContainer.addEventListener('mouseleave', () => {
+        resumeAutoScroll();
+    });
+
+    // Add touch support for mobile devices
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        pauseAutoScroll();
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        setTimeout(resumeAutoScroll, 5000);
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            showSlide(currentSlide + 1);
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            showSlide(currentSlide - 1);
         }
     }
-}
 
-window.addEventListener('resize', handleResize);
-window.addEventListener('load', handleResize);
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            showSlide(currentSlide - 1);
+            pauseAutoScroll();
+            setTimeout(resumeAutoScroll, 5000);
+        } else if (e.key === 'ArrowRight') {
+            showSlide(currentSlide + 1);
+            pauseAutoScroll();
+            setTimeout(resumeAutoScroll, 5000);
+        }
+    });
 
-// Member details functionality
-const memberData = {
-    'ddungu-henry': {
-        title: 'President',
-        name: 'Dr. Ddungu Henry',
-        image: '/placeholder.svg?height=150&width=150',
-        bio: `<p>Dr. Ddungu Henry is a distinguished hematologist with over 15 years of experience in treating blood disorders and hematologic malignancies. As the President of HOSU, he leads the organization's efforts to improve cancer care across Uganda.</p>
-              <h4>Education & Training</h4>
-              <p>Dr. Ddungu completed his medical training at Makerere University and specialized in Hematology at the University of Cape Town. He has additional fellowship training in Hematologic Malignancies from MD Anderson Cancer Center.</p>
-              <h4>Research Interests</h4>
-              <p>His research focuses on sickle cell disease complications, lymphoma treatment in resource-limited settings, and improving access to hematology care in rural Uganda.</p>`,
-        contact: [
-            { type: 'email', value: 'henry.ddungu@hosu.org' },
-            { type: 'phone', value: '+256 700 123456' }
-        ]
-    },
-    'nabbosa-valeria': {
-        title: 'President Elect',
-        name: 'Dr. Nabbosa Valeria',
-        image: '/placeholder.svg?height=150&width=150',
-        bio: `<p>Dr. Nabbosa Valeria is a medical oncologist specializing in breast and gynecological cancers. As President-Elect of HOSU, she is preparing to lead the organization's next phase of growth and development.</p>
-              <h4>Education & Training</h4>
-              <p>Dr. Nabbosa graduated from Makerere University School of Medicine and completed her oncology training at the Uganda Cancer Institute with additional fellowship training in Gynecologic Oncology in South Africa.</p>
-              <h4>Research Interests</h4>
-              <p>Her research focuses on improving early detection of breast and cervical cancers in Uganda, cancer survivorship, and quality of life for cancer patients.</p>`,
-        contact: [
-            { type: 'email', value: 'valeria.nabbosa@hosu.org' },
-            { type: 'phone', value: '+256 700 234567' }
-        ]
-    },
-    'odhiambo-clara': {
-        title: 'General Secretary',
-        name: 'Dr. Odhiambo Clara Atieno',
-        image: '/placeholder.svg?height=150&width=150',
-        bio: `<p>Dr. Odhiambo Clara Atieno serves as the General Secretary of HOSU, coordinating the organization's administrative functions and communications. She is a pediatric oncologist with special interest in childhood leukemias.</p>
-              <h4>Education & Training</h4>
-              <p>Dr. Odhiambo received her medical degree from the University of Nairobi and completed her pediatric oncology training at the Uganda Cancer Institute with additional training at St. Jude Children's Research Hospital.</p>
-              <h4>Research Interests</h4>
-              <p>Her research focuses on improving outcomes for children with acute lymphoblastic leukemia in resource-limited settings and developing protocols adapted to local conditions.</p>`,
-        contact: [
-            { type: 'email', value: 'clara.odhiambo@hosu.org' },
-            { type: 'phone', value: '+256 700 345678' }
-        ]
-    },
-    // Add more member data as needed
-};
-
-function showMemberDetails(memberId) {
-    const overlay = document.getElementById('member-overlay');
-    const data = memberData[memberId];
+    // Event filtering
+    const filterButtons = document.querySelectorAll('.filter-button');
     
-    if (data) {
-        // Populate the overlay with member data
-        document.getElementById('detail-image').src = data.image;
-        document.getElementById('detail-title').textContent = data.title;
-        document.getElementById('detail-name').textContent = data.name;
-        document.getElementById('detail-bio').innerHTML = data.bio;
-        
-        // Populate contact information
-        const contactContainer = document.getElementById('detail-contact');
-        contactContainer.innerHTML = '';
-        
-        if (data.contact && data.contact.length > 0) {
-            data.contact.forEach(contact => {
-                const contactItem = document.createElement('div');
-                contactItem.className = 'contact-item';
-                
-                let icon = '';
-                if (contact.type === 'email') {
-                    icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>';
-                } else if (contact.type === 'phone') {
-                    icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>';
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filterType = this.getAttribute('data-filter');
+            
+            // Show/hide events based on filter
+            eventCards.forEach(card => {
+                if (filterType === 'all' || card.getAttribute('data-type') === filterType) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
                 }
-                
-                contactItem.innerHTML = `${icon} <span>${contact.value}</span>`;
-                contactContainer.appendChild(contactItem);
             });
+            
+            // Reset carousel to first slide
+            showSlide(0, false);
+        });
+    });
+
+    // Initialize carousel
+    showSlide(0, false); // Initialize without animation
+    startAutoScroll();
+
+    // Check URL hash on page load to highlight matching event
+    function checkUrlForEventId() {
+        if (window.location.hash) {
+            const eventId = window.location.hash.substring(1);
+            const matchingCard = document.querySelector(`.event-card[data-event-id="${eventId}"]`);
+            
+            if (matchingCard) {
+                // Find which slide contains this card
+                const slideIndex = Array.from(slides).findIndex(slide => 
+                    slide.contains(matchingCard)
+                );
+                
+                if (slideIndex !== -1) {
+                    // Show the slide containing the matching card
+                    showSlide(slideIndex, false);
+                    
+                    // Highlight the card
+                    eventCards.forEach(card => {
+                        card.classList.remove('active-card');
+                    });
+                    matchingCard.classList.add('active-card');
+                    
+                    // Scroll to events section
+                    const eventsSection = document.getElementById('events');
+                    if (eventsSection) {
+                        setTimeout(() => {
+                            eventsSection.scrollIntoView({ behavior: 'smooth' });
+                        }, 500);
+                    }
+                }
+            }
+        }
+    }
+
+    checkUrlForEventId();
+
+    // Add calendar functionality
+    eventCards.forEach(card => {
+        // Create calendar button
+        const calendarBtn = document.createElement('button');
+        calendarBtn.className = 'calendar-button';
+        calendarBtn.innerHTML = '📅';
+        calendarBtn.title = 'Add to Calendar';
+        
+        // Add to card
+        const footer = card.querySelector('.event-footer');
+        footer.appendChild(calendarBtn);
+        
+        // Add event listener
+        calendarBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const title = card.querySelector('.event-title').textContent;
+            const dateText = card.querySelector('.event-date').textContent;
+            const location = card.querySelector('.event-location').textContent.trim();
+            
+            addToCalendar(title, parseEventDate(dateText), location);
+        });
+    });
+
+    // Function to add event to calendar
+    function addToCalendar(title, date, location) {
+        // Format date for calendar URL
+        const startDate = formatDateForCalendar(date);
+        const endDate = formatDateForCalendar(new Date(date.getTime() + 24 * 60 * 60 * 1000));
+        
+        // Create Google Calendar URL
+        const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}`;
+        
+        // Open in new tab
+        window.open(googleUrl, '_blank');
+    }
+
+    // Helper function to parse event date from text
+    function parseEventDate(dateText) {
+        // Handle various date formats like "Sept 10-12, 2025"
+        const months = {
+            'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+            'July': 6, 'Aug': 7, 'Sept': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+        };
+        
+        // Extract month, day, and year
+        const match = dateText.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
+        if (match) {
+            const [_, month, day, year] = match;
+            return new Date(parseInt(year), months[month], parseInt(day));
         }
         
-        // Show the overlay
-        overlay.classList.add('active');
-        
-        // Prevent scrolling of the background
-        document.body.style.overflow = 'hidden';
+        return new Date(); // Fallback to current date
     }
-}
 
-function closeMemberDetails() {
-    const overlay = document.getElementById('member-overlay');
-    overlay.classList.remove('active');
-    
-    // Re-enable scrolling
-    document.body.style.overflow = '';
-}
-
-// Close overlay when clicking outside the details card
-document.getElementById('member-overlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeMemberDetails();
-    }
-});
-
-// Close overlay with Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && document.getElementById('member-overlay').classList.contains('active')) {
-        closeMemberDetails();
+    // Format date for calendar URL
+    function formatDateForCalendar(date) {
+        return date.toISOString().replace(/-|:|\.\d+/g, '');
     }
 });
 </script>

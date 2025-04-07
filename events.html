@@ -9,18 +9,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles (same as other pages) */
+        /* Base styles and variables */
         :root {
             --primary-color: #e63946;
+            --primary-light: #f8d7da;
+            --primary-dark: #c81d2a;
             --secondary-color: #0d4593;
-            --text-color: #12294a;
+            --secondary-light: #e6f0ff;
+            --secondary-dark: #072a5e;
+            --text-color: #001848;
+            --text-light: #4a5568;
             --background-light: #f1faee;
             --background-dark: #1d3557;
             --white: #ffffff;
             --accent-color: #a8dadc;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+            --gray-500: #a0aec0;
             --transition: all 0.3s ease;
-            --navbar-height: 90px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --navbar-height: 70px;
+            --border-radius: 8px;
+            --card-width: 280px;
+            --card-height: 360px;
+            --card-image-height: 160px;
         }
 
         * {
@@ -36,10 +52,21 @@
             background-color: var(--white);
         }
 
-        /* Navbar styles (same as other pages) */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Navbar styles */
         .navbar {
-            background: rgba(255, 255, 255, 0.521);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -48,28 +75,28 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            transition: var(--transition);
             height: var(--navbar-height);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo img {
-            width: 250px;
-            height: 90px;
+            width: 180px;
+            height: 65px;
             object-fit: contain;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
         .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
             font-weight: 500;
             transition: var(--transition);
             position: relative;
+            padding: 0.5rem 0.25rem;
         }
 
         .nav-links a:not(.cta-button)::after {
@@ -77,286 +104,783 @@
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: -4px;
+            bottom: 0;
             left: 0;
             background-color: var(--primary-color);
-            transition: var(--transition);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:not(.cta-button):hover::after {
             width: 100%;
         }
 
+        .nav-links a:not(.cta-button):hover {
+            color: var(--primary-color);
+        }
+
         .nav-links .cta-button {
             background: var(--primary-color);
             color: var(--white);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1.25rem;
             border-radius: 30px;
-            transition: var(--transition);
+            min-height: 40px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            border: none;
         }
 
         .nav-links .cta-button:hover {
-            background: var(--secondary-color);
+            background: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
+
         .menu-toggle {
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
         }
 
-        /* Events Page Specific Styles */
-        .events-hero {
+        /* Page header */
+        .page-header {
             padding-top: calc(var(--navbar-height) + 2rem);
             background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-            min-height: 300px;
-            display: flex;
-            align-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .events-hero-content {
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/pattern.svg');
+            background-size: cover;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
             max-width: 800px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
-        .events-hero h1 {
+        .page-header h1 {
             font-size: 2.5rem;
             color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
         }
 
-        .events-hero p {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        .page-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
         }
 
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin: 1.5rem auto;
+            max-width: 600px;
+        }
+
+        /* Event filters */
         .events-filter {
-            padding: 2rem 5%;
             background: var(--white);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: var(--navbar-height);
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .filter-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            padding: 0 1.5rem;
         }
 
-        .filter-button {
-            padding: 0.5rem 1.5rem;
-            border: 2px solid var(--secondary-color);
-            border-radius: 20px;
-            background: transparent;
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--secondary-color);
-            cursor: pointer;
-            transition: var(--transition);
+        }
+
+        .filter-count {
+            background: var(--secondary-light);
+            color: var(--secondary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 500;
         }
 
-        .filter-button.active,
-        .filter-button:hover {
-            background: var(--secondary-color);
-            color: var(--white);
+        .filter-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
-        .events-grid {
-            padding: 4rem 5%;
+        .filter-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-button:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-button.active {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        .filter-button .count {
+            background: var(--gray-200);
+            color: var(--text-light);
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .filter-button.active .count {
+            background: var(--white);
+            color: var(--secondary-color);
+        }
+
+        .search-container {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px var(--secondary-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        /* Events grid */
+        .events-section {
+            padding: 2rem 0;
             background: var(--background-light);
         }
 
         .events-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            padding: 0 1.5rem;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .view-button:hover {
+            background: var(--gray-200);
+            color: var(--secondary-color);
+        }
+
+        .view-button.active {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        /* Events grid layout */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Event card styles */
         .event-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: var(--card-height);
+            position: relative;
         }
 
         .event-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
 
         .event-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: var(--card-image-height);
+            overflow: hidden;
+            position: relative;
         }
 
-        .event-content {
-            padding: 1.5rem;
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
         }
 
         .event-type {
-            display: inline-block;
-            padding: 0.25rem 1rem;
-            background: var(--accent-color);
-            color: var(--secondary-color);
-            border-radius: 15px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+
+        .event-type[data-type="conference"] {
+            background: rgba(13, 69, 147, 0.9);
+            color: white;
+        }
+
+        .event-type[data-type="workshop"] {
+            background: rgba(42, 157, 143, 0.9);
+            color: white;
+        }
+
+        .event-type[data-type="webinar"] {
+            background: rgba(131, 56, 236, 0.9);
+            color: white;
+        }
+
+        .event-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .event-status[data-status="open"] {
+            background: rgba(72, 187, 120, 0.9);
+            color: white;
+        }
+
+        .event-status[data-status="closing"] {
+            background: rgba(237, 137, 54, 0.9);
+            color: white;
+        }
+
+        .event-status[data-status="full"] {
+            background: rgba(229, 62, 62, 0.9);
+            color: white;
+        }
+
+        .event-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .event-date {
             color: var(--primary-color);
             font-weight: 500;
             margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-date::before {
+            content: "📅";
+            font-size: 0.9rem;
         }
 
         .event-title {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             color: var(--secondary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            font-weight: 600;
         }
 
         .event-description {
-            margin-bottom: 1.5rem;
-            color: var(--text-color);
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            flex-grow: 1;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .event-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--gray-200);
+            margin-top: auto;
         }
 
         .event-location {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-color);
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-100);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
             font-size: 0.9rem;
         }
 
+        .action-button:hover {
+            background: var(--secondary-light);
+            color: var(--secondary-color);
+        }
+
         .register-button {
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 0.75rem;
             background: var(--primary-color);
             color: var(--white);
             border-radius: 20px;
             text-decoration: none;
             transition: var(--transition);
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
         .register-button:hover {
-            background: var(--secondary-color);
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
 
-        .past-events {
-            padding: 4rem 5%;
-            background: var(--white);
+        .event-countdown {
+            position: absolute;
+            bottom: var(--card-image-height);
+            right: 0;
+            background: rgba(230, 57, 70, 0.9);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transform: translateY(50%);
+            z-index: 2;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
+        .featured-badge {
+            position: absolute;
+            top: 40px;
+            left: -30px;
             background: var(--primary-color);
-            margin: 1rem auto 0;
+            color: white;
+            padding: 0.25rem 2rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transform: rotate(-45deg);
+            z-index: 2;
         }
 
-        .past-events-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+        /* Featured events carousel */
+        .featured-events {
+            margin-bottom: 3rem;
         }
 
-        .past-event-card {
-            background: var(--background-light);
-            border-radius: 15px;
-            padding: 1.5rem;
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -1.5rem;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            padding: 1rem 1.5rem;
+        }
+
+        .carousel-slide {
+            flex: 0 0 var(--card-width);
+            margin-right: 1.5rem;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .carousel-arrow:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .past-event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+        .carousel-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
         }
 
-        .resources-button {
+        .carousel-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--primary-color);
+            transition: width 3s linear;
+        }
+
+        /* Month dividers */
+        .month-divider {
+            margin: 2.5rem 0 1.5rem;
+            position: relative;
+            text-align: left;
+        }
+
+        .month-title {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            background: var(--background-light);
+            padding: 0 1rem 0 0;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .month-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gray-300);
+            z-index: 0;
+        }
+
+        /* Past events section */
+        .past-events {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-300);
+        }
+
+        .past-events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .past-events-title {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .past-events-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .past-events-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .past-events-header.collapsed + .past-events-content {
+            max-height: 0;
+        }
+
+        /* Resources section */
+        .resources-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .resources-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .resources-content {
+            flex-grow: 1;
+        }
+
+        .resources-title {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .resources-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
+            color: var(--secondary-color);
+            font-size: 0.85rem;
             font-weight: 500;
-            margin-top: 1rem;
+            transition: var(--transition);
         }
 
-        .resources-button:hover {
-            text-decoration: underline;
+        .resource-link:hover {
+            color: var(--primary-color);
         }
 
-        /* Featured event styles */
-        .featured-event {
-            border: 2px solid var(--primary-color);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background: var(--primary-color);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            z-index: 10;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
         }
 
-        /* Footer styles (same as other pages) */
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
         footer {
             background: var(--background-dark);
             color: var(--white);
-            padding: 4rem 5% 2rem;
+            padding: 3rem 0 1.5rem;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+        .footer-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
         }
 
         .footer-section h4 {
             color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
         }
 
         .footer-section ul {
@@ -364,129 +888,207 @@
         }
 
         .footer-section li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.75rem;
         }
 
         .footer-section a {
-            color: var(--white);
-            text-decoration: none;
+            color: var(--gray-400);
             transition: var(--transition);
         }
 
         .footer-section a:hover {
-            color: var(--accent-color);
+            color: var(--white);
+            padding-left: 0.25rem;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1.25rem;
         }
 
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
+        .social-link {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: var(--transition);
         }
 
-        .social-links a:hover {
+        .social-link:hover {
             background: var(--accent-color);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .copyright {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-500);
+            font-size: 0.85rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Responsive styles */
+        @media (max-width: 1024px) {
             :root {
-                --navbar-height: 70px;
+                --card-width: 260px;
+                --card-height: 340px;
+                --card-image-height: 140px;
             }
 
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .navbar {
-                padding: 1rem;
+                padding: 0.75rem 1rem;
             }
 
             .logo img {
-                width: 200px;
-                height: 70px;
+                width: 150px;
+                height: 55px;
             }
 
             .nav-links {
                 display: none;
-                flex-direction: column;
                 position: absolute;
-                top: 100%;
+                top: var(--navbar-height);
                 left: 0;
                 width: 100%;
                 background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: var(--shadow-md);
+                z-index: 1000;
             }
 
             .nav-links.active {
                 display: flex;
             }
 
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem 0;
+            }
+
             .menu-toggle {
-                display: block;
+                display: flex;
             }
 
-            .events-hero h1 {
-                font-size: 2rem;
-            }
-
-            .events-hero p {
-                font-size: 1.1rem;
-            }
-
-            .events-container {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .filter-container {
+            .filter-header {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .filter-options {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                width: 100%;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
             }
 
             .filter-button {
-                width: 100%;
+                flex: 0 0 auto;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            }
+
+            :root {
+                --card-width: 100%;
+                --card-height: auto;
+                --card-image-height: 180px;
+            }
+
+            .event-card {
+                min-height: 360px;
+            }
+
+            .carousel-slide {
+                flex: 0 0 85%;
+                margin-right: 1rem;
+            }
+
+            .resources-card {
+                flex-direction: column;
                 text-align: center;
+                padding: 1.25rem;
+            }
+
+            .resources-icon {
+                margin: 0 auto 1rem;
+            }
+
+            .resources-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-  {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 0.95rem;
+            }
+
+            .event-image {
+                height: 160px;
+            }
+
+            .carousel-controls {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .carousel-track {
+                transition: none;
+            }
+
+            .carousel-progress {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+            <img src="img/hlogo2.png" alt="HOSU Logo">
         </div>
         <div class="nav-links">
             <a href="index.html">Home</a>           
@@ -494,132 +1096,333 @@
             <a href="research.html">Research</a> 
             <a href="membership.html">Membership</a>           
             <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
             <a href="login.html" class="cta-button">Member Portal</a>
         </div>
         <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
     </nav>
 
-    <section class="events-hero">
-        <div class="events-hero-content">
-            <h1>Upcoming Events</h1>
-            <p>Join us for conferences, workshops, and webinars designed to advance oncology care and research.</p>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Events & Conferences</h1>
+            <p>Join us for conferences, workshops, and webinars designed to advance oncology care and research in Uganda and beyond.</p>
         </div>
-    </section>
+    </header>
 
+    <!-- Filters Section -->
     <section class="events-filter">
         <div class="filter-container">
-            <button class="filter-button active" data-filter="all">All Events</button>
-            <button class="filter-button" data-filter="conference">Conferences</button>
-            <button class="filter-button" data-filter="workshop">Workshops</button>
-            <button class="filter-button" data-filter="webinar">Webinars</button>
+            <div class="filter-header">
+                <h2 class="filter-title">Filter Events</h2>
+                <span class="filter-count">Showing 9 events</span>
+            </div>
+            <div class="filter-options">
+                <button class="filter-button active" data-filter="all">All Events <span class="count">9</span></button>
+                <button class="filter-button" data-filter="conference">Conferences <span class="count">3</span></button>
+                <button class="filter-button" data-filter="workshop">Workshops <span class="count">3</span></button>
+                <button class="filter-button" data-filter="webinar">Webinars <span class="count">3</span></button>
+                <button class="filter-button" data-filter="upcoming">Upcoming <span class="count">6</span></button>
+                <button class="filter-button" data-filter="past">Past <span class="count">3</span></button>
+            </div>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search events by title, location, or speaker...">
+            </div>
         </div>
     </section>
 
-    <section class="events-grid">
+    <!-- Featured Events Section -->
+    <section class="events-section">
         <div class="events-container">
-            <!-- New Featured Event: UCI – PCAU – HOSU Conference -->
-            <article class="event-card featured-event" data-type="conference">
-                <span class="featured-badge">Featured</span>
-                <img src="/placeholder.svg?height=200&width=350" alt="UCI – PCAU – HOSU Conference" class="event-image">
-                <div class="event-content">
-                    <span class="event-type">Conference</span>
-                    <div class="event-date">September 10-12, 2025</div>
-                    <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
-                    <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care brings together clinicians, researchers, policymakers, and advocates to explore innovative solutions, share evidence-based practices, and promote patient-centered care.</p>
-                    <div class="event-footer">
-                        <div class="event-location">
-                            📍 Speke Resort Munyonyo, Kampala, Uganda
-                        </div>
-                        <a href="#register" class="register-button">Register Now</a>
+            <div class="featured-events">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Events</h2>
+                    <div class="view-options">
+                        <button class="view-button active" aria-label="Grid view">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
+                            </svg>
+                        </button>
+                        <button class="view-button" aria-label="List view">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-            </article>
 
-            <article class="event-card" data-type="conference">
-                <img src="/placeholder.svg?height=200&width=350" alt="Annual Oncology Conference 2024" class="event-image">
-                <div class="event-content">
-                    <span class="event-type">Conference</span>
-                    <div class="event-date">September 15-18, 2024</div>
-                    <h3 class="event-title">Annual Oncology Conference 2024</h3>
-                    <p class="event-description">Join leading oncologists and researchers for our flagship conference featuring keynote speakers, research presentations, and networking opportunities.</p>
-                    <div class="event-footer">
-                        <div class="event-location">
-                            📍 London, UK
+                <div class="carousel-container">
+                    <div class="carousel-track" id="featured-carousel">
+                        <!-- Featured Event 1 -->
+                        <div class="carousel-slide">
+                            <article class="event-card" id="uci-pcau-hosu">
+                                <div class="featured-badge">Featured</div>
+                                <span class="event-type" data-type="conference">Conference</span>
+                                <span class="event-status" data-status="open">Registration Open</span>
+                                <div class="event-image">
+                                    <img src="/placeholder.svg?height=160&width=280" alt="UCI – PCAU – HOSU Conference">
+                                </div>
+                                <span class="event-countdown">In 1 year, 5 months</span>
+                                <div class="event-content">
+                                    <div class="event-date">September 10-12, 2025</div>
+                                    <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
+                                    <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care brings together clinicians, researchers, policymakers, and advocates to explore innovative solutions.</p>
+                                    <div class="event-footer">
+                                        <div class="event-location">📍 Kampala, Uganda</div>
+                                        <div class="event-actions">
+                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                            <a href="#register" class="register-button">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <a href="#register" class="register-button">Register Now</a>
-                    </div>
-                </div>
-            </article>
 
-            <article class="event-card" data-type="workshop">
-                <img src="/placeholder.svg?height=200&width=350" alt="Immunotherapy Workshop" class="event-image">
-                <div class="event-content">
-                    <span class="event-type">Workshop</span>
-                    <div class="event-date">July 8-9, 2024</div>
-                    <h3 class="event-title">Advanced Immunotherapy Workshop</h3>
-                    <p class="event-description">A hands-on workshop focusing on the latest developments in cancer immunotherapy treatments and techniques.</p>
-                    <div class="event-footer">
-                        <div class="event-location">
-                            📍 Boston, USA
+                        <!-- Featured Event 2 -->
+                        <div class="carousel-slide">
+                            <article class="event-card" id="annual-oncology-2024">
+                                <span class="event-type" data-type="conference">Conference</span>
+                                <span class="event-status" data-status="open">Registration Open</span>
+                                <div class="event-image">
+                                    <img src="/placeholder.svg?height=160&width=280" alt="Annual Oncology Conference 2024">
+                                </div>
+                                <span class="event-countdown">In 5 months</span>
+                                <div class="event-content">
+                                    <div class="event-date">September 15-18, 2024</div>
+                                    <h3 class="event-title">Annual Oncology Conference 2024</h3>
+                                    <p class="event-description">Join leading oncologists and researchers for our flagship conference featuring keynote speakers, research presentations, and networking opportunities.</p>
+                                    <div class="event-footer">
+                                        <div class="event-location">📍 London, UK</div>
+                                        <div class="event-actions">
+                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                            <a href="#register" class="register-button">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <a href="#register" class="register-button">Register Now</a>
-                    </div>
-                </div>
-            </article>
 
-            <article class="event-card" data-type="webinar">
-                <img src="/placeholder.svg?height=200&width=350" alt="Digital Pathology Webinar" class="event-image">
-                <div class="event-content">
-                    <span class="event-type">Webinar</span>
-                    <div class="event-date">June 25, 2024</div>
-                    <h3 class="event-title">Digital Pathology in Oncology</h3>
-                    <p class="event-description">Learn about the latest advances in digital pathology and its applications in cancer diagnosis and treatment.</p>
-                    <div class="event-footer">
-                        <div class="event-location">
-                            🌐 Online
+                        <!-- Featured Event 3 -->
+                        <div class="carousel-slide">
+                            <article class="event-card" id="immunotherapy-workshop">
+                                <span class="event-type" data-type="workshop">Workshop</span>
+                                <span class="event-status" data-status="closing">Closing Soon</span>
+                                <div class="event-image">
+                                    <img src="/placeholder.svg?height=160&width=280" alt="Immunotherapy Workshop">
+                                </div>
+                                <span class="event-countdown">In 3 months</span>
+                                <div class="event-content">
+                                    <div class="event-date">July 8-9, 2024</div>
+                                    <h3 class="event-title">Advanced Immunotherapy Workshop</h3>
+                                    <p class="event-description">A hands-on workshop focusing on the latest developments in cancer immunotherapy treatments and techniques.</p>
+                                    <div class="event-footer">
+                                        <div class="event-location">📍 Boston, USA</div>
+                                        <div class="event-actions">
+                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                            <a href="#register" class="register-button">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <a href="#register" class="register-button">Register Now</a>
+                    </div>
+                    <div class="carousel-progress"></div>
+                </div>
+
+                <div class="carousel-controls">
+                    <div class="carousel-arrows">
+                        <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
+                        <button class="carousel-arrow next" aria-label="Next slide">❯</button>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="carousel-dot active" data-slide="0"></span>
+                        <span class="carousel-dot" data-slide="1"></span>
+                        <span class="carousel-dot" data-slide="2"></span>
                     </div>
                 </div>
-            </article>
+            </div>
+
+            <!-- Upcoming Events Section -->
+            <div class="month-divider">
+                <h3 class="month-title">June 2024</h3>
+            </div>
+
+            <div class="events-grid">
+                <!-- Event 1 -->
+                <article class="event-card" id="digital-pathology">
+                    <span class="event-type" data-type="webinar">Webinar</span>
+                    <span class="event-status" data-status="open">Registration Open</span>
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=160&width=280" alt="Digital Pathology Webinar">
+                    </div>
+                    <span class="event-countdown">In 2 months</span>
+                    <div class="event-content">
+                        <div class="event-date">June 25, 2024</div>
+                        <h3 class="event-title">Digital Pathology in Oncology</h3>
+                        <p class="event-description">Learn about the latest advances in digital pathology and its applications in cancer diagnosis and treatment.</p>
+                        <div class="event-footer">
+                            <div class="event-location">🌐 Online</div>
+                            <div class="event-actions">
+                                <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                <a href="#register" class="register-button">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="month-divider">
+                <h3 class="month-title">July 2024</h3>
+            </div>
+
+            <div class="events-grid">
+                <!-- Event 2 -->
+                <article class="event-card" id="research-updates">
+                    <span class="event-type" data-type="webinar">Webinar</span>
+                    <span class="event-status" data-status="open">Registration Open</span>
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=160&width=280" alt="Cancer Research Updates">
+                    </div>
+                    <span class="event-countdown">In 3 months</span>
+                    <div class="event-content">
+                        <div class="event-date">July 20, 2024</div>
+                        <h3 class="event-title">Quarterly Cancer Research Updates</h3>
+                        <p class="event-description">Stay up-to-date with the latest research findings and clinical trials in oncology with our quarterly webinar series.</p>
+                        <div class="event-footer">
+                            <div class="event-location">🌐 Online</div>
+                            <div class="event-actions">
+                                <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                <a href="#register" class="register-button">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="month-divider">
+                <h3 class="month-title">August 2024</h3>
+            </div>
+
+            <div class="events-grid">
+                <!-- Event 3 -->
+                <article class="event-card" id="surgical-oncology">
+                    <span class="event-type" data-type="workshop">Workshop</span>
+                    <span class="event-status" data-status="open">Registration Open</span>
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=160&width=280" alt="Surgical Oncology Techniques">
+                    </div>
+                    <span class="event-countdown">In 4 months</span>
+                    <div class="event-content">
+                        <div class="event-date">August 12-13, 2024</div>
+                        <h3 class="event-title">Surgical Oncology Techniques</h3>
+                        <p class="event-description">A comprehensive workshop on the latest surgical techniques for oncology specialists, featuring hands-on training sessions.</p>
+                        <div class="event-footer">
+                            <div class="event-location">📍 Kampala, Uganda</div>
+                            <div class="event-actions">
+                                <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+                                <a href="#register" class="register-button">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Past Events Section -->
+            <div class="past-events">
+                <div class="past-events-header">
+                    <h2 class="past-events-title">
+                        <span>Past Events</span>
+                        <span class="toggle-icon">▼</span>
+                    </h2>
+                    <div class="filter-count">3 events</div>
+                </div>
+                <div class="past-events-content">
+                    <div class="events-grid">
+                        <!-- Past Event 1 -->
+                        <article class="event-card">
+                            <span class="event-type" data-type="conference">Conference</span>
+                            <div class="event-image">
+                                <img src="/placeholder.svg?height=160&width=280" alt="Precision Medicine Symposium">
+                            </div>
+                            <div class="event-content">
+                                <div class="event-date">March 10-12, 2024</div>
+                                <h3 class="event-title">Precision Medicine Symposium</h3>
+                                <p class="event-description">Explored the latest advances in precision medicine and targeted therapies for cancer treatment.</p>
+                                <div class="event-footer">
+                                    <div class="event-location">📍 Kampala, Uganda</div>
+                                    <div class="event-actions">
+                                        <a href="#resources" class="register-button">Resources</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Past Event 2 -->
+                        <article class="event-card">
+                            <span class="event-type" data-type="workshop">Workshop</span>
+                            <div class="event-image">
+                                <img src="/placeholder.svg?height=160&width=280" alt="Clinical Trials Workshop">
+                            </div>
+                            <div class="event-content">
+                                <div class="event-date">February 15, 2024</div>
+                                <h3 class="event-title">Clinical Trials Workshop</h3>
+                                <p class="event-description">Focused on best practices in clinical trial design and management for oncology research.</p>
+                                <div class="event-footer">
+                                    <div class="event-location">📍 Nairobi, Kenya</div>
+                                    <div class="event-actions">
+                                        <a href="#resources" class="register-button">Resources</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Past Event 3 -->
+                        <article class="event-card">
+                            <span class="event-type" data-type="webinar">Webinar</span>
+                            <div class="event-image">
+                                <img src="/placeholder.svg?height=160&width=280" alt="Cancer Research Updates">
+                            </div>
+                            <div class="event-content">
+                                <div class="event-date">January 20, 2024</div>
+                                <h3 class="event-title">Cancer Research Updates</h3>
+                                <p class="event-description">Quarterly webinar covering the latest research developments in cancer treatment and prevention.</p>
+                                <div class="event-footer">
+                                    <div class="event-location">🌐 Online</div>
+                                    <div class="event-actions">
+                                        <a href="#recording" class="register-button">Recording</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Resources Section -->
+                    <div class="resources-card">
+                        <div class="resources-icon">📚</div>
+                        <div class="resources-content">
+                            <h3 class="resources-title">Event Resources</h3>
+                            <p class="resources-description">Access presentations, recordings, and materials from our past events.</p>
+                            <div class="resources-links">
+                                <a href="#" class="resource-link">📊 Presentation Slides</a>
+                                <a href="#" class="resource-link">🎥 Event Recordings</a>
+                                <a href="#" class="resource-link">📝 Research Papers</a>
+                                <a href="#" class="resource-link">📋 Conference Proceedings</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="past-events">
-        <h2 class="section-title">Past Events</h2>
-        <div class="past-events-grid">
-            <div class="past-event-card">
-                <div class="event-date">March 10-12, 2024</div>
-                <h3 class="event-title">Precision Medicine Symposium</h3>
-                <p class="event-description">Explored the latest advances in precision medicine and targeted therapies.</p>
-                <a href="#resources" class="resources-button">
-                    View Resources →
-                </a>
-            </div>
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">↑</button>
 
-            <div class="past-event-card">
-                <div class="event-date">February 15, 2024</div>
-                <h3 class="event-title">Clinical Trials Workshop</h3>
-                <p class="event-description">Focused on best practices in clinical trial design and management.</p>
-                <a href="#resources" class="resources-button">
-                    View Resources →
-                </a>
-            </div>
-
-            <div class="past-event-card">
-                <div class="event-date">January 20, 2024</div>
-                <h3 class="event-title">Cancer Research Updates</h3>
-                <p class="event-description">Quarterly webinar covering the latest research developments.</p>
-                <a href="#resources" class="resources-button">
-                    View Recording →
-                </a>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer>
-        <div class="footer-content">
+        <div class="footer-container">
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
@@ -633,54 +1436,72 @@
                 <h4>Contact Us</h4>
                 <address>
                     HOSU Headquarters<br>
-                    123 Medical Innovation Way<br>
-                    Global Health City, GH 54321<br>
-                    ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
-                    ✉ <a href="/cdn-cgi/l/email-protection#9ef7f0f8f1def6f1edebb0f1ecf9"><span class="__cf_email__" data-cfemail="71181f171e31191e02045f1e0316">[email&#160;protected]</span></a>
+                    Kampala, Uganda<br>
+                    <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                    <a href="mailto:info@hosu.org">info@hosu.org</a>
                 </address>
             </div>
             <div class="footer-section">
                 <h4>Stay Connected</h4>
+                <p>Follow us on social media for the latest updates and announcements.</p>
                 <div class="social-links">
-                    <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                        </svg>
                     </a>
-                    <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                        </svg>
                     </a>
-                    <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                        <i class="fab fa-facebook"></i>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                        </svg>
                     </a>
-                    <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                        <i class="fab fa-youtube"></i>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                        </svg>
                     </a>
                 </div>
             </div>
         </div>
         <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
         // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
+        menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            menuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
         });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
-                navLinks.classList.remove('active');
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
             }
         });
 
-        // Event filtering
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Filter functionality
         const filterButtons = document.querySelectorAll('.filter-button');
         const eventCards = document.querySelectorAll('.event-card');
 
@@ -688,36 +1509,300 @@
             button.addEventListener('click', () => {
                 // Remove active class from all buttons
                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                
                 // Add active class to clicked button
                 button.classList.add('active');
-
+                
                 const filterValue = button.getAttribute('data-filter');
-
-                eventCards.forEach(card => {
-                    if (filterValue === 'all' || card.getAttribute('data-type') === filterValue) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+                
+                // Filter events
+                if (filterValue === 'all') {
+                    eventCards.forEach(card => {
+                        card.style.display = 'flex';
+                    });
+                } else {
+                    eventCards.forEach(card => {
+                        const cardType = card.querySelector('.event-type').getAttribute('data-type');
+                        const isPast = !card.querySelector('.event-countdown');
+                        
+                        if ((filterValue === cardType) || 
+                            (filterValue === 'upcoming' && !isPast) || 
+                            (filterValue === 'past' && isPast)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Update filter count
+                const visibleCards = document.querySelectorAll('.event-card[style="display: flex;"]');
+                document.querySelector('.filter-count').textContent = `Showing ${visibleCards.length} events`;
             });
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+        // Past events toggle
+        const pastEventsHeader = document.querySelector('.past-events-header');
+        
+        pastEventsHeader.addEventListener('click', () => {
+            pastEventsHeader.classList.toggle('collapsed');
+        });
+
+        // Featured events carousel with conditional auto-scroll
+        const carousel = document.getElementById('featured-carousel');
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevButton = document.querySelector('.carousel-arrow.prev');
+        const nextButton = document.querySelector('.carousel-arrow.next');
+        const progressBar = document.querySelector('.carousel-progress');
+        
+        let currentSlide = 0;
+        let autoScrollInterval;
+        const totalSlides = slides.length;
+        let isAutoScrollPaused = false;
+        
+        // Function to check if carousel needs auto-scroll
+        function shouldAutoScroll() {
+            // Only auto-scroll if there are more slides than can fit in the viewport
+            const carouselWidth = carousel.parentElement.clientWidth;
+            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
+            const visibleSlides = Math.floor(carouselWidth / slideWidth);
+            
+            return totalSlides > visibleSlides;
+        }
+        
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Handle looping
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            
+            currentSlide = index;
+            
+            // Calculate slide position
+            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
+            const offset = -currentSlide * slideWidth;
+            
+            // Apply transform with smooth transition
+            carousel.style.transition = 'transform 0.5s ease';
+            carousel.style.transform = `translateX(${offset}px)`;
+            
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        // Initialize auto-scrolling if needed
+        function startAutoScroll() {
+            // Clear any existing interval
+            if (autoScrollInterval) clearInterval(autoScrollInterval);
+            
+            // Only start auto-scroll if needed
+            if (shouldAutoScroll()) {
+                // Reset and start progress animation
+                progressBar.style.width = '0%';
+                progressBar.style.transition = 'width 5s linear';
+                progressBar.style.width = '100%';
                 
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                // Set new interval - 5 seconds per slide
+                autoScrollInterval = setInterval(() => {
+                    if (!isAutoScrollPaused) {
+                        // Reset progress bar
+                        progressBar.style.width = '0%';
+                        progressBar.style.transition = 'width 5s linear';
+                        progressBar.style.width = '100%';
+                        
+                        showSlide(currentSlide + 1);
+                    }
+                }, 5000);
+            } else {
+                // Hide progress bar if auto-scroll is not needed
+                progressBar.style.display = 'none';
+            }
+        }
+        
+        // Pause auto-scroll
+        function pauseAutoScroll() {
+            isAutoScrollPaused = true;
+            
+            // Pause progress bar animation
+            const width = getComputedStyle(progressBar).width;
+            progressBar.style.transition = 'none';
+            progressBar.style.width = width;
+        }
+        
+        // Resume auto-scroll
+        function resumeAutoScroll() {
+            isAutoScrollPaused = false;
+            
+            // Only resume if auto-scroll is needed
+            if (shouldAutoScroll()) {
+                // Calculate remaining time based on progress bar width
+                const progressWidth = parseInt(getComputedStyle(progressBar).width) / 
+                                    parseInt(getComputedStyle(progressBar.parentElement).width) * 100;
+                const remainingTime = (100 - progressWidth) / 100 * 5000;
+                
+                // Complete current progress animation
+                progressBar.style.transition = `width ${remainingTime}ms linear`;
+                progressBar.style.width = '100%';
+                
+                // Set timeout to start next slide after remaining time
+                setTimeout(() => {
+                    if (!isAutoScrollPaused) {
+                        showSlide(currentSlide + 1);
+                        startAutoScroll();
+                    }
+                }, remainingTime);
+            }
+        }
+        
+        // Event listeners for navigation
+        prevButton.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+            pauseAutoScroll();
+            setTimeout(resumeAutoScroll, 5000);
+        });
+        
+        nextButton.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+            pauseAutoScroll();
+            setTimeout(resumeAutoScroll, 5000);
+        });
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                pauseAutoScroll();
+                setTimeout(resumeAutoScroll, 5000);
+            });
+        });
+        
+        // Pause auto-scroll when hovering over carousel
+        carousel.parentElement.addEventListener('mouseenter', pauseAutoScroll);
+        carousel.parentElement.addEventListener('mouseleave', resumeAutoScroll);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Recalculate if auto-scroll is needed
+            if (shouldAutoScroll()) {
+                if (!autoScrollInterval) startAutoScroll();
+                progressBar.style.display = 'block';
+            } else {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+                progressBar.style.display = 'none';
+            }
+            
+            // Reposition slides without animation
+            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
+            const offset = -currentSlide * slideWidth;
+            
+            carousel.style.transition = 'none';
+            carousel.style.transform = `translateX(${offset}px)`;
+        });
+        
+        // Initialize carousel
+        showSlide(0);
+        startAutoScroll();
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            eventCards.forEach(card => {
+                const title = card.querySelector('.event-title').textContent.toLowerCase();
+                const description = card.querySelector('.event-description').textContent.toLowerCase();
+                const location = card.querySelector('.event-location').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || location.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update filter count
+            const visibleCards = document.querySelectorAll('.event-card[style="display: flex;"]');
+            document.querySelector('.filter-count').textContent = `Showing ${visibleCards.length} events`;
+        });
+        
+        // Add to calendar functionality
+        const calendarButtons = document.querySelectorAll('.action-button[title="Add to calendar"]');
+        
+        calendarButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const card = button.closest('.event-card');
+                const title = card.querySelector('.event-title').textContent;
+                const dateText = card.querySelector('.event-date').textContent;
+                const location = card.querySelector('.event-location').textContent;
+                
+                // Parse date
+                const months = {
+                    'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
+                    'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
+                };
+                
+                // Extract month, day, and year
+                const dateMatch = dateText.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
+                if (dateMatch) {
+                    const [_, month, day, year] = dateMatch;
+                    const eventDate = new Date(parseInt(year), months[month], parseInt(day));
                     
-                    // Close mobile menu if open
-                    navLinks.classList.remove('active');
+                    // Format for Google Calendar
+                    const startDate = eventDate.toISOString().replace(/-|:|\.\d+/g, '');
+                    const endDate = new Date(eventDate.getTime() + 24 * 60 * 60 * 1000)
+                                    .toISOString().replace(/-|:|\.\d+/g, '');
+                    
+                    // Create Google Calendar URL
+                    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}`;
+                    
+                    // Open in new tab
+                    window.open(googleUrl, '_blank');
+                }
+            });
+        });
+        
+        // View options
+        const viewButtons = document.querySelectorAll('.view-button');
+        const eventsGrid = document.querySelector('.events-grid');
+        
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                viewButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                if (button.getAttribute('aria-label') === 'List view') {
+                    eventsGrid.style.gridTemplateColumns = '1fr';
+                    document.documentElement.style.setProperty('--card-height', 'auto');
+                    document.documentElement.style.setProperty('--card-image-height', '120px');
+                    
+                    // Adjust card layout for list view
+                    eventCards.forEach(card => {
+                        card.style.display = 'grid';
+                        card.style.gridTemplateColumns = '200px 1fr';
+                        card.style.gridTemplateAreas = '"image content"';
+                        card.querySelector('.event-image').style.gridArea = 'image';
+                        card.querySelector('.event-content').style.gridArea = 'content';
+                    });
+                } else {
+                    eventsGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(var(--card-width), 1fr))';
+                    document.documentElement.style.setProperty('--card-height', '360px');
+                    document.documentElement.style.setProperty('--card-image-height', '160px');
+                    
+                    // Reset card layout for grid view
+                    eventCards.forEach(card => {
+                        card.style.display = 'flex';
+                        card.style.gridTemplateColumns = '';
+                        card.style.gridTemplateAreas = '';
+                        card.querySelector('.event-image').style.gridArea = '';
+                        card.querySelector('.event-content').style.gridArea = '';
+                    });
                 }
             });
         });
