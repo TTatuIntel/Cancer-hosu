@@ -1785,7 +1785,7 @@ footer::before {
     width: 100%;
     height: 3px;
     background: var(--primary-color);
-    animation: filterProgress 3s linear;
+    animation: filterProgress 5s linear;
 }
 
 @keyframes filterProgress {
@@ -2469,7 +2469,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentFilterIndex = 0;
     let autoFilterInterval;
     const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
-    const filterCycleTime = 3000; // 3 seconds per filter
+    const filterCycleTime = 5000; // 5 seconds per filter (updated from 3 seconds)
+    const eventsSection = document.querySelector('.events-section');
 
     // Auto-cycle filters function
     function startFilterAutoCycle() {
@@ -2541,14 +2542,13 @@ document.addEventListener('DOMContentLoaded', function() {
     startFilterAutoCycle();
     startCarouselAutoCycle();
 
-    // Pause cycling on interaction
-    const carouselContainer = document.querySelector('.events-carousel-container');
-    carouselContainer.addEventListener('mouseenter', () => {
+    // Pause cycling on interaction with entire events section
+    eventsSection.addEventListener('mouseenter', () => {
         clearInterval(autoFilterInterval);
         stopCarouselAutoCycle();
     });
 
-    carouselContainer.addEventListener('mouseleave', () => {
+    eventsSection.addEventListener('mouseleave', () => {
         startFilterAutoCycle();
         startCarouselAutoCycle();
     });
@@ -2579,7 +2579,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentSlide = 0;
     let autoScrollTimer;
     const totalSlides = slides.length;
-    const scrollDuration = 3000; // 3 seconds per slide
+    const scrollDuration = 5000; // 5 seconds per slide (updated from 3 seconds)
     
     // Function to show a specific slide
     function showSlide(index) {
@@ -2653,10 +2653,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Pause on hover
-        carousel.parentElement.addEventListener('mouseenter', stopCarouselAutoCycle);
-        carousel.parentElement.addEventListener('mouseleave', startCarouselAutoCycle);
-        
         // Start auto-scrolling
         startCarouselAutoCycle();
         
@@ -2673,7 +2669,7 @@ document.addEventListener('DOMContentLoaded', function() {
             touchEndX = e.changedTouches[0].screenX;
             const diff = touchStartX - touchEndX;
             
-            if (Math.abs(diff) > 50) { // Minimum swipe distance
+            if (Math.abs(diff) > 50) {
                 if (diff > 0) {
                     showSlide(currentSlide + 1); // Swipe left, next slide
                 } else {
