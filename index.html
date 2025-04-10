@@ -63,6 +63,7 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--white);
+    overflow-x: hidden;
 }
 
 a {
@@ -550,25 +551,15 @@ section {
     max-width: 850px;
     margin: 0 auto;
     padding: 0 2rem;
-}
-
-.carousel-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background-color: var(--primary-color);
-    z-index: 5;
-    transition: width 3s linear;
+    overflow: hidden;
 }
 
 .events-carousel {
     display: flex;
     overflow: hidden;
-    scroll-behavior: smooth;
     margin-bottom: 1.25rem;
     position: relative;
+    transition: transform 0.5s ease;
 }
 
 .carousel-slide {
@@ -576,8 +567,18 @@ section {
     flex: 0 0 100%;
     justify-content: center;
     gap: 1rem;
-    transition: transform 0.5s ease;
     min-height: 320px;
+    overflow: visible;
+}
+
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background-color: var(--primary-color);
+    z-index: 5;
 }
 
 /* Enhanced event cards with color coding and countdown */
@@ -597,6 +598,8 @@ section {
     opacity: 0.9;
     cursor: pointer;
     position: relative;
+    border: none !important;
+    border-left: none !important;
 }
 
 .event-card:hover, .event-card.active-card {
@@ -605,17 +608,17 @@ section {
     opacity: 1;
 }
 
-/* Color coding for event types */
+/* Color coding for event types - removed red border */
 .event-card[data-type="conference"] {
-    border-left: 3px solid var(--secondary-color);
+    border-left: 3px solid transparent;
 }
 
 .event-card[data-type="workshop"] {
-    border-left: 3px solid #2a9d8f;
+    border-left: 3px solid transparent;
 }
 
 .event-card[data-type="webinar"] {
-    border-left: 3px solid #8338ec;
+    border-left: 3px solid transparent;
 }
 
 .event-image {
@@ -755,8 +758,8 @@ section {
 }
 
 .featured-event {
-    border: 2px solid var(--primary-color);
     position: relative;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
 .featured-badge {
@@ -899,16 +902,26 @@ section {
     gap: 0.4rem;
     background: var(--secondary-color);
     color: var(--white);
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 30px;
     font-weight: 500;
     transition: var(--transition);
-    font-size: 0.85rem;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-sm);
 }
 
 .view-all-button:hover {
     background: var(--secondary-dark);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.view-all-button span {
+    transition: transform 0.3s ease;
+}
+
+.view-all-button:hover span {
+    transform: translateX(4px);
 }
 
 /* Tabs Section */
@@ -1713,6 +1726,72 @@ footer::before {
         display: none;
     }
 }
+
+/* Update these CSS rules for the events carousel */
+.events-carousel-container {
+    position: relative;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.events-carousel {
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    display: flex;
+    flex: 0 0 100%;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 320px;
+}
+
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background-color: var(--primary-color);
+    z-index: 5;
+}
+
+/* Add this new CSS for auto-cycling indicators */
+.filter-indicator {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 3px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.filter-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.auto-cycling .filter-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    animation: filterProgress 3s linear;
+}
+
+@keyframes filterProgress {
+    from { width: 0 }
+    to { width: 100% }
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1808,8 +1887,8 @@ footer::before {
       <h2 class="section-title">New and Upcoming Events</h2>
       <p class="events-subtitle">Join us for conferences, workshops, and webinars designed to advance oncology care and research</p>
       
-      <!-- Event type filters -->
-      <div class="event-filters">
+      <!-- Event type filters with auto-cycling indicators -->
+      <div class="event-filters auto-cycling">
           <button class="filter-button active" data-filter="all">All Events</button>
           <button class="filter-button" data-filter="conference">Conferences</button>
           <button class="filter-button" data-filter="workshop">Workshops</button>
@@ -1817,164 +1896,161 @@ footer::before {
       </div>
       
       <div class="events-carousel-container">
-          <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
-          <button class="carousel-arrow next" aria-label="Next slide">❯</button>
-          
-          <div class="events-carousel">
-              <!-- Slide 1 -->
-              <div class="carousel-slide">
-                  <!-- Featured Event -->
-                  <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu">
-                      <span class="featured-badge">Featured</span>
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="UCI – PCAU – HOSU Conference" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Conference</span>
-                          <div class="event-date">Sept 10-12, 2025</div>
-                          <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
-                          <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">1 year, 5 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  📍 Kampala
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
+        <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
+        <button class="carousel-arrow next" aria-label="Next slide">❯</button>
+        
+        <div class="events-carousel">
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+                <!-- Featured Event -->
+                <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu">
+                    <span class="featured-badge">Featured</span>
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="UCI – PCAU – HOSU Conference" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Conference</span>
+                        <div class="event-date">Sept 10-12, 2025</div>
+                        <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
+                        <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">1 year, 5 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                📍 Kampala
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
 
-                  <!-- Regular Event -->
-                  <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024">
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Annual Oncology Conference 2024" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Conference</span>
-                          <div class="event-date">Sept 15-18, 2024</div>
-                          <h3 class="event-title">Annual Oncology Conference</h3>
-                          <p class="event-description">Join leading oncologists and researchers for our flagship conference.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">5 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  📍 London
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
+                <!-- Regular Event -->
+                <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024">
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="Annual Oncology Conference 2024" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Conference</span>
+                        <div class="event-date">Sept 15-18, 2024</div>
+                        <h3 class="event-title">Annual Oncology Conference</h3>
+                        <p class="event-description">Join leading oncologists and researchers for our flagship conference.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">5 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                📍 London
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
 
-                  <!-- Workshop Event -->
-                  <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop">
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Immunotherapy Workshop" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Workshop</span>
-                          <div class="event-date">July 8-9, 2024</div>
-                          <h3 class="event-title">Immunotherapy Workshop</h3>
-                          <p class="event-description">A hands-on workshop on the latest developments in immunotherapy.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">3 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  📍 Boston
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-              
-              <!-- Slide 2 -->
-              <div class="carousel-slide">
-                  <!-- Webinar Event -->
-                  <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology">
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Digital Pathology Webinar" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Webinar</span>
-                          <div class="event-date">June 25, 2024</div>
-                          <h3 class="event-title">Digital Pathology in Oncology</h3>
-                          <p class="event-description">Learn about advances in digital pathology for cancer diagnosis.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">2 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  🌐 Online
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
-                  
-                  <!-- Workshop Event -->
-                  <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology">
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Surgical Oncology Techniques" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Workshop</span>
-                          <div class="event-date">Aug 12-13, 2024</div>
-                          <h3 class="event-title">Surgical Oncology Techniques</h3>
-                          <p class="event-description">A workshop on the latest surgical techniques for oncology specialists.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">4 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  📍 Kampala
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
-                  
-                  <!-- Webinar Event -->
-                  <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates">
-                      <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Cancer Research Updates" loading="lazy">
-                      </div>
-                      <div class="event-content">
-                          <span class="event-type">Webinar</span>
-                          <div class="event-date">July 20, 2024</div>
-                          <h3 class="event-title">Cancer Research Updates</h3>
-                          <p class="event-description">Stay up-to-date with the latest research findings in oncology.</p>
-                          <div class="event-countdown">
-                              <span class="countdown-label">Starts in:</span>
-                              <span class="countdown-time">3 months</span>
-                          </div>
-                          <div class="event-footer">
-                              <div class="event-location">
-                                  🌐 Online
-                              </div>
-                              <span class="register-button">Details</span>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-          </div>
-          
-          <!-- Carousel Navigation Dots -->
-          <div class="carousel-nav">
-              <span class="carousel-dot active" data-slide="0"></span>
-              <span class="carousel-dot" data-slide="1"></span>
-          </div>
-          
-          <!-- Progress indicator for auto-scroll -->
-          <div class="carousel-progress"></div>
+                <!-- Workshop Event -->
+                <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop">
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="Immunotherapy Workshop" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Workshop</span>
+                        <div class="event-date">July 8-9, 2024</div>
+                        <h3 class="event-title">Immunotherapy Workshop</h3>
+                        <p class="event-description">A hands-on workshop on the latest developments in immunotherapy.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">3 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                📍 Boston
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+                <!-- Webinar Event -->
+                <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology">
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="Digital Pathology Webinar" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Webinar</span>
+                        <div class="event-date">June 25, 2024</div>
+                        <h3 class="event-title">Digital Pathology in Oncology</h3>
+                        <p class="event-description">Learn about advances in digital pathology for cancer diagnosis.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">2 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                🌐 Online
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Workshop Event -->
+                <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology">
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="Surgical Oncology Techniques" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Workshop</span>
+                        <div class="event-date">Aug 12-13, 2024</div>
+                        <h3 class="event-title">Surgical Oncology Techniques</h3>
+                        <p class="event-description">A workshop on the latest surgical techniques for oncology specialists.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">4 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                📍 Kampala
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Webinar Event -->
+                <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates">
+                    <div class="event-image">
+                        <img src="/placeholder.svg?height=110&width=200" alt="Cancer Research Updates" loading="lazy">
+                    </div>
+                    <div class="event-content">
+                        <span class="event-type">Webinar</span>
+                        <div class="event-date">July 20, 2024</div>
+                        <h3 class="event-title">Cancer Research Updates</h3>
+                        <p class="event-description">Stay up-to-date with the latest research findings in oncology.</p>
+                        <div class="event-countdown">
+                            <span class="countdown-label">Starts in:</span>
+                            <span class="countdown-time">3 months</span>
+                        </div>
+                        <div class="event-footer">
+                            <div class="event-location">
+                                🌐 Online
+                            </div>
+                            <span class="register-button">Details</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Carousel Navigation Dots -->
+        <div class="carousel-nav">
+            <span class="carousel-dot active" data-slide="0"></span>
+            <span class="carousel-dot" data-slide="1"></span>
+        </div>   
       </div>
       
       <!-- Past events highlight -->
@@ -2194,7 +2270,7 @@ footer::before {
             HOSU Headquarters<br>
             Kampala, Uganda<br>
             <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-            <a href="mailto:info@hosu.org">info@hosu.org</a>
+            <a href="/cdn-cgi/l/email-protection#0960676f664961667a7c27667b6e"><span class="__cf_email__" data-cfemail="f0999e969fb0989f8385de9f8297">[email&#160;protected]</span></a>
         </address>
     </div>
     <div class="footer-section">
@@ -2219,7 +2295,7 @@ footer::before {
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Custom cursor effect
 const cursor = document.getElementById('custom-cursor');
 const joinButton = document.getElementById('join-button');
@@ -2387,39 +2463,133 @@ if (activeTab) {
     showTabContent(initialTabId);
 }
 
-// Enhanced Carousel functionality with auto-scroll and selection features
+// Updated JavaScript for auto-cycling functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing variables and setup
+    let currentFilterIndex = 0;
+    let autoFilterInterval;
+    const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
+    const filterCycleTime = 3000; // 3 seconds per filter
+
+    // Auto-cycle filters function
+    function startFilterAutoCycle() {
+        autoFilterInterval = setInterval(() => {
+            currentFilterIndex = (currentFilterIndex + 1) % filterButtons.length;
+            activateFilter(filterButtons[currentFilterIndex]);
+        }, filterCycleTime);
+    }
+
+    function activateFilter(filterButton) {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to selected button
+        filterButton.classList.add('active');
+        
+        // Get filter type
+        const filterType = filterButton.dataset.filter;
+        
+        // Filter events
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.style.display = filterType === 'all' || card.dataset.type === filterType ? '' : 'none';
+        });
+
+        // Reset carousel for new filter
+        resetCarouselForFilter();
+        startCarouselAutoCycle();
+    }
+
+    function resetCarouselForFilter() {
+        // Hide all slides
+        document.querySelectorAll('.carousel-slide').forEach(slide => {
+            slide.style.display = 'none';
+        });
+
+        // Show only slides with visible cards
+        let slideIndex = 0;
+        document.querySelectorAll('.carousel-slide').forEach(slide => {
+            const hasVisibleCards = Array.from(slide.children).some(card => 
+                window.getComputedStyle(card).display !== 'none'
+            );
+            if (hasVisibleCards) {
+                slide.style.display = 'flex';
+                slide.dataset.filterSlideIndex = slideIndex++;
+            } else {
+                slide.removeAttribute('data-filter-slide-index');
+            }
+        });
+
+        // Reset carousel state
+        currentSlide = 0;
+        totalSlides = document.querySelectorAll('.carousel-slide[data-filter-slide-index]').length;
+        showSlide(currentSlide);
+    }
+
+    function showSlide(index) {
+        // Existing showSlide logic
+        // Add filter transition check
+        if (index >= totalSlides) {
+            // Trigger next filter if at end of carousel
+            clearInterval(autoFilterInterval);
+            currentFilterIndex = (currentFilterIndex + 1) % filterButtons.length;
+            activateFilter(filterButtons[currentFilterIndex]);
+            startFilterAutoCycle();
+        }
+    }
+
+    // Start initial cycles
+    startFilterAutoCycle();
+    startCarouselAutoCycle();
+
+    // Pause cycling on interaction
+    const carouselContainer = document.querySelector('.events-carousel-container');
+    carouselContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoFilterInterval);
+        stopCarouselAutoCycle();
+    });
+
+    carouselContainer.addEventListener('mouseleave', () => {
+        startFilterAutoCycle();
+        startCarouselAutoCycle();
+    });
+
+    // Existing carousel and filter click handlers
+    // Add pause/resume logic for manual interactions
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            clearInterval(autoFilterInterval);
+            currentFilterIndex = filterButtons.indexOf(this);
+            activateFilter(this);
+            startFilterAutoCycle();
+        });
+    });
+});
+
+// Simplified and fixed carousel functionality
 document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.events-carousel');
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.carousel-dot');
     const prevButton = document.querySelector('.carousel-arrow.prev');
     const nextButton = document.querySelector('.carousel-arrow.next');
-    const eventCards = document.querySelectorAll('.event-card');
     const progressBar = document.querySelector('.carousel-progress');
-
+    
+    if (!carousel || !slides.length) return;
+    
     let currentSlide = 0;
-    let autoScrollInterval;
+    let autoScrollTimer;
     const totalSlides = slides.length;
-    let isAutoScrollPaused = false;
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    // Function to show a specific slide with smooth transition
-    function showSlide(index, smooth = true) {
-        // Implement proper looping
+    const scrollDuration = 3000; // 3 seconds per slide
+    
+    // Function to show a specific slide
+    function showSlide(index) {
+        // Handle looping
         if (index < 0) index = totalSlides - 1;
         if (index >= totalSlides) index = 0;
         
-        // Update current slide
         currentSlide = index;
         
-        // Update carousel position with smooth transition
-        if (smooth) {
-            carousel.style.transition = 'transform 0.5s ease';
-        } else {
-            carousel.style.transition = 'none';
-        }
-        
+        // Move carousel
         carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
         
         // Update dots
@@ -2427,153 +2597,100 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.classList.toggle('active', i === currentSlide);
         });
         
-        // Add active class to visible cards for subtle highlight effect
-        const allCards = document.querySelectorAll('.event-card');
-        allCards.forEach(card => card.classList.remove('active-card'));
-        
-        const visibleCards = slides[currentSlide].querySelectorAll('.event-card');
-        visibleCards.forEach(card => card.classList.add('active-card'));
-        
-        // Check URL hash to see if we should highlight a specific card
-        if (window.location.hash) {
-            const eventId = window.location.hash.substring(1);
-            const matchingCard = slides[currentSlide].querySelector(`.event-card[data-event-id="${eventId}"]`);
-            if (matchingCard) {
-                allCards.forEach(card => card.classList.remove('active-card'));
-                matchingCard.classList.add('active-card');
-            }
-        }
+        // Reset and start progress bar
+        resetProgressBar();
     }
-
-    // Initialize auto-scrolling with progress bar
-    function startAutoScroll() {
-        // Clear any existing interval
-        if (autoScrollInterval) clearInterval(autoScrollInterval);
-        
-        // Reset and start progress animation
-        progressBar.style.width = '0%';
-        progressBar.style.transition = 'width 3s linear';
+    
+    // Reset and animate progress bar
+    function resetProgressBar() {
+        progressBar.style.width = '0';
+        // Force a reflow to ensure the transition works
+        void progressBar.offsetWidth;
+        progressBar.style.transition = `width ${scrollDuration}ms linear`;
         progressBar.style.width = '100%';
-        
-        // Set new interval - 3 seconds per slide as requested
-        autoScrollInterval = setInterval(() => {
-            if (!isAutoScrollPaused) {
-                // Reset progress bar
-                progressBar.style.width = '0%';
-                progressBar.style.transition = 'width 3s linear';
-                progressBar.style.width = '100%';
-                
-                showSlide(currentSlide + 1);
-            }
-        }, 3000);
     }
-
-    // Pause auto-scroll
-    function pauseAutoScroll() {
-        isAutoScrollPaused = true;
+    
+    // Start auto-scrolling
+    function startCarouselAutoCycle() {
+        clearTimeout(autoScrollTimer);
+        resetProgressBar();
         
-        // Pause progress bar animation
-        const width = getComputedStyle(progressBar).width;
+        autoScrollTimer = setTimeout(() => {
+            showSlide(currentSlide + 1);
+            startCarouselAutoCycle();
+        }, scrollDuration);
+    }
+    
+    // Stop auto-scrolling
+    function stopCarouselAutoCycle() {
+        clearTimeout(autoScrollTimer);
         progressBar.style.transition = 'none';
-        progressBar.style.width = width;
     }
-
-    // Resume auto-scroll
-    function resumeAutoScroll() {
-        isAutoScrollPaused = false;
+    
+    // Initialize carousel
+    function initCarousel() {
+        // Set initial slide
+        showSlide(0);
         
-        // Calculate remaining time based on progress bar width
-        const progressWidth = parseInt(getComputedStyle(progressBar).width) / 
-                            parseInt(getComputedStyle(progressBar.parentElement).width) * 100;
-        const remainingTime = (100 - progressWidth) / 100 * 3000;
-        
-        // Complete current progress animation
-        progressBar.style.transition = `width ${remainingTime}ms linear`;
-        progressBar.style.width = '100%';
-        
-        // Set timeout to start next slide after remaining time
-        setTimeout(() => {
-            if (!isAutoScrollPaused) {
-                showSlide(currentSlide + 1);
-                startAutoScroll();
-            }
-        }, remainingTime);
-    }
-
-    // Event listeners for navigation
-    prevButton.addEventListener('click', () => {
-        prevButton.classList.add('clicked');
-        setTimeout(() => prevButton.classList.remove('clicked'), 200);
-        showSlide(currentSlide - 1);
-        pauseAutoScroll();
-        setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
-    });
-
-    nextButton.addEventListener('click', () => {
-        nextButton.classList.add('clicked');
-        setTimeout(() => nextButton.classList.remove('clicked'), 200);
-        showSlide(currentSlide + 1);
-        pauseAutoScroll();
-        setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
-    });
-
-    // Dot navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            dot.classList.add('clicked');
-            setTimeout(() => dot.classList.remove('clicked'), 200);
-            showSlide(index);
-            pauseAutoScroll();
-            setTimeout(resumeAutoScroll, 5000); // Resume after 5 seconds of inactivity
+        // Add event listeners
+        prevButton.addEventListener('click', () => {
+            stopCarouselAutoCycle();
+            showSlide(currentSlide - 1);
+            startCarouselAutoCycle();
         });
-    });
-
-    // Pause auto-scroll when user interacts with carousel
-    const carouselContainer = document.querySelector('.events-carousel-container');
-    carouselContainer.addEventListener('mouseenter', () => {
-        pauseAutoScroll();
-    });
-
-    carouselContainer.addEventListener('mouseleave', () => {
-        resumeAutoScroll();
-    });
-
-    // Add touch support for mobile devices
-    carousel.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        pauseAutoScroll();
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-        setTimeout(resumeAutoScroll, 5000);
-    }, { passive: true });
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchEndX < touchStartX - swipeThreshold) {
+        
+        nextButton.addEventListener('click', () => {
+            stopCarouselAutoCycle();
             showSlide(currentSlide + 1);
-        } else if (touchEndX > touchStartX + swipeThreshold) {
-            showSlide(currentSlide - 1);
-        }
+            startCarouselAutoCycle();
+        });
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopCarouselAutoCycle();
+                showSlide(index);
+                startCarouselAutoCycle();
+            });
+        });
+        
+        // Pause on hover
+        carousel.parentElement.addEventListener('mouseenter', stopCarouselAutoCycle);
+        carousel.parentElement.addEventListener('mouseleave', startCarouselAutoCycle);
+        
+        // Start auto-scrolling
+        startCarouselAutoCycle();
+        
+        // Add swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopCarouselAutoCycle();
+        }, { passive: true });
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) { // Minimum swipe distance
+                if (diff > 0) {
+                    showSlide(currentSlide + 1); // Swipe left, next slide
+                } else {
+                    showSlide(currentSlide - 1); // Swipe right, previous slide
+                }
+            }
+            
+            startCarouselAutoCycle();
+        }, { passive: true });
     }
-
-    // Add keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            showSlide(currentSlide - 1);
-            pauseAutoScroll();
-            setTimeout(resumeAutoScroll, 5000);
-        } else if (e.key === 'ArrowRight') {
-            showSlide(currentSlide + 1);
-            pauseAutoScroll();
-            setTimeout(resumeAutoScroll, 5000);
-        }
-    });
-
+    
+    // Initialize the carousel
+    initCarousel();
+    
     // Event filtering
     const filterButtons = document.querySelectorAll('.filter-button');
+    const eventCards = document.querySelectorAll('.event-card');
     
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -2592,110 +2709,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Reset carousel to first slide
-            showSlide(0, false);
+            // Reset carousel
+            stopCarouselAutoCycle();
+            showSlide(0);
+            startCarouselAutoCycle();
         });
     });
-
-    // Initialize carousel
-    showSlide(0, false); // Initialize without animation
-    startAutoScroll();
-
-    // Check URL hash on page load to highlight matching event
-    function checkUrlForEventId() {
-        if (window.location.hash) {
-            const eventId = window.location.hash.substring(1);
-            const matchingCard = document.querySelector(`.event-card[data-event-id="${eventId}"]`);
-            
-            if (matchingCard) {
-                // Find which slide contains this card
-                const slideIndex = Array.from(slides).findIndex(slide => 
-                    slide.contains(matchingCard)
-                );
-                
-                if (slideIndex !== -1) {
-                    // Show the slide containing the matching card
-                    showSlide(slideIndex, false);
-                    
-                    // Highlight the card
-                    eventCards.forEach(card => {
-                        card.classList.remove('active-card');
-                    });
-                    matchingCard.classList.add('active-card');
-                    
-                    // Scroll to events section
-                    const eventsSection = document.getElementById('events');
-                    if (eventsSection) {
-                        setTimeout(() => {
-                            eventsSection.scrollIntoView({ behavior: 'smooth' });
-                        }, 500);
-                    }
+    
+    // Check URL hash for direct linking
+    if (window.location.hash) {
+        const eventId = window.location.hash.substring(1);
+        const matchingCard = document.querySelector(`.event-card[data-event-id="${eventId}"]`);
+        
+        if (matchingCard) {
+            // Find which slide contains this card
+            slides.forEach((slide, index) => {
+                if (slide.contains(matchingCard)) {
+                    showSlide(index);
                 }
-            }
+            });
         }
-    }
-
-    checkUrlForEventId();
-
-    // Add calendar functionality
-    eventCards.forEach(card => {
-        // Create calendar button
-        const calendarBtn = document.createElement('button');
-        calendarBtn.className = 'calendar-button';
-        calendarBtn.innerHTML = '📅';
-        calendarBtn.title = 'Add to Calendar';
-        
-        // Add to card
-        const footer = card.querySelector('.event-footer');
-        footer.appendChild(calendarBtn);
-        
-        // Add event listener
-        calendarBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const title = card.querySelector('.event-title').textContent;
-            const dateText = card.querySelector('.event-date').textContent;
-            const location = card.querySelector('.event-location').textContent.trim();
-            
-            addToCalendar(title, parseEventDate(dateText), location);
-        });
-    });
-
-    // Function to add event to calendar
-    function addToCalendar(title, date, location) {
-        // Format date for calendar URL
-        const startDate = formatDateForCalendar(date);
-        const endDate = formatDateForCalendar(new Date(date.getTime() + 24 * 60 * 60 * 1000));
-        
-        // Create Google Calendar URL
-        const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}`;
-        
-        // Open in new tab
-        window.open(googleUrl, '_blank');
-    }
-
-    // Helper function to parse event date from text
-    function parseEventDate(dateText) {
-        // Handle various date formats like "Sept 10-12, 2025"
-        const months = {
-            'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-            'July': 6, 'Aug': 7, 'Sept': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
-        };
-        
-        // Extract month, day, and year
-        const match = dateText.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
-        if (match) {
-            const [_, month, day, year] = match;
-            return new Date(parseInt(year), months[month], parseInt(day));
-        }
-        
-        return new Date(); // Fallback to current date
-    }
-
-    // Format date for calendar URL
-    function formatDateForCalendar(date) {
-        return date.toISOString().replace(/-|:|\.\d+/g, '');
     }
 });
 </script>
