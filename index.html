@@ -560,6 +560,8 @@ section {
     margin-bottom: 1.25rem;
     position: relative;
     transition: transform 0.5s ease;
+    scroll-snap-type: x mandatory; /* Added for smooth scrolling */
+    -webkit-overflow-scrolling: touch; /* Better iOS scrolling */
 }
 
 .carousel-slide {
@@ -569,6 +571,27 @@ section {
     gap: 1rem;
     min-height: 320px;
     overflow: visible;
+    scroll-snap-align: start; /* Added for smooth scrolling */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Added for transitions */
+}
+
+.carousel-slide.empty {
+    display: none;
+}
+
+.carousel-slide.prev-slide {
+    opacity: 0;
+    transform: translateX(-10%);
+}
+
+.carousel-slide.next-slide {
+    opacity: 0;
+    transform: translateX(10%);
+}
+
+.carousel-slide.active-slide {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .carousel-progress {
@@ -833,6 +856,11 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     opacity: 0.6;
+    display: none; /* Hide by default */
+}
+
+.carousel-dot.has-content {
+    display: block; /* Only show dots for slides with content */
 }
 
 .carousel-dot:hover {
@@ -1503,7 +1531,130 @@ footer::before {
     transform: translate(-50%, -50%);
     z-index: 9999;
     opacity: 0;
-    transition: transform 0.1s ease, opacity 0.2s ease;
+    transition: transform 0.1s ease, opacity 0.2s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+}
+
+/* Enhanced custom cursor for events section */
+.custom-cursor.events-cursor {
+    background-color: rgba(230, 57, 70, 0.1);
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+}
+
+.custom-cursor.card-hover {
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    opacity: 0.7;
+    border: none;
+}
+
+/* Event card hover effects for cursor interaction */
+.event-card {
+    transition: all 0.3s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.event-card.cursor-active {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    z-index: 5;
+}
+
+.event-card.cursor-active .event-image img {
+    transform: scale(1.1);
+}
+
+.event-card.cursor-active .register-button {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Add this new CSS for auto-cycling indicators */
+.filter-indicator {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 3px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.filter-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.auto-cycling .filter-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    animation: filterProgress 5s linear;
+}
+
+@keyframes filterProgress {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* NEW: Enhanced carousel transitions */
+@keyframes slideInRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeInScale {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* NEW: Scroll snap for smooth scrolling */
+.events-carousel {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.events-carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* NEW: Drag to scroll visual feedback */
+.events-carousel.dragging {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.events-carousel.dragging .event-card {
+    pointer-events: none;
+}
+
+/* NEW: Visual position indicator */
+.carousel-position-indicator {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gray-300);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.carousel-position-indicator-progress {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0;
+    transition: width 0.3s ease;
 }
 
 /* Media Queries */
@@ -1727,70 +1878,51 @@ footer::before {
     }
 }
 
-/* Update these CSS rules for the events carousel */
-.events-carousel-container {
-    position: relative;
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    overflow: hidden;
+/* Event card hover styles for cursor interaction */
+.event-card.cursor-hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
 }
 
-.events-carousel {
-    display: flex;
-    overflow: hidden;
-    margin-bottom: 1.25rem;
-    position: relative;
-    transition: transform 0.5s ease;
+.carousel-arrow.cursor-hover {
+  transform: translateY(-50%) scale(1.1) !important;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  opacity: 1 !important;
 }
 
-.carousel-slide {
-    display: flex;
-    flex: 0 0 100%;
-    justify-content: center;
-    gap: 1rem;
-    min-height: 320px;
+.filter-button.cursor-hover {
+  background: var(--gray-200) !important;
+  transform: translateY(-2px) !important;
 }
 
-.carousel-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 0;
-    background-color: var(--primary-color);
-    z-index: 5;
+.custom-cursor.clicking {
+  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) scale(0.9) !important;
+  background-color: rgba(230, 57, 70, 0.3) !important;
 }
 
-/* Add this new CSS for auto-cycling indicators */
-.filter-indicator {
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    height: 3px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
+/* NEW: Focus styles for keyboard navigation */
+.event-card:focus-visible,
+.carousel-arrow:focus-visible,
+.filter-button:focus-visible,
+.carousel-dot:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
-.filter-button {
-    position: relative;
-    overflow: hidden;
+/* NEW: Active slide indicator */
+.carousel-slide.active-slide .event-card {
+  animation: pulseHighlight 2s infinite alternate;
 }
 
-.auto-cycling .filter-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--primary-color);
-    animation: filterProgress 5s linear;
-}
-
-@keyframes filterProgress {
-    from { width: 0 }
-    to { width: 100% }
+@keyframes pulseHighlight {
+  0% {
+    box-shadow: var(--shadow-sm);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
+  }
 }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1889,21 +2021,21 @@ footer::before {
       
       <!-- Event type filters with auto-cycling indicators -->
       <div class="event-filters auto-cycling">
-          <button class="filter-button active" data-filter="all">All Events</button>
-          <button class="filter-button" data-filter="conference">Conferences</button>
-          <button class="filter-button" data-filter="workshop">Workshops</button>
-          <button class="filter-button" data-filter="webinar">Webinars</button>
+          <button class="filter-button active" data-filter="all" tabindex="0">All Events</button>
+          <button class="filter-button" data-filter="conference" tabindex="0">Conferences</button>
+          <button class="filter-button" data-filter="workshop" tabindex="0">Workshops</button>
+          <button class="filter-button" data-filter="webinar" tabindex="0">Webinars</button>
       </div>
       
       <div class="events-carousel-container">
-        <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
-        <button class="carousel-arrow next" aria-label="Next slide">❯</button>
+        <button class="carousel-arrow prev" aria-label="Previous slide" tabindex="0">❮</button>
+        <button class="carousel-arrow next" aria-label="Next slide" tabindex="0">❯</button>
         
         <div class="events-carousel">
             <!-- Slide 1 -->
-            <div class="carousel-slide">
+            <div class="carousel-slide active-slide" data-has-content="true">
                 <!-- Featured Event -->
-                <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu">
+                <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu" tabindex="0">
                     <span class="featured-badge">Featured</span>
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="UCI – PCAU – HOSU Conference" loading="lazy">
@@ -1927,7 +2059,7 @@ footer::before {
                 </a>
 
                 <!-- Regular Event -->
-                <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024">
+                <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024" tabindex="0">
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="Annual Oncology Conference 2024" loading="lazy">
                     </div>
@@ -1950,7 +2082,7 @@ footer::before {
                 </a>
 
                 <!-- Workshop Event -->
-                <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop">
+                <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop" tabindex="0">
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="Immunotherapy Workshop" loading="lazy">
                     </div>
@@ -1974,9 +2106,9 @@ footer::before {
             </div>
             
             <!-- Slide 2 -->
-            <div class="carousel-slide">
+            <div class="carousel-slide" data-has-content="true">
                 <!-- Webinar Event -->
-                <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology">
+                <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology" tabindex="0">
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="Digital Pathology Webinar" loading="lazy">
                     </div>
@@ -1999,7 +2131,7 @@ footer::before {
                 </a>
                 
                 <!-- Workshop Event -->
-                <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology">
+                <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology" tabindex="0">
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="Surgical Oncology Techniques" loading="lazy">
                     </div>
@@ -2022,7 +2154,7 @@ footer::before {
                 </a>
                 
                 <!-- Webinar Event -->
-                <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates">
+                <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates" tabindex="0">
                     <div class="event-image">
                         <img src="/placeholder.svg?height=110&width=200" alt="Cancer Research Updates" loading="lazy">
                     </div>
@@ -2046,11 +2178,15 @@ footer::before {
             </div>
         </div>
         
-        <!-- Carousel Navigation Dots -->
-        <div class="carousel-nav">
-            <span class="carousel-dot active" data-slide="0"></span>
-            <span class="carousel-dot" data-slide="1"></span>
-        </div>   
+        <!-- Carousel Navigation Dots - Only show for slides with content -->
+        <div class="carousel-nav" id="carousel-nav">
+            <!-- Dots will be dynamically generated based on slides with content -->
+        </div>
+        
+        <!-- NEW: Visual position indicator -->
+        <div class="carousel-position-indicator">
+            <div class="carousel-position-indicator-progress"></div>
+        </div>
       </div>
       
       <!-- Past events highlight -->
@@ -2295,23 +2431,154 @@ footer::before {
 
 <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Custom cursor effect
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+// Enhanced custom cursor effect for events section
 const cursor = document.getElementById('custom-cursor');
 const joinButton = document.getElementById('join-button');
+const eventsSection = document.getElementById('events');
+const eventCards = document.querySelectorAll('.event-card');
+const carouselArrows = document.querySelectorAll('.carousel-arrow');
+const filterButtons = document.querySelectorAll('.filter-button');
+
+// Track if we're in the events section
+let isInEventsSection = false;
 
 document.addEventListener('mousemove', (e) => {
+    // Basic cursor positioning
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    // Set CSS variables for position to use in transforms
+    cursor.style.setProperty('--x', `${x}px`);
+    cursor.style.setProperty('--y', `${y}px`);
+    
+    // Check if mouse is over the events section
+    const eventsSectionRect = eventsSection?.getBoundingClientRect();
+    isInEventsSection = eventsSectionRect && 
+        x >= eventsSectionRect.left && 
+        x <= eventsSectionRect.right && 
+        y >= eventsSectionRect.top && 
+        y <= eventsSectionRect.bottom;
+    
     // Check if mouse is over the join button
     const buttonRect = joinButton?.getBoundingClientRect();
     const isOverButton = buttonRect && 
-        e.clientX >= buttonRect.left && 
-        e.clientX <= buttonRect.right && 
-        e.clientY >= buttonRect.top && 
-        e.clientY <= buttonRect.bottom;
+        x >= buttonRect.left && 
+        x <= buttonRect.right && 
+        y >= buttonRect.top && 
+        y <= buttonRect.bottom;
     
-    // Update cursor position
-    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(${isOverButton ? 1 : 0.5})`;
-    cursor.style.opacity = isOverButton ? '1' : '0';
+    // Check if mouse is over any event card
+    let isOverCard = false;
+    let activeCard = null;
+    
+    eventCards.forEach(card => {
+        const cardRect = card.getBoundingClientRect();
+        if (
+            x >= cardRect.left && 
+            x <= cardRect.right && 
+            y >= cardRect.top && 
+            y <= cardRect.bottom &&
+            isInEventsSection
+        ) {
+            isOverCard = true;
+            activeCard = card;
+            card.classList.add('cursor-hover');
+        } else {
+            card.classList.remove('cursor-hover');
+        }
+    });
+    
+    // Check if mouse is over carousel arrows
+    let isOverArrow = false;
+    carouselArrows.forEach(arrow => {
+        const arrowRect = arrow.getBoundingClientRect();
+        if (
+            x >= arrowRect.left && 
+            x <= arrowRect.right && 
+            y >= arrowRect.top && 
+            y <= arrowRect.bottom &&
+            isInEventsSection
+        ) {
+            isOverArrow = true;
+            arrow.classList.add('cursor-hover');
+        } else {
+            arrow.classList.remove('cursor-hover');
+        }
+    });
+    
+    // Check if mouse is over filter buttons
+    let isOverFilter = false;
+    filterButtons.forEach(button => {
+        const buttonRect = button.getBoundingClientRect();
+        if (
+            x >= buttonRect.left && 
+            x <= buttonRect.right && 
+            y >= buttonRect.top && 
+            y <= buttonRect.bottom &&
+            isInEventsSection
+        ) {
+            isOverFilter = true;
+            button.classList.add('cursor-hover');
+        } else {
+            button.classList.remove('cursor-hover');
+        }
+    });
+    
+    // Update cursor appearance based on context
+    if (isOverButton) {
+        cursor.className = 'custom-cursor';
+        cursor.style.opacity = '1';
+        cursor.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+        cursor.textContent = '';
+    } else if (isOverCard) {
+        cursor.className = 'custom-cursor card-hover';
+        cursor.style.opacity = '1';
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+        cursor.textContent = 'View';
+    } else if (isOverArrow) {
+        cursor.className = 'custom-cursor events-cursor';
+        cursor.style.opacity = '1';
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+        cursor.textContent = carouselArrows[0].classList.contains('prev') ? 'Prev' : 'Next';
+    } else if (isOverFilter) {
+        cursor.className = 'custom-cursor events-cursor';
+        cursor.style.opacity = '1';
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+        cursor.textContent = 'Filter';
+    } else if (isInEventsSection) {
+        cursor.className = 'custom-cursor events-cursor';
+        cursor.style.opacity = '0.7';
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+        cursor.textContent = '';
+    } else {
+        cursor.className = 'custom-cursor';
+        cursor.style.opacity = '0';
+        cursor.style.transform = `translate(${x}px, ${y}px) scale(0.5)`;
+        cursor.textContent = '';
+    }
+    
+    // Remove active class from all cards
+    eventCards.forEach(card => {
+        card.classList.remove('cursor-active');
+    });
+    
+    // Add active class to the card under cursor
+    if (activeCard) {
+        activeCard.classList.add('cursor-active');
+    }
+});
+
+// Add click effect to cursor
+document.addEventListener('mousedown', () => {
+    if (isInEventsSection) {
+        cursor.classList.add('clicking');
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    cursor.classList.remove('clicking');
 });
 
 // Add glow effect to join button on hover
@@ -2376,6 +2643,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 top: offsetPosition,
                 behavior: 'smooth'
             });
+            
             
             // Close mobile menu after clicking
             navLinks.classList.remove('active');
@@ -2463,139 +2731,107 @@ if (activeTab) {
     showTabContent(initialTabId);
 }
 
-// Updated JavaScript for auto-cycling functionality
+// ENHANCED carousel functionality with interactive elements
 document.addEventListener('DOMContentLoaded', function() {
-    // Existing variables and setup
-    let currentFilterIndex = 0;
-    let autoFilterInterval;
-    const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
-    const filterCycleTime = 5000; // 5 seconds per filter (updated from 3 seconds)
-    const eventsSection = document.querySelector('.events-section');
-
-    // Auto-cycle filters function
-    function startFilterAutoCycle() {
-        autoFilterInterval = setInterval(() => {
-            currentFilterIndex = (currentFilterIndex + 1) % filterButtons.length;
-            activateFilter(filterButtons[currentFilterIndex]);
-        }, filterCycleTime);
-    }
-
-    function activateFilter(filterButton) {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to selected button
-        filterButton.classList.add('active');
-        
-        // Get filter type
-        const filterType = filterButton.dataset.filter;
-        
-        // Filter events
-        document.querySelectorAll('.event-card').forEach(card => {
-            card.style.display = filterType === 'all' || card.dataset.type === filterType ? '' : 'none';
-        });
-
-        // Reset carousel for new filter
-        resetCarouselForFilter();
-        startCarouselAutoCycle();
-    }
-
-    function resetCarouselForFilter() {
-        // Hide all slides
-        document.querySelectorAll('.carousel-slide').forEach(slide => {
-            slide.style.display = 'none';
-        });
-
-        // Show only slides with visible cards
-        let slideIndex = 0;
-        document.querySelectorAll('.carousel-slide').forEach(slide => {
-            const hasVisibleCards = Array.from(slide.children).some(card => 
-                window.getComputedStyle(card).display !== 'none'
-            );
-            if (hasVisibleCards) {
-                slide.style.display = 'flex';
-                slide.dataset.filterSlideIndex = slideIndex++;
-            } else {
-                slide.removeAttribute('data-filter-slide-index');
-            }
-        });
-
-        // Reset carousel state
-        currentSlide = 0;
-        totalSlides = document.querySelectorAll('.carousel-slide[data-filter-slide-index]').length;
-        showSlide(currentSlide);
-    }
-
-    function showSlide(index) {
-        // Existing showSlide logic
-        // Add filter transition check
-        if (index >= totalSlides) {
-            // Trigger next filter if at end of carousel
-            clearInterval(autoFilterInterval);
-            currentFilterIndex = (currentFilterIndex + 1) % filterButtons.length;
-            activateFilter(filterButtons[currentFilterIndex]);
-            startFilterAutoCycle();
-        }
-    }
-
-    // Start initial cycles
-    startFilterAutoCycle();
-    startCarouselAutoCycle();
-
-    // Pause cycling on interaction with entire events section
-    eventsSection.addEventListener('mouseenter', () => {
-        clearInterval(autoFilterInterval);
-        stopCarouselAutoCycle();
-    });
-
-    eventsSection.addEventListener('mouseleave', () => {
-        startFilterAutoCycle();
-        startCarouselAutoCycle();
-    });
-
-    // Existing carousel and filter click handlers
-    // Add pause/resume logic for manual interactions
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            clearInterval(autoFilterInterval);
-            currentFilterIndex = filterButtons.indexOf(this);
-            activateFilter(this);
-            startFilterAutoCycle();
-        });
-    });
-});
-
-// Simplified and fixed carousel functionality
-document.addEventListener('DOMContentLoaded', function() {
+    // Carousel variables
     const carousel = document.querySelector('.events-carousel');
     const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
+    const carouselNav = document.getElementById('carousel-nav');
     const prevButton = document.querySelector('.carousel-arrow.prev');
     const nextButton = document.querySelector('.carousel-arrow.next');
     const progressBar = document.querySelector('.carousel-progress');
+    const positionIndicator = document.querySelector('.carousel-position-indicator-progress');
     
     if (!carousel || !slides.length) return;
     
+    // Check for empty slides and mark them
+    slides.forEach((slide, index) => {
+        const hasEvents = slide.querySelectorAll('.event-card').length > 0;
+        if (!hasEvents) {
+            slide.classList.add('empty');
+        } else {
+            slide.setAttribute('data-has-content', 'true');
+        }
+    });
+    
+    // Get only non-empty slides
+    const nonEmptySlides = document.querySelectorAll('.carousel-slide[data-has-content="true"]');
+    
+    // Generate dots only for slides with content
+    nonEmptySlides.forEach((slide, index) => {
+        const dot = document.createElement('span');
+        dot.className = index === 0 ? 'carousel-dot has-content active' : 'carousel-dot has-content';
+        dot.setAttribute('data-slide', index);
+        dot.setAttribute('tabindex', '0');
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+        carouselNav.appendChild(dot);
+    });
+    
+    // Get the generated dots
+    const dots = document.querySelectorAll('.carousel-dot.has-content');
+    
     let currentSlide = 0;
     let autoScrollTimer;
-    const totalSlides = slides.length;
-    const scrollDuration = 5000; // 5 seconds per slide (updated from 3 seconds)
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let animationID = 0;
+    const totalSlides = nonEmptySlides.length;
+    const scrollDuration = 5000; // 5 seconds per slide
+    let isPaused = false;
     
-    // Function to show a specific slide
-    function showSlide(index) {
+    // Function to show a specific slide with enhanced transitions
+    function showSlide(index, direction = null) {
         // Handle looping
         if (index < 0) index = totalSlides - 1;
         if (index >= totalSlides) index = 0;
         
+        // Set transition classes based on direction
+        slides.forEach(slide => {
+            slide.classList.remove('active-slide', 'prev-slide', 'next-slide');
+        });
+        
+        // Find the actual slide index in the original slides collection
+        let actualIndex = 0;
+        let count = 0;
+        for (let i = 0; i < slides.length; i++) {
+            if (slides[i].getAttribute('data-has-content') === 'true') {
+                if (count === index) {
+                    actualIndex = i;
+                    break;
+                }
+                count++;
+            }
+        }
+        
+        // Apply transition classes
+        if (direction === 'next' || (direction === null && index > currentSlide)) {
+            slides[actualIndex].classList.add('next-slide');
+        } else if (direction === 'prev' || (direction === null && index < currentSlide)) {
+            slides[actualIndex].classList.add('prev-slide');
+        }
+        
+        // Force reflow to ensure transition works
+        void slides[actualIndex].offsetWidth;
+        
         currentSlide = index;
         
-        // Move carousel
-        carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Move carousel with transition
+        carousel.style.transform = `translateX(-${actualIndex * 100}%)`;
+        slides[actualIndex].classList.add('active-slide');
         
         // Update dots
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentSlide);
+            dot.setAttribute('aria-selected', i === currentSlide ? 'true' : 'false');
         });
+        
+        // Update position indicator
+        if (positionIndicator) {
+            positionIndicator.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
         
         // Reset and start progress bar
         resetProgressBar();
@@ -2603,20 +2839,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Reset and animate progress bar
     function resetProgressBar() {
+        if (!progressBar) return;
         progressBar.style.width = '0';
         // Force a reflow to ensure the transition works
         void progressBar.offsetWidth;
-        progressBar.style.transition = `width ${scrollDuration}ms linear`;
-        progressBar.style.width = '100%';
+        
+        if (!isPaused) {
+            progressBar.style.transition = `width ${scrollDuration}ms linear`;
+            progressBar.style.width = '100%';
+        }
     }
     
     // Start auto-scrolling
     function startCarouselAutoCycle() {
+        if (isPaused) return;
+        
         clearTimeout(autoScrollTimer);
         resetProgressBar();
         
         autoScrollTimer = setTimeout(() => {
-            showSlide(currentSlide + 1);
+            showSlide(currentSlide + 1, 'next');
             startCarouselAutoCycle();
         }, scrollDuration);
     }
@@ -2624,7 +2866,101 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stop auto-scrolling
     function stopCarouselAutoCycle() {
         clearTimeout(autoScrollTimer);
-        progressBar.style.transition = 'none';
+        if (progressBar) {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0';
+        }
+    }
+    
+    // Pause auto-scrolling
+    function pauseCarousel() {
+        isPaused = true;
+        stopCarouselAutoCycle();
+        if (progressBar) {
+            const computedStyle = window.getComputedStyle(progressBar);
+            const width = computedStyle.getPropertyValue('width');
+            progressBar.style.transition = 'none';
+            progressBar.style.width = width;
+        }
+    }
+    
+    // Resume auto-scrolling
+    function resumeCarousel() {
+        isPaused = false;
+        startCarouselAutoCycle();
+    }
+    
+    // Drag functionality
+    function touchStart(e) {
+        if (isPaused) return;
+        
+        pauseCarousel();
+        
+        startPos = getPositionX(e);
+        isDragging = true;
+        animationID = requestAnimationFrame(animation);
+        carousel.classList.add('dragging');
+    }
+    
+    function touchMove(e) {
+        if (isDragging) {
+            const currentPosition = getPositionX(e);
+            currentTranslate = prevTranslate + currentPosition - startPos;
+        }
+    }
+    
+    function touchEnd() {
+        cancelAnimationFrame(animationID);
+        isDragging = false;
+        carousel.classList.remove('dragging');
+        
+        const movedBy = currentTranslate - prevTranslate;
+        
+        // Determine if we should change slides based on drag distance
+        if (movedBy < -100) {
+            showSlide(currentSlide + 1, 'next');
+        } else if (movedBy > 100) {
+            showSlide(currentSlide - 1, 'prev');
+        } else {
+            // Return to current slide if not dragged far enough
+            showSlide(currentSlide);
+        }
+        
+        resumeCarousel();
+    }
+    
+    function getPositionX(e) {
+        return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    }
+    
+    function animation() {
+        if (isDragging) {
+            const slideWidth = carousel.clientWidth;
+            const currentSlideIndex = currentSlide;
+            const offset = (currentTranslate / slideWidth) * 100;
+            carousel.style.transform = `translateX(calc(-${currentSlideIndex * 100}% + ${offset}px))`;
+            requestAnimationFrame(animation);
+        }
+    }
+    
+    // Keyboard navigation
+    function handleKeyDown(e) {
+        if (e.key === 'ArrowLeft') {
+            stopCarouselAutoCycle();
+            showSlide(currentSlide - 1, 'prev');
+            startCarouselAutoCycle();
+        } else if (e.key === 'ArrowRight') {
+            stopCarouselAutoCycle();
+            showSlide(currentSlide + 1, 'next');
+            startCarouselAutoCycle();
+        } else if (e.key === 'Space') {
+            e.preventDefault();
+            if (isPaused) {
+                resumeCarousel();
+            } else {
+                pauseCarousel();
+            }
+        }
     }
     
     // Initialize carousel
@@ -2632,76 +2968,110 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set initial slide
         showSlide(0);
         
-        // Add event listeners
-        prevButton.addEventListener('click', () => {
-            stopCarouselAutoCycle();
-            showSlide(currentSlide - 1);
-            startCarouselAutoCycle();
-        });
+        // Add event listeners for navigation
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                prevButton.classList.add('clicked');
+                setTimeout(() => prevButton.classList.remove('clicked'), 300);
+                
+                stopCarouselAutoCycle();
+                showSlide(currentSlide - 1, 'prev');
+                startCarouselAutoCycle();
+            });
+        }
         
-        nextButton.addEventListener('click', () => {
-            stopCarouselAutoCycle();
-            showSlide(currentSlide + 1);
-            startCarouselAutoCycle();
-        });
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                nextButton.classList.add('clicked');
+                setTimeout(() => nextButton.classList.remove('clicked'), 300);
+                
+                stopCarouselAutoCycle();
+                showSlide(currentSlide + 1, 'next');
+                startCarouselAutoCycle();
+            });
+        }
         
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
+                dot.classList.add('clicked');
+                setTimeout(() => dot.classList.remove('clicked'), 300);
+                
                 stopCarouselAutoCycle();
-                showSlide(index);
+                showSlide(index, index > currentSlide ? 'next' : 'prev');
                 startCarouselAutoCycle();
             });
+            
+            // Keyboard accessibility for dots
+            dot.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    dot.click();
+                }
+            });
         });
+        
+        // Add touch/drag support
+        carousel.addEventListener('mousedown', touchStart);
+        carousel.addEventListener('touchstart', touchStart, { passive: true });
+        
+        window.addEventListener('mousemove', touchMove);
+        window.addEventListener('touchmove', touchMove, { passive: true });
+        
+        window.addEventListener('mouseup', touchEnd);
+        window.addEventListener('touchend', touchEnd);
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', handleKeyDown);
+        
+        // Pause on hover
+        carousel.addEventListener('mouseenter', pauseCarousel);
+        carousel.addEventListener('mouseleave', resumeCarousel);
         
         // Start auto-scrolling
         startCarouselAutoCycle();
         
-        // Add swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        carousel.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            stopCarouselAutoCycle();
-        }, { passive: true });
-        
-        carousel.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    showSlide(currentSlide + 1); // Swipe left, next slide
-                } else {
-                    showSlide(currentSlide - 1); // Swipe right, previous slide
-                }
-            }
-            
-            startCarouselAutoCycle();
-        }, { passive: true });
+        // Add scroll snap for smoother scrolling
+        carousel.style.scrollSnapType = 'x mandatory';
+        slides.forEach(slide => {
+            slide.style.scrollSnapAlign = 'start';
+        });
     }
     
-    // Initialize the carousel
-    initCarousel();
+    // Initialize the carousel if there are non-empty slides
+    if (nonEmptySlides.length > 0) {
+        initCarousel();
+    }
     
-    // Event filtering
+    // Event filtering with interactive effects
     const filterButtons = document.querySelectorAll('.filter-button');
     const eventCards = document.querySelectorAll('.event-card');
     
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
+            // Add click effect
+            this.classList.add('clicked');
+            setTimeout(() => this.classList.remove('clicked'), 300);
+            
             // Update active button
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
             const filterType = this.getAttribute('data-filter');
             
-            // Show/hide events based on filter
+            // Show/hide events based on filter with animation
             eventCards.forEach(card => {
                 if (filterType === 'all' || card.getAttribute('data-type') === filterType) {
                     card.style.display = '';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(0.98)';
+                    }, 50);
                 } else {
-                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
                 }
             });
             
@@ -2710,6 +3080,38 @@ document.addEventListener('DOMContentLoaded', function() {
             showSlide(0);
             startCarouselAutoCycle();
         });
+        
+        // Keyboard accessibility for filter buttons
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                button.click();
+            }
+        });
+    });
+    
+    // Auto-cycling filters
+    let currentFilterIndex = 0;
+    let autoFilterInterval;
+    const filterCycleTime = 5000; // 5 seconds per filter
+    
+    function startFilterAutoCycle() {
+        autoFilterInterval = setInterval(() => {
+            currentFilterIndex = (currentFilterIndex + 1) % filterButtons.length;
+            filterButtons[currentFilterIndex].click();
+        }, filterCycleTime);
+    }
+    
+    // Start auto-cycling filters when not interacting
+    startFilterAutoCycle();
+    
+    // Pause cycling on interaction
+    eventsSection.addEventListener('mouseenter', () => {
+        clearInterval(autoFilterInterval);
+    });
+    
+    eventsSection.addEventListener('mouseleave', () => {
+        startFilterAutoCycle();
     });
     
     // Check URL hash for direct linking
@@ -2722,6 +3124,12 @@ document.addEventListener('DOMContentLoaded', function() {
             slides.forEach((slide, index) => {
                 if (slide.contains(matchingCard)) {
                     showSlide(index);
+                    
+                    // Highlight the card
+                    matchingCard.classList.add('cursor-active');
+                    setTimeout(() => {
+                        matchingCard.classList.remove('cursor-active');
+                    }, 2000);
                 }
             });
         }
