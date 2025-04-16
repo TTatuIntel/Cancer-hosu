@@ -1,1183 +1,1327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Join HOSU - Membership benefits, tiers, and application process for healthcare professionals">
-<title>Membership - HOSU</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-    /* Base styles */
-    :root {
-        --primary-color: #e63946;
-        --secondary-color: #0d4593;
-        --text-color: #12294a;
-        --background-light: #f1faee;
-        --background-dark: #1d3557;
-        --white: #ffffff;
-        --accent-color: #a8dadc;
-        --shadow: 0 2px 4px rgba(0,0,0,0.1);
-        --transition: all 0.3s ease;
-        --navbar-height: 90px;
-        --mtn-yellow: #ffcc00;
-        --airtel-red: #e40000;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        line-height: 1.6;
-        color: var(--text-color);
-        background-color: var(--white);
-    }
-
-    /* Navbar styles */
-    .navbar {
-        background: rgba(255, 255, 255, 0.521);
-        backdrop-filter: blur(15px);
-        padding: 1rem 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        transition: var(--transition);
-        height: var(--navbar-height);
-    }
-
-    .logo img {
-        width: 250px;
-        height: 90px;
-        object-fit: contain;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: var(--text-color);
-        font-weight: 500;
-        transition: var(--transition);
-        position: relative;
-    }
-
-    .nav-links a:not(.cta-button)::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: -4px;
-        left: 0;
-        background-color: var(--primary-color);
-        transition: var(--transition);
-    }
-
-    .nav-links a:not(.cta-button):hover::after {
-        width: 100%;
-    }
-
-    .nav-links .cta-button {
-        background: var(--primary-color);
-        color: var(--white);
-        padding: 0.75rem 1.5rem;
-        border-radius: 30px;
-        transition: var(--transition);
-    }
-
-    .nav-links .cta-button:hover {
-        background: var(--secondary-color);
-        transform: translateY(-2px);
-    }
-
-    .menu-toggle {
-        display: none;
-        cursor: pointer;
-        font-size: 1.5rem;
-    }
-
-    /* Membership Page Specific Styles */
-    .membership-hero {
-        padding-top: calc(var(--navbar-height) + 2rem);
-        background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-        min-height: 400px;
-        display: flex;
-        align-items: center;
-        text-align: center;
-    }
-
-    .membership-hero-content {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 3rem 2rem;
-    }
-
-    .membership-hero h1 {
-        font-size: 2.5rem;
-        color: var(--secondary-color);
-        margin-bottom: 1.5rem;
-        animation: fadeInUp 1s ease;
-    }
-
-    .membership-hero p {
-        font-size: 1.2rem;
-        color: var(--text-color);
-        margin-bottom: 2rem;
-        animation: fadeInUp 1s ease 0.3s;
-    }
-
-    /* Eligible Professions Grid */
-    .eligible-professions {
-        padding: 4rem 5%;
-        background: var(--white);
-    }
-
-    .section-title {
-        text-align: center;
-        font-size: 2.5rem;
-        color: var(--secondary-color);
-        margin-bottom: 2rem;
-        animation: fadeInUp 1s ease;
-    }
-
-    .profession-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .profession-card {
-        background: var(--background-light);
-        border-radius: 10px;
-        padding: 1.5rem;
-        text-align: center;
-        transition: var(--transition);
-        cursor: pointer;
-    }
-
-    .profession-card:hover, .profession-card.selected {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow);
-        border: 2px solid var(--primary-color);
-    }
-
-    .profession-icon {
-        font-size: 1.5rem;
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-    }
-
-    .profession-card h3 {
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
-    }
-
-    .profession-card p {
-        font-size: 0.85rem;
-        color: var(--text-color);
-    }
-
-    /* Membership Benefits */
-    .membership-benefits {
-        padding: 4rem 5%;
-        background: var(--background-light);
-    }
-
-    .benefits-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .benefit-card {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 2rem;
-        text-align: center;
-        transition: var(--transition);
-    }
-
-    .benefit-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow);
-    }
-
-    .benefit-icon {
-        font-size: 2rem;
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-    }
-
-    /* Subscription Section */
-    .subscription-section {
-        padding: 4rem 5%;
-        background: var(--white);
-        text-align: center;
-    }
-
-    .subscription-cta {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .subscription-cta h2 {
-        font-size: 2rem;
-        color: var(--secondary-color);
-        margin-bottom: 1rem;
-    }
-
-    .subscription-cta p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    /* Popup Form Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background: var(--white);
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 900px;
-        max-height: 90vh;
-        overflow-y: auto;
-        position: relative;
-        animation: slideIn 0.3s ease-out;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    @keyframes slideIn {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: none;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
-        color: #666;
-        transition: color 0.2s;
-        z-index: 10;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background-color: #f1f1f1;
-    }
-
-    .close-modal:hover {
-        color: var(--primary-color);
-        background-color: #e5e5e5;
-    }
-
-    .form-section, .payment-section {
-        padding: 20px;
-        flex: 1;
-        min-width: 250px;
-    }
-
-    .form-section {
-        background-color: var(--background-light);
-        border-radius: 15px 0 0 15px;
-    }
-
-    .form-section h2, .payment-section h2 {
-        color: var(--secondary-color);
-        margin-bottom: 15px;
-        font-size: 1.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 12px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 4px;
-        font-weight: 500;
-        font-size: 0.85rem;
-    }
-
-    .form-group input, .form-group select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 13px;
-        transition: border-color 0.2s;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-    }
-
-    .payment-option {
-        display: grid;
-        grid-template-columns: 60px 1fr;
-        gap: 10px;
-        align-items: center;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        padding: 12px;
-        text-align: center;
-        cursor: pointer;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
-    }
-
-    .payment-option:hover {
-        border-color: var(--primary-color);
-        background-color: rgba(230, 57, 70, 0.05);
-        transform: translateY(-2px);
-    }
-
-    .payment-option.selected {
-        border-color: var(--primary-color);
-        background-color: rgba(230, 57, 70, 0.1);
-    }
-
-    .payment-icon {
-        font-size: 1.5rem;
-        color: var(--primary-color);
-    }
-
-    .payment-details {
-        margin-top: 10px;
-        padding: 8px;
-        background-color: var(--background-light);
-        border-radius: 5px;
-        font-size: 0.85rem;
-        transition: opacity 0.2s;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .success-message {
-        color: green;
-        margin-top: 10px;
-        font-weight: bold;
-        display: none;
-    }
-
-    .error-message {
-        color: red;
-        margin-top: 10px;
-        font-weight: bold;
-        display: none;
-    }
-
-    /* Bank Details Modal */
-    .bank-details-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .bank-details-content {
-        background: var(--white);
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        padding: 20px;
-        position: relative;
-    }
-
-    .bank-details-content h3 {
-        color: var(--secondary-color);
-        margin-bottom: 15px;
-        font-size: 1.3rem;
-    }
-
-    .bank-details-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        color: #666;
-        transition: color 0.2s;
-    }
-
-    .bank-details-close:hover {
-        color: var(--primary-color);
-    }
-
-    /* Updated Payment Styles */
-    .payment-logo {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-    }
-
-    .mtn-payment {
-        background-color: rgba(255, 204, 0, 0.1);
-        border: 2px solid var(--mtn-yellow);
-    }
-
-    .mtn-payment.selected {
-        background-color: rgba(255, 204, 0, 0.2);
-    }
-
-    .airtel-payment {
-        background-color: rgba(228, 0, 0, 0.05);
-        border: 2px solid var(--airtel-red);
-    }
-
-    .airtel-payment.selected {
-        background-color: rgba(228, 0, 0, 0.1);
-    }
-
-    .payment-code {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
-
-    .payment-instruction {
-        font-size: 0.9rem;
-        margin-bottom: 5px;
-    }
-
-    .ussd-button {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        margin-top: 5px;
-        display: inline-block;
-        text-decoration: none;
-    }
-
-    .ussd-button:hover {
-        background-color: #555;
-    }
-
-    .payment-confirmation {
-        margin-top: 15px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        border-left: 4px solid var(--primary-color);
-    }
-
-    /* Footer styles */
-    footer {
-        background: var(--background-dark);
-        color: var(--white);
-        padding: 4rem 5% 2rem;
-    }
-
-    .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .footer-section h4 {
-        color: var(--accent-color);
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
-        font-weight: 600;
-    }
-
-    .footer-section ul {
-        list-style: none;
-    }
-
-    .footer-section li {
-        margin-bottom: 0.8rem;
-    }
-
-    .footer-section a {
-        color: var(--white);
-        text-decoration: none;
-        transition: var(--transition);
-    }
-
-    .footer-section a:hover {
-        color: var(--accent-color);
-    }
-
-    .social-links {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-
-    .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        transition: var(--transition);
-    }
-
-    .social-links a:hover {
-        background: var(--accent-color);
-        transform: translateY(-2px);
-    }
-
-    .copyright {
-        text-align: center;
-        margin-top: 4rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join HOSU - Membership benefits, tiers, and application process for healthcare professionals">
+    <title>Membership - HOSU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
         :root {
-            --navbar-height: 70px;
+            --primary-color: #e63946;
+            --secondary-color: #0d4593;
+            --text-color: #12294a;
+            --background-light: #f1faee;
+            --background-dark: #1d3557;
+            --white: #ffffff;
+            --accent-color: #a8dadc;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+            --navbar-height: 90px;
+            --mtn-yellow: #ffcc00;
+            --airtel-red: #e40000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
         }
 
         .navbar {
-            padding: 1rem;
+            background: rgba(255, 255, 255, 0.521);
+            backdrop-filter: blur(15px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            height: var(--navbar-height);
         }
 
         .logo img {
-            width: 200px;
-            height: 70px;
+            width: 250px;
+            height: 90px;
+            object-fit: contain;
         }
 
         .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--white);
-            padding: 1rem;
-            box-shadow: var(--shadow);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
 
-        .nav-links.active {
-            display: flex;
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:not(.cta-button)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.cta-button):hover::after {
+            width: 100%;
+        }
+
+        .nav-links .cta-button {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .nav-links .cta-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
         .menu-toggle {
-            display: block;
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .membership-hero {
+            padding-top: calc(var(--navbar-height) + 2rem);
+            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .membership-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
         }
 
         .membership-hero h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
         }
 
         .membership-hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+        }
+
+        .eligible-professions {
+            padding: 4rem 5%;
+            background: var(--white);
         }
 
         .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .profession-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profession-card {
+            background: var(--background-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .profession-card:hover, .profession-card.selected {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary-color);
+        }
+
+        .profession-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .profession-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .profession-card p {
+            font-size: 0.85rem;
+            color: var(--text-color);
+        }
+
+        .membership-benefits {
+            padding: 4rem 5%;
+            background: var(--background-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .benefit-icon {
             font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .subscription-section {
+            padding: 4rem 5%;
+            background: var(--white);
+            text-align: center;
+        }
+
+        .subscription-cta {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subscription-cta h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .subscription-cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
-            flex-direction: column;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+            z-index: 10;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+            background-color: #e5e5e5;
+        }
+
+        .form-section, .payment-section {
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
         }
 
         .form-section {
-            border-radius: 15px 15px 0 0;
+            background-color: var(--background-light);
+            border-radius: 15px 0 0 15px;
         }
-    }
-</style>
+
+        .form-section h2, .payment-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .payment-option {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 10px;
+            align-items: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 57, 70, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 57, 70, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .payment-details {
+            margin-top: 10px;
+            padding: 8px;
+            background-color: var(--background-light);
+            border-radius: 5px;
+            font-size: 0.85rem;
+            transition: opacity 0.2s;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .bank-details-modal, .processing-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bank-details-content, .processing-content {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .bank-details-content h3, .processing-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .bank-details-close, .processing-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .bank-details-close:hover, .processing-close:hover {
+            color: var(--primary-color);
+        }
+
+        .payment-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .mtn-payment {
+            background-color: rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--mtn-yellow);
+        }
+
+        .mtn-payment.selected {
+            background-color: rgba(255, 204, 0, 0.2);
+        }
+
+        .airtel-payment {
+            background-color: rgba(228, 0, 0, 0.05);
+            border: 2px solid var(--airtel-red);
+        }
+
+        .airtel-payment.selected {
+            background-color: rgba(228, 0, 0, 0.1);
+        }
+
+        .payment-code {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .payment-instruction {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .ussd-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 5px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .ussd-button:hover {
+            background-color: #555;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            background: var(--background-dark);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --navbar-height: 70px;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo img {
+                width: 200px;
+                height: 70px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .membership-hero h1 {
+                font-size: 2rem;
+            }
+
+            .membership-hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                flex-direction: column;
+            }
+
+            .form-section {
+                border-radius: 15px 15px 0 0;
+            }
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar">
-    <div class="logo">
-        <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
-    </div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>           
-        <a href="events.html">Events</a>
-        <a href="research.html">Research</a> 
-        <a href="membership.html">Membership</a>           
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html" class="cta-button">Member Portal</a>
-    </div>
-    <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
-</nav>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>           
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a> 
+            <a href="membership.html">Membership</a>           
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="cta-button">Member Portal</a>
+        </div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
+    </nav>
 
-<section class="membership-hero">
-    <div class="membership-hero-content">
-        <h1>Join Our Global Community</h1>
-        <p>Connect with leading oncology professionals, access exclusive resources, and contribute to groundbreaking research in cancer care.</p>
-    </div>
-</section>
+    <section class="membership-hero">
+        <div class="membership-hero-content">
+            <h1>Join Our Global Community</h1>
+            <p>Connect with leading oncology professionals, access exclusive resources, and contribute to groundbreaking research in cancer care.</p>
+        </div>
+    </section>
 
-<section class="eligible-professions">
-    <h2 class="section-title">Who Can Join</h2>
-    
-    <div class="profession-grid">
-        <div class="profession-card" data-profession="hematologist" onclick="selectProfession('hematologist')">
-            <div class="profession-icon">🩺</div>
-            <h3>Hematologists</h3>
-            <p>Specialists in blood disorders</p>
-        </div>
-        <div class="profession-card" data-profession="medical-oncologist" onclick="selectProfession('medical-oncologist')">
-            <div class="profession-icon">🔬</div>
-            <h3>Medical Oncologists</h3>
-            <p>Cancer treatment specialists</p>
-        </div>
-        <div class="profession-card" data-profession="pediatric-oncologist" onclick="selectProfession('pediatric-oncologist')">
-            <div class="profession-icon">👶</div>
-            <h3>Pediatric Oncologists</h3>
-            <p>Children's cancer specialists</p>
-        </div>
-        <div class="profession-card" data-profession="surgical-oncologist" onclick="selectProfession('surgical-oncologist')">
-            <div class="profession-icon">🩺</div>
-            <h3>Surgical Oncologists</h3>
-            <p>Cancer surgery specialists</p>
-        </div>
-        <div class="profession-card" data-profession="radiation-oncologist" onclick="selectProfession('radiation-oncologist')">
-            <div class="profession-icon">☢️</div>
-            <h3>Radiation Oncologists</h3>
-            <p>Radiotherapy specialists</p>
-        </div>
-        <div class="profession-card" data-profession="pathologist" onclick="selectProfession('pathologist')">
-            <div class="profession-icon">🩸</div>
-            <h3>Pathologists</h3>
-            <p>Disease diagnosis specialists</p>
-        </div>
-        <div class="profession-card" data-profession="cancer-biologist" onclick="selectProfession('cancer-biologist')">
-            <div class="profession-icon">🧬</div>
-            <h3>Cancer Biologists</h3>
-            <p>Research scientists studying cancer</p>
-        </div>
-        <div class="profession-card" data-profession="pharmacist" onclick="selectProfession('pharmacist')">
-            <div class="profession-icon">💊</div>
-            <h3>Pharmacists</h3>
-            <p>Medication specialists</p>
-        </div>
-        <div class="profession-card" data-profession="oncology-nurse" onclick="selectProfession('oncology-nurse')">
-            <div class="profession-icon">👩⚕️</div>
-            <h3>Oncology Nurses</h3>
-            <p>Cancer care nursing specialists</p>
-        </div>
-        <div class="profession-card" data-profession="gynecology-oncologist" onclick="selectProfession('gynecology-oncologist')">
-            <div class="profession-icon">♀️</div>
-            <h3>Gynecology Oncologists</h3>
-            <p>Women's cancer specialists</p>
-        </div>
-        <div class="profession-card" data-profession="medical-physicist" onclick="selectProfession('medical-physicist')">
-            <div class="profession-icon">⚙️</div>
-            <h3>Medical Physicists</h3>
-            <p>Medical radiation physics specialists</p>
-        </div>
-        <div class="profession-card" data-profession="radiologist" onclick="selectProfession('radiologist')">
-            <div class="profession-icon">👁️</div>
-            <h3>Radiologists</h3>
-            <p>Imaging specialists</p>
-        </div>
-        <div class="profession-card" data-profession="anesthesiologist" onclick="selectProfession('anesthesiologist')">
-            <div class="profession-icon">🩺</div>
-            <h3>Anesthesiologists</h3>
-            <p>Pain management specialists</p>
-        </div>
-        <div class="profession-card" data-profession="researcher" onclick="selectProfession('researcher')">
-            <div class="profession-icon">🔍</div>
-            <h3>Researchers</h3>
-            <p>Medical and scientific researchers</p>
-        </div>
-        <div class="profession-card" data-profession="palliative-care" onclick="selectProfession('palliative-care')">
-            <div class="profession-icon">🩻</div>
-            <h3>Palliative Care Specialists</h3>
-            <p>Supportive care specialists</p>
-        </div>
-        <div class="profession-card" data-profession="civil-society" onclick="selectProfession('civil-society')">
-            <div class="profession-icon">🤝</div>
-            <h3>Civil Society Organizations</h3>
-            <p>Non-governmental organizations</p>
-        </div>
-        <div class="profession-card" data-profession="other" onclick="selectProfession('other')">
-            <div class="profession-icon">❓</div>
-            <h3>Other Professionals</h3>
-            <p>Healthcare professionals not listed above</p>
-        </div>
-    </div>
-</section>
-
-<section class="membership-benefits">
-    <h2 class="section-title">Member Benefits</h2>
-    <div class="benefits-grid">
-        <div class="benefit-card">
-            <div class="benefit-icon">🌐</div>
-            <h3>Professional Network</h3>
-            <p>Access to a network of Hematology and Oncology specialists across Uganda and beyond.</p>
-        </div>
-        <div class="benefit-card">
-            <div class="benefit-icon">🔍</div>
-            <h3>Research Opportunities</h3>
-            <p>Gain access to research and training opportunities within the society.</p>
-        </div>
-        <div class="benefit-card">
-            <div class="benefit-icon">🗳️</div>
-            <h3>Voting Rights</h3>
-            <p>Right to vote for the Executive Committee during the annual general meeting.</p>
-        </div>
-        <div class="benefit-card">
-            <div class="benefit-icon">🙋</div>
-            <h3>Leadership Opportunities</h3>
-            <p>Right to contest for an Executive Committee position during the AGM.</p>
-        </div>
-    </div>
-</section>
-
-<section class="subscription-section">
-    <div class="subscription-cta">
-        <h2>Annual Membership Fee: UGX 100,000</h2>
-        <!-- Normal button with no CSS styling -->
-        <button onclick="openSubscriptionForm()" style="width: 200px; height: 40px;">Start Your Subscription</button>
-    </div>
-</section>
-
-<div class="modal" id="subscriptionModal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closeSubscriptionForm()" aria-label="Close form">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="form-section">
-            <h2>Membership Application</h2>
-            <form id="membershipForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="profession">Profession</label>
-                    <select id="profession" required>
-                        <option value="">Select profession</option>
-                        <option value="hematologist">Hematologist</option>
-                        <option value="medical-oncologist">Medical Oncologist</option>
-                        <option value="pediatric-oncologist">Pediatric Oncologist</option>
-                        <option value="surgical-oncologist">Surgical Oncologist</option>
-                        <option value="radiation-oncologist">Radiation Oncologist</option>
-                        <option value="pathologist">Pathologist</option>
-                        <option value="cancer-biologist">Cancer Biologist</option>
-                        <option value="pharmacist">Pharmacist</option>
-                        <option value="oncology-nurse">Oncology Nurse</option>
-                        <option value="gynecology-oncologist">Gynecology Oncologist</option>
-                        <option value="medical-physicist">Medical Physicist</option>
-                        <option value="radiologist">Radiologist</option>
-                        <option value="anesthesiologist">Anesthesiologist</option>
-                        <option value="researcher">Researcher</option>
-                        <option value="palliative-care">Palliative Care Specialist</option>
-                        <option value="civil-society">Civil Society Organization</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group" id="otherProfessionGroup" style="display: none;">
-                    <label for="otherProfession">Specify Your Profession</label>
-                    <input type="text" id="otherProfession">
-                </div>
-                <div class="form-group">
-                    <label for="contact">Phone Number</label>
-                    <input type="tel" id="contact" required placeholder="e.g., 0772123456">
-                </div>
-            </form>
-        </div>
-
-        <div class="payment-section">
-            <h2>Payment Options</h2>
-            <div class="payment-option" onclick="selectPayment('bank')">
-                <i class="fas fa-university payment-icon"></i>
-                <div>
-                    <h3>Bank Transfer</h3>
-                </div>
+    <section class="eligible-professions">
+        <h2 class="section-title">Who Can Join</h2>
+        <div class="profession-grid">
+            <div class="profession-card" data-profession="hematologist" onclick="selectProfession('hematologist')">
+                <div class="profession-icon">🩺</div>
+                <h3>Hematologists</h3>
+                <p>Specialists in blood disorders</p>
             </div>
-            <div class="payment-option mtn-payment" onclick="selectPayment('mtn')">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBmaWxsPSIjZmZjYzAwIiBkPSJNMCAwaDI0MHYyNDBIMHoiLz48cGF0aCBkPSJNMTIwIDUwLjhjLTM4LjIgMC02OS4yIDMxLTY5LjIgNjkuMnMzMSA2OS4yIDY5LjIgNjkuMiA2OS4yLTMxIDY5LjItNjkuMi0zMS02OS4yLTY5LjItNjkuMnptMCAxMjYuNWMtMzEuNiAwLTU3LjMtMjUuNy01Ny4zLTU3LjNzMjUuNy01Ny4zIDU3LjMtNTcuMyA1Ny4zIDI1LjcgNTcuMyA1Ny4zLTI1LjcgNTcuMy01Ny4zIDU3LjN6IiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTEyMCA3Ni41Yy0yNCAwLTQzLjUgMTkuNS00My41IDQzLjVzMTkuNSA0My41IDQzLjUgNDMuNSA0My41LTE5LjUgNDMuNS00My41LTE5LjUtNDMuNS00My41LTQzLjV6IiBmaWxsPSIjMDAwIi8+PC9zdmc+" alt="MTN Logo" class="payment-logo">
-                <div>
-                    <p class="payment-code">*165*3#</p>
-                    <p class="payment-instruction">Merchant Code: 721212</p>
-                    <a href="tel:*165*3*721212#" class="ussd-button">Dial USSD Code</a>
-                </div>
+            <div class="profession-card" data-profession="medical-oncologist" onclick="selectProfession('medical-oncologist')">
+                <div class="profession-icon">💉</div>
+                <h3>Medical Oncologists</h3>
+                <p>Experts in cancer treatment</p>
             </div>
-            <div class="payment-option airtel-payment" onclick="selectPayment('airtel')">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBmaWxsPSIjZTQwMDAwIiBkPSJNMCAwaDI0MHYyNDBIMHoiLz48cGF0aCBkPSJNMTIwIDUwYy0zOC42IDAtNzAgMzEuNC03MCA3MHMzMS40IDcwIDcwIDcwIDcwLTMxLjQgNzAtNzAtMzEuNC03MC03MC03MHptMCAxMjBjLTI3LjYgMC01MC0yMi40LTUwLTUwczIyLjQtNTAgNTAtNTAgNTAgMjIuNCA1MCA1MC0yMi40IDUwLTUwIDUweiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMjAgODBjLTIyLjEgMC00MCAxNy45LTQwIDQwczE3LjkgNDAgNDAgNDAgNDAtMTcuOSA0MC00MC0xNy45LTQwLTQwLTQweiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==" alt="Airtel Logo" class="payment-logo">
-                <div>
-                    <p class="payment-code">*185*9#</p>
-                    <p class="payment-instruction">Merchant ID: 4373226</p>
-                    <a href="tel:*185*9*4373226#" class="ussd-button">Dial USSD Code</a>
-                </div>
+            <div class="profession-card" data-profession="pediatric-oncologist" onclick="selectProfession('pediatric-oncologist')">
+                <div class="profession-icon">👶</div>
+                <h3>Pediatric Oncologists</h3>
+                <p>Childhood cancer specialists</p>
             </div>
-            <div id="paymentDetails" class="payment-details hidden"></div>
-            <div id="paymentConfirmation" class="payment-confirmation hidden">
-                <p>After completing your payment, please enter the transaction reference below:</p>
-                <div class="form-group">
-                    <label for="transactionRef">Transaction Reference</label>
-                    <input type="text" id="transactionRef" placeholder="Enter transaction reference">
-                </div>
+            <div class="profession-card" data-profession="surgical-oncologist" onclick="selectProfession('surgical-oncologist')">
+                <div class="profession-icon">🔪</div>
+                <h3>Surgical Oncologists</h3>
+                <p>Cancer surgery experts</p>
             </div>
-            <!-- Normal button with no CSS styling -->
-            <button onclick="submitSubscription()" id="submitButton" disabled style="width: 200px; height: 40px;">Submit Application</button>
+            <div class="profession-card" data-profession="radiation-oncologist" onclick="selectProfession('radiation-oncologist')">
+                <div class="profession-icon">☢</div>
+                <h3>Radiation Oncologists</h3>
+                <p>Radiation therapy specialists</p>
+            </div>
+            <div class="profession-card" data-profession="pathologist" onclick="selectProfession('pathologist')">
+                <div class="profession-icon">🔬</div>
+                <h3>Pathologists</h3>
+                <p>Diagnose diseases</p>
+            </div>
+            <div class="profession-card" data-profession="cancer-biologist" onclick="selectProfession('cancer-biologist')">
+                <div class="profession-icon">🧬</div>
+                <h3>Cancer Biologists</h3>
+                <p>Study cancer mechanisms</p>
+            </div>
+            <div class="profession-card" data-profession="pharmacist" onclick="selectProfession('pharmacist')">
+                <div class="profession-icon">💊</div>
+                <h3>Pharmacists</h3>
+                <p>Medication specialists</p>
+            </div>
+            <div class="profession-card" data-profession="oncology-nurse" onclick="selectProfession('oncology-nurse')">
+                <div class="profession-icon">🩹</div>
+                <h3>Oncology Nurses</h3>
+                <p>Cancer care nurses</p>
+            </div>
+            <div class="profession-card" data-profession="gynecology-oncologist" onclick="selectProfession('gynecology-oncologist')">
+                <div class="profession-icon">♀</div>
+                <h3>Gynecology Oncologists</h3>
+                <p>Women's cancer specialists</p>
+            </div>
+            <div class="profession-card" data-profession="medical-physicist" onclick="selectProfession('medical-physicist')">
+                <div class="profession-icon">⚛</div>
+                <h3>Medical Physicists</h3>
+                <p>Radiation tech experts</p>
+            </div>
+            <div class="profession-card" data-profession="radiologist" onclick="selectProfession('radiologist')">
+                <div class="profession-icon">🩻</div>
+                <h3>Radiologists</h3>
+                <p>Imaging specialists</p>
+            </div>
+            <div class="profession-card" data-profession="anesthesiologist" onclick="selectProfession('anesthesiologist')">
+                <div class="profession-icon">😴</div>
+                <h3>Anesthesiologists</h3>
+                <p>Anesthesia experts</p>
+            </div>
+            <div class="profession-card" data-profession="researcher" onclick="selectProfession('researcher')">
+                <div class="profession-icon">📊</div>
+                <h3>Researchers</h3>
+                <p>Cancer research scientists</p>
+            </div>
+            <div class="profession-card" data-profession="palliative-care" onclick="selectProfession('palliative-care')">
+                <div class="profession-icon">🤲</div>
+                <h3>Palliative Care</h3>
+                <p>Quality-of-life specialists</p>
+            </div>
+            <div class="profession-card" data-profession="civil-society" onclick="selectProfession('civil-society')">
+                <div class="profession-icon">🏛</div>
+                <h3>Civil Society</h3>
+                <p>Advocacy organizations</p>
+            </div>
+            <div class="profession-card" data-profession="other" onclick="selectProfession('other')">
+                <div class="profession-icon">❓</div>
+                <h3>Other Professionals</h3>
+                <p>Healthcare professionals not listed above</p>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<div class="bank-details-modal" id="bankDetailsModal">
-    <div class="bank-details-content">
-        <button class="bank-details-close" onclick="closeBankDetails()">
-            <i class="fas fa-times"></i>
-        </button>
-        <h3>Bank Transfer Details</h3>
-        <p>Account: HOSU Limited</p>
-        <p>No: 9030025235214</p>
-        <p>Bank: Stanbic Bank</p>
-        <p>Branch: Mulago</p>
-        <div class="form-group">
-            <label for="bankAccount">Your Bank Account Number</label>
-            <input type="text" id="bankAccount" required>
+    <section class="membership-benefits">
+        <h2 class="section-title">Member Benefits</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🌐</div>
+                <h3>Professional Network</h3>
+                <p>Access to a network of Hematology and Oncology specialists across Uganda and beyond.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📚</div>
+                <h3>Educational Resources</h3>
+                <p>Exclusive access to research, webinars, and training programs on cancer care.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🔬</div>
+                <h3>Research Opportunities</h3>
+                <p>Participate in cutting-edge studies and collaborate on innovative treatments.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📅</div>
+                <h3>Events & Conferences</h3>
+                <p>Invitations to HOSU events, workshops, and global oncology conferences.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🗳</div>
+                <h3>Voting Rights</h3>
+                <p>Influence HOSU’s direction through voting in elections and key decisions.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🏅</div>
+                <h3>Recognition</h3>
+                <p>Gain visibility for your contributions to oncology and hematology in Uganda.</p>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="bankTransactionRef">Transaction Reference (if available)</label>
-            <input type="text" id="bankTransactionRef">
-        </div>
-        <!-- Normal button with no CSS styling -->
-        <button onclick="confirmBankDetails()" style="width: 200px; height: 40px;">Confirm</button>
-    </div>
-</div>
+    </section>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="about.html">About HOSU</a></li>
-                <li><a href="membership.html">Membership Benefits</a></li>
-                <li><a href="research.html">Research Initiatives</a></li>
-                <li><a href="leadership.html">Society Leadership</a></li>
-            </ul>
+    <section class="subscription-section">
+        <div class="subscription-cta">
+            <h2>Annual Membership Fee: UGX 100,000</h2>
+            <button onclick="openSubscriptionForm()" style="width: 200px; height: 40px;">Start Your Subscription</button>
         </div>
-        <div class="footer-section">
-            <h4>Contact Us</h4>
-            <address>
-                HOSU Headquarters<br>
-                Mulago Hospital Complex<br>
-                Kampala, Uganda<br>
-                ☎ <a href="tel:+256700123456">+256 700 123456</a><br>
-                ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
-            </address>
-        </div>
-        <div class="footer-section">
-            <h4>Stay Connected</h4>
-            <div class="social-links">
-                <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-facebook"></i>
-                </a>
+    </section>
+
+    <div class="modal" id="subscriptionModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeSubscriptionForm()" aria-label="Close form">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="form-section">
+                <h2>Membership Application</h2>
+                <form id="membershipForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession</label>
+                        <select id="profession" name="profession" required>
+                            <option value="">Select profession</option>
+                            <option value="hematologist">Hematologist</option>
+                            <option value="medical-oncologist">Medical Oncologist</option>
+                            <option value="pediatric-oncologist">Pediatric Oncologist</option>
+                            <option value="surgical-oncologist">Surgical Oncologist</option>
+                            <option value="radiation-oncologist">Radiation Oncologist</option>
+                            <option value="pathologist">Pathologist</option>
+                            <option value="cancer-biologist">Cancer Biologist</option>
+                            <option value="pharmacist">Pharmacist</option>
+                            <option value="oncology-nurse">Oncology Nurse</option>
+                            <option value="gynecology-oncologist">Gynecology Oncologist</option>
+                            <option value="medical-physicist">Medical Physicist</option>
+                            <option value="radiologist">Radiologist</option>
+                            <option value="anesthesiologist">Anesthesiologist</option>
+                            <option value="researcher">Researcher</option>
+                            <option value="palliative-care">Palliative Care Specialist</option>
+                            <option value="civil-society">Civil Society Organization</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherProfessionGroup" style="display: none;">
+                        <label for="otherProfession">Specify Your Profession</label>
+                        <input type="text" id="otherProfession" name="otherProfession">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Phone Number</label>
+                        <input type="tel" id="contact" name="contact" required placeholder="e.g., 0772123456" minlength="10" maxlength="10">
+                        <div class="invalid-phonenumber text-danger" style="display: none;">Invalid Phone number.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="payment-section">
+                <h2>Payment Options</h2>
+                <form id="paymentForm">
+                    <div class="payment-option" onclick="selectPayment('bank')">
+                        <i class="fas fa-university payment-icon"></i>
+                        <div>
+                            <h3>Bank Transfer</h3>
+                            <input type="radio" name="paymentmode" value="bank" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="payment-option mtn-payment" onclick="selectPayment('mtn')">
+                        <img src="img/mtn.png" alt="MTN Logo" class="payment-logo">
+                        <div>
+                            <p class="payment-code">*165*3#</p>
+                            <p class="payment-instruction">Merchant Code: 721212</p>
+                            <a href="tel:*165*3*721212#" class="ussd-button">Dial USSD Code</a>
+                            <input type="radio" name="paymentmode" value="UGMTNMOMODIR" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="payment-option airtel-payment" onclick="selectPayment('airtel')">
+                        <img src="img/airtel.png" alt="Airtel Logo" class="payment-logo">
+                        <div>
+                            <p class="payment-code">*185*9#</p>
+                            <p class="payment-instruction">Merchant ID: 4373226</p>
+                            <a href="tel:*185*9*4373226#" class="ussd-button">Dial USSD Code</a>
+                            <input type="radio" name="paymentmode" value="UGAIRTELMODIR" style="display: none;">
+                        </div>
+                    </div>
+                    <div id="paymentDetails" class="payment-details hidden"></div>
+                    <button type="button" onclick="payNow()" id="submitButton" disabled style="width: 100%; height: 40px;">Process Payment</button>
+                </form>
             </div>
         </div>
     </div>
-    <div class="copyright">
-        <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+
+    <div class="bank-details-modal" id="bankDetailsModal">
+        <div class="bank-details-content">
+            <button class="bank-details-close" onclick="closeBankDetails()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>Bank Transfer Details</h3>
+            <p>Account: HOSU Limited</p>
+            <p>No: 9030025235214</p>
+            <p>Bank: Stanbic Bank</p>
+            <p>Branch: Mulago</p>
+            <p>Please transfer UGX 100,000 to the account above and contact us to confirm.</p>
+            <button onclick="closeBankDetails()" style="width: 100%; height: 40px;">Close</button>
+        </div>
     </div>
-</footer>
 
-<script>
-    let selectedMethod = null;
-    const professionRelations = {
-        'medical-oncologist': ['oncologist'],
-        'pediatric-oncologist': ['oncologist'],
-        'surgical-oncologist': ['oncologist'],
-        'radiation-oncologist': ['oncologist'],
-        'gynecology-oncologist': ['oncologist'],
-        'oncologist': ['medical-oncologist', 'pediatric-oncologist', 'surgical-oncologist', 'radiation-oncologist', 'gynecology-oncologist'],
-        'oncology-nurse': ['nurse'],
-        'nurse': ['oncology-nurse']
-    };
+    <div class="processing-modal" id="processingModal">
+        <div class="processing-content">
+            <button class="processing-close" onclick="closeProcessingModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>Processing Payment</h3>
+            <div id="modalSpinner" class="spinner"></div>
+            <p id="modalMessage">Processing payment, please wait...</p>
+            <button id="closeModalButton" style="display: none; width: 100%; height: 40px;">Close</button>
+        </div>
+    </div>
 
-    // Open subscription form modal
-    function openSubscriptionForm() {
-        document.getElementById('subscriptionModal').style.display = 'flex';
-    }
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About HOSU</a></li>
+                    <li><a href="membership.html">Membership Benefits</a></li>
+                    <li><a href="research.html">Research Initiatives</a></li>
+                    <li><a href="leadership.html">Society Leadership</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <address>
+                    HOSU Headquarters<br>
+                    Mulago Hospital Complex<br>
+                    Kampala, Uganda<br>
+                    ☎ <a href="tel:+256700123456">+256 700 123456</a><br>
+                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                </address>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Connected</h4>
+                <div class="social-links">
+                    <a href="https://linkedin.com/hosu" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/hosu_org" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+        </div>
+    </footer>
 
-    // Close subscription form modal
-    function closeSubscriptionForm() {
-        document.getElementById('subscriptionModal').style.display = 'none';
-        resetForm();
-    }
-
-    // Select profession from card
-    function selectProfession(profession) {
-        const professionSelect = document.getElementById('profession');
-        const simplifiedProfession = {
-            'medical-oncologist': 'medical-oncologist',
-            'pediatric-oncologist': 'pediatric-oncologist',
-            'surgical-oncologist': 'surgical-oncologist',
-            'radiation-oncologist': 'radiation-oncologist',
-            'gynecology-oncologist': 'gynecology-oncologist',
-            'oncology-nurse': 'oncology-nurse'
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let selectedMethod = null;
+        let formRequestObj = null;
+        const professionRelations = {
+            'medical-oncologist': ['oncologist'],
+            'pediatric-oncologist': ['oncologist'],
+            'surgical-oncologist': ['oncologist'],
+            'radiation-oncologist': ['oncologist'],
+            'gynecology-oncologist': ['oncologist'],
+            'oncologist': ['medical-oncologist', 'pediatric-oncologist', 'surgical-oncologist', 'radiation-oncologist', 'gynecology-oncologist'],
+            'oncology-nurse': ['nurse'],
+            'nurse': ['oncology-nurse']
         };
 
-        const mappedProfession = simplifiedProfession[profession] || profession;
-        for (let i = 0; i < professionSelect.options.length; i++) {
-            if (professionSelect.options[i].value === mappedProfession) {
-                professionSelect.options[i].selected = true;
-                break;
+        function openSubscriptionForm() {
+            document.getElementById('subscriptionModal').style.display = 'flex';
+        }
+
+        function closeSubscriptionForm() {
+            document.getElementById('subscriptionModal').style.display = 'none';
+            resetForm();
+        }
+
+        function selectProfession(profession) {
+            const professionSelect = document.getElementById('profession');
+            const simplifiedProfession = {
+                'medical-oncologist': 'medical-oncologist',
+                'pediatric-oncologist': 'pediatric-oncologist',
+                'surgical-oncologist': 'surgical-oncologist',
+                'radiation-oncologist': 'radiation-oncologist',
+                'gynecology-oncologist': 'gynecology-oncologist',
+                'oncology-nurse': 'oncology-nurse'
+            };
+
+            const mappedProfession = simplifiedProfession[profession] || profession;
+            for (let i = 0; i < professionSelect.options.length; i++) {
+                if (professionSelect.options[i].value === mappedProfession) {
+                    professionSelect.options[i].selected = true;
+                    break;
+                }
             }
+
+            openSubscriptionForm();
+
+            const cards = document.querySelectorAll('.profession-card');
+            cards.forEach(card => card.classList.remove('selected'));
+
+            const relatedProfessions = professionRelations[profession] || [];
+            relatedProfessions.push(profession);
+            relatedProfessions.forEach(rp => {
+                const card = document.querySelector(`.profession-card[data-profession="${rp}"]`);
+                if (card) card.classList.add('selected');
+            });
+
+            document.getElementById('otherProfessionGroup').style.display = profession === 'other' ? 'block' : 'none';
         }
 
-        openSubscriptionForm();
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-option').forEach(option => option.classList.remove('selected'));
+            const selectedOption = document.querySelector(`.payment-option[onclick*="${method}"]`);
+            selectedOption.classList.add('selected');
+            selectedMethod = method;
 
-        const cards = document.querySelectorAll('.profession-card');
-        cards.forEach(card => {
-            card.classList.remove('selected');
-        });
+            document.querySelectorAll('input[name="paymentmode"]').forEach(radio => {
+                radio.checked = radio.value === method || radio.value === (method === 'mtn' ? 'UGMTNMOMODIR' : 'UGAIRTELMODIR');
+            });
 
-        // Get all related professions
-        const relatedProfessions = professionRelations[profession] || [];
-        relatedProfessions.push(profession); // Add the selected profession itself
-
-        relatedProfessions.forEach(rp => {
-            const card = document.querySelector(`.profession-card[data-profession="${rp}"]`);
-            if (card) {
-                card.classList.add('selected');
+            if (method === 'bank') {
+                document.getElementById('bankDetailsModal').style.display = 'flex';
+            } else {
+                showPaymentDetails(method);
             }
-        });
-
-        // Show/hide other profession input
-        if (profession === 'other') {
-            document.getElementById('otherProfessionGroup').style.display = 'block';
-        } else {
-            document.getElementById('otherProfessionGroup').style.display = 'none';
-        }
-    }
-
-    // Select payment method
-    function selectPayment(method) {
-        document.querySelectorAll('.payment-option').forEach(option => {
-            option.classList.remove('selected');
-        });
-
-        const selectedOption = document.querySelector(`.payment-option[onclick*="${method}"]`);
-        selectedOption.classList.add('selected');
-        selectedMethod = method;
-
-        if (method === 'bank') {
-            document.getElementById('bankDetailsModal').style.display = 'flex';
-        } else {
-            showPaymentDetails(method);
-            document.getElementById('paymentConfirmation').classList.remove('hidden');
-        }
-    }
-
-    // Show payment details
-    function showPaymentDetails(method) {
-        const detailsDiv = document.getElementById('paymentDetails');
-        const submitButton = document.getElementById('submitButton');
-        const contact = document.getElementById('contact').value;
-
-        detailsDiv.classList.remove('hidden');
-        submitButton.disabled = false;
-
-        if (method === 'mtn') {
-            detailsDiv.innerHTML = `
-                <p>1. Dial <strong>*165*3#</strong> on your MTN line</p>
-                <p>2. Select "Pay Bill"</p>
-                <p>3. Enter Merchant Code: <strong>721212</strong></p>
-                <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
-                <p>5. Confirm with your PIN</p>
-            `;
-        } else if (method === 'airtel') {
-            detailsDiv.innerHTML = `
-                <p>1. Dial <strong>*185*9#</strong> on your Airtel line</p>
-                <p>2. Select "Pay Merchant"</p>
-                <p>3. Enter Merchant ID: <strong>4373226</strong></p>
-                <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
-                <p>5. Confirm with your PIN</p>
-            `;
-        }
-    }
-
-    // Direct USSD dialing
-    function dialUSSD(code) {
-        window.location.href = `tel:${code}`;
-    }
-
-    // Handle form submission
-    function submitSubscription() {
-        const form = document.getElementById('membershipForm');
-        const otherProfession = document.getElementById('otherProfession');
-        const transactionRef = document.getElementById('transactionRef');
-        
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-        
-        if (document.getElementById('profession').value === 'other' && !otherProfession.value) {
-            alert('Please specify your profession');
-            return;
-        }
-
-        if (!selectedMethod) {
-            alert('Please select a payment method');
-            return;
-        }
-
-        // For mobile payments, check transaction reference
-        if ((selectedMethod === 'mtn' || selectedMethod === 'airtel') && 
-            (!transactionRef || !transactionRef.value)) {
-            alert('Please enter the transaction reference number');
-            return;
-        }
-
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('email').value;
-        const contact = document.getElementById('contact').value;
-
-        alert(`Thank you, ${fullName}! Your application has been submitted. We'll contact you at ${email} or ${contact} to confirm payment.`);
-        closeSubscriptionForm();
-    }
-
-    // Reset form
-    function resetForm() {
-        document.getElementById('membershipForm').reset();
-        document.getElementById('paymentDetails').classList.add('hidden');
-        document.getElementById('paymentConfirmation').classList.add('hidden');
-        document.getElementById('submitButton').disabled = true;
-        document.querySelectorAll('.payment-option').forEach(option => {
-            option.classList.remove('selected');
-        });
-        selectedMethod = null;
-        document.getElementById('otherProfessionGroup').style.display = 'none';
-    }
-
-    // Bank details modal functions
-    function closeBankDetails() {
-        document.getElementById('bankDetailsModal').style.display = 'none';
-    }
-
-    function confirmBankDetails() {
-        const bankAccount = document.getElementById('bankAccount').value;
-        const bankTransactionRef = document.getElementById('bankTransactionRef').value;
-        
-        if (bankAccount) {
-            document.getElementById('paymentDetails').classList.remove('hidden');
-            document.getElementById('paymentDetails').innerHTML = `
-                <p>Your bank account: ${bankAccount}</p>
-                ${bankTransactionRef ? `<p>Transaction reference: ${bankTransactionRef}</p>` : ''}
-                <p>Please transfer UGX 100,000 to the HOSU account.</p>
-            `;
             document.getElementById('submitButton').disabled = false;
-            closeBankDetails();
-        } else {
-            alert('Please enter your bank account number');
         }
-    }
 
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+        function showPaymentDetails(method) {
+            const detailsDiv = document.getElementById('paymentDetails');
+            detailsDiv.classList.remove('hidden');
 
-    menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        navLinks.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
-            navLinks.classList.remove('active');
+            if (method === 'mtn') {
+                detailsDiv.innerHTML = `
+                    <p>1. Dial <strong>*165*3#</strong> on your MTN line</p>
+                    <p>2. Select "Pay Bill"</p>
+                    <p>3. Enter Merchant Code: <strong>721212</strong></p>
+                    <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
+                    <p>5. Confirm with your PIN</p>
+                `;
+            } else if (method === 'airtel') {
+                detailsDiv.innerHTML = `
+                    <p>1. Dial <strong>*185*9#</strong> on your Airtel line</p>
+                    <p>2. Select "Pay Merchant"</p>
+                    <p>3. Enter Merchant ID: <strong>4373226</strong></p>
+                    <p>4. Enter Amount: <strong>100,000 UGX</strong></p>
+                    <p>5. Confirm with your PIN</p>
+                `;
+            }
         }
-    });
 
-    // Close popup when clicking outside
-    document.getElementById('subscriptionModal')?.addEventListener('click', (e) => {
-        if (e.target === document.getElementById('subscriptionModal')) {
-            closeSubscriptionForm();
+        function closeBankDetails() {
+            document.getElementById('bankDetailsModal').style.display = 'none';
         }
-    });
 
-    // Add event listener to the profession select
-    document.getElementById('profession').addEventListener('change', function() {
-        if (this.value === 'other') {
-            document.getElementById('otherProfessionGroup').style.display = 'block';
-        } else {
+        function showProcessingModal() {
+            resetProcessingModal();
+            document.getElementById('processingModal').style.display = 'flex';
+        }
+
+        function closeProcessingModal() {
+            document.getElementById('processingModal').style.display = 'none';
+            resetProcessingModal();
+        }
+
+        function resetProcessingModal() {
+            document.getElementById('modalSpinner').style.display = 'block';
+            document.getElementById('modalMessage').textContent = 'Processing payment, please wait...';
+            document.getElementById('modalMessage').style.color = 'inherit';
+            document.getElementById('closeModalButton').style.display = 'none';
+        }
+
+        function isValidUgandanPhoneNumber(phoneNumber) {
+            const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+            return cleanedPhoneNumber.startsWith('0') && cleanedPhoneNumber.length === 10;
+        }
+
+        function validateForm() {
+            const membershipForm = document.getElementById('membershipForm');
+            const paymentModeRadios = document.getElementsByName('paymentmode');
+            let isValid = false;
+            const validateNumber = document.querySelector('.invalid-phonenumber');
+
+            for (const radio of paymentModeRadios) {
+                if (radio.checked) {
+                    isValid = true;
+                }
+            }
+            if (!isValid) {
+                alert('Please select a payment method');
+                return false;
+            }
+
+            const phoneNumber = document.getElementById('contact').value;
+            if (isValidUgandanPhoneNumber(phoneNumber)) {
+                validateNumber.style.display = 'none';
+            } else {
+                validateNumber.style.display = 'block';
+                return false;
+            }
+
+            if (!membershipForm.checkValidity()) {
+                membershipForm.reportValidity();
+                return false;
+            }
+
+            return true;
+        }
+
+        function generateUniqueId() {
+            return 'xxxxxxxxyxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function getToken() {
+            if (localStorage.getItem("token") && localStorage.getItem("tokenExp") >= (Math.floor(Date.now() / 1000) - 60)) {
+                return localStorage.getItem("token");
+            }
+
+            return new Promise((resolve) => {
+                $.ajax({
+                    url: "https://api.zatuxe.com/get-paytoken",
+                    method: "GET",
+                    contentType: "application/json",
+                    success: function(data) {
+                        if (data.userToken) {
+                            let tokenValues = parseJwt(data.userToken);
+                            localStorage.setItem("token", data.userToken);
+                            localStorage.setItem("tokenExp", tokenValues.exp);
+                            resolve(data.userToken);
+                        } else {
+                            resolve("dummy-token");
+                        }
+                    },
+                    error: function() {
+                        resolve("dummy-token");
+                    }
+                });
+            });
+        }
+
+        function parseJwt(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        async function payNow() {
+            if (!validateForm()) return;
+
+            const membershipForm = document.getElementById('membershipForm');
+            const paymentForm = document.getElementById('paymentForm');
+            const otherProfession = document.getElementById('otherProfession');
+
+            if (document.getElementById('profession').value === 'other' && !otherProfession.value) {
+                alert('Please specify your profession');
+                return;
+            }
+
+            if (selectedMethod === 'bank') {
+                showProcessingModal();
+                document.getElementById('modalMessage').textContent = 'Please follow bank transfer instructions.';
+                document.getElementById('modalSpinner').style.display = 'none';
+                document.getElementById('closeModalButton').style.display = 'block';
+                return;
+            }
+
+            showProcessingModal();
+            const formData = new FormData(membershipForm);
+            const paymentData = new FormData(paymentForm);
+            const formObject = {
+                fullName: formData.get('fullName'),
+                email: formData.get('email'),
+                profession: formData.get('profession') === 'other' ? otherProfession.value : formData.get('profession'),
+                contact: formData.get('contact'),
+                paymentmode: paymentData.get('paymentmode'),
+                amount: 100000
+            };
+
+            let jsonObject = null;
+            if (formObject.paymentmode === 'UGMTNMOMODIR') {
+                jsonObject = {
+                    requestReference: generateUniqueId(),
+                    amount: formObject.amount,
+                    customerId: formObject.contact.replace(/\D/g, '')
+                };
+            } else if (formObject.paymentmode === 'UGAIRTELMODIR') {
+                jsonObject = {
+                    msisdn: parseFloat(formObject.contact.replace(/\D/g, '')),
+                    country: 'UG',
+                    currency: 'UGX',
+                    amount: formObject.amount,
+                    id: generateUniqueId()
+                };
+            }
+
+            formRequestObj = jsonObject;
+            const token = await getToken();
+            const settings = {
+                url: formObject.paymentmode === 'UGMTNMOMODIR' ? 'https://api.zatuxe.com/api/isw/MTNCollection' : 'https://api.zatuxe.com/api/Airtel/RequestToPay',
+                method: 'POST',
+                headers: {
+                    'clientId': '70b982fe984e472ba1a1f2177901ed89',
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(jsonObject)
+            };
+
+            $.ajax(settings).done(function(result) {
+                handleResponse(result, formObject.paymentmode);
+            }).fail(function() {
+                showError('An error occurred during the payment process.');
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('modalSpinner').style.display = 'none';
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modalMessage').style.color = 'red';
+            document.getElementById('closeModalButton').style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            document.getElementById('modalSpinner').style.display = 'none';
+            document.getElementById('modalMessage').textContent = message + ' Thank you for your payment!';
+            document.getElementById('modalMessage').style.color = 'green';
+            document.getElementById('closeModalButton').style.display = 'block';
+            resetForm();
+            setTimeout(() => {
+                closeSubscriptionForm();
+                closeProcessingModal();
+            }, 3000);
+        }
+
+        function handleResponse(result, paymentMode) {
+            if (paymentMode === 'UGMTNMOMODIR') {
+                if (result.responseCode === 90020) {
+                    showError(result.responseMessage);
+                } else if (result.responseCode === 90000) {
+                    showSuccess(result.responseMessage);
+                } else if (result.responseCode === 90052) {
+                    showError('Invalid MTN Number');
+                }
+            } else if (paymentMode === 'UGAIRTELMODIR') {
+                if (result.status?.responseReason.includes('pending')) {
+                    checkAirtelStatus(result.data.transaction.id);
+                } else if (result.status?.responseReason.includes('successful')) {
+                    showSuccess(result.status.message);
+                } else {
+                    showError(result.status?.responseReason || 'Payment failed');
+                }
+            }
+        }
+
+        async function checkAirtelStatus(transactionId) {
+            const checkUrl = `https://api.zatuxe.com/api/airtel/CheckStatus?id=${transactionId}&country=UG¤cy=UGX`;
+            const token = await getToken();
+            const settings = {
+                url: checkUrl,
+                method: 'GET',
+                headers: {
+                    'clientId': '70b982fe984e472ba1a1f2177901ed89',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            document.getElementById('modalMessage').textContent = 'Waiting for Approval, please check your phone';
+
+            for (let i = 0; i < 15; i++) {
+                try {
+                    $.ajax(settings).done(function(result) {
+                        if (result.status.success && result.data.transaction.status === 'TS') {
+                            showSuccess(result.data.transaction.message);
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+                await new Promise(r => setTimeout(r, 10000));
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('membershipForm').reset();
+            document.getElementById('paymentForm').reset();
+            document.getElementById('paymentDetails').classList.add('hidden');
+            document.getElementById('submitButton').disabled = true;
+            document.querySelectorAll('.payment-option').forEach(option => option.classList.remove('selected'));
+            document.querySelectorAll('.invalid-phonenumber').forEach(el => el.style.display = 'none');
+            selectedMethod = null;
             document.getElementById('otherProfessionGroup').style.display = 'none';
         }
-    });
-</script>
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        document.getElementById('subscriptionModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('subscriptionModal')) {
+                closeSubscriptionForm();
+            }
+        });
+
+        document.getElementById('profession').addEventListener('change', function() {
+            document.getElementById('otherProfessionGroup').style.display = this.value === 'other' ? 'block' : 'none';
+        });
+
+        document.getElementById('closeModalButton').addEventListener('click', closeProcessingModal);
+    </script>
 </body>
 </html>
