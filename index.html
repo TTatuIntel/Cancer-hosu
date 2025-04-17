@@ -413,7 +413,7 @@ section {
     box-shadow: 0 0 10px 2px rgba(230, 57, 70, 0.5);
 }
 
-/* Partner Logos Section - UPDATED: Compact with left-aligned title */
+/* Partner Logos Section - UPDATED: Colored logos with hover effects */
 .partners-section {
     padding: var(--spacing-sm) 0; /* Reduced padding */
     background: var(--white);
@@ -452,25 +452,25 @@ section {
 }
 
 .partner-logo {
-    height: 70px; /* Smaller height */
-    max-width: 150px; /* Smaller width */
+    height: 70px; /* Maintain smaller height */
+    max-width: 150px; /* Maintain smaller width */
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: grayscale(100%);
-    opacity: 0.7;
     transition: var(--transition);
-}
-
-.partner-logo:hover {
-    filter: grayscale(0);
-    opacity: 1;
 }
 
 .partner-logo img {
     max-height: 100%;
     max-width: 100%;
     object-fit: contain;
+    filter: none; /* Ensure logos are in full color */
+    opacity: 1; /* Full opacity by default */
+}
+
+.partner-logo:hover img {
+    transform: scale(1.05); /* Slight scale on hover for interactivity */
+    filter: brightness(1.1); /* Slightly brighten on hover */
 }
 
 /* Events Section - ENHANCED with new features */
@@ -1989,28 +1989,45 @@ footer::before {
 
 <!-- Partner Logos Section -->
 <section id="partners" class="partners-section">
-<div class="partners-container">
-    <div class="partners-header">
-        <h3 class="partners-title">Our Partners</h3>
+    <div class="partners-container">
+        <div class="partners-header">
+            <h2 class="partners-title">Our Partners</h2>
+        </div>
+        
+        <div class="partners-grid">
+            <!-- Partner Logos - No Names -->
+            <div class="partner-logo">
+                <img src="img/uci.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/ado.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/Agakhan.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/future.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/hetero.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/metro.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/msn.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/mulago.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/nsambya.png" alt="Partner Logo" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/onco.png" alt="Partner Logo" loading="lazy">
+            </div>
+        </div>
     </div>
-    <div class="partners-grid">
-        <div class="partner-logo">
-            <img src="/placeholder.svg?height=60&width=120" alt="Uganda Cancer Institute" loading="lazy">
-        </div>
-        <div class="partner-logo">
-            <img src="/placeholder.svg?height=60&width=120" alt="Ministry of Health" loading="lazy">
-        </div>
-        <div class="partner-logo">
-            <img src="/placeholder.svg?height=60&width=120" alt="Makerere University" loading="lazy">
-        </div>
-        <div class="partner-logo">
-            <img src="/placeholder.svg?height=60&width=120" alt="American Society of Clinical Oncology" loading="lazy">
-        </div>
-        <div class="partner-logo">
-            <img src="/placeholder.svg?height=60&width=120" alt="WHO Uganda" loading="lazy">
-        </div>
-    </div>
-</div>
 </section>
 
 <!-- New and Upcoming Events Section with Enhanced Carousel -->
