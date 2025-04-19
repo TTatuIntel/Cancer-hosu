@@ -1262,6 +1262,7 @@
     <!-- Events Section -->
     <section class="events-section">
         <div class="events-container">
+            <!-- Featured Events -->
             <div class="featured-events">
                 <div class="section-header">
                     <h2 class="section-title">Featured Events</h2>
@@ -1278,108 +1279,20 @@
                         </button>
                     </div>
                 </div>
-
+            
                 <div class="carousel-container">
-                    <div class="carousel-track" id="featured-carousel">
-                        <!-- Featured Event 1 -->
-                        <div class="carousel-slide">
-                            <article class="event-card scroll-target" id="uci-pcau-hosu">
-                                <div class="featured-badge">Featured</div>
-                                <span class="event-type" data-type="conference">Conference</span>
-                                <span class="event-status" data-status="open">Registration Open</span>
-                                <div class="event-image">
-                                    <img src="/placeholder.svg?height=160&width=280" alt="UCI – PCAU – HOSU Conference">
-                                </div>
-                                <span class="event-countdown">In 1 year, 5 months</span>
-                                <div class="event-content">
-                                    <div class="event-date">September 10-12, 2025</div>
-                                    <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
-                                    <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care brings together clinicians, researchers, policymakers, and advocates to explore innovative solutions.</p>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Kampala, Uganda</div>
-                                        <div class="event-actions">
-                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                            <a href="#register" class="register-button">Register</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Featured Event 2 -->
-                        <div class="carousel-slide">
-                            <article class="event-card scroll-target" id="annual-oncology-2024">
-                                <span class="event-type" data-type="conference">Conference</span>
-                                <span class="event-status" data-status="open">Registration Open</span>
-                                <div class="event-image">
-                                    <img src="/placeholder.svg?height=160&width=280" alt="Annual Oncology Conference 2024">
-                                </div>
-                                <span class="event-countdown">In 5 months</span>
-                                <div class="event-content">
-                                    <div class="event-date">September 15-18, 2024</div>
-                                    <h3 class="event-title">Annual Oncology Conference 2024</h3>
-                                    <p class="event-description">Join leading oncologists and researchers for our flagship conference featuring keynote speakers, research presentations, and networking opportunities.</p>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 London, UK</div>
-                                        <div class="event-actions">
-                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                            <a href="#register" class="register-button">Register</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Featured Event 3 -->
-                        <div class="carousel-slide">
-                            <article class="event-card scroll-target" id="immunotherapy-workshop">
-                                <span class="event-type" data-type="workshop">Workshop</span>
-                                <span class="event-status" data-status="closing">Closing Soon</span>
-                                <div class="event-image">
-                                    <img src="/placeholder.svg?height=160&width=280" alt="Immunotherapy Workshop">
-                                </div>
-                                <span class="event-countdown">In 3 months</span>
-                                <div class="event-content">
-                                    <div class="event-date">July 8-9, 2024</div>
-                                    <h3 class="event-title">Advanced Immunotherapy Workshop</h3>
-                                    <p class="event-description">A hands-on workshop focusing on the latest developments in cancer immunotherapy treatments and techniques.</p>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Boston, USA</div>
-                                        <div class="event-actions">
-                                            <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                            <a href="#register" class="register-button">Register</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
+                    <div class="carousel-track" id="featured-carousel" style="display: flex; align-items: stretch;"></div>
                     <div class="carousel-progress"></div>
                 </div>
-
+            
                 <div class="carousel-controls">
                     <div class="carousel-arrows">
                         <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
                         <button class="carousel-arrow next" aria-label="Next slide">❯</button>
                     </div>
-                    <div class="carousel-dots">
-                        <span class="carousel-dot active" data-slide="0"></span>
-                        <span class="carousel-dot" data-slide="1"></span>
-                        <span class="carousel-dot" data-slide="2"></span>
-                    </div>
+                    <div class="carousel-dots" id="carousel-dots"></div>
                 </div>
             </div>
-            <!-- Upcoming Events Section -->
-            <section id="upcoming-events" class="scroll-target">
-                <div class="category-header">
-                    <div class="category-icon">⏳</div>
-                    <div class="category-content">
-                        <h2 class="category-title">Upcoming Events</h2>
-                        <p class="category-description">Explore our upcoming conferences, workshops, and webinars advancing healthcare technology.</p>
-                    </div>
-                </div>
-                <div class="events-grid" id="upcoming-events-grid"></div>
-            </section>
 
             <!-- Current Events Section -->
             <section id="current-events" class="scroll-target">
@@ -1392,7 +1305,20 @@
                 </div>
                 <div class="events-grid" id="current-events-grid"></div>
             </section>
+
+                        <!-- Upcoming Events Section -->
+                        <section id="upcoming-events" class="scroll-target">
+                            <div class="category-header">
+                                <div class="category-icon">⏳</div>
+                                <div class="category-content">
+                                    <h2 class="category-title">Upcoming Events</h2>
+                                    <p class="category-description">Explore our upcoming conferences, workshops, and webinars advancing healthcare technology.</p>
+                                </div>
+                            </div>
+                            <div class="events-grid" id="upcoming-events-grid"></div>
+                        </section>
             <!-- Conference Events Section -->
+           <!-- Conference Events Section -->
             <section id="conference-events" class="scroll-target">
                 <div class="category-header">
                     <div class="category-icon">🎓</div>
@@ -1401,75 +1327,10 @@
                         <p class="category-description">Join our flagship conferences featuring keynote speakers, research presentations, and networking opportunities with leading oncology professionals.</p>
                     </div>
                 </div>
-
-                <div class="events-grid">
-                    <!-- Conference Event 1 -->
-                    <article class="event-card scroll-target" id="uci-pcau-hosu-conf">
-                        <div class="featured-badge">Featured</div>
-                        <span class="event-type" data-type="conference">Conference</span>
-                        <span class="event-status" data-status="open">Registration Open</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="UCI – PCAU – HOSU Conference">
-                        </div>
-                        <span class="event-countdown">In 1 year, 5 months</span>
-                        <div class="event-content">
-                            <div class="event-date">September 10-12, 2025</div>
-                            <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
-                            <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care brings together clinicians, researchers, policymakers, and advocates to explore innovative solutions.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 Kampala, Uganda</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Conference Event 2 -->
-                    <article class="event-card scroll-target" id="annual-oncology-2024-conf">
-                        <span class="event-type" data-type="conference">Conference</span>
-                        <span class="event-status" data-status="open">Registration Open</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Annual Oncology Conference 2024">
-                        </div>
-                        <span class="event-countdown">In 5 months</span>
-                        <div class="event-content">
-                            <div class="event-date">September 15-18, 2024</div>
-                            <h3 class="event-title">Annual Oncology Conference 2024</h3>
-                            <p class="event-description">Join leading oncologists and researchers for our flagship conference featuring keynote speakers, research presentations, and networking opportunities.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 London, UK</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Past Conference Event -->
-                    <article class="event-card">
-                        <span class="event-type" data-type="conference">Conference</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Precision Medicine Symposium">
-                        </div>
-                        <div class="event-content">
-                            <div class="event-date">March 10-12, 2024</div>
-                            <h3 class="event-title">Precision Medicine Symposium</h3>
-                            <p class="event-description">Explored the latest advances in precision medicine and targeted therapies for cancer treatment.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 Kampala, Uganda</div>
-                                <div class="event-actions">
-                                    <a href="#resources" class="register-button">Resources</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                <div class="events-grid" id="conference-events-grid"></div>
             </section>
 
-            <!-- Workshop Events Section -->
+                        <!-- Workshop Events Section -->
             <section id="workshop-events" class="scroll-target">
                 <div class="category-header">
                     <div class="category-icon">👨‍🔬</div>
@@ -1478,74 +1339,10 @@
                         <p class="category-description">Hands-on workshops focusing on practical skills and the latest techniques in oncology treatment and research.</p>
                     </div>
                 </div>
-
-                <div class="events-grid">
-                    <!-- Workshop Event 1 -->
-                    <article class="event-card scroll-target" id="immunotherapy-workshop-ws">
-                        <span class="event-type" data-type="workshop">Workshop</span>
-                        <span class="event-status" data-status="closing">Closing Soon</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Immunotherapy Workshop">
-                        </div>
-                        <span class="event-countdown">In 3 months</span>
-                        <div class="event-content">
-                            <div class="event-date">July 8-9, 2024</div>
-                            <h3 class="event-title">Advanced Immunotherapy Workshop</h3>
-                            <p class="event-description">A hands-on workshop focusing on the latest developments in cancer immunotherapy treatments and techniques.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 Boston, USA</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Workshop Event 2 -->
-                    <article class="event-card scroll-target" id="surgical-oncology">
-                        <span class="event-type" data-type="workshop">Workshop</span>
-                        <span class="event-status" data-status="open">Registration Open</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Surgical Oncology Techniques">
-                        </div>
-                        <span class="event-countdown">In 4 months</span>
-                        <div class="event-content">
-                            <div class="event-date">August 12-13, 2024</div>
-                            <h3 class="event-title">Surgical Oncology Techniques</h3>
-                            <p class="event-description">A comprehensive workshop on the latest surgical techniques for oncology specialists, featuring hands-on training sessions.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 Kampala, Uganda</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Past Workshop Event -->
-                    <article class="event-card">
-                        <span class="event-type" data-type="workshop">Workshop</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Clinical Trials Workshop">
-                        </div>
-                        <div class="event-content">
-                            <div class="event-date">February 15, 2024</div>
-                            <h3 class="event-title">Clinical Trials Workshop</h3>
-                            <p class="event-description">Focused on best practices in clinical trial design and management for oncology research.</p>
-                            <div class="event-footer">
-                                <div class="event-location">📍 Nairobi, Kenya</div>
-                                <div class="event-actions">
-                                    <a href="#resources" class="register-button">Resources</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                <div class="events-grid" id="workshop-events-grid"></div>
             </section>
 
-            <!-- Webinar Events Section -->
+                        <!-- Webinar Events Section -->
             <section id="webinar-events" class="scroll-target">
                 <div class="category-header">
                     <div class="category-icon">💻</div>
@@ -1554,72 +1351,9 @@
                         <p class="category-description">Online educational sessions covering the latest research, treatments, and best practices in oncology care.</p>
                     </div>
                 </div>
-
-                <div class="events-grid">
-                    <!-- Webinar Event 1 -->
-                    <article class="event-card scroll-target" id="digital-pathology">
-                        <span class="event-type" data-type="webinar">Webinar</span>
-                        <span class="event-status" data-status="open">Registration Open</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Digital Pathology Webinar">
-                        </div>
-                        <span class="event-countdown">In 2 months</span>
-                        <div class="event-content">
-                            <div class="event-date">June 25, 2024</div>
-                            <h3 class="event-title">Digital Pathology in Oncology</h3>
-                            <p class="event-description">Learn about the latest advances in digital pathology and its applications in cancer diagnosis and treatment.</p>
-                            <div class="event-footer">
-                                <div class="event-location">🌐 Online</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Webinar Event 2 -->
-                    <article class="event-card scroll-target" id="research-updates">
-                        <span class="event-type" data-type="webinar">Webinar</span>
-                        <span class="event-status" data-status="open">Registration Open</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Cancer Research Updates">
-                        </div>
-                        <span class="event-countdown">In 3 months</span>
-                        <div class="event-content">
-                            <div class="event-date">July 20, 2024</div>
-                            <h3 class="event-title">Quarterly Cancer Research Updates</h3>
-                            <p class="event-description">Stay up-to-date with the latest research findings and clinical trials in oncology with our quarterly webinar series.</p>
-                            <div class="event-footer">
-                                <div class="event-location">🌐 Online</div>
-                                <div class="event-actions">
-                                    <button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-                                    <a href="#register" class="register-button">Register</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Past Webinar Event -->
-                    <article class="event-card">
-                        <span class="event-type" data-type="webinar">Webinar</span>
-                        <div class="event-image">
-                            <img src="/placeholder.svg?height=160&width=280" alt="Cancer Research Updates">
-                        </div>
-                        <div class="event-content">
-                            <div class="event-date">January 20, 2024</div>
-                            <h3 class="event-title">Cancer Research Updates</h3>
-                            <p class="event-description">Quarterly webinar covering the latest research developments in cancer treatment and prevention.</p>
-                            <div class="event-footer">
-                                <div class="event-location">🌐 Online</div>
-                                <div class="event-actions">
-                                    <a href="#recording" class="register-button">Recording</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                <div class="events-grid" id="webinar-events-grid"></div>
             </section>
+
 
             <!-- Past Events Section -->
             <div class="past-events" id="past-events">
@@ -1631,64 +1365,7 @@
                     <div class="filter-count">3 events</div>
                 </div>
                 <div class="past-events-content">
-                    <div class="events-grid">
-                        <!-- Past Event 1 -->
-                        <article class="event-card">
-                            <span class="event-type" data-type="conference">Conference</span>
-                            <div class="event-image">
-                                <img src="/placeholder.svg?height=160&width=280" alt="Precision Medicine Symposium">
-                            </div>
-                            <div class="event-content">
-                                <div class="event-date">March 10-12, 2024</div>
-                                <h3 class="event-title">Precision Medicine Symposium</h3>
-                                <p class="event-description">Explored the latest advances in precision medicine and targeted therapies for cancer treatment.</p>
-                                <div class="event-footer">
-                                    <div class="event-location">📍 Kampala, Uganda</div>
-                                    <div class="event-actions">
-                                        <a href="#resources" class="register-button">Resources</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Past Event 2 -->
-                        <article class="event-card">
-                            <span class="event-type" data-type="workshop">Workshop</span>
-                            <div class="event-image">
-                                <img src="/placeholder.svg?height=160&width=280" alt="Clinical Trials Workshop">
-                            </div>
-                            <div class="event-content">
-                                <div class="event-date">February 15, 2024</div>
-                                <h3 class="event-title">Clinical Trials Workshop</h3>
-                                <p class="event-description">Focused on best practices in clinical trial design and management for oncology research.</p>
-                                <div class="event-footer">
-                                    <div class="event-location">📍 Nairobi, Kenya</div>
-                                    <div class="event-actions">
-                                        <a href="#resources" class="register-button">Resources</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Past Event 3 -->
-                        <article class="event-card">
-                            <span class="event-type" data-type="webinar">Webinar</span>
-                            <div class="event-image">
-                                <img src="/placeholder.svg?height=160&width=280" alt="Cancer Research Updates">
-                            </div>
-                            <div class="event-content">
-                                <div class="event-date">January 20, 2024</div>
-                                <h3 class="event-title">Cancer Research Updates</h3>
-                                <p class="event-description">Quarterly webinar covering the latest research developments in cancer treatment and prevention.</p>
-                                <div class="event-footer">
-                                    <div class="event-location">🌐 Online</div>
-                                    <div class="event-actions">
-                                        <a href="#recording" class="register-button">Recording</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    <div class="events-grid" id="past-events-grid"></div>
 
                     <!-- Resources Section -->
                     <div class="resources-card">
@@ -1706,8 +1383,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
     <!-- Back to Top Button -->
     <button class="back-to-top" aria-label="Back to top">↑</button>
@@ -1765,32 +1440,93 @@
         </div>
     </footer>
 
-    <!-- <script>events-data.js</script> -->
-    <script src="events-data.js" defer></script>
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    // Function to create an event card
-    function createEventCard(event) {
-        return `
-            <div class="event-card" id="${event.id}">
-                <div class="event-image">
-                    <img src="${event.image}" alt="${event.imageAlt}">
-                </div>
-                <div class="event-details">
-                    <span class="event-status">${event.countdown}</span>
-                    <h3 class="event-title">${event.title}</h3>
-                    <p class="event-description">${event.description}</p>
-                    <div class="event-meta">
-                        <span class="event-date">${event.date}</span>
-                        <span class="event-location">${event.location}</span>
+
+// Function to create an event card
+function createEventCard(event, isCarousel = false) {
+    const featuredBadge = event.featured ? '<div class="featured-badge">Featured</div>' : '';
+    const statusTag = event.status !== 'past' 
+        ? `<span class="event-status" data-status="${event.status}">${event.status === 'open' ? 'Registration Open' : 'Closing Soon'}</span>` 
+        : '';
+    const countdownTag = event.countdown 
+        ? `<span class="event-countdown">${event.countdown}</span>` 
+        : '';
+    const actionButton = event.status !== 'past' 
+        ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+           <a href="#register" class="register-button">Register</a>`
+        : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
+
+    // Define card dimensions to match other sections
+    const cardWidth = '280px'; // Match --card-width from CSS
+    const cardHeight = '360px'; // Match --card-height from CSS
+
+    // Add inline style to event-card
+    const cardHtml = `
+        <article class="event-card scroll-target" id="${event.id}" style="width: ${cardWidth}; height: ${cardHeight}; flex-shrink: 0;">
+            ${featuredBadge}
+            <span class="event-type" data-type="${event.type}">${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>
+            ${statusTag}
+            <div class="event-image">
+                <img src="${event.image}" alt="${event.imageAlt}">
+            </div>
+            ${countdownTag}
+            <div class="event-content">
+                <div class="event-date">${event.date}</div>
+                <h3 class="event-title">${event.title}</h3>
+                <p class="event-description">${event.description}</p>
+                <div class="event-footer">
+                    <div class="event-location">${event.location}</div>
+                    <div class="event-actions">
+                        ${actionButton}
                     </div>
                 </div>
             </div>
-        `;
-    }
+        </article>
+    `;
 
-    // Populate current events
-    const currentEventsGrid = document.getElementById('current-events-grid');
+    // If this card is for the carousel, wrap it in a carousel-slide with inline style
+    return isCarousel 
+        ? `<div class="carousel-slide" style="width: ${cardWidth}; flex: 0 0 ${cardWidth}; margin-right: 1.5rem;">${cardHtml}</div>` 
+        : cardHtml;
+}
+
+// Function to populate webinar events
+function populateWebinarEvents() {
+
+
+            // Featured Events (Carousel)
+            const featuredCarousel = document.getElementById('featured-carousel');
+        const carouselDotsContainer = document.getElementById('carousel-dots');
+        eventsData.featured.forEach((event, index) => {
+            featuredCarousel.innerHTML += createEventCard(event, true);
+            carouselDotsContainer.innerHTML += `<span class="carousel-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>`;
+        });
+
+    const webinarEventsGrid = document.getElementById('webinar-events-grid');
+    eventsData.webinars.forEach(event => {
+        webinarEventsGrid.innerHTML += createEventCard(event);
+    });
+
+        // Workshop Events
+        const workshopEventsGrid = document.getElementById('workshop-events-grid');
+        eventsData.workshops.forEach(event => {
+            workshopEventsGrid.innerHTML += createEventCard(event);
+        });
+
+                // Conference Events
+                const conferenceEventsGrid = document.getElementById('conference-events-grid');
+        eventsData.conferences.forEach(event => {
+            conferenceEventsGrid.innerHTML += createEventCard(event);
+        });
+
+
+              // Past Events
+              const pastEventsGrid = document.getElementById('past-events-grid');
+        eventsData.past.forEach(event => {
+            pastEventsGrid.innerHTML += createEventCard(event);
+        });
+
+            const currentEventsGrid = document.getElementById('current-events-grid');
     eventsData.current.forEach(event => {
         currentEventsGrid.innerHTML += createEventCard(event);
     });
@@ -1800,54 +1536,19 @@
     eventsData.upcoming.forEach(event => {
         upcomingEventsGrid.innerHTML += createEventCard(event);
     });
+
+}
+
+
+// Call the function when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    populateWebinarEvents();
 });
     </script>
-    <style>
-        .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
-}
 
-.event-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
+    <!-- <script>events-data.js</script> -->
+    <script src="events-data.js" defer></script>
 
-.event-card:hover {
-    transform: translateY(-5px);
-}
-
-.event-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.event-details {
-    padding: 15px;
-}
-
-.event-status {
-    display: inline-block;
-    padding: 3px 8px;
-    background: #f0f0f0;
-    border-radius: 4px;
-    font-size: 0.8em;
-    margin-bottom: 10px;
-}
-
-.event-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    font-size: 0.9em;
-    color: #666;
-}
-    </style>
 
     <script>
         // Mobile menu toggle
