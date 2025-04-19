@@ -1243,6 +1243,8 @@
                 <span class="filter-count">Showing 9 events</span>
             </div>
             <div class="filter-options">
+                <button class="filter-button" data-filter="current">Current <span class="count">1</span></button>
+                <button class="filter-button" data-filter="upcoming">Upcoming <span class="count">1</span></button>
                 <button class="filter-button active" data-filter="all">All Events <span class="count">9</span></button>
                 <button class="filter-button" data-filter="conference">Conferences <span class="count">3</span></button>
                 <button class="filter-button" data-filter="workshop">Workshops <span class="count">3</span></button>
@@ -1367,7 +1369,29 @@
                     </div>
                 </div>
             </div>
+            <!-- Upcoming Events Section -->
+            <section id="upcoming-events" class="scroll-target">
+                <div class="category-header">
+                    <div class="category-icon">⏳</div>
+                    <div class="category-content">
+                        <h2 class="category-title">Upcoming Events</h2>
+                        <p class="category-description">Explore our upcoming conferences, workshops, and webinars advancing healthcare technology.</p>
+                    </div>
+                </div>
+                <div class="events-grid" id="upcoming-events-grid"></div>
+            </section>
 
+            <!-- Current Events Section -->
+            <section id="current-events" class="scroll-target">
+                <div class="category-header">
+                    <div class="category-icon">🔥</div>
+                    <div class="category-content">
+                        <h2 class="category-title">Current Events</h2>
+                        <p class="category-description">Join our ongoing or imminent events focused on innovations in healthcare.</p>
+                    </div>
+                </div>
+                <div class="events-grid" id="current-events-grid"></div>
+            </section>
             <!-- Conference Events Section -->
             <section id="conference-events" class="scroll-target">
                 <div class="category-header">
@@ -1740,6 +1764,90 @@
             <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- <script>events-data.js</script> -->
+    <script src="events-data.js" defer></script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    // Function to create an event card
+    function createEventCard(event) {
+        return `
+            <div class="event-card" id="${event.id}">
+                <div class="event-image">
+                    <img src="${event.image}" alt="${event.imageAlt}">
+                </div>
+                <div class="event-details">
+                    <span class="event-status">${event.countdown}</span>
+                    <h3 class="event-title">${event.title}</h3>
+                    <p class="event-description">${event.description}</p>
+                    <div class="event-meta">
+                        <span class="event-date">${event.date}</span>
+                        <span class="event-location">${event.location}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Populate current events
+    const currentEventsGrid = document.getElementById('current-events-grid');
+    eventsData.current.forEach(event => {
+        currentEventsGrid.innerHTML += createEventCard(event);
+    });
+
+    // Populate upcoming events
+    const upcomingEventsGrid = document.getElementById('upcoming-events-grid');
+    eventsData.upcoming.forEach(event => {
+        upcomingEventsGrid.innerHTML += createEventCard(event);
+    });
+});
+    </script>
+    <style>
+        .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.event-details {
+    padding: 15px;
+}
+
+.event-status {
+    display: inline-block;
+    padding: 3px 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+.event-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #666;
+}
+    </style>
 
     <script>
         // Mobile menu toggle
