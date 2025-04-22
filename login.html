@@ -366,6 +366,10 @@
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
         }
+        .partner-logo:hover img {
+                transform: scale(1.5);
+                filter: brightness(1.5);
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -415,12 +419,12 @@
 </head>
 <body>
    <!-- Navbar -->
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+   <nav class="navbar">
+    <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
         </div>
-        <div class="nav-links">
+        <div class="nav-links" style="align-items: center; gap: 2rem;">
             <a href="index.html">Home</a>           
             <a href="events.html">Events</a>
             <a href="research.html">Research</a> 
@@ -432,7 +436,7 @@
         </div>
         <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
     </div>
-    </nav>
+</nav>
 
     <main class="login-section">
         <div class="login-container">
@@ -551,6 +555,11 @@
                     <a href="https://youtube.com/hosu" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                         <i class="fab fa-youtube"></i>
                     </a>
+                </div>
+                <h4>Designed By
+                </h4>
+                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                    <img src="img/calogo.png" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
                 </div>
             </div>
         </div>

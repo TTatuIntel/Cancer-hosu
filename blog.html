@@ -836,6 +836,11 @@
         background: var(--primary-dark);
     }
 
+    .partner-logo:hover img {
+                transform: scale(1.5);
+                filter: brightness(1.5);
+        }
+
     /* Media Queries */
     @media (max-width: 1024px) {
         .blog-layout {
@@ -946,6 +951,7 @@
             height: 35px;
             font-size: 0.9rem;
         }
+
     }
 </style>
 </head>
@@ -1260,7 +1266,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                 </a>
             </div>
+            <h4>Designed By
+            </h4>
+            <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                <img src="img/calogo.png" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
+            </div>
         </div>
+
     </div>
     <div class="copyright">
         <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>

@@ -580,6 +580,11 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        .partner-logo:hover img {
+                transform: scale(1.5);
+                filter: brightness(1.5);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -643,20 +648,22 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
+                <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
+            </div>
+            <div class="nav-links" style="align-items: center; gap: 2rem;">
+                <a href="index.html">Home</a>           
+                <a href="events.html">Events</a>
+                <a href="research.html">Research</a> 
+                <a href="membership.html">Membership</a>           
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="cta-button">Member Portal</a>
+            </div>
+            <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
         </div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>           
-            <a href="events.html">Events</a>
-            <a href="research.html">Research</a> 
-            <a href="membership.html">Membership</a>           
-            <a href="about.html">About</a>
-            <a href="blog.html" class="active">Blog</a>
-            <a href="contact.html">Contact</a>
-            <a href="login.html" class="cta-button">Member Portal</a>
-        </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
     </nav>
 
     <section class="membership-hero">
@@ -945,6 +952,11 @@
                     <a href="https://facebook.com/hosu.org" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-facebook"></i>
                     </a>
+                </div>
+                <h4>Designed By
+                </h4>
+                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                    <img src="img/calogo.png" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
                 </div>
             </div>
         </div>
