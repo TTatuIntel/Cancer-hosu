@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles (same as other pages) */
+        /* Base styles */
         :root {
             --primary-color: #e63946;
             --secondary-color: #0d4593;
@@ -21,6 +21,7 @@
             --shadow: 0 2px 4px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
             --navbar-height: 90px;
+            --error-color: #dc2626;
         }
 
         * {
@@ -36,7 +37,7 @@
             background-color: var(--white);
         }
 
-        /* Navbar styles (same as other pages) */
+        /* Navbar styles */
         .navbar {
             background: rgba(255, 255, 255, 0.521);
             backdrop-filter: blur(15px);
@@ -99,6 +100,7 @@
             background: var(--secondary-color);
             transform: translateY(-2px);
         }
+
         .menu-toggle {
             display: none;
             cursor: pointer;
@@ -186,6 +188,23 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--secondary-color);
+        }
+
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
         }
 
         .form-group textarea {
@@ -277,7 +296,7 @@
             border: none;
         }
 
-        /* Footer styles (same as other pages) */
+        /* Footer styles */
         footer {
             background: var(--background-dark);
             color: var(--white);
@@ -345,12 +364,12 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
-            color:rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .partner-logo:hover img {
-                transform: scale(1.5);
-                filter: brightness(1.5);
+            transform: scale(1.5);
+            filter: brightness(1.5);
         }
 
         /* Animations */
@@ -450,28 +469,34 @@
     <section class="contact-section">
         <div class="contact-grid">
             <div class="contact-form">
-                <form id="contactForm" onsubmit="return handleSubmit(event)">
+                <form id="contactForm" action="https://formspree.io/f/mblojwdd" method="POST" onsubmit="return handleSubmit(event)">
+                    <input type="hidden" name="_to" value="info@hosu.org">
+                    <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required aria-describedby="nameError">
+                        <div id="nameError" class="error-message">Please enter your name</div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required aria-describedby="emailError">
+                        <div id="emailError" class="error-message">Please enter a valid email address</div>
                     </div>
                     <div class="form-group">
                         <label for="subject">Subject</label>
-                        <select id="subject" name="subject" required>
+                        <select id="subject" name="subject" required aria-describedby="subjectError">
                             <option value="">Select a subject</option>
-                            <option value="membership">Membership Inquiry</option>
-                            <option value="research">Research Collaboration</option>
-                            <option value="events">Events Information</option>
-                            <option value="other">Other</option>
+                            <option value="Membership Inquiry">Membership Inquiry</option>
+                            <option value="Research Collaboration">Research Collaboration</option>
+                            <option value="Events Information">Events Information</option>
+                            <option value="Other">Other</option>
                         </select>
+                        <div id="subjectError" class="error-message">Please select a subject</div>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
+                        <textarea id="message" name="message" required aria-describedby="messageError"></textarea>
+                        <div id="messageError" class="error-message">Please enter your message</div>
                     </div>
                     <button type="submit" class="submit-button">Send Message</button>
                 </form>
@@ -545,8 +570,7 @@
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
-                <h4>Designed By
-                </h4>
+                <h4>Designed By</h4>
                 <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                     <img src="img/calogo.png" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
                 </div>
@@ -576,22 +600,67 @@
         });
 
         // Form submission handler
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            // Here you would typically send the data to your server
-            console.log('Form submitted:', data);
-            
-            // Show success message
-            alert('Thank you for your message. We will get back to you soon!');
-            
-            // Reset form
-            event.target.reset();
-            
+            const form = event.target;
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const message = document.getElementById('message');
+            let isValid = true;
+
+            // Reset error states
+            [name, email, subject, message].forEach(field => {
+                field.parentElement.classList.remove('error');
+            });
+
+            // Validate name
+            if (!name.value.trim()) {
+                name.parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            // Validate email
+            if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                email.parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            // Validate subject
+            if (!subject.value) {
+                subject.parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            // Validate message
+            if (!message.value.trim()) {
+                message.parentElement.classList.add('error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return false;
+            }
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    alert('Thank you for your message. We will get back to you soon!');
+                    form.reset();
+                } else {
+                    const error = await response.json();
+                    alert(`Error: ${error.message || 'Failed to send message. Please try again later.'}`);
+                }
+            } catch (error) {
+                alert('Error: Failed to send message. Please try again later.');
+                console.error('Fetch error:', error);
+            }
+
             return false;
         }
 

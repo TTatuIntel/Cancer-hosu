@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles (same as other pages) */
+        /* Base styles */
         :root {
             --primary-color: #e63946;
             --secondary-color: #0d4593;
@@ -35,9 +35,10 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--white);
+            position: relative;
         }
 
-        /* Navbar styles (same as other pages) */
+        /* Navbar styles */
         .navbar {
             background: rgba(255, 255, 255, 0.521);
             backdrop-filter: blur(15px);
@@ -48,7 +49,7 @@
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
+            z-index: 3000; /* Higher z-index to stay above overlay */
             transition: var(--transition);
             height: var(--navbar-height);
         }
@@ -108,7 +109,8 @@
         }
 
         /* Login Page Specific Styles */
-        .login-section {
+        .login-section
+{
             padding-top: calc(var(--navbar-height) + 2rem);
             min-height: calc(100vh - var(--navbar-height));
             display: flex;
@@ -296,7 +298,7 @@
             font-size: 1.2rem;
         }
 
-        /* Footer styles (same as other pages) */
+        /* Footer styles */
         footer {
             background: var(--background-dark);
             color: var(--white);
@@ -366,9 +368,35 @@
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
         }
+
         .partner-logo:hover img {
-                transform: scale(1.5);
-                filter: brightness(1.5);
+            transform: scale(1.5);
+            filter: brightness(1.5);
+        }
+
+        /* Overlay styles */
+        .coming-soon-overlay {
+            position: fixed;
+            top: var(--navbar-height); /* Start below navbar */
+            left: 0;
+            width: 100%;
+            height: calc(100% - var(--navbar-height)); /* Cover area below navbar */
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Below navbar */
+            transition: opacity 0.5s ease;
+            pointer-events: none; /* Allow clicks to pass through to navbar */
+        }
+
+        .coming-soon-text {
+            color: var(--white);
+            font-size: 4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         /* Responsive Design */
@@ -390,12 +418,13 @@
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 100%;
+                top: var(--navbar-height);
                 left: 0;
                 width: 100%;
                 background: var(--white);
                 padding: 1rem;
                 box-shadow: var(--shadow);
+                z-index: 3000; /* Ensure mobile menu is above overlay */
             }
 
             .nav-links.active {
@@ -404,6 +433,7 @@
 
             .menu-toggle {
                 display: block;
+                z-index: 3000; /* Ensure toggle is above overlay */
             }
 
             .login-container {
@@ -414,29 +444,43 @@
             .benefits-preview {
                 order: -1;
             }
+
+            .coming-soon-text {
+                font-size: 2.5rem;
+            }
+
+            .coming-soon-overlay {
+                top: var(--navbar-height);
+                height: calc(100% - var(--navbar-height));
+            }
         }
     </style>
 </head>
 <body>
-   <!-- Navbar -->
-   <nav class="navbar">
-    <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
-        </div>
-        <div class="nav-links" style="align-items: center; gap: 2rem;">
-            <a href="index.html">Home</a>           
-            <a href="events.html">Events</a>
-            <a href="research.html">Research</a> 
-            <a href="membership.html">Membership</a>           
-            <a href="about.html">About</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
-            <a href="login.html" class="cta-button">Member Portal</a>
-        </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+    <!-- Coming Soon Overlay -->
+    <div class="coming-soon-overlay">
+        <div class="coming-soon-text">Coming Soon</div>
     </div>
-</nav>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
+                <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
+            </div>
+            <div class="nav-links" style="align-items: center; gap: 2rem;">
+                <a href="index.html">Home</a>           
+                <a href="events.html">Events</a>
+                <a href="research.html">Research</a> 
+                <a href="membership.html">Membership</a>           
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="cta-button">Member Portal</a>
+            </div>
+            <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+        </div>
+    </nav>
 
     <main class="login-section">
         <div class="login-container">
@@ -556,8 +600,7 @@
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
-                <h4>Designed By
-                </h4>
+                <h4>Designed By</h4>
                 <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                     <img src="img/calogo.png" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
                 </div>
