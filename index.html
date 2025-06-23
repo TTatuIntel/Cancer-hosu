@@ -2324,92 +2324,68 @@ footer::before {
     </div>
 </section>
 
-<!-- New and Upcoming Events Section with Enhanced Carousel -->
 <section id="events" class="events-section">
     <div class="events-container">
         <div class="events-wrapper">
-
             <!-- Left Column: Current and Upcoming Events -->
             <div class="upcoming-events-column">
                 <h2 class="section-title">Events Overview</h2>
                 <p class="events-subtitle">Explore our latest events designed to advance oncology care and research</p>
-              
-                <style>
-                    .events-row {
-                        display: flex;
-                        gap: 20px;
-                        width: 100%;
-                        }
-                                    
-                    .current-events-section,
-                    .upcoming-events-section {
-                        flex: 1;
-                        min-width: 0;
-                        }
-                                    
-                    .event-card {
-                        width: 80%;
-                        display: block;
-                        margin-top: 10px;
-                        }
-
-                </style>
-                  
-                  <div class="events-row">
-                    <!-- Left Side: Current Events -->
+                
+                <div class="events-row">
+                    <!-- Current Events -->
                     <div class="current-events-section">
-                     
-                      <button class="filter-button active" data-filter="all" tabindex="0">Current Events</button>
-                      <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0" style="width: 250px;">
-                        <div class="event-image">
-                          <img src="/placeholder.svg?height=110&width=200" alt="Tech Summit 2025" loading="lazy">
-                        </div>
-                        <div class="event-content">
-                          <span class="event-type">Conference</span>
-                          <div class="event-date">April 17, 2025</div>
-                          <h3 class="event-title">Tech Summit 2025</h3>
-                          <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
-                          <div class="event-countdown">
-                            <span class="countdown-label">Happening Now</span>
-                          </div>
-                          <div class="event-footer">
-                            <div class="event-location">📍 Kampala</div>
-                            <span class="register-button">Details</span>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  
-                    <!-- Right Side: Upcoming Events -->
-                    <div class="upcoming-events-section" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; width: 100%;">
-                        <button class="filter-button active" data-filter="all" tabindex="0">Upcoming Events</button>
-                        <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0" style="max-height: 250px; max-width: 200px; transform: scale(0.95); margin: 0 auto;">
+                        <button class="filter-button active" data-filter="all" tabindex="0">Current Events</button>
+                        <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0">
                             <div class="event-image">
-                              <img src="/placeholder.svg?height=110&width=200" alt="Tech Summit 2025" loading="lazy">
+                                <img src="/placeholder.svg?height=110&width=200" alt="Tech Summit 2025" loading="lazy">
                             </div>
                             <div class="event-content">
-                              <span class="event-type">Conference</span>
-                              <div class="event-date">April 26, 2025</div>
-                              <h3 class="event-title">Tech Summit 2025</h3>
-                              <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
-                              <div class="event-countdown">
-                                <span class="countdown-label">Happening Soon</span>
-                              </div>
-                              <div class="event-footer">
-                                <div class="event-location">📍 Kampala</div>
-                                <span class="register-button">Details</span>
-                              </div>
+                                <span class="event-type">Conference</span>
+                                <div class="event-date">April 17, 2025</div>
+                                <h3 class="event-title">Tech Summit 2025</h3>
+                                <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
+                                <div class="event-countdown">
+                                    <span class="countdown-label">Happening Now</span>
+                                </div>
+                                <div class="event-footer">
+                                    <div class="event-location">📍 Kampala</div>
+                                    <span class="register-button">Details</span>
+                                </div>
                             </div>
-                          </a>
+                        </a>
                     </div>
-                  </div>
-              </div>
-              
+
+                    <!-- Upcoming Events -->
+                    <div class="upcoming-events-section">
+                        <button class="filter-button active" data-filter="all" tabindex="0">Upcoming Events</button>
+                        <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0">
+                            <div class="event-image">
+                                <img src="/placeholder.svg?height=110&width=200" alt="Tech Summit 2025" loading="lazy">
+                            </div>
+                            <div class="event-content">
+                                <span class="event-type">Conference</span>
+                                <div class="event-date">April 26, 2025</div>
+                                <h3 class="event-title">Tech Summit 2025</h3>
+                                <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
+                                <div class="event-countdown">
+                                    <span class="countdown-label">Happening Soon</span>
+                                </div>
+                                <div class="event-footer">
+                                    <div class="event-location">📍 Kampala</div>
+                                    <span class="register-button">Details</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Right Column: Other Events -->
             <div class="other-events-column">
                 <h2 class="section-title">New and Upcoming Events</h2>
                 <p class="events-subtitle">Join us for conferences, workshops, and webinars designed to advance oncology care and research</p>
-                <div class="event-filters auto-cycling">
+                <div class="event-filters">
                     <button class="filter-button active" data-filter="all" tabindex="0">All Events</button>
                     <button class="filter-button" data-filter="conference" tabindex="0">Conferences</button>
                     <button class="filter-button" data-filter="workshop" tabindex="0">Workshops</button>
@@ -2419,7 +2395,6 @@ footer::before {
                     <div class="events-carousel">
                         <!-- Slide 1 -->
                         <div class="carousel-slide active-slide" data-has-content="true">
-                            <!-- Featured Event -->
                             <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu" tabindex="0">
                                 <span class="featured-badge">Featured</span>
                                 <div class="event-image">
@@ -2440,7 +2415,6 @@ footer::before {
                                     </div>
                                 </div>
                             </a>
-                            <!-- New Future Event -->
                             <a href="events.html#oncology-symposium-2025" class="event-card" data-type="conference" data-event-id="oncology-symposium-2025" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Oncology Symposium 2025" loading="lazy">
@@ -2460,7 +2434,6 @@ footer::before {
                                     </div>
                                 </div>
                             </a>
-                            <!-- Regular Event -->
                             <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Annual Oncology Conference 2024" loading="lazy">
@@ -2480,7 +2453,6 @@ footer::before {
                                     </div>
                                 </div>
                             </a>
-                            <!-- Workshop Event -->
                             <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Immunotherapy Workshop" loading="lazy">
@@ -2503,7 +2475,6 @@ footer::before {
                         </div>
                         <!-- Slide 2 -->
                         <div class="carousel-slide" data-has-content="true">
-                            <!-- Webinar Event -->
                             <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Digital Pathology Webinar" loading="lazy">
@@ -2523,7 +2494,6 @@ footer::before {
                                     </div>
                                 </div>
                             </a>
-                            <!-- Workshop Event -->
                             <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Surgical Oncology Techniques" loading="lazy">
@@ -2543,7 +2513,6 @@ footer::before {
                                     </div>
                                 </div>
                             </a>
-                            <!-- Webinar Event -->
                             <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates" tabindex="0">
                                 <div class="event-image">
                                     <img src="/placeholder.svg?height=110&width=200" alt="Cancer Research Updates" loading="lazy">
@@ -2570,15 +2539,10 @@ footer::before {
                         <div class="carousel-position-indicator-progress"></div>
                     </div>
                 </div>
-                <div class="view-all-events">
-                    <a href="events.html" class="view-all-button">
-                        View All Events
-                        <span>→</span>
-                    </a>
-                </div>
             </div>
         </div>
-        <!-- Past Events Highlight - Centered Below -->
+
+        <!-- Past Events Highlight -->
         <div class="past-events-highlight centered">
             <h3 class="highlight-title">Past Event Highlights</h3>
             <div class="highlight-content">
@@ -2591,8 +2555,280 @@ footer::before {
                 </div>
             </div>
         </div>
+
+        <!-- View All Events - Moved to Bottom of Past Events -->
+        <div class="view-all-events">
+            <a href="events.html" class="view-all-button">
+                View All Events
+                <span>→</span>
+            </a>
+        </div>
     </div>
-  </section>
+</section>
+
+<style>
+    /* Events Section Styling */
+    .events-section {
+        padding: 40px 20px;
+        background-color: #f9fafb;
+    }
+
+    .events-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .events-wrapper {
+        display: flex;
+        gap: 30px;
+    }
+
+    /* Column Styles */
+    .upcoming-events-column,
+    .other-events-column {
+        flex: 1; /* Equal flex to ensure same size */
+        min-width: 0;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    .events-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    /* Events Row Layout */
+    .events-row {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .current-events-section,
+    .upcoming-events-section {
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Event Card Styling */
+    .event-card {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #1f2937;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .current-event-card {
+        width: 250px;
+    }
+
+    .event-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .event-content {
+        padding: 10px;
+    }
+
+    .event-type {
+        font-size: 0.75rem;
+        color: #10b981;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .event-date {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 5px;
+    }
+
+    .event-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin: 5px 0;
+    }
+
+    .event-description {
+        font-size: 0.875rem;
+        color: #4b5563;
+        margin-bottom: 10px;
+    }
+
+    .event-countdown {
+        font-size: 0.75rem;
+        color: #ef4444;
+        margin-bottom: 10px;
+    }
+
+    .event-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+    }
+
+    .event-location {
+        color: #6b7280;
+    }
+
+    .register-button {
+        color: #10b981;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .register-button:hover {
+        text-decoration: underline;
+    }
+
+    /* Carousel and Filters */
+    .event-filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .filter-button {
+        padding: 6px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        background-color: #fff;
+        cursor: pointer;
+        font-size: 0.875rem;
+    }
+
+    .filter-button.active {
+        background-color: #10b981;
+        color: #fff;
+        border-color: #10b981;
+    }
+
+    .events-carousel-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .events-carousel {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .carousel-slide {
+        display: flex;
+        gap: 20px;
+        min-width: 100%;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #ef4444;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+    }
+
+    /* Past Events Highlight */
+    .past-events-highlight {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .highlight-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 15px;
+    }
+
+    .highlight-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .highlight-image img {
+        border-radius: 8px;
+    }
+
+    .highlight-text {
+        max-width: 400px;
+    }
+
+    .highlight-link {
+        color: #10b981;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .highlight-link:hover {
+        text-decoration: underline;
+    }
+
+    /* View All Events */
+    .view-all-events {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .view-all-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        background-color: #10b981;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .view-all-button:hover {
+        background-color: #059669;
+    }
+
+    .view-all-button span {
+        margin-left: 5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .events-wrapper {
+            flex-direction: column;
+        }
+
+        .events-row {
+            flex-direction: column;
+        }
+
+        .event-card {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+        }
+
+        .highlight-content {
+            flex-direction: column;
+        }
+    }
+</style>
 
 <!-- Tabs Section -->
 <section id="tabs" class="tabs-section">
