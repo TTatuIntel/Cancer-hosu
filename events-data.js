@@ -38,7 +38,7 @@ const eventsData = {
             id: "uci-pcau-hosu",
             type: "conference",
             status: "open",
-            image: "/placeholder.svg?height=160&width=280",
+            image: "img/airtel.png",
             imageAlt: "UCI – PCAU – HOSU Conference",
             countdown: "In 1 year, 5 months",
             date: "September 10-12, 2025",
