@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration | HOSU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reuse your existing CSS variables */
+        :root {
+            --primary-color: #e63946;
+            --primary-light: #f8d7da;
+            --primary-dark: #c81d2a;
+            --secondary-color: #0d4593;
+            --secondary-light: #e6f0ff;
+            --secondary-dark: #072a5e;
+            --text-color: #001848;
+            --text-light: #4a5568;
+            --background-light: #f1faee;
+            --background-dark: #1d3557;
+            --white: #ffffff;
+            --accent-color: #a8dadc;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+            --gray-500: #a0aec0;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .registration-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .registration-header h1 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .registration-header p {
+            color: var(--text-light);
+        }
+
+        .registration-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-info {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .event-image {
+            width: 200px;
+            height: 120px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-details h2 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .event-type {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .registration-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px var(--secondary-light);
+        }
+
+        .submit-btn {
+            grid-column: span 2;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Payment Section Styles */
+.payment-section-label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.payment-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.payment-card {
+    position: relative;
+}
+
+.payment-input {
+    position: absolute;
+    opacity: 0;
+}
+
+.payment-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border: 2px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--white);
+    text-align: center;
+}
+
+.payment-input:checked + .payment-label {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.payment-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary-light);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.payment-input:checked + .payment-label .payment-icon {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.payment-title {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.payment-subtext {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .payment-options-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        .confirmation {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .confirmation h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .confirmation p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--secondary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .registration-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .submit-btn {
+                grid-column: span 1;
+            }
+            
+            .event-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .event-image {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+        }
+    </style>
+</head>
+<body>
+  
+
+    <div class="container">
+        <div class="registration-header">
+            <h1>Event Registration</h1>
+            <p>Complete the form below to register for this event</p>
+        </div>
+
+        <div class="registration-card" id="registrationForm">
+            <div class="event-info">
+                <div class="event-image">
+                    <img id="eventImage" src="" alt="Event Image">
+                </div>
+                <div class="event-details">
+                    <h2 id="eventTitle">Event Title</h2>
+                    <div class="event-meta">
+                        <span id="eventDate">Date</span>
+                        <span id="eventLocation">Location</span>
+                    </div>
+                    <span class="event-type" id="eventType">Conference</span>
+                </div>
+            </div>
+
+            <form class="registration-form" id="registerForm">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="institution">Institution/Organization</label>
+                    <input type="text" id="institution" name="institution" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position/Title</label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="specialRequirements">Special Requirements (Dietary, Accessibility, etc.)</label>
+                    <textarea id="specialRequirements" name="specialRequirements" rows="3"></textarea>
+                </div>
+               <div class="form-group full-width">
+    <label class="payment-section-label">Payment Method</label>
+    <div class="payment-options-grid">
+        <!-- Mobile Money Option -->
+        <div class="payment-card">
+            <input type="radio" id="mobileMoney" name="paymentMethod" value="mobileMoney" checked class="payment-input">
+            <label for="mobileMoney" class="payment-label">
+                <div class="payment-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M5 8h14a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V9a1 1 0 011-1zm1 2v8h12v-8H6zm6 5a2 2 0 110-4 2 2 0 010 4z"/>
+                    </svg>
+                </div>
+                <div class="payment-details">
+                    <span class="payment-title">Mobile Money</span>
+                    <span class="payment-subtext">MTN, Airtel, Africell</span>
+                </div>
+            </label>
+        </div>
+
+        <!-- Credit Card Option -->
+        <div class="payment-card">
+            <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" class="payment-input">
+            <label for="creditCard" class="payment-label">
+                <div class="payment-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 3h18a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm17 8H4v8h16v-8zm0-2V5H4v4h16zm-6 6h4v2h-4v-2z"/>
+                    </svg>
+                </div>
+                <div class="payment-details">
+                    <span class="payment-title">Credit Card</span>
+                    <span class="payment-subtext">Visa, Mastercard</span>
+                </div>
+            </label>
+        </div>
+
+        <!-- Bank Transfer Option -->
+        <div class="payment-card">
+            <input type="radio" id="bankTransfer" name="paymentMethod" value="bankTransfer" class="payment-input">
+            <label for="bankTransfer" class="payment-label">
+                <div class="payment-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2 20h20v2H2v-2zm2-8h2v7H4v-7zm5 0h2v7H9v-7zm5 0h2v7h-2v-7zm5 0h2v7h-2v-7zM2 7l10-5 10 5v4H2V7zm10 1a1 1 0 100-2 1 1 0 000 2z"/>
+                    </svg>
+                </div>
+                <div class="payment-details">
+                    <span class="payment-title">Bank Transfer</span>
+                    <span class="payment-subtext">Stanbic, Centenary, etc.</span>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+                <button type="submit" class="submit-btn">Complete Registration</button>
+            </form>
+        </div>
+
+        <div class="registration-card confirmation" id="confirmationMessage">
+            <h2>Thank You for Registering!</h2>
+            <p>Your registration for <strong id="confirmedEventTitle">Event Name</strong> has been received. We've sent a confirmation email with further details.</p>
+            <p>Payment instructions will be sent to your email shortly.</p>
+            <a href="events.html" class="btn">Back to Events</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get event ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('eventId');
+            
+            // In a real implementation, you would fetch event details from an API
+            // For this example, we'll simulate fetching event data
+            fetchEventDetails(eventId);
+            
+            // Handle form submission
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real implementation, you would send the form data to your server
+                // For this example, we'll just show the confirmation message
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('confirmationMessage').style.display = 'block';
+                
+                // Scroll to confirmation
+                document.getElementById('confirmationMessage').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        function fetchEventDetails(eventId) {
+            // This is a simulation - in a real app, you would fetch from your API
+            console.log("Fetching details for event:", eventId);
+            
+            // Sample event data - replace with actual API call
+            const sampleEvents = {
+                "tech-summit-2025": {
+                    title: "Tech Summit 2025",
+                    date: "April 17, 2025",
+                    location: "Kampala",
+                    type: "Conference",
+                    image: "img/IMG_7891.jpg"
+                },
+                "uci-pcau-hosu": {
+                    title: "UCI – PCAU – HOSU Conference",
+                    date: "Sept 10-12, 2025",
+                    location: "Kampala",
+                    type: "Conference",
+                    image: "img/IMG_8005.jpg"
+                },
+                "oncology-symposium-2025": {
+                    title: "Oncology Symposium 2025",
+                    date: "Nov 20-22, 2025",
+                    location: "Kampala",
+                    type: "Conference",
+                    image: "img/IMG_8022.jpg"
+                },
+                "annual-oncology-2024": {
+                    title: "Annual Oncology Conference",
+                    date: "Sept 15-18, 2024",
+                    location: "London",
+                    type: "Conference",
+                    image: "img/IMG_8316.jpg"
+                },
+                "immunotherapy-workshop": {
+                    title: "Immunotherapy Workshop",
+                    date: "July 8-9, 2024",
+                    location: "Boston",
+                    type: "Workshop",
+                    image: "img/IMG_8317.jpg"
+                }
+            };
+            
+            const event = sampleEvents[eventId] || {
+                title: "Selected Event",
+                date: "Date TBD",
+                location: "Location TBD",
+                type: "Event",
+                image: "img/IMG_7825.webp"
+            };
+            
+            // Update the page with event details
+            document.getElementById('eventTitle').textContent = event.title;
+            document.getElementById('eventDate').textContent = event.date;
+            document.getElementById('eventLocation').textContent = event.location;
+            document.getElementById('eventType').textContent = event.type;
+            document.getElementById('eventImage').src = event.image;
+            document.getElementById('eventImage').alt = event.title;
+            document.getElementById('confirmedEventTitle').textContent = event.title;
+        }
+    </script>
+</body>
+</html>

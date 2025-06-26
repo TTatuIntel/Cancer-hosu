@@ -1453,6 +1453,48 @@
 
     <script>
 
+function openRegistrationForm(eventId) {
+    // You can customize this form as needed
+    const formHtml = `
+        <div class="registration-modal">
+            <div class="modal-content">
+                <h2>Register for Event</h2>
+                <form id="event-registration-form">
+                    <input type="hidden" name="eventId" value="${eventId}">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <button type="submit">Submit Registration</button>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Create and show the modal
+    const modal = document.createElement('div');
+    modal.innerHTML = formHtml;
+    document.body.appendChild(modal);
+    
+    // Handle form submission
+    modal.querySelector('#event-registration-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Handle form submission here (AJAX call, etc.)
+        alert('Registration submitted!');
+        document.body.removeChild(modal);
+    });
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+}
 // Function to create an event card
 function createEventCard(event, isCarousel = false) {
     const featuredBadge = event.featured ? '<div class="featured-badge">Featured</div>' : '';
@@ -1462,11 +1504,16 @@ function createEventCard(event, isCarousel = false) {
     const countdownTag = event.countdown 
         ? `<span class="event-countdown">${event.countdown}</span>` 
         : '';
-    const actionButton = event.status !== 'past' 
-        ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-           <a href="#register" class="register-button">Register</a>`
-        : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
 
+        const actionButton = event.status !== 'past' 
+    ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+       <a href="register.html?eventId=${event.id}" class="register-button">Register</a>`
+    : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${
+        event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
+    // const actionButton = event.status !== 'past' 
+    //     ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
+    //        <button id="register-button" class="register-button">Register</button>`
+    //     : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
     // Define card dimensions to match other sections
     const cardWidth = '280px'; // Match --card-width from CSS
     const cardHeight = '360px'; // Match --card-height from CSS
