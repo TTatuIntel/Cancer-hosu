@@ -2991,6 +2991,74 @@ footer::before {
 </div>
 </section>
 
+<!-- Radiation Oncology Section -->
+<section id="radiation-oncology" class="tab-content radiation-oncology-section">
+<div class="surgical-oncology-container">
+    <h2 class="section-title">Radiation Oncology</h2>
+    <div class="surgical-oncology-intro">
+        <p>Radiation Oncology is a medical specialty that uses high-energy radiation to treat cancer. Radiation oncologists employ precise techniques to target and destroy cancer cells while sparing healthy tissue. This treatment can be used alone or in combination with surgery and medical oncology to improve outcomes for patients with various types of cancer.</p>
+    </div>
+    
+    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Types of Radiation Therapy</h3>
+    <div class="role-cards">
+        <div class="role-card">
+            <h3>External Beam Radiation</h3>
+            <p>Delivers radiation from a machine outside the body, targeting the tumor with high precision</p>
+        </div>
+        <div class="role-card">
+            <h3>Brachytherapy</h3>
+            <p>Involves placing radioactive sources inside or near the tumor to deliver a high dose of radiation directly</p>
+        </div>
+        <div class="role-card">
+            <h3>Stereotactic Radiosurgery</h3>
+            <p>High-dose radiation delivered in a single or few sessions to treat small tumors with extreme precision</p>
+        </div>
+        <div class="role-card">
+            <h3>Proton Therapy</h3>
+            <p>Uses protons instead of X-rays to deliver radiation, allowing for precise targeting with less damage to surrounding tissues</p>
+        </div>
+        <div class="role-card">
+            <h3>Image-Guided Radiation Therapy</h3>
+            <p>Uses imaging during treatment to improve the precision and accuracy of radiation delivery</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Pediatric Oncology Section -->
+<section id="pediatric-oncology" class="tab-content pediatric-oncology-section">
+<div class="surgical-oncology-container">
+    <h2 class="section-title">Pediatric Oncology</h2>
+    <div class="surgical-oncology-intro">
+        <p>Pediatric Oncology focuses on the diagnosis and treatment of cancers in children and adolescents. Pediatric oncologists specialize in managing cancers such as leukemia, brain tumors, and sarcomas, using a combination of surgery, chemotherapy, radiation, and other therapies tailored to young patients to maximize outcomes and minimize long-term effects.</p>
+    </div>
+    
+    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Key Aspects of Pediatric Oncology</h3>
+    <div class="role-cards">
+        <div class="role-card">
+            <h3>Leukemia Treatment</h3>
+            <p>Uses chemotherapy and sometimes stem cell transplants to treat cancers of the blood and bone marrow</p>
+        </div>
+        <div class="role-card">
+            <h3>Brain Tumor Management</h3>
+            <p>Combines surgery, radiation, and chemotherapy to address tumors in the brain and spinal cord</p>
+        </div>
+        <div class="role-card">
+            <h3>Sarcoma Care</h3>
+            <p>Focuses on treating cancers of the bone and soft tissues with a multidisciplinary approach</p>
+        </div>
+        <div class="role-card">
+            <h3>Supportive Care</h3>
+            <p>Provides psychological and social support to children and families to improve quality of life during treatment</p>
+        </div>
+        <div class="role-card">
+            <h3>Long-Term Follow-Up</h3>
+            <p>Monitors survivors for late effects of treatment to ensure healthy development into adulthood</p>
+        </div>
+    </div>
+</div>
+</section>
+
 <!-- CTA Section -->
 <section class="cta-section">
 <div class="container">
@@ -2998,11 +3066,200 @@ footer::before {
         <h2 class="section-title">Make a Difference</h2>
         <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
         <div class="cta-buttons">
-            <a href="contact.html" id="donate" class="cta-button">Support Us</a>
+            <button id="donate-button" class="cta-button">Support Us</button>
+        </div>
+    </div>
+</div>
+
+<!-- Donation Overlay -->
+<div id="donation-overlay" class="overlay">
+    <div class="overlay-content">
+        <button id="close-overlay" class="close-button">×</button>
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <h2>Support HOSU's Mission</h2>
+        <p>Your donation helps transform cancer care in Uganda.</p>
+        <div class="donation-form">
+            <label for="donation-amount">Donation Amount (UGX)</label>
+            <input type="number" id="donation-amount" placeholder="Enter amount" min="1000" step="1000">
+            <div class="donation-options">
+                <button class="amount-option" data-amount="5000">5,000</button>
+                <button class="amount-option" data-amount="10000">10,000</button>
+                <button class="amount-option" data-amount="25000">25,000</button>
+                <button class="amount-option" data-amount="50000">50,000</button>
+            </div>
+            <label for="donor-name">Your Name (Optional)</label>
+            <input type="text" id="donor-name" placeholder="Enter your name">
+            <label for="donor-email">Your Email (Optional)</label>
+            <input type="email" id="donor-email" placeholder="Enter your email">
+            <button id="submit-donation" class="submit-button">Donate Now</button>
         </div>
     </div>
 </div>
 </section>
+
+<style>
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.logo {
+    margin-bottom: 1rem;
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+.close-button:hover {
+    color: #c0392b;
+}
+
+.donation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.donation-form label {
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: left;
+}
+
+.donation-form input {
+    padding: 0.75rem;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.donation-form input:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.donation-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.amount-option {
+    padding: 0.5rem 1rem;
+    border: 2px solid #3498db;
+    background: #ecf0f1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.amount-option:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+.submit-button {
+    padding: 0.75rem;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.submit-button:hover {
+    background: #2980b9;
+}
+
+.cta-button {
+    padding: 0.75rem 1.5rem;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #2980b9;
+}
+</style>
+
+<script>
+document.getElementById('donate-button').addEventListener('click', () => {
+    document.getElementById('donation-overlay').style.display = 'flex';
+});
+
+document.getElementById('close-overlay').addEventListener('click', () => {
+    document.getElementById('donation-overlay').style.display = 'none';
+});
+
+document.querySelectorAll('.amount-option').forEach(button => {
+    button.addEventListener('click', () => {
+        document.getElementById('donation-amount').value = button.getAttribute('data-amount');
+    });
+});
+
+document.getElementById('submit-donation').addEventListener('click', () => {
+    const amount = document.getElementById('donation-amount').value;
+    const name = document.getElementById('donor-name').value;
+    const email = document.getElementById('donor-email').value;
+    
+    if (amount && amount >= 1000) {
+        alert(`Thank you${name ? ", " + name : ""}! Your donation of UGX ${amount} to HOSU has been submitted.`);
+        document.getElementById('donation-overlay').style.display = 'none';
+        document.getElementById('donation-amount').value = '';
+        document.getElementById('donor-name').value = '';
+        document.getElementById('donor-email').value = '';
+    } else {
+        alert('Please enter a valid donation amount (minimum UGX 1,000).');
+    }
+});
+</script>
 
 <!-- Footer -->
 <footer>
