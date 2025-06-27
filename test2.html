@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - Hematology & Oncology Society of Uganda</title>
+<style>
+    /* CSS for blog page - ensuring uniform colors with home page */
+    :root {
+        --primary-color: #e63946;
+        --primary-light: #f8d7da;
+        --primary-dark: #c81d2a;
+        --secondary-color: #0d4593;
+        --secondary-light: #e6f0ff;
+        --secondary-dark: #072a5e;
+        --text-color: #001848;
+        --text-light: #4a5568;
+        --background-light: #f1faee;
+        --background-dark: #1d3557;
+        --white: #ffffff;
+        --accent-color: #a8dadc;
+        --gray-100: #f7fafc;
+        --gray-200: #edf2f7;
+        --gray-300: #e2e8f0;
+        --gray-400: #cbd5e0;
+        --gray-500: #a0aec0;
+        --transition: all 0.3s ease;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --navbar-height: 70px;
+        --border-radius: 8px;
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        --content-width: 1200px;
+        --section-width: 90%;
+        --section-max-width: 1000px;
+        --section-padding: 3rem;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--white);
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .container {
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin: 0 auto;
+        padding: 0 var(--spacing-sm);
+    }
+
+    section {
+        padding: var(--section-padding) 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Utility Classes */
+    .text-center { text-align: center; }
+    .text-primary { color: var(--primary-color); }
+    .text-secondary { color: var(--secondary-color); }
+    .bg-primary { background-color: var(--primary-color); }
+    .bg-secondary { background-color: var(--secondary-color); }
+    .bg-light { background-color: var(--background-light); }
+    .shadow { box-shadow: var(--shadow-md); }
+    .rounded { border-radius: var(--border-radius); }
+    .fade-in { animation: fadeIn 0.5s ease-in-out; }
+    .hidden { display: none; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Navbar */
+    .navbar {
+        background: transparent;
+        backdrop-filter: blur(15px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        transition: var(--transition);
+        height: var(--navbar-height);
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        padding: 0 var(--spacing-sm);
+    }
+
+    .logo img {
+        width: 180px;
+        height: 65px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        font-weight: 500;
+        transition: var(--transition);
+        position: relative;
+        padding: 0.5rem 0.25rem;
+    }
+
+    .nav-links a:not(.cta-button)::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:not(.cta-button):hover::after {
+        width: 100%;
+    }
+
+    .nav-links a:not(.cta-button):hover {
+        color: var(--primary-color);
+    }
+
+    .nav-links .cta-button {
+        background: var(--primary-color);
+        color: var(--white);
+        padding: 0.5rem 1.25rem;
+        border-radius: 30px;
+        min-height: 40px;
+        min-width: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        border: none;
+    }
+
+    .nav-links .cta-button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        background-color: var(--gray-200);
+    }
+
+    /* Blog Header */
+    .blog-header {
+        padding-top: calc(var(--navbar-height) + 2rem);
+        background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+
+    .blog-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-header p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+    }
+
+    /* Blog Layout */
+    .blog-layout {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .blog-main {
+        flex: 1;
+    }
+
+    .blog-sidebar {
+        width: 300px;
+    }
+
+    /* Featured Post */
+    .featured-post {
+        margin-bottom: 3rem;
+        background: var(--white);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+    }
+
+    .featured-image {
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .featured-post:hover .featured-image img {
+        transform: scale(1.05);
+    }
+
+    .featured-content {
+        padding: 2rem;
+    }
+
+    .featured-tag {
+        display: inline-block;
+        background: var(--primary-light);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    .featured-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .featured-excerpt {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .featured-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    .featured-author {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .featured-author img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        font-weight: 600;
+        transition: var(--transition);
+        margin-top: 1rem;
+    }
+
+    .read-more:hover {
+        gap: 0.8rem;
+    }
+
+    /* Blog Posts Grid */
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .blog-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .blog-image {
+        height: 0;
+        padding-bottom: 56.25%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .blog-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .blog-card:hover .blog-image img {
+        transform: scale(1.05);
+    }
+
+    .blog-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blog-category {
+        color: var(--primary-color);
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .blog-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+    }
+
+    .blog-card p {
+        margin-bottom: 1.25rem;
+        color: var(--text-light);
+        flex-grow: 1;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .blog-meta-author {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .blog-meta-author img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .blog-meta-date {
+        font-style: italic;
+    }
+
+    /* Sidebar */
+    .sidebar-widget {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .widget-title {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--gray-200);
+        position: relative;
+    }
+
+    .widget-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--primary-color);
+    }
+
+    .search-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+        border-radius: var(--border-radius);
+        font-size: 0.95rem;
+    }
+
+    .search-button {
+        background: var(--secondary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 0 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .search-button:hover {
+        background: var(--secondary-dark);
+    }
+
+    .categories-list {
+        list-style: none;
+    }
+
+    .categories-list li {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .categories-list li:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .categories-list a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-light);
+        transition: var(--transition);
+    }
+
+    .categories-list a:hover {
+        color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    .categories-list .count {
+        background: var(--gray-200);
+        color: var(--text-light);
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        transition: var(--transition);
+    }
+
+    .categories-list a:hover .count {
+        background: var(--primary-light);
+        color: var(--primary-color);
+    }
+
+    .recent-post {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .recent-post:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .recent-post-image {
+        width: 70px;
+        height: 70px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .recent-post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .recent-post-content h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .recent-post-content .date {
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        background: var(--gray-200);
+        color: var(--text-light);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        transition: var(--transition);
+    }
+
+    .tag:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    /* Newsletter */
+    .newsletter-section {
+        background-color: var(--secondary-light);
+        padding: 3rem 0;
+        text-align: center;
+    }
+
+    .newsletter-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .newsletter-title {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .newsletter-description {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .newsletter-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+        border-radius: 30px;
+        font-size: 0.95rem;
+    }
+
+    .newsletter-button {
+        background: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 30px;
+        padding: 0 1.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+    }
+
+    .newsletter-button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+        background: var(--background-dark);
+        color: var(--white);
+        padding: var(--section-padding) 0 var(--spacing-md);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin: 0 auto;
+    }
+
+    .footer-section h4 {
+        color: var(--accent-color);
+        font-size: 1.2rem;
+        margin-bottom: 1.25rem;
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-section h4::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: var(--accent-color);
+    }
+
+    .footer-section ul {
+        list-style: none;
+    }
+
+    .footer-section li {
+        margin-bottom: 0.75rem;
+    }
+
+    .footer-section a {
+        color: var(--gray-400);
+        transition: var(--transition);
+        display: inline-block;
+        padding: 0.25rem 0;
+    }
+
+    .footer-section a:hover {
+        color: var(--accent-color);
+        transform: translateX(3px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        transition: var(--transition);
+        color: var(--white);
+    }
+
+    .social-links a:hover {
+        background: var(--accent-color);
+        transform: translateY(-2px);
+        color: var(--background-dark);
+    }
+
+    .copyright {
+        text-align: center;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+        width: var(--section-width);
+        max-width: var(--section-max-width);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+        z-index: 999;
+        box-shadow: var(--shadow-md);
+        font-size: 1.2rem;
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .back-to-top:hover {
+        background: var(--primary-dark);
+    }
+
+    .partner-logo:hover img {
+        transform: scale(1.5);
+        filter: brightness(1.5);
+    }
+
+    /* New Post Form */
+    .post-form-container {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-bottom: 3rem;
+        box-shadow: var(--shadow-md);
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(13, 69, 147, 0.1);
+    }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .form-submit {
+        background: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 30px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: block;
+        margin: 0 auto;
+    }
+
+    .form-submit:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-top: 3rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .comments-title {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--gray-200);
+    }
+
+    .comment {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .comment:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .comment-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .comment-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .comment-content {
+        flex: 1;
+    }
+
+    .comment-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: var(--secondary-color);
+    }
+
+    .comment-date {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .comment-text {
+        color: var(--text-color);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+    }
+
+    .comment-reply {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .comment-reply:hover {
+        color: var(--primary-dark);
+    }
+
+    .comment-form {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--gray-200);
+    }
+
+    .reply-form {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--gray-100);
+        border-radius: var(--border-radius);
+        display: none;
+    }
+
+    .reply-form.active {
+        display: block;
+    }
+
+    /* Media Queries */
+    @media (max-width: 1024px) {
+        .blog-layout {
+            flex-direction: column;
+        }
+
+        .blog-sidebar {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar-container {
+            width: 95%;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 0;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-links.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-links a {
+            font-size: 1rem;
+            padding: 0.75rem 0;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .nav-links a:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .blog-header {
+            padding-top: calc(var(--navbar-height) + 2rem);
+            padding-bottom: 2rem;
+        }
+
+        .blog-header h1 {
+            font-size: 2rem;
+        }
+
+        .featured-image {
+            height: 250px;
+        }
+
+        .featured-content {
+            padding: 1.5rem;
+        }
+
+        .featured-title {
+            font-size: 1.5rem;
+        }
+
+        .blog-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .newsletter-form {
+            flex-direction: column;
+        }
+
+        .newsletter-button {
+            width: 100%;
+            padding: 0.75rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .featured-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .pagination {
+            gap: 0.25rem;
+        }
+
+        .pagination-item, .pagination-arrow {
+            width: 35px;
+            height: 35px;
+            font-size: 0.9rem;
+        }
+
+        .comment {
+            flex-direction: column;
+        }
+
+        .comment-avatar {
+            margin-bottom: 0.5rem;
+        }
+        /* File upload styles */
+    .file-upload {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    
+    .file-upload-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
+    .file-upload-label {
+        display: block;
+        padding: 0.75rem 1rem;
+        border: 1px dashed var(--gray-300);
+        border-radius: var(--border-radius);
+        text-align: center;
+        transition: var(--transition);
+    }
+    
+    .file-upload-label:hover {
+        border-color: var(--secondary-color);
+        background: var(--secondary-light);
+    }
+    
+    .file-upload-preview {
+        margin-top: 1rem;
+        display: none;
+    }
+    
+    .file-upload-preview img {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: var(--border-radius);
+    }
+    
+    /* Loading spinner */
+    .spinner {
+        display: none;
+        width: 40px;
+        height: 40px;
+        margin: 20px auto;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    }
+    .post-comments {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .comments-title {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .comment-form {
+            margin-top: 1.5rem;
+        }
+        
+        .view-comments {
+            color: var(--primary-color);
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+    /* Comment toggle */
+    .comment-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 1rem;
+        user-select: none;
+    }
+
+    .comment-toggle::after {
+        content: '▼';
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+
+    .comment-toggle.active::after {
+        transform: rotate(180deg);
+    }
+
+    .comment-form-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .comment-form-container.active {
+        max-height: 500px;
+    }
+    .featured-date, .blog-meta-date {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.featured-date {
+    margin-left: auto; /* For featured posts, push date to the right */
+}
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="logo">
+            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>           
+            <a href="events.html">Events</a>
+            <a href="research.html">Research</a> 
+            <a href="membership.html">Membership</a>           
+            <a href="about.html">About</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="cta-button">Member Portal</a>
+        </div>
+        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+    </div>
+</nav>
+
+<!-- Blog Header -->
+<header class="blog-header">
+    <div class="container">
+        <h1>HOSU Blog</h1>
+        <p>Latest insights, research updates, and stories from the Hematology & Oncology Society of Uganda</p>
+    </div>
+</header>
+
+<!-- Blog Content -->
+<section class="blog-content">
+    <div class="container">
+        <!-- New Post Form -->
+        <div id="new-post-form" class="post-form-container hidden">
+            <h2 class="form-title">Create New Blog Post</h2>
+            <form id="blog-post-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="post-title" class="form-label">Title</label>
+                    <input type="text" id="post-title" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-category" class="form-label">Category</label>
+                    <select id="post-category" class="form-control" required>
+                        <option value="">Select a category</option>
+                        <option value="Research">Research</option>
+                        <option value="Patient Care">Patient Care</option>
+                        <option value="Treatment">Treatment</option>
+                        <option value="Education">Education</option>
+                        <option value="Community">Community</option>
+                        <option value="Events">Events</option>
+                    </select>
+                </div>
+                
+                <div class="form-group file-upload">
+                    <label class="form-label">Featured Image</label>
+                    <div class="file-upload-label" id="featured-image-label">
+                        <span>Click to upload image or drag and drop</span>
+                        <input type="file" id="post-image" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div class="file-upload-preview" id="featured-image-preview"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-content" class="form-label">Content</label>
+                    <textarea id="post-content" class="form-control" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="author-name" class="form-label">Your Name</label>
+                    <input type="text" id="author-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group file-upload">
+                    <label class="form-label">Your Avatar</label>
+                    <div class="file-upload-label" id="avatar-image-label">
+                        <span>Click to upload avatar or drag and drop</span>
+                        <input type="file" id="author-avatar" class="file-upload-input" accept="image/*">
+                    </div>
+                    <div class="file-upload-preview" id="avatar-image-preview"></div>
+                </div>
+                
+                <div class="spinner" id="form-spinner"></div>
+                
+                <button type="submit" class="form-submit">Publish Post</button>
+            </form>
+        </div>
+
+        <!-- Featured Post (now dynamically loaded) -->
+        <div id="featured-post-container"></div>
+
+        <!-- Full Article View (dynamically loaded) -->
+        <div id="full-article" class="hidden"></div>
+
+        <!-- New Post Button -->
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="new-post-button" class="form-submit">+ New Post</button>
+        </div>
+
+        <!-- Blog Posts Container -->
+        <div class="blog-layout">
+            <div class="blog-main">
+                <h2 class="section-title">Latest Articles</h2>
+                <div id="blog-posts-container" class="blog-grid"></div>
+            </div>
+            
+            <aside class="blog-sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Search</h3>
+                    <form class="search-form" id="blog-search">
+                        <input type="text" class="search-input" placeholder="Search by category...">
+                        <button type="submit" class="search-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="categories-list" id="categories-list">
+                        <!-- Dynamically loaded -->
+                    </ul>
+                </div>
+                
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Recent Posts</h3>
+                    <div class="recent-posts" id="recent-posts">
+                        <!-- Dynamically loaded -->
+                    </div>
+                </div>
+                
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Tags</h3>
+                    <div class="tag-cloud" id="tag-cloud">
+                        <!-- Dynamically loaded -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="newsletter-container">
+        <h2 class="newsletter-title">Subscribe to Our Newsletter</h2>
+        <p class="newsletter-description">Stay updated with the latest research, events, and cancer care advancements in Uganda</p>
+        <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-button">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About HOSU</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="research.html">Research</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <address>
+                HOSU Headquarters<br>
+                Kampala, Uganda<br>
+                <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                <a href="mailto:info@hosu.org">info@hosu.org</a>
+            </address>
+        </div>
+        <div class="footer-section">
+           <h4>Stay Connected</h4>
+                <p>Follow us on social media for the latest updates and announcements.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                        </svg>
+                    </a>
+                </div>
+            <h4>Designed By
+            </h4>
+            <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
+            </div>
+        </div>
+
+    </div>
+    <div class="copyright">
+        <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+    </div>
+</footer>
+
+<a href="#" class="back-to-top" aria-label="Back to top">↑</a>
+
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = navLinks.classList.contains('active');
+        navLinks.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        menuToggle.innerHTML = isExpanded ? '☰' : '✕';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+            navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.innerHTML = '☰';
+        }
+    });
+
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+        
+        // Navbar scroll effect with adaptive background
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('scrolled', window.pageYOffset > 50);
+        
+        // Adaptive background based on scroll position
+        if (window.pageYOffset > 50) {
+            navbar.style.backdropFilter = 'blur(15px)';
+            navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+        } else {
+            navbar.style.backdropFilter = 'blur(5px)';
+            navbar.style.background = 'transparent';
+        }
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 70;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Blog functionality
+    // Database simulation (in a real app, this would be server-side)
+    const database = {
+        posts: [
+            {
+                id: 1,
+                title: "Advances in Cancer Treatment: New Hope for Ugandan Patients",
+                category: "Research",
+                image: "img/IMG_7825.webp",
+                content: `<p>In recent years, Uganda has made significant strides in cancer treatment, offering new hope to patients across the country. The introduction of targeted therapies and immunotherapies has revolutionized how we approach previously difficult-to-treat cancers.</p>
+                <h3>Targeted Therapies</h3>
+                <p>Targeted cancer therapies are drugs or other substances that block the growth and spread of cancer by interfering with specific molecules ("molecular targets") that are involved in the growth, progression, and spread of cancer.</p>`,
+                author: "Dr. Nixon Niyonzima",
+                avatar: "img/IMG_7926.webp",
+                date: "June 15, 2024",
+                featured: true,
+                comments: [
+                    {
+                        id: 1,
+                        author: "Dr. Sarah Kintu",
+                        content: "This is a fantastic development for our patients. I've seen firsthand how these new therapies have improved outcomes at our clinic in Mbarara.",
+                        date: "June 16, 2024",
+                        replies: [
+                            {
+                                id: 2,
+                                author: "Dr. Nixon Niyonzima",
+                                content: "Thank you for your comment, Dr. Kintu. We're working on expanding access to these therapies to regional centers like yours.",
+                                date: "June 16, 2024"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        categories: [
+            { name: "Research", count: 12 },
+            { name: "Patient Care", count: 8 },
+            { name: "Treatment", count: 15 },
+            { name: "Education", count: 6 },
+            { name: "Community", count: 9 },
+            { name: "Events", count: 4 }
+        ],
+        tags: [
+            "Cancer", "Research", "Treatment", "Oncology", "Hematology", 
+            "Patients", "Healthcare", "Uganda", "Africa", "Education",
+            "Awareness", "Screening"
+        ],
+        subscribers: []
+    };
+
+    // DOM elements
+    const newPostForm = document.getElementById('new-post-form');
+    const newPostButton = document.getElementById('new-post-button');
+    const blogPostForm = document.getElementById('blog-post-form');
+    const featuredPostContainer = document.getElementById('featured-post-container');
+    const blogPostsContainer = document.getElementById('blog-posts-container');
+    const formSpinner = document.getElementById('form-spinner');
+    const blogSearch = document.getElementById('blog-search');
+    
+    // Initialize the blog
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Check if user is logged in
+        const isLoggedIn = await checkLoginStatus();
+        if (isLoggedIn) {
+            newPostButton.classList.remove('hidden');
+        }
+        
+        // Load blog content
+        await loadBlogContent();
+        
+        // Set up event listeners
+        setupEventListeners();
+    });
+    
+    async function checkLoginStatus() {
+        try {
+            const response = await fetch('api.php?action=check_login');
+            const result = await response.json();
+            return result.logged_in;
+        } catch (error) {
+            console.error('Error checking login status:', error);
+            return false;
+        }
+    }
+    
+    async function loadBlogContent() {
+        try {
+            // Fetch posts
+            const response = await fetch('api.php?action=get_posts');
+            const posts = await response.json();
+            
+            // Find featured post
+            const featuredPost = posts.find(post => post.featured);
+            if (featuredPost) {
+                renderPost(featuredPost, featuredPostContainer, true);
+            }
+            
+            // Render other posts
+            posts.filter(post => !post.featured).forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-card-container';
+                blogPostsContainer.appendChild(postElement);
+                renderPost(post, postElement, false);
+            });
+            
+            // Load categories
+            const categoriesResponse = await fetch('api.php?action=get_categories');
+            const categories = await categoriesResponse.json();
+            renderCategories(categories);
+            
+        } catch (error) {
+            console.error('Error loading blog content:', error);
+        }
+    }
+    
+    function renderPost(post, container, isFeatured) {
+            // Use post.formatted_date instead of post.date
+    const postDate = post.formatted_date || post.date || 'Date not available';
+        container.innerHTML = `
+            <article class="${isFeatured ? 'featured-post' : 'blog-card'}">
+                ${isFeatured ? `
+                    <div class="featured-image">
+                        <img src="${post.image}" alt="${post.title}" loading="lazy">
+                    </div>
+                ` : `
+                    <div class="blog-image">
+                        <img src="${post.image}" alt="${post.title}" loading="lazy">
+                    </div>
+                `}
+                
+                <div class="${isFeatured ? 'featured-content' : 'blog-content'}">
+                    ${isFeatured ? '<span class="featured-tag">Featured</span>' : `<span class="blog-category">${post.category}</span>`}
+                    <h3>${post.title}</h3>
+                    ${isFeatured ? `
+                        <p class="featured-excerpt">${post.content.substring(0, 200)}...</p>
+                    ` : `
+                        <p>${post.content.substring(0, 150)}...</p>
+                    `}
+                    
+                    <div class="${isFeatured ? 'featured-meta' : 'blog-meta'}">
+                        <div class="${isFeatured ? 'featured-author' : 'blog-meta-author'}">
+                            <img src="${post.avatar}" alt="${post.author}" loading="lazy">
+                            <span>${post.author}</span>
+                        </div>
+            <div class="${isFeatured ? 'featured-date' : 'blog-meta-date'}">
+                ${postDate}
+            </div>                  
+                    </div>
+                    
+                    <div class="post-comments">
+                        <div class="comment-toggle">Comments (${post.comment_count || 0})</div>
+                        
+                        <div class="comment-form-container">
+                            <!-- Display first 2 comments -->
+                            <div id="comments-${post.id}" class="comments-list">
+                                ${post.comments && post.comments.length > 0 ? 
+                                    post.comments.slice(0, 2).map(comment => `
+                                        <div class="comment">
+                                            <div class="comment-content">
+                                                <div class="comment-meta">
+                                                    <span class="comment-author">${comment.author}</span>
+                                            <span class="comment-date">
+                                                ${comment.formatted_date || 'Date not available'}
+                                                at ${comment.formatted_time || ''}
+                                            </span>
+                                                </div>
+                                                <p class="comment-text">${comment.content}</p>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p>No comments yet. Be the first to comment!</p>'
+                                }
+                            </div>
+                            
+                            <!-- Comment form -->
+                            <form class="comment-form" data-post-id="${post.id}">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your name" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Add a comment..." rows="2" required></textarea>
+                                </div>
+                                <button type="submit" class="form-submit" style="padding: 0.5rem 1rem;">Post Comment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+    
+    function renderCategories(categories) {
+        const categoriesList = document.getElementById('categories-list');
+        categoriesList.innerHTML = categories.map(category => `
+            <li>
+                <a href="#" data-category="${category.name}">
+                    ${category.name}
+                    <span class="count">${category.count}</span>
+                </a>
+            </li>
+        `).join('');
+    }
+    
+    function setupEventListeners() {
+        // Toggle new post form
+        newPostButton.addEventListener('click', function() {
+            newPostForm.classList.toggle('hidden');
+            this.textContent = newPostForm.classList.contains('hidden') ? 
+                '+ New Post' : 'Cancel';
+        });
+        
+        // Handle new post submission
+        blogPostForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            formSpinner.style.display = 'block';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'create_post');
+                formData.append('title', document.getElementById('post-title').value);
+                formData.append('content', document.getElementById('post-content').value);
+                formData.append('category', document.getElementById('post-category').value);
+                formData.append('author', document.getElementById('author-name').value);
+                
+                // Handle file uploads
+                const imageFile = document.getElementById('post-image').files[0];
+                if (imageFile) formData.append('image', imageFile);
+                
+                const avatarFile = document.getElementById('author-avatar').files[0];
+                if (avatarFile) formData.append('avatar', avatarFile);
+
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('API Response:', result);
+                
+                if (result.success) {
+                    // Reset form
+                    this.reset();
+                    document.getElementById('featured-image-preview').innerHTML = '';
+                    document.getElementById('featured-image-preview').style.display = 'none';
+                    document.getElementById('avatar-image-preview').innerHTML = '';
+                    document.getElementById('avatar-image-preview').style.display = 'none';
+                    newPostForm.classList.add('hidden');
+                    newPostButton.textContent = '+ New Post';
+                    
+                    // Reload content
+                    featuredPostContainer.innerHTML = '';
+                    blogPostsContainer.innerHTML = '';
+                    await loadBlogContent();
+                    
+                    alert('Post published successfully!');
+                } else {
+                    alert(result.error || 'Error publishing post');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Network error occurred');
+            } finally {
+                formSpinner.style.display = 'none';
+            }
+        });
+
+        // File upload preview functionality
+        document.getElementById('post-image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('featured-image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('author-avatar').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('avatar-image-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Avatar Preview">`;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Handle comment toggle
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('comment-toggle')) {
+                e.preventDefault();
+                const toggle = e.target;
+                toggle.classList.toggle('active');
+                const container = toggle.nextElementSibling;
+                container.classList.toggle('active');
+            }
+        });
+        
+        // Handle comment submission
+        document.addEventListener('submit', async function(e) {
+            if (e.target.classList.contains('comment-form')) {
+                e.preventDefault();
+                const form = e.target;
+                const postId = form.getAttribute('data-post-id');
+                const nameInput = form.querySelector('input[type="text"]');
+                const commentInput = form.querySelector('textarea');
+                
+                const formData = new FormData();
+                formData.append('post_id', postId);
+                formData.append('author', nameInput.value);
+                formData.append('content', commentInput.value);
+                
+                try {
+                    const response = await fetch('api.php?action=add_comment', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Reset form
+                        form.reset();
+                        
+                        // Reload comments for this post
+                        const commentsContainer = document.getElementById(`comments-${postId}`);
+                        if (commentsContainer) {
+                            const response = await fetch(`api.php?action=get_comments&post_id=${postId}`);
+                            const comments = await response.json();
+                            renderComments(commentsContainer, comments);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting comment:', error);
+                    alert('Error submitting comment. Please try again.');
+                }
+            }
+        });
+        
+        // Handle search
+        blogSearch.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const searchTerm = this.querySelector('.search-input').value.trim();
+            if (searchTerm) {
+                try {
+                    const response = await fetch(`api.php?action=search_posts&category=${searchTerm}`);
+                    const posts = await response.json();
+                    
+                    blogPostsContainer.innerHTML = '';
+                    posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'blog-card-container';
+                        blogPostsContainer.appendChild(postElement);
+                        renderPost(post, postElement, false);
+                    });
+                } catch (error) {
+                    console.error('Error searching posts:', error);
+                }
+            }
+        });
+        
+        // Handle category click
+        document.getElementById('categories-list').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const categoryLink = e.target.closest('a');
+            if (categoryLink) {
+                const category = categoryLink.getAttribute('data-category');
+                try {
+                    const response = await fetch(`api.php?action=get_posts&category=${category}`);
+                    const posts = await response.json();
+                    
+                    blogPostsContainer.innerHTML = '';
+                    posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'blog-card-container';
+                        blogPostsContainer.appendChild(postElement);
+                        renderPost(post, postElement, false);
+                    });
+                } catch (error) {
+                    console.error('Error filtering by category:', error);
+                }
+            }
+        });
+    }
+    
+    function renderComments(container, comments) {
+        container.innerHTML = comments.map(comment => `
+            <div class="comment">
+                <div class="comment-content">
+                    <div class="comment-meta">
+                        <span class="comment-author">${comment.author}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <p class="comment-text">${comment.content}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+</script>
+</body>
+</html>
