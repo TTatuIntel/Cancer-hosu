@@ -90,7 +90,7 @@ const eventsData = {
     ],
     current: [
         {
-            id: "tech-summit-current-2025",
+            id: "tech-summit-current-2025 test",
             type: "conference",
             status: "open",
             image: "img/IMG_7756.jpg",
@@ -98,7 +98,7 @@ const eventsData = {
             countdown: "Happening Now",
             date: "April 17, 2025",
             title: "Tech Summit 2025",
-            description: "Join industry leaders to discuss the future of technology in healthcare.",
+            description: "Test Join industry leaders to discuss the future of technology in healthcare.",
             location: "📍 Kampala",
             featured: false
         },

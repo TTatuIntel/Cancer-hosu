@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events Admin</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        .form-container { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button { 
+            padding: 12px 20px; 
+            background: #27ae60; 
+            color: white; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer; 
+            font-size: 16px;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover { 
+            background: #219653; 
+        }
+        button:disabled { 
+            background: #95a5a6; 
+            cursor: not-allowed; 
+        }
+        .image-preview { 
+            max-width: 200px; 
+            margin-top: 10px; 
+            display: none;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        .status-message { 
+            padding: 15px; 
+            margin: 20px 0; 
+            border-radius: 4px; 
+            display: none;
+            font-size: 16px;
+        }
+        .success { 
+            background: #d5f5e3; 
+            color: #27ae60; 
+            border: 1px solid #a3e4d7;
+        }
+        .error { 
+            background: #fadbd8; 
+            color: #e74c3c; 
+            border: 1px solid #f5b7b1;
+        }
+        .message-icon {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        small {
+            display: block;
+            color: #7f8c8d;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add New Event</h1>
+        
+        <div id="statusMessage" class="status-message">
+            <span id="statusIcon" class="message-icon"></span>
+            <span id="statusText"></span>
+        </div>
+        
+        <form id="eventForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="id">Unique ID:</label>
+                <input type="text" id="id" name="id" required placeholder="e.g., tech-summit-2024">
+            </div>
+            
+            <div class="form-group">
+                <label for="type">Event Type:</label>
+                <select id="type" name="type" required>
+                    <option value="">Select type</option>
+                    <option value="conference">Conference</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="webinar">Webinar</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="">Select status</option>
+                    <option value="open">Open</option>
+                    <option value="closing">Closing</option>
+                    <option value="past">Past</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="imageFile">Upload Image:</label>
+                <input type="file" id="imageFile" name="imageFile" accept="image/*">
+                <img id="imagePreview" class="image-preview" alt="Preview">
+                <small>OR</small>
+                <label for="image">Image URL:</label>
+                <input type="text" id="image" name="image" placeholder="https://example.com/image.jpg">
+            </div>
+            
+            <div class="form-group">
+                <label for="imageAlt">Image Description:</label>
+                <input type="text" id="imageAlt" name="imageAlt" required placeholder="Describe the image">
+            </div>
+            
+            <div class="form-group">
+                <label for="countdown">Countdown Text:</label>
+                <input type="text" id="countdown" name="countdown" placeholder="e.g., Happening in 2 months">
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Event Date:</label>
+                <input type="text" id="date" name="date" required placeholder="e.g., April 15, 2024">
+            </div>
+            
+            <div class="form-group">
+                <label for="title">Event Title:</label>
+                <input type="text" id="title" name="title" required placeholder="e.g., Tech Summit 2024">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required placeholder="e.g., Kampala, Uganda">
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="featured" name="featured"> Featured Event
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select category</option>
+                    <option value="featured">Featured</option>
+                    <option value="current">Current</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="conferences">Conferences</option>
+                    <option value="workshops">Workshops</option>
+                    <option value="webinars">Webinars</option>
+                    <option value="past">Past</option>
+                </select>
+            </div>
+            
+            <button type="submit" id="submitBtn">Add Event</button>
+        </form>
+    </div>
+
+    <script>
+        // Image preview functionality
+        document.getElementById('imageFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission with enhanced feedback
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const statusMessage = document.getElementById('statusMessage');
+            const statusText = document.getElementById('statusText');
+            const statusIcon = document.getElementById('statusIcon');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Reset message state
+            statusMessage.style.display = 'none';
+            statusMessage.className = 'status-message';
+            statusIcon.textContent = '';
+            statusText.textContent = '';
+            
+            // Show loading state
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            fetch('save_event.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || 'Server returned an error');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Success state
+                    statusIcon.textContent = '✓';
+                    statusText.textContent = 'Event successfully added! The changes are now live on the website.';
+                    statusMessage.className = 'status-message success';
+                    
+                    // Clear form
+                    this.reset();
+                    document.getElementById('imagePreview').style.display = 'none';
+                    
+                    // Show success message
+                    statusMessage.style.display = 'block';
+                    
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error(data.error || 'The event could not be added');
+                }
+            })
+            .catch(error => {
+                // Error state
+                console.error('Error:', error);
+                statusIcon.textContent = '!';
+                statusText.textContent = error.message;
+                statusMessage.className = 'status-message error';
+                statusMessage.style.display = 'block';
+            })
+            .finally(() => {
+                submitBtn.textContent = 'Add Event';
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
