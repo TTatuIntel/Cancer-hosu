@@ -1,5 +1,19 @@
 const eventsData = {
-    "featured": [],
+    "featured": [
+        {
+            "id": "Medical-Summit 3",
+            "type": "webinar",
+            "status": "closing",
+            "image": "uploads/68668913e19f1_safari-01.2jpg.jpg",
+            "imageAlt": "Medical Travel",
+            "countdown": "Happening in 2 months",
+            "date": "April 30 2026",
+            "title": "Medical Travel",
+            "description": "Traveling Together ",
+            "location": "Kampala, uganda",
+            "featured": true
+        }
+    ],
     "current": [
         {
             "id": "tester-tech-real",
@@ -17,6 +31,19 @@ const eventsData = {
     ],
     "upcoming": [],
     "conferences": [
+        {
+            "id": "Medical-Summit 2",
+            "type": "conference",
+            "status": "open",
+            "image": "uploads/68667d294c8a6_e4f8950dd200ffdae8617e084c3a5c1f.jpg",
+            "imageAlt": "Medical Content",
+            "countdown": "Happening in 2 months",
+            "date": "April 30 2026",
+            "title": "Medical Get Together ",
+            "description": "Medical Content",
+            "location": "Kampala, uganda",
+            "featured": true
+        },
         {
             "id": "tester tech",
             "type": "conference",
@@ -44,7 +71,21 @@ const eventsData = {
             "featured": true
         }
     ],
-    "workshops": [],
+    "workshops": [
+        {
+            "id": "Medical-Summit",
+            "type": "conference",
+            "status": "open",
+            "image": "uploads/68667c3e33986_e4f8950dd200ffdae8617e084c3a5c1f.jpg",
+            "imageAlt": "Medical Content",
+            "countdown": "Happening in 2 months",
+            "date": "April 30 2026",
+            "title": "Medical Get Together ",
+            "description": "Medical Content",
+            "location": "Kampala, uganda",
+            "featured": true
+        }
+    ],
     "webinars": [],
     "past": []
 };

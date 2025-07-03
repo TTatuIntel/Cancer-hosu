@@ -89,19 +89,7 @@ const eventsData = {
         }
     ],
     current: [
-        {
-            id: "tech-summit-current-2025 test",
-            type: "conference",
-            status: "open",
-            image: "img/IMG_7756.jpg",
-            imageAlt: "Tech Summit 2025 (Current)",
-            countdown: "Happening Now",
-            date: "April 17, 2025",
-            title: "Tech Summit 2025",
-            description: "Test Join industry leaders to discuss the future of technology in healthcare.",
-            location: "📍 Kampala",
-            featured: false
-        },
+
         {
             id: "tech-summit-current-2025",
             type: "conference",
