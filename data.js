@@ -29,7 +29,21 @@ const eventsData = {
             "featured": true
         }
     ],
-    "upcoming": [],
+    "upcoming": [
+        {
+            "id": "Medical-Summit 4",
+            "type": "conference",
+            "status": "open",
+            "image": "uploads/686b687b08ced_e4f8950dd200ffdae8617e084c3a5c1f.jpg",
+            "imageAlt": "Medical Travel Together",
+            "countdown": "Happening in 3 months",
+            "date": "April 30 2026",
+            "title": "Medical Travel Together",
+            "description": "Testing Out this Function",
+            "location": "Kampala, uganda",
+            "featured": true
+        }
+    ],
     "conferences": [
         {
             "id": "Medical-Summit 2",
