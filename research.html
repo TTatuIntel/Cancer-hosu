@@ -8,654 +8,1551 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="donate-float.css">
     <style>
-        /* Base styles (same as other pages) */
         :root {
             --primary-color: #e63946;
+            --primary-light: #f8d7da;
+            --primary-dark: #c81d2a;
             --secondary-color: #0d4593;
-            --text-color: #12294a;
+            --secondary-light: #e6f0ff;
+            --secondary-dark: #072a5e;
+            --text-color: #001848;
+            --text-light: #4a5568;
             --background-light: #f1faee;
             --background-dark: #1d3557;
             --white: #ffffff;
             --accent-color: #a8dadc;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+            --gray-500: #a0aec0;
             --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
             --navbar-height: 90px;
+            --border-radius: 8px;
+            --spacing-sm: 1rem;
+            --section-width: 92%;
+            --section-max-width: 1280px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background-color: var(--white);
+            background: linear-gradient(180deg, var(--gray-100) 0%, var(--white) 8%);
+            overflow-x: hidden;
         }
 
-        /* Navbar styles (same as other pages) */
-        .navbar {
-            background: rgba(255, 255, 255, 0.521);
-            backdrop-filter: blur(15px);
-            padding: 1rem 5%;
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; }
+
+        /* Navbar styles handled by navbar.css */
+
+        .hero {
+            position: relative;
+            color: var(--text-color);
+            padding-top: var(--navbar-height);
+            overflow: visible;
+            background-color: var(--gray-100);
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 390px;
+            z-index: 20;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            max-width: var(--section-max-width);
+            width: var(--section-width);
+            margin: 0 auto;
+            position: relative;
+            overflow: visible;
+            padding: 1rem 0;
+            gap: 3%;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-            height: var(--navbar-height);
+            min-height: 340px;
         }
 
-        .logo img {
-            width: 250px;
-            height: 90px;
-            object-fit: contain;
-        }
-
-        .nav-links {
+        .hero-content {
+            width: 48%;
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0.25rem 0;
+            z-index: 10;
+            text-align: left;
+            position: relative;
+            min-height: 240px;
+            margin-left: auto;
         }
 
-        .nav-links a {
+        .hero-slide {
+            display: none;
+            flex-direction: column;
+            animation: heroFadeIn 0.6s ease;
+        }
+
+        .hero-slide.active { display: flex; }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: rgba(255,255,255,0.85);
+            color: var(--secondary-color);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 16px;
+            border: 1px solid rgba(13,69,147,0.12);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-readmore {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.85rem;
             text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            margin-top: 0.25rem;
             position: relative;
         }
 
-        .nav-links a:not(.cta-button)::after {
+        .hero-readmore:hover {
+            color: #c81d2a;
+            transform: translateX(4px);
+        }
+
+        .hero-float-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            left: -8px;
+            z-index: 200;
+            width: 360px;
+            max-height: 320px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.72);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            backdrop-filter: blur(24px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem 1.2rem;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            animation: floatPopDown 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hero-float-popup.active { display: block; }
+
+        .hero-float-popup::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: var(--transition);
+            top: -7px;
+            left: 20px;
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.72);
+            border-top: 1px solid rgba(255, 255, 255, 0.55);
+            border-left: 1px solid rgba(255, 255, 255, 0.55);
+            transform: rotate(45deg);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
         }
 
-        .nav-links a:not(.cta-button):hover::after {
-            width: 100%;
+        .hero-float-popup::-webkit-scrollbar { width: 4px; }
+        .hero-float-popup::-webkit-scrollbar-track { background: transparent; }
+        .hero-float-popup::-webkit-scrollbar-thumb {
+            background: rgba(13, 69, 147, 0.15);
+            border-radius: 4px;
         }
 
-        .nav-links .cta-button {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            transition: var(--transition);
-        }
-
-        .nav-links .cta-button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        /* Research Page Specific Styles */
-        .research-hero {
-            padding-top: calc(var(--navbar-height) + 2rem);
-            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-            min-height: 300px;
+        .float-popup-close {
+            position: absolute;
+            top: 0.55rem;
+            right: 0.6rem;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
-            text-align: center;
-        }
-
-        .research-hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .research-hero h1 {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .research-hero p {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        .research-areas {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
-        .research-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .research-card {
-            background: var(--background-light);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: var(--transition);
-        }
-
-        .research-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .research-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .research-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .publications {
-            padding: 4rem 5%;
-            background: var(--background-light);
-        }
-
-        .publication-list {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .publication-card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .publication-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .publication-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .publication-tag {
-            background: var(--accent-color);
-            color: var(--secondary-color);
-            padding: 0.25rem 1rem;
-            border-radius: 15px;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            border-radius: 50%;
             font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
+            line-height: 1;
+            transition: all 0.2s ease;
         }
 
-        .publication-date {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        .publication-title {
-            font-size: 1.4rem;
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-        }
-
-        .publication-authors {
-            color: var(--text-color);
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .publication-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .publication-link:hover {
-            text-decoration: underline;
-        }
-
-        .grants {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
-        .grant-card {
-            background: var(--background-light);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-
-        .grant-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .grant-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .grant-amount {
+        .float-popup-close:hover {
             background: var(--primary-color);
             color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 500;
         }
 
-        .grant-deadline {
-            color: var(--primary-color);
-            font-weight: 500;
-            margin-bottom: 1rem;
+        .hero-float-popup h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.4rem;
+            padding-right: 1.8rem;
+            letter-spacing: -0.01em;
         }
+
+        .hero-float-popup p {
+            font-size: 0.76rem;
+            color: var(--text-color);
+            line-height: 1.55;
+            margin-bottom: 0.35rem;
+            opacity: 0.9;
+        }
+
+        .hero-float-popup h4 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 0.45rem 0 0.25rem;
+            padding-bottom: 0.2rem;
+            border-bottom: 1.5px solid rgba(13, 69, 147, 0.1);
+            display: inline-block;
+        }
+
+        .hero-float-popup ul {
+            padding-left: 0.9rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .hero-float-popup li {
+            font-size: 0.73rem;
+            color: var(--text-color);
+            line-height: 1.5;
+            margin-bottom: 0.15rem;
+            opacity: 0.88;
+        }
+
+        .hero-float-popup li strong {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        @keyframes floatPopDown {
+            from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .hero-content h1 {
+            font-size: clamp(1.15rem, 2.1vw, 1.45rem);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        .hero-content p {
+            font-size: clamp(0.78rem, 1.1vw, 0.84rem);
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.55;
+            margin-top: 0.85rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1.4rem;
+            margin-top: 0.9rem;
+        }
+
+        .hero-stat-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .hero-stat-label {
+            font-size: 0.66rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .hero-indicators {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+
+        .hero-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(18, 41, 74, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-dot.active {
+            background: var(--primary-color);
+            width: 22px;
+            border-radius: 4px;
+        }
+
+        .hero-image-container {
+            position: absolute;
+            left: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 58%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 0;
+            animation: heroImgFadeIn 1s ease-out 0.3s forwards;
+            opacity: 0;
+            z-index: 0;
+            max-height: 360px;
+        }
+
+        .hero-image-container::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(to left, #f7fafc 0%, rgba(247,250,252,0.85) 8%, rgba(247,250,252,0.5) 18%, rgba(247,250,252,0.15) 30%, transparent 45%),
+                linear-gradient(to right, #f7fafc 0%, rgba(247,250,252,0.4) 3%, transparent 10%),
+                linear-gradient(to bottom, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%),
+                linear-gradient(to top, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%);
+        }
+
+        @keyframes heroImgFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1s ease, transform 8s ease;
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        .hero-background.bg-1 { background-image: url('img/IMG_7770.jpg'); }
+        .hero-background.bg-2 { background-image: url('img/IMG_8316.jpg'); }
+        .hero-background.bg-3 { background-image: url('img/IMG_7891.jpg'); }
+        .hero-background.bg-4 { background-image: url('img/IMG_7825.webp'); }
+        .hero-background.bg-5 { background-image: url('img/IMG_8005.jpg'); }
+
+        .hero-background.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .research-areas,
+        .updates-section {
+            padding: 0.85rem 0 0.75rem;
+        }
+
+        .updates-section { background: rgba(241, 250, 238, 0.5); }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: clamp(1.2rem, 2.4vw, 1.5rem);
             color: var(--secondary-color);
-            margin-bottom: 3rem;
+            margin-bottom: 0.85rem;
             position: relative;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 3px;
+            width: 45px;
+            height: 2.5px;
             background: var(--primary-color);
-            margin: 1rem auto 0;
+            margin: 0.45rem auto 0;
         }
 
-        /* Footer styles (same as other pages) */
-        footer {
-            background: var(--background-dark);
+        .updates-grid {
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .updates-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .updates-col-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .updates-col-title .col-icon {
+            font-size: 0.8rem;
+        }
+
+        .publication-card,
+        .grant-card {
+            border-radius: 12px;
+            border: 1px solid rgba(13, 69, 147, 0.08);
+            box-shadow: var(--shadow-sm);
+            background: var(--white);
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .publication-card:last-of-type,
+        .grant-card:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .updates-loading-card {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            padding: 1.5rem;
+        }
+
+        .publication-meta {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.35rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .publication-tag {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 0.12rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+
+        .publication-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .publication-title {
+            font-size: 0.82rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.15rem;
+            line-height: 1.3;
+        }
+
+        .publication-authors {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.25rem;
+            font-size: 0.72rem;
+        }
+
+        .publication-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.72rem;
+        }
+
+        .publication-link:hover { text-decoration: underline; }
+
+        .grant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+            gap: 0.5rem;
+        }
+
+        .grant-header h3 {
+            font-size: 0.82rem;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .grant-amount {
+            background: var(--primary-color);
             color: var(--white);
-            padding: 4rem 5% 2rem;
+            padding: 0.18rem 0.5rem;
+            border-radius: 14px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .grant-deadline {
+            color: var(--primary-color);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .grant-card p {
+            font-size: 0.74rem;
+            line-height: 1.45;
+            color: var(--text-light);
+        }
+
+        .grant-apply {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.45rem;
+            padding: 0.3rem 0.7rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .grant-apply:hover {
+            background: var(--secondary-dark);
+        }
+
+        .grant-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #16a34a;
+            margin-bottom: 0.3rem;
+        }
+
+        .grant-status .status-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #16a34a;
+            display: inline-block;
+        }
+
+        .grant-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.4rem;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        footer {
+            background: var(--gray-100);
+            color: var(--text-color);
+            padding: 1rem 0 0.6rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-top: 1px solid var(--gray-300);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
+            grid-template-columns: 1fr 1.2fr 1.4fr 1fr;
+            gap: 1.25rem;
+            width: var(--section-width);
+            max-width: var(--section-max-width);
             margin: 0 auto;
         }
 
         .footer-section h4 {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-section ul {
-            list-style: none;
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 24px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 2px;
         }
 
-        .footer-section li {
-            margin-bottom: 0.8rem;
-        }
+        .footer-section ul { list-style: none; margin: 0; padding: 0; }
+        .footer-section li { margin-bottom: 0.45rem; }
 
         .footer-section a {
-            color: var(--white);
-            text-decoration: none;
+            color: var(--text-light);
             transition: var(--transition);
+            display: inline-block;
+            padding: 0.15rem 0;
+            font-size: 0.88rem;
         }
 
         .footer-section a:hover {
-            color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateX(3px);
+        }
+
+        .footer-section address {
+            font-style: normal;
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .footer-section p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 0.35rem;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--gray-200);
             transition: var(--transition);
+            color: var(--secondary-color);
         }
 
         .social-links a:hover {
-            background: var(--accent-color);
+            background: var(--secondary-color);
             transform: translateY(-2px);
+            color: var(--white);
         }
 
         .copyright {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--gray-300);
+            font-size: 0.78rem;
+            color: var(--text-light);
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-dev-info p { margin: 0; }
+        .footer-dev-name { font-size: 0.88rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.35rem; }
+        .footer-dev-contact { font-size: 0.82rem; color: var(--text-light); margin-bottom: 0.25rem; }
+        .footer-dev-contact:last-child { margin-bottom: 0; }
+        .footer-dev-contact a { color: var(--text-light); }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+            box-shadow: var(--shadow-md);
+            font-size: 1.1rem;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover { background: var(--primary-dark); }
+
+        .login-trigger-wrap { position: relative; display: inline-block; }
+        .login-float-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 14px);
+            right: 0;
+            z-index: 1001;
+            width: 300px;
+            background: rgba(255,255,255,0.78);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            backdrop-filter: blur(24px) saturate(1.4);
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 14px;
+            padding: 1.2rem 1.3rem 1.1rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+            animation: loginPopUp 0.3s cubic-bezier(0.22,1,0.36,1);
+            text-align: left;
+        }
+
+        .login-float-popup.active { display: block; }
+
+        .login-float-popup::after {
+            content: '';
+            position: absolute;
+            top: -7px;
+            right: 24px;
+            width: 14px;
+            height: 14px;
+            background: rgba(255,255,255,0.78);
+            border-top: 1px solid rgba(255,255,255,0.55);
+            border-left: 1px solid rgba(255,255,255,0.55);
+            transform: rotate(45deg);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
+        }
+
+        .login-float-popup .lfp-close {
+            position: absolute;
+            top: 0.55rem;
+            right: 0.6rem;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.06);
+            border: none;
+            border-radius: 50%;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-light);
+            cursor: pointer;
+            line-height: 1;
+            transition: all 0.2s ease;
         }
 
-        .partner-logo:hover img {
-                transform: scale(1.5);
-                filter: brightness(1.5);
+        .login-float-popup .lfp-close:hover { background: var(--primary-color); color: var(--white); }
+
+        @keyframes loginPopUp {
+            from { opacity: 0; transform: translateY(8px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        @media (max-width: 1024px) {
+            .hero-container {
+                min-height: 360px;
+                gap: 1.5rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+            .hero-content { width: 50%; }
+            .hero-image-container { width: 56%; left: -6%; }
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            :root {
-                --navbar-height: 70px;
+            .hero { min-height: 340px; }
+            .hero-container {
+                min-height: 300px;
+                padding: 1rem 0 1.5rem;
             }
 
-            .navbar {
-                padding: 1rem;
-            }
-
-            .logo img {
-                width: 200px;
-                height: 70px;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
+            .hero-image-container {
                 position: absolute;
-                top: 100%;
-                left: 0;
+                inset: 0;
                 width: 100%;
-                background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow);
+                max-height: none;
+                opacity: 0.25;
             }
 
-            .nav-links.active {
-                display: flex;
+            .hero-content {
+                width: 100%;
+                margin-left: 0;
+                padding: 0 0.3rem;
             }
 
-            .menu-toggle {
-                display: block;
-            }
-
-            .research-hero h1 {
-                font-size: 2rem;
-            }
-
-            .research-hero p {
-                font-size: 1.1rem;
-            }
+            .hero-stats { gap: 0.75rem; }
+            .footer-content { grid-template-columns: 1fr; }
 
             .section-title {
-                font-size: 2rem;
+                margin-bottom: 0.7rem;
             }
 
-            .grant-header {
-                flex-direction: column;
+            .updates-section {
+                padding: 0.75rem 0 0.6rem;
+            }
+
+            .updates-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+
+            .publication-card,
+            .grant-card {
+                padding: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
-   <!-- Navbar -->
-<!-- <nav class="navbar">
+<nav class="navbar">
     <div class="navbar-container">
         <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+            <img src="img/logo2.png" alt="HOSU - Hematology & Oncology Society of Uganda" loading="eager">
         </div>
         <div class="nav-links">
-            <a href="index.html">Home</a>           
+            <a href="index.html">Home</a>
             <a href="events.html">Events</a>
-            <a href="research.html">Research</a> 
-            <a href="membership.html">Membership</a>           
+            <a href="research.html">Research</a>
+            <a href="membership.html">Membership</a>
             <a href="about.html">About</a>
             <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
-            <a href="login.html" class="cta-button">Member Portal</a>
+            <div class="login-trigger-wrap">
+                <a href="#" class="cta-button login-trigger" onclick="toggleLoginPopup(event)">Member Portal</a>
+                <div class="login-float-popup" id="loginPopup"></div>
+            </div>
         </div>
         <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
     </div>
-    </nav> -->
-    <nav class="navbar">
-        <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
-                <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
-            </div>
-            <div class="nav-links" style="align-items: center; gap: 2rem;">
-                <a href="index.html">Home</a>           
-                <a href="events.html">Events</a>
-                <a href="research.html">Research</a> 
-                <a href="membership.html">Membership</a>           
-                <a href="about.html">About</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contact</a>
-                <a href="login.html" class="cta-button">Member Portal</a>
-            </div>
-            <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
-        </div>
-    </nav>
-    <section class="research-hero">
-        <div class="research-hero-content">
-            <h1>Research & Innovation</h1>
-            <p>Advancing cancer care through groundbreaking research, collaboration, and innovation.</p>
-        </div>
-    </section>
+</nav>
 
-    <section class="research-areas">
-        <h2 class="section-title">Research Focus Areas</h2>
-        <div class="research-grid">
-            <div class="research-card">
-                <div class="research-icon">🧬</div>
-                <h3>Precision Medicine</h3>
-                <p>Developing targeted therapies based on genetic profiles and biomarkers for personalized cancer treatment.</p>
-            </div>
-            <div class="research-card">
-                <div class="research-icon">🔬</div>
-                <h3>Immunotherapy</h3>
-                <p>Investigating novel approaches to harness the immune system in fighting cancer cells.</p>
-            </div>
-            <div class="research-card">
-                <div class="research-icon">📊</div>
-                <h3>Clinical Trials</h3>
-                <p>Conducting innovative clinical trials to evaluate new treatments and improve patient outcomes.</p>
-            </div>
-            <div class="research-card">
-                <div class="research-icon">🤖</div>
-                <h3>AI in Oncology</h3>
-                <p>Leveraging artificial intelligence for better diagnosis, treatment planning, and outcome prediction.</p>
-            </div>
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-image-container" id="heroImageContainer">
+            <div class="hero-background bg-1 active"></div>
+            <div class="hero-background bg-2"></div>
+            <div class="hero-background bg-3"></div>
+            <div class="hero-background bg-4"></div>
+            <div class="hero-background bg-5"></div>
         </div>
-    </section>
-
-    <section class="publications">
-        <h2 class="section-title">Latest Publications</h2>
-        <div class="publication-list">
-            <article class="publication-card">
-                <div class="publication-meta">
-                    <span class="publication-tag">Clinical Research</span>
-                    <span class="publication-date">March 2024</span>
+        <div class="hero-content">
+            <article class="hero-slide active" data-slide="intro">
+                <div class="hero-pills">
+                    <span class="hero-pill">Evidence-Based Care</span>
+                    <span class="hero-pill">National Impact</span>
                 </div>
-                <h3 class="publication-title">Novel Immunotherapy Approaches in Advanced Melanoma Treatment</h3>
-                <p class="publication-authors">Chen, S., Rodriguez, M., Thompson, E., et al.</p>
-                <p>A comprehensive study of innovative immunotherapy strategies showing promising results in advanced melanoma cases.</p>
-                <a href="#" class="publication-link">Read Full Paper →</a>
+                <h1>Research & Innovation</h1>
+                <p>Driving evidence-based cancer care in Uganda through collaborative research, clinical studies, and partnerships with leading institutions across East Africa.</p>
             </article>
-
-            <article class="publication-card">
-                <div class="publication-meta">
-                    <span class="publication-tag">Precision Medicine</span>
-                    <span class="publication-date">February 2024</span>
+            <article class="hero-slide" data-slide="epidemiology">
+                <div class="hero-pills">
+                    <span class="hero-pill">Population Data</span>
+                    <span class="hero-pill">Risk Mapping</span>
                 </div>
-                <h3 class="publication-title">Genetic Profiling in Personalized Cancer Treatment</h3>
-                <p class="publication-authors">Thompson, E., Wilson, J., Garcia, M., et al.</p>
-                <p>Analysis of genetic markers for improved treatment selection in various cancer types.</p>
-                <a href="#" class="publication-link">Read Full Paper →</a>
+                <h1>Cancer Epidemiology</h1>
+                <p>We analyze incidence patterns, regional burden, and risk factors to guide prevention programs and earlier diagnosis pathways.</p>
+                <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'epidemiology'); return false;">Read More →
+                    <div class="hero-float-popup" data-popup="epidemiology"></div>
+                </a>
             </article>
-        </div>
-    </section>
-
-    <section class="grants">
-        <h2 class="section-title">Research Grants</h2>
-        <div class="grant-card">
-            <div class="grant-header">
-                <h3>Early Career Researcher Grant</h3>
-                <span class="grant-amount">$50,000</span>
-            </div>
-            <p class="grant-deadline">Application Deadline: June 30, 2024</p>
-            <p>Supporting innovative research projects led by early-career oncologists and researchers.</p>
-            <a href="#" class="publication-link">Learn More & Apply →</a>
-        </div>
-
-        <div class="grant-card">
-            <div class="grant-header">
-                <h3>Clinical Trial Innovation Grant</h3>
-                <span class="grant-amount">$250,000</span>
-            </div>
-            <p class="grant-deadline">Application Deadline: September 15, 2024</p>
-            <p>Funding for novel approaches in clinical trial design and implementation.</p>
-            <a href="#" class="publication-link">Learn More & Apply →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="about.html">About HOSU</a></li>
-                    <li><a href="membership.html">Membership Benefits</a></li>
-                    <li><a href="research.html">Research Initiatives</a></li>
-                    <li><a href="leadership.html">Society Leadership</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <address>
-                    HOSU Headquarters<br>
-                    123 Medical Innovation Way<br>
-                    Global Health City, GH 54321<br>
-                    ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
-                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
-                </address>
-            </div>
-            <div class="footer-section">
-                <h4>Stay Connected</h4>
-                <p>Follow us on social media for the latest updates and announcements.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
+            <article class="hero-slide" data-slide="hematological-malignancies">
+                <div class="hero-pills">
+                    <span class="hero-pill">Leukemia</span>
+                    <span class="hero-pill">Lymphoma</span>
                 </div>
-                <h4>Designed By
-                </h4>
-                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                    <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
+                <h1>Hematological Malignancies</h1>
+                <p>Focused studies on blood cancers improve treatment selection, access pathways, and long-term outcomes across East Africa.</p>
+                <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'hematological-malignancies'); return false;">Read More →
+                    <div class="hero-float-popup" data-popup="hematological-malignancies"></div>
+                </a>
+            </article>
+            <article class="hero-slide" data-slide="clinical-trials">
+                <div class="hero-pills">
+                    <span class="hero-pill">Protocol Design</span>
+                    <span class="hero-pill">Patient Outcomes</span>
+                </div>
+                <h1>Clinical Trials</h1>
+                <p>Trials and implementation studies test locally relevant interventions and translate findings into practical oncology protocols.</p>
+                <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'clinical-trials'); return false;">Read More →
+                    <div class="hero-float-popup" data-popup="clinical-trials"></div>
+                </a>
+            </article>
+            <article class="hero-slide" data-slide="palliative-supportive-care">
+                <div class="hero-pills">
+                    <span class="hero-pill">Quality of Life</span>
+                    <span class="hero-pill">Symptom Relief</span>
+                </div>
+                <h1>Palliative &amp; Supportive Care</h1>
+                <p>Research-driven supportive care models improve pain control, dignity, and whole-person outcomes for advanced cancer care.</p>
+                <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'palliative-supportive-care'); return false;">Read More →
+                    <div class="hero-float-popup" data-popup="palliative-supportive-care"></div>
+                </a>
+            </article>
+            <div class="hero-stats">
+                <div>
+                    <span class="hero-stat-number">12+</span>
+                    <span class="hero-stat-label">Active Studies</span>
+                </div>
+                <div>
+                    <span class="hero-stat-number">8</span>
+                    <span class="hero-stat-label">Partner Centers</span>
+                </div>
+                <div>
+                    <span class="hero-stat-number">4</span>
+                    <span class="hero-stat-label">Focus Domains</span>
                 </div>
             </div>
+            <div class="hero-indicators">
+                <span class="hero-dot active" data-index="0" aria-label="Hero slide 1"></span>
+                <span class="hero-dot" data-index="1" aria-label="Hero slide 2"></span>
+                <span class="hero-dot" data-index="2" aria-label="Hero slide 3"></span>
+                <span class="hero-dot" data-index="3" aria-label="Hero slide 4"></span>
+                <span class="hero-dot" data-index="4" aria-label="Hero slide 5"></span>
+            </div>
         </div>
-        <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+    </div>
+</section>
+
+<section class="updates-section">
+    <h2 class="section-title">Publications &amp; Grants</h2>
+    <div class="updates-grid">
+        <div class="updates-col">
+            <div class="updates-col-title"><span class="col-icon">&#128196;</span> Recent Publications</div>
+            <div id="publications-container">
+                <div class="publication-card updates-loading-card">Loading publications…</div>
+            </div>
         </div>
-    </footer>
+        <div class="updates-col">
+            <div class="updates-col-title"><span class="col-icon">&#127942;</span> Grants &amp; Opportunities</div>
+            <div id="grants-container">
+                <div class="grant-card updates-loading-card">Loading grants…</div>
+            </div>
+        </div>
+    </div>
+    <p class="grant-note">More opportunities will be published as they are announced.</p>
+</section>
 
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <script>
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
+<!-- Grant Application Modal -->
+<style>
+.ga-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,20,50,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);align-items:center;justify-content:center;animation:gaFadeIn .25s ease;}
+.ga-overlay.open{display:flex;}
+@keyframes gaFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes gaSlideUp{from{transform:translateY(24px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.ga-box{background:#fff;border-radius:16px;max-width:500px;width:92%;max-height:88vh;overflow-y:auto;padding:0;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:gaSlideUp .3s ease;}
+.ga-box::-webkit-scrollbar{width:5px;}.ga-box::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px;}
+.ga-header{position:sticky;top:0;z-index:1;background:linear-gradient(135deg,var(--secondary-color,#0d4593) 0%,#1a5fb4 100%);padding:1.4rem 1.6rem 1.2rem;border-radius:16px 16px 0 0;color:#fff;}
+.ga-header h3{margin:0;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.45rem;}
+.ga-header h3 .ga-icon{width:28px;height:28px;background:rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
+.ga-header p{margin:.3rem 0 0;font-size:.78rem;opacity:.82;}
+.ga-close{position:absolute;top:1rem;right:1rem;width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.ga-close:hover{background:rgba(255,255,255,.3);}
+.ga-form-wrap{padding:1.4rem 1.6rem 1.6rem;}
+.ga-error{display:none;font-size:.8rem;color:var(--primary-color,#e63946);background:rgba(230,57,70,.06);border:1px solid rgba(230,57,70,.15);border-radius:8px;padding:.5rem .75rem;margin-bottom:.85rem;line-height:1.4;}
+.ga-success{display:none;text-align:center;padding:2rem 1rem;}
+.ga-success .ga-check{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;}
+.ga-success h4{color:var(--secondary-color,#0d4593);margin:0 0 .35rem;font-size:1.05rem;}
+.ga-success p{font-size:.82rem;color:var(--text-light,#4a5568);line-height:1.5;margin:0;}
+.ga-field{margin-bottom:.75rem;}
+.ga-field label{display:block;font-size:.78rem;font-weight:600;color:var(--text-color,#001848);margin-bottom:.3rem;}
+.ga-field label .req{color:var(--primary-color,#e63946);margin-left:2px;}
+.ga-field input,.ga-field textarea{width:100%;padding:.5rem .7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit;background:#f8fafc;color:var(--text-color,#001848);transition:border-color .2s,box-shadow .2s;box-sizing:border-box;}
+.ga-field input:focus,.ga-field textarea:focus{outline:none;border-color:var(--secondary-color,#0d4593);box-shadow:0 0 0 3px rgba(13,69,147,.08);background:#fff;}
+.ga-field input::placeholder,.ga-field textarea::placeholder{color:#94a3b8;}
+.ga-field textarea{resize:vertical;min-height:80px;}
+.ga-field small{display:block;margin-top:.2rem;font-size:.7rem;color:#94a3b8;}
+.ga-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.ga-submit{width:100%;padding:.65rem;background:linear-gradient(135deg,var(--secondary-color,#0d4593),#1a5fb4);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .15s;margin-top:.3rem;}
+.ga-submit:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(13,69,147,.3);}
+.ga-submit:active{transform:translateY(0);}
+.ga-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+</style>
 
-        menuToggle.addEventListener('click', (e) => {
+<div id="grant-apply-modal" class="ga-overlay">
+  <div class="ga-box">
+    <div class="ga-header">
+      <button class="ga-close" onclick="closeGrantApplyModal()">&times;</button>
+      <h3 id="grant-apply-title"><span class="ga-icon">📋</span> Apply for Grant</h3>
+      <p id="grant-apply-subtitle">Complete the form below to submit your application.</p>
+    </div>
+    <div class="ga-form-wrap">
+      <div id="grant-apply-error" class="ga-error"></div>
+      <div id="grant-apply-success" class="ga-success">
+        <div class="ga-check">✓</div>
+        <h4>Application Submitted!</h4>
+        <p>Your application has been received and is under review.<br>We will contact you at the email provided.</p>
+      </div>
+      <form id="grant-apply-form" onsubmit="submitGrantApplication(event)">
+        <input type="hidden" id="ga-grant-id">
+        <div class="ga-row">
+          <div class="ga-field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="ga-name" required placeholder="e.g. Dr. John Doe">
+          </div>
+          <div class="ga-field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" id="ga-email" required placeholder="you@institution.ac.ug">
+          </div>
+        </div>
+        <div class="ga-row">
+          <div class="ga-field">
+            <label>Phone</label>
+            <input type="tel" id="ga-phone" placeholder="+256 7XX XXX XXX">
+          </div>
+          <div class="ga-field">
+            <label>Institution / Affiliation</label>
+            <input type="text" id="ga-institution" placeholder="e.g. Makerere University">
+          </div>
+        </div>
+        <div class="ga-field">
+          <label>Brief Proposal / Statement of Interest</label>
+          <textarea id="ga-proposal" rows="4" placeholder="Describe your research interest, objectives, and how this grant will support your work…"></textarea>
+          <small>Max 500 words recommended</small>
+        </div>
+        <button type="submit" id="ga-submit-btn" class="ga-submit">Submit Application →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="about.html">About HOSU</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="events.html">Events</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <address>
+                HOSU Headquarters<br>
+                Kampala, Uganda<br>
+                <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                <a href="mailto:info@hosu.org">info@hosu.org</a>
+            </address>
+        </div>
+        <div class="footer-section">
+            <h4>Stay Connected</h4>
+            <p>Follow us on social media for the latest updates and announcements.</p>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg></a>
+                <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
+                <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Developer</h4>
+            <div class="footer-dev-info">
+                <p class="footer-dev-name">TattuIntel</p>
+                <p class="footer-dev-contact"><a href="tel:+256770495837">+256 770 495837</a></p>
+                <p class="footer-dev-contact"><a href="mailto:tattuintel@gmail.com">tattuintel@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2026 Hematology &amp; Oncology Society of Uganda. All rights reserved.</p>
+    </div>
+</footer>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navbar = document.querySelector('.navbar');
+    const backToTopBtn = document.querySelector('.back-to-top');
+
+    function syncNavbarState() {
+        navbar.classList.toggle('scrolled', window.pageYOffset > 50);
+    }
+
+    syncNavbarState();
+    window.addEventListener('scroll', syncNavbarState);
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             navLinks.classList.toggle('active');
         });
+    }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
-                navLinks.classList.remove('active');
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
+            navLinks.classList.remove('active');
+        }
+    });
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    let heroIndex = 0;
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroBgs = document.querySelectorAll('.hero-background');
+    const heroDots = document.querySelectorAll('.hero-dot');
+
+    function showHeroSlide(index) {
+        document.querySelectorAll('.hero-float-popup.active').forEach(function(p) {
+            p.classList.remove('active');
+        });
+
+        heroSlides.forEach(function(s) { s.classList.remove('active'); });
+        heroBgs.forEach(function(b) { b.classList.remove('active'); });
+        heroDots.forEach(function(d) { d.classList.remove('active'); });
+
+        heroSlides[index].classList.add('active');
+        heroBgs[index % heroBgs.length].classList.add('active');
+        heroDots[index].classList.add('active');
+
+        heroIndex = index;
+    }
+
+    let heroTimer = setInterval(function() {
+        showHeroSlide((heroIndex + 1) % heroSlides.length);
+    }, 6000);
+
+    function resetHeroTimer() {
+        clearInterval(heroTimer);
+        heroTimer = setInterval(function() {
+            showHeroSlide((heroIndex + 1) % heroSlides.length);
+        }, 6000);
+    }
+
+    heroDots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+            showHeroSlide(parseInt(dot.dataset.index, 10));
+            resetHeroTimer();
+        });
+    });
+
+    const heroPopupData = {
+        'hematological-malignancies': {
+            title: 'Hematological Malignancies',
+            content: '<p>Investigating blood cancers including leukemia, lymphoma, and myeloma with focus on treatment access and outcomes in East Africa.</p>'
+                + '<p>Our blood-cancer research also addresses diagnosis timing, treatment pathways, and survivorship outcomes in local care settings.</p>'
+                + '<h4>Priority Areas</h4>'
+                + '<ul>'
+                + '<li><strong>Leukemia Pathways</strong> — Earlier detection and referral optimization.</li>'
+                + '<li><strong>Lymphoma Outcomes</strong> — Regimen response tracking in regional centers.</li>'
+                + '<li><strong>Myeloma Care</strong> — Access barriers and continuity-of-care research.</li>'
+                + '</ul>'
+        },
+        'clinical-trials': {
+            title: 'Clinical Trials',
+            content: '<p>Conducting and participating in clinical trials to evaluate new treatments, improve protocols, and expand care options for Ugandan patients.</p>'
+                + '<p>Our clinical trials also evaluate practical treatment pathways in local contexts while preserving international quality standards.</p>'
+                + '<h4>Key Areas</h4>'
+                + '<ul>'
+                + '<li><strong>Protocol Adaptation</strong> — Context-aware trial designs for Uganda.</li>'
+                + '<li><strong>Outcome Monitoring</strong> — Real-world patient response tracking.</li>'
+                + '<li><strong>Access Equity</strong> — Expanding participation across regions.</li>'
+                + '</ul>'
+        },
+        'epidemiology': {
+            title: 'Cancer Epidemiology',
+            content: '<p>Studying cancer patterns, risk factors, and prevalence across Uganda to inform targeted prevention and early detection strategies.</p>'
+                + '<p>Population-level cancer intelligence helps target prevention, screening, and treatment resource allocation.</p>'
+                + '<h4>Focus</h4>'
+                + '<ul>'
+                + '<li><strong>Incidence Trends</strong> — Site-specific burden mapping.</li>'
+                + '<li><strong>Risk Profiles</strong> — Behavioral and environmental factors.</li>'
+                + '<li><strong>Registry Strengthening</strong> — Better data quality and completeness.</li>'
+                + '</ul>'
+        },
+        'palliative-supportive-care': {
+            title: 'Palliative & Supportive Care',
+            content: '<p>Researching pain management, quality of life, and holistic care approaches for patients with advanced cancers.</p>'
+                + '<p>Supportive-care research improves symptom management and patient experience across the full oncology journey.</p>'
+                + '<h4>Approach</h4>'
+                + '<ul>'
+                + '<li><strong>Pain & Symptom Control</strong> — Evidence-based relief protocols.</li>'
+                + '<li><strong>Psychosocial Support</strong> — Family and caregiver outcome tracking.</li>'
+                + '<li><strong>Integrated Services</strong> — Embedding supportive care into oncology workflows.</li>'
+                + '</ul>'
+        }
+    };
+
+    function toggleFloatPopup(link, specialty) {
+        const popup = link.querySelector('.hero-float-popup');
+        if (!popup) return;
+
+        if (popup.classList.contains('active')) {
+            popup.classList.remove('active');
+            resetHeroTimer();
+            return;
+        }
+
+        closeAllFloatPopups();
+        const data = heroPopupData[specialty];
+        if (!data) return;
+
+        popup.innerHTML = '<button class="float-popup-close" onclick="event.stopPropagation(); closeAllFloatPopups();">&times;</button>'
+            + '<h3>' + data.title + '</h3>' + data.content;
+
+        popup.classList.add('active');
+        clearInterval(heroTimer);
+        setTimeout(function() {
+            popup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    }
+
+    function closeAllFloatPopups() {
+        document.querySelectorAll('.hero-float-popup.active').forEach(function(p) {
+            p.classList.remove('active');
+        });
+        resetHeroTimer();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.hero-readmore')) {
+            closeAllFloatPopups();
+        }
+    });
+
+    /* ── Dynamic Publications & Grants ── */
+    (function() {
+        function loadPublications() {
+            fetch('api.php?action=get_publications')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    var box = document.getElementById('publications-container');
+                    if (!box) return;
+                    var list = d.publications || d.data || [];
+                    if (!d.success || list.length === 0) {
+                        box.innerHTML = '<p style="font-size:0.82rem;color:var(--text-light);padding:1rem;">No publications yet.</p>';
+                        return;
+                    }
+                    box.innerHTML = list.map(function(p) {
+                        var dateStr = p.pub_date || '';
+                        return '<article class="publication-card">'
+                            + '<div class="publication-meta">'
+                            + '<span class="publication-tag">' + (p.pub_type || 'Article') + '</span>'
+                            + (dateStr ? '<span class="publication-date">' + dateStr + '</span>' : '')
+                            + '</div>'
+                            + '<h3 class="publication-title">' + escH(p.title) + '</h3>'
+                            + '<p class="publication-authors">' + escH(p.authors || '') + '</p>'
+                            + (p.link ? '<a href="' + escH(p.link) + '" class="publication-link" target="_blank" rel="noopener">' + escH(p.link_label || 'Read more →') + '</a>' : '')
+                            + '</article>';
+                    }).join('');
+                })
+                .catch(function() {
+                    var box = document.getElementById('publications-container');
+                    if (box) box.innerHTML = '<p style="font-size:0.82rem;color:var(--text-light);padding:1rem;">Unable to load publications.</p>';
+                });
+        }
+
+        function loadGrants() {
+            fetch('api.php?action=get_grants')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    var box = document.getElementById('grants-container');
+                    if (!box) return;
+                    var list = d.grants || d.data || [];
+                    if (!d.success || list.length === 0) {
+                        box.innerHTML = '<p style="font-size:0.82rem;color:var(--text-light);padding:1rem;">No grants available at this time.</p>';
+                        return;
+                    }
+                    box.innerHTML = list.map(function(g) {
+                        var statusLabel = g.status === 'open' ? 'Open for Applications'
+                            : g.status === 'closing' ? 'Closing Soon' : 'Closed';
+                        var deadlineStr = g.deadline || '';
+                        var amountStr = g.amount ? (g.currency || 'UGX') + ' ' + Number(g.amount).toLocaleString() : '';
+                        return '<article class="grant-card">'
+                            + '<div class="grant-status"><span class="status-dot"></span> ' + statusLabel + '</div>'
+                            + '<div class="grant-header">'
+                            + '<h3>' + escH(g.title) + '</h3>'
+                            + (amountStr ? '<span class="grant-amount">' + amountStr + '</span>' : '')
+                            + '</div>'
+                            + (deadlineStr ? '<p class="grant-deadline">&#128197; Deadline: ' + deadlineStr + '</p>' : '')
+                            + (g.description ? '<p>' + escH(g.description) + '</p>' : '')
+                            + (g.status !== 'closed' ? '<a href="#" class="grant-apply" onclick="openGrantApplyModal(' + g.id + ',\'' + escH(g.title).replace(/'/g, "\\'") + '\');return false;">Apply Now &rarr;</a>' : '')
+                            + '</article>';
+                    }).join('');
+                })
+                .catch(function() {
+                    var box = document.getElementById('grants-container');
+                    if (box) box.innerHTML = '<p style="font-size:0.82rem;color:var(--text-light);padding:1rem;">Unable to load grants.</p>';
+                });
+        }
+
+        function escH(s) {
+            var d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        loadPublications();
+        loadGrants();
+    })();
+
+    /* ── Grant Application Modal ── */
+    window.openGrantApplyModal = function(grantId, grantTitle) {
+        document.getElementById('ga-grant-id').value = grantId;
+        document.getElementById('grant-apply-title').innerHTML = '<span class="ga-icon">📋</span> ' + grantTitle;
+        document.getElementById('grant-apply-subtitle').textContent = 'Complete the form below to submit your application.';
+        document.getElementById('grant-apply-form').style.display = '';
+        document.getElementById('grant-apply-success').style.display = 'none';
+        document.getElementById('grant-apply-error').style.display = 'none';
+        document.getElementById('grant-apply-form').reset();
+        var modal = document.getElementById('grant-apply-modal');
+        modal.classList.add('open');
+    };
+
+    window.closeGrantApplyModal = function() {
+        document.getElementById('grant-apply-modal').classList.remove('open');
+    };
+
+    document.getElementById('grant-apply-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeGrantApplyModal();
+    });
+
+    window.submitGrantApplication = function(e) {
+        e.preventDefault();
+        var errEl = document.getElementById('grant-apply-error');
+        var btn   = document.getElementById('ga-submit-btn');
+        errEl.style.display = 'none';
+
+        var fd = new FormData();
+        fd.append('action', 'submit_grant_application');
+        fd.append('grant_id', document.getElementById('ga-grant-id').value);
+        fd.append('full_name', document.getElementById('ga-name').value.trim());
+        fd.append('email', document.getElementById('ga-email').value.trim());
+        fd.append('phone', document.getElementById('ga-phone').value.trim());
+        fd.append('institution', document.getElementById('ga-institution').value.trim());
+        fd.append('proposal', document.getElementById('ga-proposal').value.trim());
+
+        btn.textContent = 'Submitting…';
+        btn.disabled = true;
+
+        fetch('api.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.success) {
+                    document.getElementById('grant-apply-form').style.display = 'none';
+                    document.getElementById('grant-apply-success').style.display = '';
+                } else {
+                    errEl.textContent = d.error || 'Submission failed. Please try again.';
+                    errEl.style.display = 'block';
+                    btn.textContent = 'Submit Application';
+                    btn.disabled = false;
+                }
+            })
+            .catch(function() {
+                errEl.textContent = 'Connection error. Please try again.';
+                errEl.style.display = 'block';
+                btn.textContent = 'Submit Application';
+                btn.disabled = false;
+            });
+    };
+
+    (function() {
+        var _loginState = null;
+
+        function renderLoginPopup(popup) {
+            if (_loginState && _loginState.loggedIn) {
+                var u = _loginState.user;
+                var isAdmin = u.role === 'admin';
+                popup.innerHTML =
+                    '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                    + '<div style="text-align:center;padding-bottom:0.5rem;">'
+                    + '<div style="width:42px;height:42px;border-radius:50%;background:var(--secondary-color);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">'
+                    + u.username.charAt(0).toUpperCase() + '</div>'
+                    + '<div style="font-weight:700;font-size:0.9rem;color:var(--secondary-color);">' + u.username + '</div>'
+                    + '<div style="font-size:0.72rem;color:var(--text-light);text-transform:capitalize;">' + u.role + ' Account</div>'
+                    + '</div>'
+                    + (isAdmin ? '<a href="admin.html" style="display:block;margin:0.75rem 0 0.3rem;width:100%;text-align:center;padding:0.5rem;background:var(--secondary-color);color:#fff;border-radius:6px;font-weight:600;font-size:0.82rem;text-decoration:none;">&#9881; Admin Dashboard</a>' : '')
+                    + '<button onclick="doLogout()" style="width:100%;margin-top:0.4rem;padding:0.45rem;background:rgba(230,57,70,0.08);color:var(--primary-color);border:1px solid rgba(230,57,70,0.2);border-radius:6px;font-weight:600;font-size:0.82rem;cursor:pointer;">Sign Out</button>';
+            } else {
+                popup.innerHTML =
+                    '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                    + '<h3>&#128274; Member Portal</h3>'
+                    + '<p style="font-size:0.73rem;color:var(--text-light);margin-bottom:0.75rem;">Sign in to your HOSU account</p>'
+                    + '<div id="lfp-error" style="display:none;font-size:0.75rem;color:var(--primary-color);background:rgba(230,57,70,0.07);border-radius:5px;padding:0.35rem 0.6rem;margin-bottom:0.5rem;"></div>'
+                    + '<label for="lfp-identity" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Username or Email</label>'
+                    + '<input type="text" id="lfp-identity" placeholder="username or email" autocomplete="username" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.5rem;font-family:inherit;">'
+                    + '<label for="lfp-pass" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Password</label>'
+                    + '<input type="password" id="lfp-pass" placeholder="Enter password" autocomplete="current-password" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+                    + '<button id="lfp-submit" onclick="doLogin()" style="width:100%;padding:0.5rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Sign In</button>'
+                    + '<div style="text-align:center;margin-top:0.6rem;font-size:0.72rem;color:var(--text-light);">New member? <a href="register.html" style="color:var(--secondary-color);font-weight:600;">Register</a></div>';
+            }
+        }
+
+        window.toggleLoginPopup = function(e) {
+            e.preventDefault();
+            var popup = document.getElementById('loginPopup');
+            var isActive = popup.classList.contains('active');
+            if (isActive) {
+                popup.classList.remove('active');
+                return;
+            }
+
+            renderLoginPopup(popup);
+            popup.classList.add('active');
+
+            fetch('auth.php?action=check_session', { credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    _loginState = d.logged_in ? { loggedIn: true, user: d.user } : { loggedIn: false };
+                    renderLoginPopup(popup);
+                })
+                .catch(function() {});
+        };
+
+        window.doLogin = function() {
+            var identity = document.getElementById('lfp-identity').value.trim();
+            var password = document.getElementById('lfp-pass').value;
+            var errEl = document.getElementById('lfp-error');
+            var btn = document.getElementById('lfp-submit');
+
+            if (!identity || !password) {
+                errEl.textContent = 'Please fill in all fields.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            btn.textContent = 'Signing in...';
+            btn.disabled = true;
+
+            var fd = new FormData();
+            fd.append('action', 'login');
+            fd.append('identity', identity);
+            fd.append('password', password);
+
+            fetch('auth.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.success) {
+                        _loginState = { loggedIn: true, user: d.user };
+                        var popup = document.getElementById('loginPopup');
+                        renderLoginPopup(popup);
+                        var trigger = document.querySelector('.login-trigger');
+                        if (trigger) trigger.textContent = d.user.username;
+                    } else {
+                        errEl.textContent = d.error || 'Invalid credentials.';
+                        errEl.style.display = 'block';
+                        btn.textContent = 'Sign In';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(function() {
+                    errEl.textContent = 'Connection error. Please try again.';
+                    errEl.style.display = 'block';
+                    btn.textContent = 'Sign In';
+                    btn.disabled = false;
+                });
+        };
+
+        window.doLogout = function() {
+            fetch('auth.php?action=logout', { credentials: 'same-origin' })
+                .then(function() {
+                    _loginState = { loggedIn: false };
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = 'Member Portal';
+                    var popup = document.getElementById('loginPopup');
+                    renderLoginPopup(popup);
+                })
+                .catch(function() {});
+        };
+
+        document.addEventListener('click', function(e) {
+            var popup = document.getElementById('loginPopup');
+            if (popup && popup.classList.contains('active') && !e.target.closest('.login-trigger-wrap')) {
+                popup.classList.remove('active');
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Close mobile menu if open
-                    navLinks.classList.remove('active');
-                }
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('auth.php?action=check_session', { credentials: 'same-origin' })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.logged_in) {
+                        _loginState = { loggedIn: true, user: d.user };
+                        var trigger = document.querySelector('.login-trigger');
+                        if (trigger) trigger.textContent = d.user.username;
+                    }
+                })
+                .catch(function() {});
         });
-    </script>
+    })();
+</script>
+<script src="donate-float.js"></script>
 </body>
 </html>

@@ -1,276 +1,2675 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Events Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Admin Dashboard - HOSU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 20px; 
-            background-color: #f5f5f5;
-        }
-        .form-container { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        .form-group { 
-            margin-bottom: 20px; 
-        }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-weight: bold;
-            color: #34495e;
-        }
-        input, select, textarea { 
-            width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button { 
-            padding: 12px 20px; 
-            background: #27ae60; 
-            color: white; 
-            border: none; 
-            border-radius: 4px;
-            cursor: pointer; 
-            font-size: 16px;
-            transition: background 0.3s;
-            width: 100%;
-            margin-top: 10px;
-        }
-        button:hover { 
-            background: #219653; 
-        }
-        button:disabled { 
-            background: #95a5a6; 
-            cursor: not-allowed; 
-        }
-        .image-preview { 
-            max-width: 200px; 
-            margin-top: 10px; 
-            display: none;
-            border-radius: 4px;
-            border: 1px solid #eee;
-        }
-        .status-message { 
-            padding: 15px; 
-            margin: 20px 0; 
-            border-radius: 4px; 
-            display: none;
-            font-size: 16px;
-        }
-        .success { 
-            background: #d5f5e3; 
-            color: #27ae60; 
-            border: 1px solid #a3e4d7;
-        }
-        .error { 
-            background: #fadbd8; 
-            color: #e74c3c; 
-            border: 1px solid #f5b7b1;
-        }
-        .message-icon {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        small {
-            display: block;
-            color: #7f8c8d;
-            margin: 5px 0;
-        }
+:root{--primary:#e63946;--primary-dark:#c1121f;--secondary:#0d4593;--secondary-dark:#0a3270;--text:#12294a;--text-light:#64748b;--bg:#f1f5f9;--white:#fff;--border:#e2e8f0;--green:#16a34a;--amber:#d97706;--shadow:0 1px 4px rgba(0,0,0,.08);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+/* Flatpickr overrides */
+.flatpickr-calendar{font-family:'Inter',sans-serif!important;border-radius:10px!important;box-shadow:0 8px 28px rgba(0,0,0,.15)!important;border:1px solid var(--border)!important;}
+.flatpickr-day.selected,.flatpickr-day.selected:hover{background:var(--secondary)!important;border-color:var(--secondary)!important;}
+.flatpickr-day:hover{background:rgba(13,69,147,.08)!important;}
+.flatpickr-months .flatpickr-month{color:var(--secondary)!important;}
+.flatpickr-current-month .flatpickr-monthDropdown-months,.flatpickr-current-month input.cur-year{font-weight:600;color:var(--text)!important;}
+span.flatpickr-weekday{color:var(--text-light)!important;font-weight:600;}
+.flatpickr-day.today{border-color:var(--primary)!important;}
+.flatpickr-day.today:hover{background:rgba(230,57,70,.08)!important;}
+input[readonly].flatpickr-input{background:var(--white);cursor:pointer;}
+/* AUTH — removed standalone login; admin must log in via site portal */
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:58px;box-shadow:var(--shadow);}
+.tb-brand{display:flex;align-items:center;gap:.6rem;}
+.tb-brand img{height:70px;object-fit:contain;}
+.tb-brand span{font-weight:700;font-size:.94rem;color:var(--secondary);}
+.tb-badge{font-size:.6rem;background:var(--primary);color:#fff;border-radius:5px;padding:.12rem .45rem;font-weight:700;letter-spacing:.5px;}
+.tb-right{display:flex;align-items:center;gap:.75rem;}
+.tb-user{display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--text);}
+.tb-avatar{width:30px;height:30px;border-radius:50%;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;}
+.btn-xs{padding:.3rem .75rem;border-radius:6px;font-size:.75rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all .15s;}
+.btn-outline-xs{background:transparent;border:1.5px solid var(--border);color:var(--text-light);}
+.btn-outline-xs:hover{border-color:var(--secondary);color:var(--secondary);}
+.btn-danger-xs{background:rgba(230,57,70,.08);color:var(--primary);border:1.5px solid rgba(230,57,70,.2);}
+.btn-danger-xs:hover{background:var(--primary);color:#fff;}
+/* LAYOUT */
+#dashboard{display:none;flex-direction:column;min-height:100vh;}
+#dashboard.show{display:flex;}
+.dash-body{display:flex;flex:1;}
+/* TABS */
+.tabs-bar{background:var(--white);border-bottom:1px solid var(--border);display:flex;gap:0;overflow-x:auto;padding:0 1.5rem;flex-shrink:0;}
+.tab-btn{display:flex;align-items:center;gap:.45rem;padding:.85rem 1.1rem;font-size:.82rem;font-weight:600;color:var(--text-light);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;font-family:inherit;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--secondary);border-bottom-color:var(--secondary);}
+.tab-btn .t-badge{background:var(--primary);color:#fff;font-size:.6rem;font-weight:700;padding:.08rem .4rem;border-radius:10px;margin-left:.2rem;}
+/* MAIN */
+.main{flex:1;padding:1.5rem;overflow-x:hidden;}
+.panel{display:none;}.panel.active{display:block;}
+/* PAGE HEADER */
+.ph{margin-bottom:1.25rem;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.6rem;}
+.ph h1{font-size:1.35rem;font-weight:800;color:var(--text);}
+.ph p{font-size:.8rem;color:var(--text-light);margin-top:.15rem;}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.85rem;margin-bottom:1.4rem;}
+.sc{background:var(--white);border-radius:12px;padding:1rem 1.1rem;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .15s,transform .12s;-webkit-user-select:none;user-select:none;}
+.sc:hover{box-shadow:0 6px 22px rgba(0,0,0,.13);transform:translateY(-2px);}
+.sc .s-icon{font-size:1.3rem;margin-bottom:.4rem;}
+.sc .s-val{font-size:1.65rem;font-weight:800;color:var(--secondary);line-height:1;}
+.sc .s-lbl{font-size:.7rem;color:var(--text-light);margin-top:.2rem;font-weight:500;}
+/* CARD */
+.card{background:var(--white);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:1.25rem;}
+.card-hd{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;border-bottom:1px solid var(--border);}
+.card-hd h2{font-size:.9rem;font-weight:700;}
+.card-body{padding:1.1rem;}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:.8rem;}
+.tbl th{text-align:left;padding:.6rem .8rem;font-size:.68rem;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;border-bottom:1.5px solid var(--border);white-space:nowrap;}
+.tbl td{padding:.65rem .8rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--bg);}
+.ev-thumb{width:50px;height:37px;border-radius:6px;object-fit:cover;background:var(--bg);flex-shrink:0;}
+.ev-cell{display:flex;align-items:center;gap:.6rem;}
+.ev-name{font-weight:600;font-size:.82rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ev-id{font-size:.67rem;color:var(--text-light);}
+/* TAGS */
+.tag{display:inline-block;padding:.15rem .5rem;border-radius:20px;font-size:.67rem;font-weight:600;text-transform:capitalize;}
+.tag-conf,.tag-conferences{background:rgba(13,69,147,.1);color:var(--secondary);}
+.tag-work,.tag-workshops{background:rgba(42,157,143,.1);color:#2a9d8f;}
+.tag-web,.tag-webinars{background:rgba(131,56,236,.1);color:#8338ec;}
+.tag-open{background:rgba(22,163,74,.1);color:var(--green);}
+.tag-closing{background:rgba(217,119,6,.1);color:var(--amber);}
+.tag-past{background:rgba(100,116,139,.1);color:#475569;}
+.tag-current{background:rgba(239,68,68,.1);color:#dc2626;}
+.tag-upcoming{background:rgba(59,130,246,.1);color:#2563eb;}
+.tag-featured{background:rgba(230,57,70,.1);color:var(--primary);}
+.tag-active{background:rgba(22,163,74,.1);color:var(--green);}
+.tag-pending{background:rgba(217,119,6,.1);color:var(--amber);}
+.tag-expired{background:rgba(100,116,139,.1);color:#475569;}
+.tag-rejected{background:rgba(239,68,68,.1);color:#dc2626;}
+.tag-verified{background:rgba(22,163,74,.1);color:var(--green);}
+/* BUTTONS */
+.btn-primary{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.25rem;background:var(--secondary);color:#fff;border:none;border-radius:8px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;}
+.btn-primary:hover{background:var(--secondary-dark);transform:translateY(-1px);}
+.btn-primary:disabled{background:#94a3b8;cursor:not-allowed;transform:none;}
+.btn-danger{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .75rem;font-size:.72rem;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:rgba(230,57,70,.08);color:var(--primary);font-family:inherit;transition:all .15s;}
+.btn-danger:hover{background:var(--primary);color:#fff;}
+.btn-edit{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .75rem;font-size:.72rem;font-weight:600;border:none;border-radius:6px;cursor:pointer;background:rgba(13,69,147,.08);color:var(--secondary);font-family:inherit;transition:all .15s;}
+.btn-edit:hover{background:var(--secondary);color:#fff;}
+.btn-sm{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .8rem;font-size:.75rem;font-weight:600;border-radius:6px;cursor:pointer;font-family:inherit;border:1.5px solid var(--border);background:transparent;color:var(--text-light);transition:all .15s;}
+.btn-sm:hover{border-color:var(--secondary);color:var(--secondary);}
+.btn-green{background:rgba(22,163,74,.08);color:var(--green);border:1.5px solid rgba(22,163,74,.2);}
+.btn-green:hover{background:var(--green);color:#fff;}
+.btn-amber{background:rgba(217,119,6,.08);color:var(--amber);border:1.5px solid rgba(217,119,6,.2);}
+.btn-amber:hover{background:var(--amber);color:#fff;}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.1rem;}
+.form-grid .full{grid-column:1/-1;}
+.ff{display:flex;flex-direction:column;gap:.22rem;}
+.ff label{font-size:.69rem;font-weight:600;color:var(--text);}
+.ff label span{color:var(--primary);}
+.ff input,.ff select,.ff textarea{width:100%;padding:.46rem .72rem;border:1.5px solid var(--border);border-radius:7px;font-size:.82rem;font-family:inherit;color:var(--text);background:var(--white);transition:border-color .2s;}
+.ff input:focus,.ff select:focus,.ff textarea:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(13,69,147,.07);}
+.ff textarea{resize:vertical;min-height:72px;}
+.ff small{font-size:.67rem;color:var(--text-light);}
+.ff input[type="checkbox"]{width:auto;margin-right:.4rem;}
+/* Upload */
+.upload-zone{border:2px dashed var(--border);border-radius:8px;padding:.65rem .9rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--secondary);background:rgba(13,69,147,.02);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.upload-icon{font-size:1.6rem;margin-bottom:.3rem;}
+.upload-zone p{font-size:.76rem;color:var(--text-light);}
+.img-pre{display:none;margin-top:.65rem;}
+.img-pre img{width:100%;max-height:150px;object-fit:cover;border-radius:8px;border:1px solid var(--border);}
+.img-pre-rm{display:inline-block;margin-top:.3rem;font-size:.7rem;color:var(--primary);cursor:pointer;font-weight:600;}
+/* Toggle */
+.tog-wrap{display:flex;align-items:center;gap:.6rem;}
+.tog{position:relative;width:38px;height:21px;}
+.tog input{opacity:0;width:0;height:0;position:absolute;}
+.tog-slider{position:absolute;inset:0;background:var(--border);border-radius:21px;cursor:pointer;transition:.2s;}
+.tog-slider::before{content:'';position:absolute;left:3px;top:3px;width:15px;height:15px;background:#fff;border-radius:50%;transition:.2s;}
+.tog input:checked+.tog-slider{background:var(--secondary);}
+.tog input:checked+.tog-slider::before{transform:translateX(17px);}
+.tog-lbl{font-size:.82rem;font-weight:500;}
+/* Progress */
+.prog-wrap{height:3px;background:var(--border);border-radius:2px;margin-bottom:1rem;}
+.prog-wrap-sm{margin-bottom:.65rem;}
+.prog-fill{height:100%;background:var(--secondary);width:0;border-radius:2px;transition:width .3s;}
+/* Modal */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(18,41,74,.35);z-index:8000;align-items:center;justify-content:center;padding:1rem;}
+.modal-backdrop.open{display:flex;}
+.modal-box{background:var(--white);border-radius:14px;width:100%;max-width:560px;max-height:calc(100vh - 2rem);overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.18);animation:popIn .28s cubic-bezier(.22,1,.36,1);}
+@keyframes popIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:1;}
+.modal-hd h3{font-size:.9rem;font-weight:700;color:var(--text);}
+.modal-close{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.05);border:none;border-radius:50%;font-size:.9rem;cursor:pointer;color:var(--text-light);}
+.modal-close:hover{background:var(--primary);color:#fff;}
+.modal-body{padding:1rem;}
+/* Add-event form sections */
+.aef-sec{padding-bottom:.75rem;margin-bottom:.75rem;border-bottom:1px solid var(--border);}
+.aef-sec:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:0;}
+.aef-lbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-light);margin-bottom:.45rem;display:flex;align-items:center;gap:.35rem;}
+.aef-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.42rem .6rem;}
+.aef-grid .c2{grid-column:span 2;}
+.aef-grid .c3{grid-column:1/-1;}
+.aef-upload-row{display:grid;grid-template-columns:1fr 200px;gap:.5rem;align-items:start;}
+@media(max-width:640px){.aef-grid{grid-template-columns:1fr 1fr;}.aef-upload-row{grid-template-columns:1fr;}}
+/* Proof image */
+.proof-img{width:100%;border-radius:8px;border:1px solid var(--border);margin-bottom:.75rem;max-height:300px;object-fit:contain;}
+/* Invoice preview */
+.invoice{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;font-size:.82rem;}
+.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+.invoice-logo{font-weight:800;font-size:1rem;color:var(--secondary);}
+.invoice-no{font-size:.7rem;color:var(--text-light);text-align:right;}
+.invoice-row{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px dashed var(--border);}
+.invoice-row:last-child{border-bottom:none;font-weight:700;}
+.invoice-total{display:flex;justify-content:space-between;padding:.6rem 0 0;font-size:.92rem;font-weight:800;color:var(--secondary);}
+/* Toast */
+#toast{position:fixed;bottom:1.25rem;right:1.25rem;z-index:9998;background:#1e293b;color:#fff;padding:.65rem 1rem;border-radius:9px;font-size:.8rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);display:none;animation:su .27s ease;}
+#toast.success{background:#065f46;}#toast.error{background:#991b1b;}
+@keyframes su{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* Search input */
+.search-wrap{position:relative;display:inline-flex;align-items:center;}
+.search-wrap input{padding:.45rem .8rem .45rem 2rem;border:1.5px solid var(--border);border-radius:7px;font-size:.8rem;font-family:inherit;width:200px;}
+.search-wrap::before{content:'🔍';position:absolute;left:.55rem;font-size:.75rem;pointer-events:none;}
+/* Empty state */
+.empty{text-align:center;padding:2.5rem;color:var(--text-light);font-size:.83rem;}
+.empty .big{font-size:2.2rem;margin-bottom:.4rem;}
+/* Admin utility classes */
+.ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.card-body-flush{padding:0;}
+.filter-toolbar{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;}
+.select-sm-pad{padding:.38rem .6rem;}
+.btn-nodecor{text-decoration:none;}
+.modal-box-md{max-width:660px;}
+.modal-box-lg{max-width:780px;}
+.upload-zone-compact{padding:.55rem .8rem;}
+.upload-inner{display:flex;align-items:center;gap:.55rem;}
+.upload-icon{font-size:1.3rem;}
+.upload-text{font-size:.74rem;text-align:left;}
+.upload-hint{color:var(--text-light);font-size:.68rem;}
+.img-pre-mt{margin-top:.4rem;}
+.ev-date-opt{font-weight:400;}
+.tog-lbl-sm{font-size:.82rem;}
+.tog-lbl-xs{font-size:.78rem;}
+#ev-fee-section{display:none;}
+.pricing-row{display:flex;align-items:center;gap:.85rem;margin-bottom:.55rem;}
+.fee-hint{margin-top:.3rem;}
+.modal-footer-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;padding-top:.5rem;}
+.btn-row{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap;}
+.reg-stats-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:.8rem;}
+/* Reg-modal stat cards */
+.reg-sc{flex:1;min-width:110px;padding:.7rem 1rem;background:var(--bg);border-radius:10px;border:1px solid var(--border);}
+.reg-sc .s-val{font-size:1.15rem;font-weight:700;}
+.reg-sc .s-lbl{font-size:.72rem;color:var(--text-light);margin-top:.15rem;}
+.reg-sc .s-val.green{color:#2e7d32;}
+.reg-sc .s-val.blue{color:var(--secondary);}
+/* Reg-modal table helpers */
+.reg-name{font-weight:600;font-size:.84rem;}
+.reg-sub{font-size:.7rem;color:var(--text-light);}
+.reg-amt-free{font-size:.7rem;color:#2e7d32;font-weight:600;}
+.reg-amt-paid{font-size:.7rem;color:var(--text-light);}
+.col-num{width:30px;}
+.col-inst{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.col-date{white-space:nowrap;}
+.col-actions{white-space:nowrap;display:flex;gap:.3rem;align-items:center;flex-wrap:wrap;}
+.btn-icon-del{color:#dc2626;}
+.reg-search-wrap{margin-bottom:.6rem;}
+.reg-search-input{width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:8px;font-size:.82rem;}
+.overflow-auto{overflow-x:auto;}
+#reg-modal-empty{display:none;text-align:center;padding:2rem 1rem;color:var(--text-light);}
+.empty-icon{font-size:2.5rem;margin-bottom:.5rem;}
+.empty-title{font-weight:600;}
+.empty-desc{font-size:.82rem;}
+.ph-tight{margin-bottom:.75rem;}
+.ph-title-sm{font-size:1.15rem;}
+.btn-pill-compact{padding:.4rem .9rem;}
+.search-input-xs{width:130px;}
+.radio-inline-row{display:flex;gap:.75rem;align-items:center;margin-bottom:.65rem;}
+.radio-inline-label{display:flex;align-items:center;gap:.35rem;cursor:pointer;font-size:.82rem;font-weight:500;}
+#pub-event-picker{display:none;}
+.gapp-toolbar{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.65rem;}
+.gapp-search-grow{flex:1;}
+.gapp-empty-state{display:none;text-align:center;padding:2rem 1rem;color:var(--text-light);}
+.gapp-empty-icon{font-size:2.5rem;margin-bottom:.5rem;}
+.gapp-empty-title{font-weight:600;}
+.gapp-empty-desc{font-size:.82rem;}
+/* Tag variants for free/paid */
+.tag-free{background:#e8f5e9;color:#2e7d32;}
+.tag-paid{background:#fff3e0;color:#e65100;}
+.tag-free-sm,.tag-paid-sm{font-size:.72rem;}
+.tag-sm{font-size:.65rem;}
+.lifetime-lbl{color:#0d4593;font-weight:700;}
+/* Event table helpers */
+.ev-thumb-empty{background:var(--bg);}
+.reg-count-btn{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;}
+.reg-count-circle{background:var(--text-light);color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;}
+.reg-count-circle.has-count{background:var(--primary);}
+.reg-view-lbl{font-size:.72rem;}
+/* TD utility classes */
+.td-center{text-align:center;}
+.td-nowrap{white-space:nowrap;}
+.td-date{white-space:nowrap;font-size:.76rem;}
+.td-location{font-size:.76rem;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.td-ev-title{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.79rem;font-weight:600;}
+.td-idx{font-size:.7rem;color:var(--text-light);}
+.td-name{font-weight:600;font-size:.82rem;}
+.td-email{font-size:.78rem;}
+.td-prof{font-size:.76rem;}
+.td-sm{font-size:.74rem;}
+.td-sm-date{font-size:.72rem;}
+/* Member table helpers */
+.mem-status-sel{padding:.28rem .5rem;font-size:.7rem;}
+.mem-pay-btn{margin-left:.3rem;}
+/* Payment table helpers */
+.pay-name{font-weight:600;}
+.pay-email{font-size:.7rem;color:var(--text-light);}
+.td-type{white-space:nowrap;font-size:.76rem;}
+.td-plan{font-size:.75rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.td-amt{font-weight:700;white-space:nowrap;}
+.td-txid{font-size:.72rem;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* Pay modal helpers */
+.no-proof-msg{font-size:.82rem;color:var(--text-light);}
+.ev-date-sub{color:var(--text-light);font-size:.78rem;}
+.tbl-mt{margin-top:.5rem;}
+.pay-actions{margin-top:1rem;display:flex;gap:.5rem;}
+/* Invoice helpers */
+.inv-org-sub{font-size:.72rem;color:var(--text-light);}
+.inv-title{font-size:.85rem;font-weight:700;}
+.inv-billed{margin-bottom:.75rem;font-size:.8rem;}
+.inv-thanks{margin-top:1rem;font-size:.75rem;color:var(--text-light);}
+.inv-actions{margin-top:1rem;display:flex;gap:.5rem;}
+/* Research side-by-side grid */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;}
+.res-grid .card{margin-bottom:0;}
+/* Compact card header (stacked) */
+.card-hd-stack{flex-direction:column;align-items:stretch;gap:.5rem;padding:.65rem 1rem;}
+.card-hd-stack .card-hd-top{display:flex;align-items:center;justify-content:space-between;}
+.card-hd-stack .filter-toolbar{justify-content:flex-start;}
+/* Compact stats row */
+.stats-compact .sc{padding:.6rem .8rem;}
+.stats-compact .s-icon{font-size:1rem;margin-bottom:.2rem;}
+.stats-compact .s-val{font-size:1.2rem;}
+.stats-compact .s-lbl{font-size:.65rem;}
+/* Better pill buttons */
+.btn-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.32rem .7rem;font-size:.72rem;font-weight:600;border:none;border-radius:20px;cursor:pointer;font-family:inherit;transition:all .18s;}
+.btn-pill:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.btn-pill-primary{background:var(--secondary);color:#fff;}
+.btn-pill-primary:hover{background:var(--secondary-dark);}
+.btn-pill-edit{background:rgba(13,69,147,.08);color:var(--secondary);}
+.btn-pill-edit:hover{background:var(--secondary);color:#fff;}
+.btn-pill-del{background:rgba(230,57,70,.08);color:var(--primary);}
+.btn-pill-del:hover{background:var(--primary);color:#fff;}
+.btn-pill-green{background:rgba(22,163,74,.08);color:var(--green);}
+.btn-pill-green:hover{background:var(--green);color:#fff;}
+.btn-pill-amber{background:rgba(217,119,6,.08);color:var(--amber);}
+.btn-pill-amber:hover{background:var(--amber);color:#fff;}
+/* Compact inline actions */
+.act-row{display:flex;gap:.3rem;align-items:center;flex-wrap:nowrap;}
+/* Responsive */
+@media(max-width:900px){.res-grid{grid-template-columns:1fr;}}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr;}.form-grid .full{grid-column:1;}.stats{grid-template-columns:1fr 1fr;}.ov-grid{grid-template-columns:1fr;}.res-grid{grid-template-columns:1fr;}}
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Add New Event</h1>
-        
-        <div id="statusMessage" class="status-message">
-            <span id="statusIcon" class="message-icon"></span>
-            <span id="statusText"></span>
+
+<!-- ===== AUTH GATE ===== -->
+<!-- Auth gate removed — admin must log in via member portal. Session is verified on load. -->
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+    <header class="topbar">
+        <div class="tb-brand">
+            <img src="img/hlogo2.png" alt="HOSU">
         </div>
-        
-        <form id="eventForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="id">Unique ID:</label>
-                <input type="text" id="id" name="id" required placeholder="e.g., tech-summit-2024">
+        <div class="tb-right">
+            <div class="tb-user"><div class="tb-avatar" id="u-av">A</div><span id="u-name">Admin</span></div>
+            <a href="index.html" class="btn-xs btn-outline-xs">View Site ↗</a>
+            <button class="btn-xs btn-outline-xs" onclick="openChangePassword()" title="Change Password">🔑 Password</button>
+            <button class="btn-xs btn-danger-xs" onclick="doLogout()">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <nav class="tabs-bar">
+        <button class="tab-btn active" id="tab-overview" onclick="showTab('overview')">📊 Overview</button>
+        <button class="tab-btn" id="tab-events" onclick="showTab('events')">📅 Events <span class="t-badge" id="tab-ev-cnt">–</span></button>
+        <button class="tab-btn" id="tab-members" onclick="showTab('members')">👥 Members <span class="t-badge" id="tab-mem-cnt">–</span></button>
+        <button class="tab-btn" id="tab-payments" onclick="showTab('payments')">💳 Payments <span class="t-badge" id="tab-pay-cnt">–</span></button>
+        <button class="tab-btn" id="tab-research" onclick="showTab('research')">📚 Research <span class="t-badge" id="tab-res-cnt">–</span></button>
+        <button class="tab-btn" id="tab-leadership" onclick="showTab('leadership')">🏛️ Leadership <span class="t-badge" id="tab-lead-cnt">–</span></button>
+        <button class="tab-btn" id="tab-blog" onclick="showTab('blog')">📝 Blog <span class="t-badge" id="tab-blog-cnt">–</span></button>
+    </nav>
+
+    <main class="main">
+
+        <!-- ===== OVERVIEW ===== -->
+        <div class="panel active" id="panel-overview">
+            <div class="ph"><div><h1>📊 Dashboard Overview</h1><p>Welcome back. Here's a snapshot of HOSU data.</p></div></div>
+            <div class="stats" id="stats-row">
+                <div class="sc" onclick="showTab('events')" title="View all events"><div class="s-icon">📅</div><div class="s-val" id="s-ev">–</div><div class="s-lbl">Total Events</div></div>
+                <div class="sc" onclick="goToTab('members','mem-status-filter','')" title="View all members"><div class="s-icon">👥</div><div class="s-val" id="s-mem">–</div><div class="s-lbl">Total Members</div></div>
+                <div class="sc" onclick="goToTab('members','mem-status-filter','active')" title="View active members"><div class="s-icon">✅</div><div class="s-val" id="s-active">–</div><div class="s-lbl">Active Members</div></div>
+                <div class="sc" onclick="goToTab('members','mem-status-filter','pending')" title="View pending approvals"><div class="s-icon">⏳</div><div class="s-val" id="s-pend">–</div><div class="s-lbl">Pending Approvals</div></div>
+                <div class="sc" onclick="goToTab('payments','pay-status-filter','verified')" title="View verified payments"><div class="s-icon">💰</div><div class="s-val" id="s-col">–</div><div class="s-lbl">Revenue (UGX)</div></div>
+                <div class="sc" onclick="goToTab('payments','pay-status-filter','pending')" title="View pending invoices"><div class="s-icon">📄</div><div class="s-val" id="s-inv">–</div><div class="s-lbl">Invoices Pending</div></div>
             </div>
-            
-            <div class="form-group">
-                <label for="type">Event Type:</label>
-                <select id="type" name="type" required>
-                    <option value="">Select type</option>
-                    <option value="conference">Conference</option>
-                    <option value="workshop">Workshop</option>
-                    <option value="webinar">Webinar</option>
-                </select>
+            <div class="ov-grid">
+                <div class="card">
+                    <div class="card-hd"><h2>Recent Members</h2><button class="btn-sm" onclick="showTab('members')">View All</button></div>
+                    <div class="card-body card-body-flush"><table class="tbl" id="ov-members-tbl"><thead><tr><th>Name</th><th>Profession</th><th>Status</th><th>Joined</th></tr></thead><tbody id="ov-members-body"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody></table></div>
+                </div>
+                <div class="card">
+                    <div class="card-hd"><h2>Recent Events</h2><button class="btn-sm" onclick="showTab('events')">View All</button></div>
+                    <div class="card-body card-body-flush"><table class="tbl" id="ov-events-tbl"><thead><tr><th>Title</th><th>Type</th><th>Category</th></tr></thead><tbody id="ov-events-body"><tr><td colspan="3" class="empty">Loading…</td></tr></tbody></table></div>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="">Select status</option>
-                    <option value="open">Open</option>
-                    <option value="closing">Closing</option>
-                    <option value="past">Past</option>
-                </select>
+        </div>
+
+        <!-- ===== EVENTS LIST ===== -->
+        <div class="panel" id="panel-events">
+            <div class="ph">
+                <div><h1>📅 All Events</h1><p>Create, edit and delete events shown on the website.</p></div>
+                <button class="btn-primary" onclick="openAddEventModal()">➕ Add New Event</button>
             </div>
-            
-            <div class="form-group">
-                <label for="imageFile">Upload Image:</label>
-                <input type="file" id="imageFile" name="imageFile" accept="image/*">
-                <img id="imagePreview" class="image-preview" alt="Preview">
-                <small>OR</small>
-                <label for="image">Image URL:</label>
-                <input type="text" id="image" name="image" placeholder="https://example.com/image.jpg">
+            <div class="card">
+                <div class="card-hd"><h2>Events (<span id="ev-count">0</span>)</h2>
+                    <div class="search-wrap"><input type="text" id="ev-search" placeholder="Search events…" oninput="filterEvents()"></div>
+                </div>
+                <div class="card-body card-body-flush">
+                    <table class="tbl"><thead><tr><th>Event</th><th>Type</th><th>Category</th><th>Status</th><th>Price</th><th>Registrants</th><th>Date</th><th>Location</th><th>Actions</th></tr></thead>
+                    <tbody id="ev-body"><tr><td colspan="9" class="empty"><div class="big">📅</div>Loading events…</td></tr></tbody></table>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="imageAlt">Image Description:</label>
-                <input type="text" id="imageAlt" name="imageAlt" required placeholder="Describe the image">
+        </div>
+
+        <!-- ===== MEMBERS ===== -->
+        <div class="panel" id="panel-members">
+            <div class="ph">
+                <div><h1>👥 Members</h1><p>All society members and their membership status.</p></div>
+                <div class="filter-toolbar">
+                    <select id="mem-type-filter" class="btn-sm select-sm-pad" onchange="filterMembers()">
+                        <option value="">All Plans</option>
+                        <option value="1_year">1 Year</option>
+                        <option value="2_years">2 Years</option>
+                        <option value="3_years">3 Years</option>
+                        <option value="lifetime">5+ Years Premium</option>
+                    </select>
+                    <select id="mem-status-filter" class="btn-sm select-sm-pad" onchange="filterMembers()">
+                        <option value="">All Statuses</option>
+                        <option value="active">✅ Active</option>
+                        <option value="pending">⏳ Pending</option>
+                        <option value="expired">🔴 Expired</option>
+                        <option value="rejected">✖ Rejected</option>
+                    </select>
+                    <div class="search-wrap"><input type="text" id="mem-search" placeholder="Search members…" oninput="filterMembers()"></div>
+                    <a href="api.php?action=export_csv" class="btn-primary btn-nodecor" id="csv-btn">⬇ Export CSV</a>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="countdown">Countdown Text:</label>
-                <input type="text" id="countdown" name="countdown" placeholder="e.g., Happening in 2 months">
+            <div class="card">
+                <div class="card-hd"><h2>Members (<span id="mem-count">0</span>)</h2></div>
+                <div class="card-body card-body-flush">
+                    <table class="tbl"><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Profession</th><th>Type</th><th>Status</th><th>Joined</th><th>Payment</th><th>Actions</th></tr></thead>
+                    <tbody id="mem-body"><tr><td colspan="9" class="empty"><div class="big">👥</div>Loading members…</td></tr></tbody></table>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="date">Event Date:</label>
-                <input type="text" id="date" name="date" required placeholder="e.g., April 15, 2024">
+        </div>
+
+        <!-- ===== PAYMENTS ===== -->
+        <div class="panel" id="panel-payments">
+            <div class="ph">
+                <div><h1>💳 Payments</h1><p>All membership payments, event registrations, donations, and invoice management.</p></div>
+                <div class="filter-toolbar">
+                    <select id="pay-type-filter" class="btn-sm select-sm-pad" onchange="filterPayments()">
+                        <option value="">All Types</option>
+                        <option value="membership">Membership</option>
+                        <option value="event_registration">Event Registration</option>
+                        <option value="donation">Donation</option>
+                        <option value="grant_application">Grant Application</option>
+                    </select>
+                    <select id="pay-status-filter" class="btn-sm select-sm-pad" onchange="filterPayments()">
+                        <option value="">All Statuses</option>
+                        <option value="verified">✅ Verified</option>
+                        <option value="pending">⏳ Pending</option>
+                        <option value="rejected">✖ Rejected</option>
+                    </select>
+                    <div class="search-wrap"><input type="text" id="pay-search" placeholder="Search…" oninput="filterPayments()"></div>
+                    <a href="api.php?action=export_payments_csv" class="btn-primary btn-nodecor">⬇ Export CSV</a>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="title">Event Title:</label>
-                <input type="text" id="title" name="title" required placeholder="e.g., Tech Summit 2024">
+            <div class="stats" id="pay-stats">
+                <div class="sc"><div class="s-icon">💰</div><div class="s-val" id="ps-total">UGX 0</div><div class="s-lbl">Total Collected</div></div>
+                <div class="sc"><div class="s-icon">🪪</div><div class="s-val" id="ps-mem-rev">UGX 0</div><div class="s-lbl">Membership Revenue</div></div>
+                <div class="sc"><div class="s-icon">🎫</div><div class="s-val" id="ps-ev-rev">UGX 0</div><div class="s-lbl">Event Revenue</div></div>
+                <div class="sc"><div class="s-icon">📋</div><div class="s-val" id="ps-grant-rev">UGX 0</div><div class="s-lbl">Grant Revenue</div></div>
+                <div class="sc"><div class="s-icon"></div><div class="s-val" id="ps-don-rev">UGX 0</div><div class="s-lbl">Donations</div></div>
+                <div class="sc"><div class="s-icon">✅</div><div class="s-val" id="ps-verified">0</div><div class="s-lbl">Verified</div></div>
+                <div class="sc"><div class="s-icon">⏳</div><div class="s-val" id="ps-pending">0</div><div class="s-lbl">Pending</div></div>
             </div>
-            
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
+            <div class="card">
+                <div class="card-hd"><h2>Payments (<span id="pay-count">0</span>)</h2></div>
+                <div class="card-body card-body-flush">
+                    <table class="tbl"><thead><tr><th>#</th><th>Name</th><th>Type</th><th>Plan / Event</th><th>Amount</th><th>Tx ID</th><th>Method</th><th>Status</th><th>Valid Until</th><th>Date</th><th>Actions</th></tr></thead>
+                    <tbody id="pay-body"><tr><td colspan="11" class="empty"><div class="big">💳</div>Loading payments…</td></tr></tbody></table>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="location">Location:</label>
-                <input type="text" id="location" name="location" required placeholder="e.g., Kampala, Uganda">
+        </div>
+
+        <!-- ===== RESEARCH (Publications & Grants) ===== -->
+        <div class="panel" id="panel-research">
+            <div class="ph ph-tight">
+                <div><h1 class="ph-title-sm">📚 Research</h1><p>Publications, grants &amp; applications</p></div>
+                <a href="api.php?action=export_grants_report_csv" class="btn-pill btn-pill-primary btn-nodecor btn-pill-compact">📊 Export Report</a>
             </div>
-            
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="featured" name="featured"> Featured Event
-                </label>
+
+            <!-- Research Stats (compact) -->
+            <div class="stats stats-compact" id="res-stats">
+                <div class="sc"><div class="s-icon">📄</div><div class="s-val" id="rs-pubs">0</div><div class="s-lbl">Publications</div></div>
+                <div class="sc"><div class="s-icon">🏆</div><div class="s-val" id="rs-grants">0</div><div class="s-lbl">Total Grants</div></div>
+                <div class="sc"><div class="s-icon">✅</div><div class="s-val" id="rs-open">0</div><div class="s-lbl">Open Grants</div></div>
+                <div class="sc"><div class="s-icon">📋</div><div class="s-val" id="rs-apps">0</div><div class="s-lbl">Applications</div></div>
+                <div class="sc"><div class="s-icon">⏳</div><div class="s-val" id="rs-pending">0</div><div class="s-lbl">Pending Review</div></div>
+                <div class="sc"><div class="s-icon">💰</div><div class="s-val" id="rs-revenue">UGX 0</div><div class="s-lbl">Grant Revenue</div></div>
             </div>
-            
-            <div class="form-group">
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="">Select category</option>
-                    <option value="featured">Featured</option>
-                    <option value="current">Current</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="conferences">Conferences</option>
-                    <option value="workshops">Workshops</option>
-                    <option value="webinars">Webinars</option>
-                    <option value="past">Past</option>
-                </select>
+
+            <!-- Side-by-side cards -->
+            <div class="res-grid">
+
+            <!-- Publications Card -->
+            <div class="card">
+                <div class="card-hd card-hd-stack">
+                    <div class="card-hd-top">
+                        <h2>📄 Publications (<span id="pub-count">0</span>)</h2>
+                        <button class="btn-pill btn-pill-primary" onclick="openPubModal()">+ Add</button>
+                    </div>
+                    <div class="filter-toolbar">
+                        <select id="pub-type-filter" class="btn-sm select-sm-pad" onchange="filterPubs()">
+                            <option value="">All Types</option>
+                            <option value="Journal">Journal</option>
+                            <option value="Conference">Conference</option>
+                            <option value="Review">Review</option>
+                            <option value="Report">Report</option>
+                            <option value="Book Chapter">Book Chapter</option>
+                        </select>
+                        <div class="search-wrap"><input type="text" id="pub-search" class="search-input-xs" placeholder="Search…" oninput="filterPubs()"></div>
+                    </div>
+                </div>
+                <div class="card-body card-body-flush">
+                    <table class="tbl"><thead><tr><th>#</th><th>Type</th><th>Title</th><th>Authors</th><th>Date</th><th>Actions</th></tr></thead>
+                    <tbody id="pub-body"><tr><td colspan="6" class="empty"><div class="big">📄</div>No publications yet</td></tr></tbody></table>
+                </div>
             </div>
-            
-            <button type="submit" id="submitBtn">Add Event</button>
-        </form>
+
+            <!-- Grants Card -->
+            <div class="card">
+                <div class="card-hd card-hd-stack">
+                    <div class="card-hd-top">
+                        <h2>🏆 Grants (<span id="grant-count">0</span>)</h2>
+                        <button class="btn-pill btn-pill-primary" onclick="openGrantModal()">+ Add</button>
+                    </div>
+                    <div class="filter-toolbar">
+                        <select id="grant-status-filter" class="btn-sm select-sm-pad" onchange="filterGrantsTable()">
+                            <option value="">All Statuses</option>
+                            <option value="open">Open</option>
+                            <option value="closing">Closing</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <div class="search-wrap"><input type="text" id="grant-search" class="search-input-xs" placeholder="Search…" oninput="filterGrantsTable()"></div>
+                    </div>
+                </div>
+                <div class="card-body card-body-flush">
+                    <table class="tbl"><thead><tr><th>#</th><th>Title</th><th>Amount</th><th>Deadline</th><th>Status</th><th>Apps</th><th>Actions</th></tr></thead>
+                    <tbody id="grant-body"><tr><td colspan="7" class="empty"><div class="big">🏆</div>No grants yet</td></tr></tbody></table>
+                </div>
+            </div>
+
+            </div><!-- /res-grid -->
+
+        </div>
+
+        <!-- Leadership Panel -->
+        <div class="panel" id="panel-leadership">
+            <div class="ph"><div><h1>🏛️ Leadership Biographies</h1><p>Manage About page leader profiles &amp; bios</p></div><button class="btn-primary" onclick="openLeaderModal()">+ Add Leader</button></div>
+            <div class="stats" style="grid-template-columns:repeat(3,1fr);">
+                <div class="sc"><div class="s-icon">👤</div><div class="s-val" id="ld-total">0</div><div class="s-lbl">Total Leaders</div></div>
+                <div class="sc"><div class="s-icon">✅</div><div class="s-val" id="ld-active">0</div><div class="s-lbl">Active</div></div>
+                <div class="sc"><div class="s-icon">📝</div><div class="s-val" id="ld-with-bio">0</div><div class="s-lbl">With Bio</div></div>
+            </div>
+            <div class="card"><div class="card-hd"><h2>Leaders (<span id="lead-count">0</span>)</h2></div>
+            <div class="card-body" style="padding:0;"><table class="tbl"><thead><tr><th>#</th><th>Name</th><th>Title</th><th>Bio</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="lead-body"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody></table></div></div>
+        </div>
+
+        <!-- ===== BLOG ===== -->
+        <div class="panel" id="panel-blog">
+            <div class="ph"><div><h1>📝 Blog Posts</h1><p>Create and manage blog articles visible on the public Blog page.</p></div><button class="btn-primary" onclick="openBlogModal()">+ New Post</button></div>
+            <div class="stats" style="grid-template-columns:repeat(3,1fr);">
+                <div class="sc"><div class="s-icon">📄</div><div class="s-val" id="bp-total">0</div><div class="s-lbl">Total Posts</div></div>
+                <div class="sc"><div class="s-icon">📂</div><div class="s-val" id="bp-cats">0</div><div class="s-lbl">Categories</div></div>
+                <div class="sc"><div class="s-icon">💬</div><div class="s-val" id="bp-comments">0</div><div class="s-lbl">Comments</div></div>
+            </div>
+            <div class="card"><div class="card-hd"><h2>All Posts (<span id="bp-count">0</span>)</h2><div class="filter-toolbar"><select class="btn-sm select-sm-pad" id="bp-cat-filter" onchange="renderBlogTable()"><option value="">All Categories</option></select></div></div>
+            <div class="card-body" style="padding:0;max-height:400px;overflow-y:auto;"><table class="tbl"><thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Author</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="bp-body"><tr><td colspan="6" class="empty"><div class="big">📝</div>No posts yet. Create your first article!</td></tr></tbody></table></div></div>
+
+            <!-- Comments Management -->
+            <div class="card"><div class="card-hd"><h2>💬 Comments (<span id="cm-count">0</span>)</h2><div class="filter-toolbar"><select class="btn-sm select-sm-pad" id="cm-post-filter" onchange="renderCommentsTable()"><option value="">All Posts</option></select><button class="btn-danger" id="cm-del-all" style="display:none;" onclick="deleteAllFilteredComments()">🗑️ Delete All</button></div></div>
+            <div class="card-body" style="padding:0;max-height:350px;overflow-y:auto;"><table class="tbl"><thead><tr><th>Author</th><th>Comment</th><th>Post</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="cm-body"><tr><td colspan="5" class="empty"><div class="big">💬</div>No comments yet.</td></tr></tbody></table></div></div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Blog Modal -->
+<div class="modal-backdrop" id="blog-modal">
+    <div class="modal-box modal-box-md">
+        <div class="modal-hd">
+            <h3 id="bp-form-title">➕ New Blog Post</h3>
+            <button class="modal-close" onclick="closeModal('blog-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="bp-edit-id">
+            <div class="form-grid">
+                <div class="ff full"><label>Title <span>*</span></label><input type="text" id="bp-title" placeholder="Article title"></div>
+                <div class="ff"><label>Category <span>*</span></label><select id="bp-category"><option value="Research">Research</option><option value="Patient Care">Patient Care</option><option value="Treatment">Treatment</option><option value="Community">Community</option><option value="Education">Education</option><option value="Events">Events</option><option value="General" selected>General</option></select></div>
+                <div class="ff"><label>Author <span>*</span></label><input type="text" id="bp-author" placeholder="Author name"></div>
+                <div class="ff full"><label>Content <span>*</span></label><textarea id="bp-content" rows="8" placeholder="Write your article here..."></textarea></div>
+                <div class="ff"><label>Post Image</label>
+                    <div class="upload-zone upload-zone-compact" id="bp-upload">
+                        <input type="file" id="bp-img-file" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <div class="upload-inner"><span class="upload-icon">📷</span><p class="upload-text"><strong>Post image</strong><br><span class="upload-hint">JPG, PNG, WebP</span></p></div>
+                    </div>
+                    <div class="img-pre" id="bp-img-pre"><img id="bp-img-thumb"><span class="img-pre-rm" onclick="clearBlogImg()">✕ Remove</span></div>
+                </div>
+                <div class="ff"><label>Author Avatar</label>
+                    <div class="upload-zone upload-zone-compact" id="bp-avatar-upload">
+                        <input type="file" id="bp-avatar-file" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <div class="upload-inner"><span class="upload-icon">👤</span><p class="upload-text"><strong>Avatar</strong><br><span class="upload-hint">Square image</span></p></div>
+                    </div>
+                    <div class="img-pre" id="bp-avatar-pre"><img id="bp-avatar-thumb"><span class="img-pre-rm" onclick="clearBlogAvatar()">✕ Remove</span></div>
+                </div>
+                <div class="full" style="margin-top:.5rem;"><button class="btn-primary" style="width:100%;justify-content:center;" onclick="saveBlogPost()">📤 Publish Post</button></div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        // Image preview functionality
-        document.getElementById('imageFile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const preview = document.getElementById('imagePreview');
-                    preview.src = event.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+<!-- Leader Modal -->
+<style>
+.ld-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;animation:ldFadeIn .2s ease;}
+@keyframes ldFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ldSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.ld-modal-box{background:#fff;border-radius:16px;width:94%;max-width:640px;max-height:90vh;overflow-y:auto;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:ldSlideUp .25s ease;}
+.ld-modal-box::-webkit-scrollbar{width:6px}.ld-modal-box::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}
+.ld-modal-header{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(13,69,147,.03),rgba(230,57,70,.03));border-radius:16px 16px 0 0;}
+.ld-modal-header h3{font-size:1rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.5rem;}
+.ld-modal-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--text-light);transition:all .15s;}
+.ld-modal-close:hover{background:rgba(230,57,70,.08);color:var(--primary);border-color:rgba(230,57,70,.2);}
+.ld-modal-body{padding:1.4rem;}
+.ld-field{margin-bottom:1rem;}
+.ld-field label{font-size:.73rem;font-weight:700;color:var(--text);display:block;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.4px;}
+.ld-field label .ld-req{color:var(--primary);margin-left:2px;}
+.ld-input{width:100%;padding:.6rem .75rem;border:1.5px solid var(--border);border-radius:10px;font-size:.84rem;font-family:inherit;transition:border-color .15s,box-shadow .15s;background:var(--white);}
+.ld-input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(13,69,147,.1);}
+.ld-input::placeholder{color:#94a3b8;}
+textarea.ld-input{resize:vertical;min-height:100px;}
+.ld-row{display:grid;gap:.85rem;}
+.ld-row-2{grid-template-columns:1fr 1fr;}
+.ld-row-3{grid-template-columns:1fr 1fr 1fr;}
+/* Photo Upload Zone */
+.ld-photo-zone{display:flex;gap:1rem;align-items:flex-start;}
+.ld-photo-preview{width:110px;height:110px;border-radius:12px;border:2px dashed var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;transition:border-color .2s;position:relative;}
+.ld-photo-preview img{width:100%;height:100%;object-fit:cover;border-radius:10px;}
+.ld-photo-preview .ld-photo-placeholder{text-align:center;color:var(--text-light);font-size:.65rem;line-height:1.3;padding:.5rem;}
+.ld-photo-preview .ld-photo-placeholder span{font-size:1.8rem;display:block;margin-bottom:.25rem;opacity:.5;}
+.ld-photo-controls{flex:1;display:flex;flex-direction:column;gap:.6rem;}
+.ld-upload-drop{border:2px dashed var(--border);border-radius:10px;padding:.9rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);}
+.ld-upload-drop:hover,.ld-upload-drop.dragover{border-color:var(--secondary);background:rgba(13,69,147,.04);}
+.ld-upload-drop .ld-upload-icon{font-size:1.4rem;margin-bottom:.2rem;}
+.ld-upload-drop .ld-upload-text{font-size:.75rem;color:var(--text-light);line-height:1.4;}
+.ld-upload-drop .ld-upload-text strong{color:var(--secondary);font-weight:600;}
+.ld-upload-drop .ld-upload-hint{font-size:.65rem;color:#94a3b8;margin-top:.15rem;}
+.ld-or-divider{text-align:center;font-size:.68rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.ld-photo-remove{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(230,57,70,.9);color:#fff;border:none;font-size:.7rem;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;}
+.ld-photo-preview:hover .ld-photo-remove{display:flex;}
+/* Status Toggle */
+.ld-status-toggle{display:flex;gap:.5rem;}
+.ld-status-opt{flex:1;padding:.55rem;border:1.5px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .15s;background:var(--white);}
+.ld-status-opt:hover{border-color:var(--secondary);}
+.ld-status-opt.active-on{border-color:var(--green);background:rgba(22,163,74,.06);color:var(--green);}
+.ld-status-opt.active-off{border-color:var(--primary);background:rgba(230,57,70,.06);color:var(--primary);}
+.ld-save-btn{width:100%;padding:.75rem;border:none;border-radius:10px;background:linear-gradient(135deg,var(--secondary),var(--secondary-dark));color:#fff;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:all .2s;margin-top:.5rem;}
+.ld-save-btn:hover{box-shadow:0 4px 16px rgba(13,69,147,.3);transform:translateY(-1px);}
+.ld-save-btn:active{transform:translateY(0);}
+.ld-save-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+</style>
+<div class="ld-modal-backdrop" id="leader-modal">
+    <div class="ld-modal-box">
+        <div class="ld-modal-header">
+            <h3 id="ld-form-title">➕ Add Leader</h3>
+            <button class="ld-modal-close" onclick="closeLeaderModal()">✕</button>
+        </div>
+        <div class="ld-modal-body">
+            <input type="hidden" id="ld-edit-id">
+            <input type="hidden" id="ld-existing-photo">
+
+            <!-- Photo Upload -->
+            <div class="ld-field">
+                <label>Profile Photo</label>
+                <div class="ld-photo-zone">
+                    <div class="ld-photo-preview" id="ld-photo-preview">
+                        <div class="ld-photo-placeholder" id="ld-photo-placeholder">
+                            <span>📷</span>No photo
+                        </div>
+                        <img id="ld-photo-img" src="" alt="" style="display:none;">
+                        <button class="ld-photo-remove" id="ld-photo-remove" type="button" onclick="removeLeaderPhoto()">✕</button>
+                    </div>
+                    <div class="ld-photo-controls">
+                        <div class="ld-upload-drop" id="ld-upload-drop" onclick="document.getElementById('ld-photo-file').click()">
+                            <div class="ld-upload-icon">📁</div>
+                            <div class="ld-upload-text"><strong>Click to upload</strong> or drag &amp; drop</div>
+                            <div class="ld-upload-hint">JPG, PNG or WebP (max 5 MB)</div>
+                        </div>
+                        <input type="file" id="ld-photo-file" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handleLeaderPhoto(this)">
+                        <div class="ld-or-divider">— or paste URL —</div>
+                        <input type="text" id="ld-photo" class="ld-input" placeholder="https://example.com/photo.jpg" oninput="previewLeaderPhotoUrl(this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Name & Title -->
+            <div class="ld-row ld-row-2">
+                <div class="ld-field">
+                    <label>Full Name <span class="ld-req">*</span></label>
+                    <input type="text" id="ld-name" class="ld-input" placeholder="Dr. John Doe">
+                </div>
+                <div class="ld-field">
+                    <label>Title / Position <span class="ld-req">*</span></label>
+                    <input type="text" id="ld-title" class="ld-input" placeholder="President">
+                </div>
+            </div>
+
+            <!-- Qualifications -->
+            <div class="ld-field">
+                <label>Qualifications</label>
+                <input type="text" id="ld-quals" class="ld-input" placeholder="MBChB, MMed, PhD">
+            </div>
+
+            <!-- Biography -->
+            <div class="ld-field">
+                <label>Biography</label>
+                <textarea id="ld-bio" class="ld-input" rows="5" placeholder="Write a brief biography for this leader..."></textarea>
+            </div>
+
+            <!-- Sort Order & Status -->
+            <div class="ld-row ld-row-2" style="margin-bottom:1rem;">
+                <div class="ld-field" style="margin-bottom:0;">
+                    <label>Sort Order</label>
+                    <input type="number" id="ld-order" class="ld-input" value="0" min="0">
+                </div>
+                <div class="ld-field" style="margin-bottom:0;">
+                    <label>Status</label>
+                    <input type="hidden" id="ld-active" value="1">
+                    <div class="ld-status-toggle">
+                        <div class="ld-status-opt active-on" id="ld-status-on" onclick="setLeaderStatus(1)">✅ Active</div>
+                        <div class="ld-status-opt" id="ld-status-off" onclick="setLeaderStatus(0)">⛔ Inactive</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="ld-save-btn" id="ld-save-btn" onclick="saveLeader()">
+                <span id="ld-save-text">💾 Save Leader</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Unified Event Modal (Add + Edit) -->
+<div class="modal-backdrop" id="event-modal">
+    <div class="modal-box modal-box-md">
+        <div class="modal-hd">
+            <h3 id="ev-form-title">➕ Add New Event</h3>
+            <button class="modal-close" onclick="closeModal('event-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="ev-edit-id">
+            <div class="prog-wrap prog-wrap-sm"><div class="prog-fill" id="eprog"></div></div>
+
+            <!-- 1 — Image -->
+            <div class="aef-sec">
+                <div class="aef-lbl">🖼 Event Image</div>
+                <div class="aef-upload-row">
+                    <div class="upload-zone upload-zone-compact" id="ev-upload">
+                        <input type="file" id="ev-img-file" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <div class="upload-inner">
+                            <span class="upload-icon">📷</span>
+                            <p class="upload-text"><strong>Click to upload</strong> or drag &amp; drop<br><span class="upload-hint">JPG, PNG, WebP — max 5 MB</span></p>
+                        </div>
+                    </div>
+                    <div class="ff">
+                        <label>Or image URL</label>
+                        <input type="url" id="ev-img-url" placeholder="https://…/image.jpg">
+                        <small>Leave blank if uploading a file</small>
+                    </div>
+                </div>
+                <div class="img-pre img-pre-mt" id="ev-img-pre"><img id="ev-img-thumb" src="" alt=""><span class="img-pre-rm" onclick="clearEvImg()">✕ Remove</span></div>
+            </div>
+
+            <!-- 2 — Core Details -->
+            <div class="aef-sec">
+                <div class="aef-lbl">📝 Event Details</div>
+                <div class="aef-grid">
+                    <div class="ff c3"><label>Event Title <span>*</span></label><input type="text" id="ev-title" placeholder="e.g. Annual Oncology Conference 2026" oninput="autoSlug()"></div>
+                    <div class="ff c2"><label>Event ID / Slug <span>*</span></label><input type="text" id="ev-slug" placeholder="auto-generated" readonly><small>Auto-filled from title</small></div>
+                    <div class="ff"><label>Type <span>*</span></label>
+                        <select id="ev-type"><option value="">Select…</option><option value="conference">Conference</option><option value="workshop">Workshop</option><option value="webinar">Webinar</option></select>
+                    </div>
+                    <div class="ff"><label>Image Alt Text <span>*</span></label><input type="text" id="ev-alt" placeholder="Brief image description"></div>
+                </div>
+            </div>
+
+            <!-- 3 — Date & Location -->
+            <div class="aef-sec">
+                <div class="aef-lbl">📅 Date &amp; Location</div>
+                <div class="aef-grid">
+                    <div class="ff"><label>Start Date <span>*</span></label><input type="text" id="ev-date-start" placeholder="Select start date" readonly oninput="buildDate()"></div>
+                    <div class="ff"><label>End Date <small class="ev-date-opt">(optional)</small></label><input type="text" id="ev-date-end" placeholder="Select end date" readonly oninput="buildDate()"></div>
+                    <div class="ff"><label>Formatted Date</label><input type="text" id="ev-date" placeholder="Auto-filled" readonly><small>Generated from pickers</small></div>
+                    <div class="ff c3"><label>Location <span>*</span></label><input type="text" id="ev-loc" placeholder="📍 e.g. Serena Hotel, Kampala"></div>
+                    <div class="ff c3"><label>Description <span>*</span></label><textarea id="ev-desc" rows="3" placeholder="Describe the event — agenda, speakers, objectives…"></textarea></div>
+                </div>
+            </div>
+
+            <!-- 4 — Pricing -->
+            <div class="aef-sec">
+                <div class="aef-lbl">💰 Pricing</div>
+                <div class="pricing-row">
+                    <div class="tog-wrap"><label class="tog"><input type="checkbox" id="ev-is-free" checked onchange="toggleFee()"><span class="tog-slider"></span></label><span class="tog-lbl tog-lbl-sm">🆓 Free Event</span></div>
+                </div>
+                <div id="ev-fee-section">
+                    <div class="aef-grid">
+                        <div class="ff"><label>Registration Fee (UGX) <span>*</span></label><input type="number" id="ev-fee" min="0" step="1000" placeholder="e.g. 50000"></div>
+                        <div class="ff"><label>&nbsp;</label><small class="fee-hint">This amount will be shown to attendees during registration. Payment methods will appear automatically.</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 — Footer: show on home toggle + actions -->
+            <div class="modal-footer-bar">
+                <div class="tog-wrap"><label class="tog"><input type="checkbox" id="ev-featured"><span class="tog-slider"></span></label><span class="tog-lbl tog-lbl-xs">🏠 Show on Home</span></div>
+                <div class="btn-row">
+                    <button class="btn-primary" id="ev-save-btn" onclick="saveEvent()">💾 Save Event</button>
+                    <button class="btn-sm" onclick="closeModal('event-modal')">✕ Cancel</button>
+                </div>
+            </div>
+
+            <!-- Hidden fields for auto-computed values -->
+            <input type="hidden" id="ev-cat" value="">
+            <input type="hidden" id="ev-status" value="">
+            <input type="hidden" id="ev-countdown" value="">
+
+        </div>
+    </div>
+</div>
+
+<!-- Payment Detail Modal -->
+<div class="modal-backdrop" id="pay-modal">
+    <div class="modal-box">
+        <div class="modal-hd"><h3>💳 Payment Detail</h3><button class="modal-close" onclick="closeModal('pay-modal')">×</button></div>
+        <div class="modal-body" id="pay-modal-body"></div>
+    </div>
+</div>
+
+<!-- Invoice Modal -->
+<div class="modal-backdrop" id="inv-modal">
+    <div class="modal-box">
+        <div class="modal-hd"><h3>📄 Invoice Preview</h3><button class="modal-close" onclick="closeModal('inv-modal')">×</button></div>
+        <div class="modal-body" id="inv-modal-body"></div>
+    </div>
+</div>
+
+<!-- Event Registrants Modal -->
+<div class="modal-backdrop" id="reg-modal">
+    <div class="modal-box modal-box-lg">
+        <div class="modal-hd"><h3 id="reg-modal-title">👥 Registrants</h3><button class="modal-close" onclick="closeModal('reg-modal')">×</button></div>
+        <div class="modal-body">
+            <div id="reg-modal-stats" class="reg-stats-row"></div>
+            <div class="reg-search-wrap"><input type="text" id="reg-search" class="reg-search-input" placeholder="Search registrants…" oninput="filterRegModal()"></div>
+            <div class="overflow-auto">
+                <table class="tbl"><thead><tr><th>#</th><th>Name / Email</th><th>Phone</th><th>Institution</th><th>Payment</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody id="reg-modal-body"><tr><td colspan="7" class="empty">Loading…</td></tr></tbody></table>
+            </div>
+            <div id="reg-modal-empty">
+                <div class="empty-icon">📭</div>
+                <p class="empty-title">No registrations yet</p>
+                <p class="empty-desc">Once users register for this event, they'll appear here.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Publication Modal -->
+<div class="modal-backdrop" id="pub-modal">
+    <div class="modal-box modal-box-md">
+        <div class="modal-hd"><h3 id="pub-form-title">➕ Add Publication</h3><button class="modal-close" onclick="closeModal('pub-modal')">×</button></div>
+        <div class="modal-body">
+            <input type="hidden" id="pub-edit-id">
+
+            <!-- Import from Event toggle -->
+            <div class="aef-sec" id="pub-import-sec">
+                <div class="aef-lbl">📥 Source</div>
+                <div class="radio-inline-row">
+                    <label class="radio-inline-label">
+                        <input type="radio" name="pub-source" value="new" checked onchange="togglePubSource()"> Create New
+                    </label>
+                    <label class="radio-inline-label">
+                        <input type="radio" name="pub-source" value="event" onchange="togglePubSource()"> Import from Event
+                    </label>
+                </div>
+                <div id="pub-event-picker">
+                    <div class="ff">
+                        <label>Select Event <span>*</span></label>
+                        <select id="pub-event-select" onchange="fillPubFromEvent()">
+                            <option value="">— Choose an event —</option>
+                        </select>
+                        <small>Event details will auto-fill the form below</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publication form fields -->
+            <div class="aef-sec">
+                <div class="aef-lbl">📝 Publication Details</div>
+                <div class="form-grid">
+                    <div class="ff"><label>Type <span>*</span></label>
+                        <select id="pub-type"><option value="Journal">Journal</option><option value="Conference">Conference</option><option value="Review">Review</option><option value="Report">Report</option><option value="Book Chapter">Book Chapter</option></select>
+                    </div>
+                    <div class="ff"><label>Date <span>*</span></label><input type="text" id="pub-date" placeholder="Select month & year" readonly></div>
+                    <div class="ff full"><label>Title <span>*</span></label><input type="text" id="pub-title" placeholder="Publication title"></div>
+                    <div class="ff full"><label>Authors</label><input type="text" id="pub-authors" placeholder="e.g. HOSU Research Network, UCI Collaborators"></div>
+                    <div class="ff"><label>Link URL</label><input type="url" id="pub-link" placeholder="https://…"></div>
+                    <div class="ff"><label>Link Label</label><input type="text" id="pub-link-label" placeholder="Read abstract" value="Read abstract"></div>
+                    <div class="ff"><label>Sort Order</label><input type="number" id="pub-sort" value="0" min="0"><small>Lower = shown first</small></div>
+                </div>
+            </div>
+
+            <div class="modal-footer-bar">
+                <div class="tog-wrap"><label class="tog"><input type="checkbox" id="pub-show-home"><span class="tog-slider"></span></label><span class="tog-lbl tog-lbl-xs">🏠 Show on Home</span></div>
+                <div class="btn-row">
+                    <button class="btn-primary" id="pub-save-btn" onclick="savePub()">💾 Save</button>
+                    <button class="btn-sm" onclick="closeModal('pub-modal')">✕ Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Grant Modal -->
+<div class="modal-backdrop" id="grant-modal">
+    <div class="modal-box modal-box-md">
+        <div class="modal-hd"><h3 id="grant-form-title">➕ Add Grant</h3><button class="modal-close" onclick="closeModal('grant-modal')">×</button></div>
+        <div class="modal-body">
+            <input type="hidden" id="grant-edit-id">
+            <div class="aef-sec">
+                <div class="aef-lbl">📝 Grant Details</div>
+                <div class="form-grid">
+                    <div class="ff full"><label>Title <span>*</span></label><input type="text" id="grant-title" placeholder="Grant title"></div>
+                    <div class="ff"><label>Amount</label><input type="number" id="grant-amount" min="0" step="1000" placeholder="e.g. 40000000"></div>
+                    <div class="ff"><label>Currency</label>
+                        <select id="grant-currency"><option value="UGX">UGX</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option></select>
+                    </div>
+                    <div class="ff"><label>Deadline</label><input type="text" id="grant-deadline" placeholder="Select deadline date" readonly></div>
+                    <div class="ff"><label>Status</label>
+                        <select id="grant-status"><option value="open">Open for Applications</option><option value="closing">Closing Soon</option><option value="closed">Closed</option></select>
+                    </div>
+                    <div class="ff full"><label>Description</label><textarea id="grant-desc" rows="3" placeholder="Brief description of the grant…"></textarea></div>
+                    <div class="ff full"><label>Apply Link</label><input type="url" id="grant-apply-link" placeholder="https://… (leave blank to use built-in form)"></div>
+                    <div class="ff"><label>Sort Order</label><input type="number" id="grant-sort" value="0" min="0"><small>Lower = shown first</small></div>
+                </div>
+            </div>
+            <div class="modal-footer-bar">
+                <div class="tog-wrap"><label class="tog"><input type="checkbox" id="grant-show-home"><span class="tog-slider"></span></label><span class="tog-lbl tog-lbl-xs">🏠 Show on Home</span></div>
+                <div class="btn-row">
+                    <button class="btn-primary" id="grant-save-btn" onclick="saveGrant()">💾 Save</button>
+                    <button class="btn-sm" onclick="closeModal('grant-modal')">✕ Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Grant Applications Modal (like reg-modal) -->
+<div class="modal-backdrop" id="gapp-modal">
+    <div class="modal-box modal-box-lg">
+        <div class="modal-hd"><h3 id="gapp-modal-title">📋 Grant Applications</h3><button class="modal-close" onclick="closeModal('gapp-modal')">×</button></div>
+        <div class="modal-body">
+            <div id="gapp-stats" class="reg-stats-row"></div>
+            <div class="gapp-toolbar">
+                <input type="text" id="gapp-search" class="reg-search-input gapp-search-grow" placeholder="Search applicants…" oninput="filterGappModal()">
+                <select id="gapp-status-filter" class="btn-sm select-sm-pad" onchange="filterGappModal()">
+                    <option value="">All Statuses</option>
+                    <option value="pending">⏳ Pending</option>
+                    <option value="approved">✅ Approved</option>
+                    <option value="rejected">❌ Rejected</option>
+                </select>
+                <a id="gapp-export-btn" href="#" class="btn-sm btn-green" target="_blank">⬇ Export CSV</a>
+            </div>
+            <div class="overflow-auto">
+                <table class="tbl"><thead><tr><th>#</th><th>Applicant</th><th>Phone</th><th>Institution</th><th>Proposal</th><th>Status</th><th>Payment</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody id="gapp-body"><tr><td colspan="9" class="empty">Loading…</td></tr></tbody></table>
+            </div>
+            <div id="gapp-empty" class="gapp-empty-state">
+                <div class="gapp-empty-icon">📭</div>
+                <p class="gapp-empty-title">No applications yet</p>
+                <p class="gapp-empty-desc">Once applicants apply for this grant, they'll appear here.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CHANGE PASSWORD MODAL ===== -->
+<div class="modal-backdrop" id="chpw-modal">
+    <div class="modal-box" style="max-width:420px;">
+        <div class="modal-hd">
+            <h3>🔑 Change Password</h3>
+            <button class="modal-close" onclick="closeChangePassword()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div id="chpw-msg" style="display:none;padding:.55rem .8rem;border-radius:8px;font-size:.8rem;margin-bottom:.75rem;"></div>
+            <form onsubmit="submitChangePassword(event)" autocomplete="off">
+                <div class="ff" style="margin-bottom:.75rem;">
+                    <label>Current Password <span>*</span></label>
+                    <input type="password" id="chpw-current" required autocomplete="current-password">
+                </div>
+                <div class="ff" style="margin-bottom:.75rem;">
+                    <label>New Password <span>*</span></label>
+                    <input type="password" id="chpw-new" required minlength="8" autocomplete="new-password">
+                    <small>Min 8 chars, 1 uppercase, 1 lowercase, 1 number</small>
+                </div>
+                <div class="ff" style="margin-bottom:.75rem;">
+                    <label>Confirm New Password <span>*</span></label>
+                    <input type="password" id="chpw-confirm" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;">Update Password</button>
+            </form>
+            <div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border);">
+                <button class="btn-sm" onclick="loadLoginHistory()" style="width:100%;justify-content:center;">📋 View Login History</button>
+                <div id="login-history" style="display:none;margin-top:.6rem;max-height:200px;overflow-y:auto;">
+                    <table class="tbl"><thead><tr><th>Time</th><th>IP</th><th>Status</th></tr></thead><tbody id="login-history-body"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+var _members=[], _events=[], _payments=[], _hasEvImg=false, _editingEvId=null;
+
+/* ── AUTH ─────────────────────────────────── */
+// No standalone login — verify existing session on load, redirect if not admin
+(function(){
+    fetch('auth.php?action=heartbeat',{credentials:'same-origin'})
+        .then(function(r){return r.json();})
+        .then(function(d){
+            if(!d.success || d.role !== 'admin'){
+                window.location.href='index.html';
+                return;
             }
-        });
+            showDashboard({username:d.username||'Admin'});
+        })
+        .catch(function(){window.location.href='index.html';});
+})();
 
-        // Form submission with enhanced feedback
-        document.getElementById('eventForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const statusMessage = document.getElementById('statusMessage');
-            const statusText = document.getElementById('statusText');
-            const statusIcon = document.getElementById('statusIcon');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Reset message state
-            statusMessage.style.display = 'none';
-            statusMessage.className = 'status-message';
-            statusIcon.textContent = '';
-            statusText.textContent = '';
-            
-            // Show loading state
-            submitBtn.textContent = 'Processing...';
-            submitBtn.disabled = true;
-            
-            fetch('save_event.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.error || 'Server returned an error');
-                    });
+function showDashboard(user){
+    document.getElementById('dashboard').style.display='flex';
+    document.getElementById('u-name').textContent=user.username;
+    document.getElementById('u-av').textContent=user.username.charAt(0).toUpperCase();
+    loadAll();
+    startSecurityMonitor();
+}
+function doLogout(){
+    clearSecurityMonitor();
+    fetch('auth.php?action=logout',{credentials:'same-origin'}).finally(()=>{
+        // Prevent back-button access after logout
+        if(window.history && window.history.replaceState){
+            window.history.replaceState(null,'','index.html');
+        }
+        window.location.replace('index.html');
+    });
+}
+
+/* ── SECURITY: Idle timeout + tab close + heartbeat ── */
+var _idleTimer=null, _heartbeatTimer=null, _idleTimeout=1800;
+var _idleCountdown=null, _idleWarnShown=false;
+
+function startSecurityMonitor(){
+    resetIdleTimer();
+    // Track user activity
+    ['mousemove','keydown','click','scroll','touchstart'].forEach(function(evt){
+        document.addEventListener(evt, resetIdleTimer, {passive:true});
+    });
+    // Heartbeat every 2 min to keep server session alive while active
+    _heartbeatTimer = setInterval(function(){
+        fetch('auth.php?action=heartbeat',{credentials:'same-origin'})
+            .then(function(r){return r.json();})
+            .then(function(d){if(d.expired) forceLogout('Session expired');})
+            .catch(function(){});
+    }, 120000);
+    // Detect tab visibility changes (pause/resume heartbeat)
+    document.addEventListener('visibilitychange', onVisChange);
+}
+
+function clearSecurityMonitor(){
+    if(_idleTimer) clearTimeout(_idleTimer);
+    if(_heartbeatTimer) clearInterval(_heartbeatTimer);
+    if(_idleCountdown) clearInterval(_idleCountdown);
+    document.removeEventListener('visibilitychange', onVisChange);
+}
+
+function resetIdleTimer(){
+    if(_idleTimer) clearTimeout(_idleTimer);
+    if(_idleCountdown) clearInterval(_idleCountdown);
+    hideIdleWarning();
+    // Show warning 60s before timeout
+    var warnAt = (_idleTimeout - 60) * 1000;
+    if(warnAt < 10000) warnAt = _idleTimeout * 500;
+    _idleTimer = setTimeout(function(){
+        showIdleWarning();
+    }, warnAt);
+}
+
+function showIdleWarning(){
+    if(_idleWarnShown) return;
+    _idleWarnShown = true;
+    var el = document.getElementById('idle-warning');
+    if(!el){
+        el = document.createElement('div');
+        el.id = 'idle-warning';
+        el.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;background:#fef3c7;border-bottom:2px solid #f59e0b;padding:.6rem 1.25rem;display:flex;align-items:center;justify-content:space-between;font-family:Inter,sans-serif;font-size:.82rem;color:#92400e;gap:.5rem;';
+        el.innerHTML = '<span><strong>Session expiring</strong> — <span id=\"idle-seconds\">60</span>s remaining. Move mouse to stay logged in.</span><button onclick=\"resetIdleTimer()\" style=\"padding:.3rem .8rem;border-radius:6px;border:1.5px solid #d97706;background:#fff;color:#92400e;font-weight:600;cursor:pointer;font-size:.75rem;font-family:inherit;\">Stay Logged In</button>';
+        document.body.appendChild(el);
+    }
+    el.style.display = 'flex';
+    var secs = 60;
+    var secEl = document.getElementById('idle-seconds');
+    _idleCountdown = setInterval(function(){
+        secs--;
+        if(secEl) secEl.textContent = secs;
+        if(secs <= 0){
+            clearInterval(_idleCountdown);
+            forceLogout('Logged out due to inactivity');
+        }
+    }, 1000);
+}
+
+function hideIdleWarning(){
+    _idleWarnShown = false;
+    var el = document.getElementById('idle-warning');
+    if(el) el.style.display = 'none';
+}
+
+function forceLogout(reason){
+    clearSecurityMonitor();
+    // Clear sensitive data from DOM
+    document.getElementById('dashboard').style.display='none';
+    fetch('auth.php?action=logout',{credentials:'same-origin'}).finally(function(){
+        // Prevent back-button access
+        if(window.history && window.history.replaceState){
+            window.history.replaceState(null,'','index.html');
+        }
+        // Remove existing overlay if any
+        var old = document.getElementById('session-expired-overlay');
+        if(old) old.remove();
+
+        var countdown = 5;
+        var overlay = document.createElement('div');
+        overlay.id = 'session-expired-overlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-family:Inter,sans-serif;animation:fadeInOverlay .3s ease;';
+        overlay.innerHTML =
+            '<style>@keyframes fadeInOverlay{from{opacity:0}to{opacity:1}}@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}</style>' +
+            '<div style="background:#fff;border-radius:16px;padding:2rem 2.5rem;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.18);max-width:380px;width:90%;animation:popIn .35s ease;">' +
+                '<div style="font-size:2.2rem;margin-bottom:.5rem;">&#128274;</div>' +
+                '<h3 style="color:#0d4593;margin:0 0 .5rem;font-size:1.15rem;">Session Ended</h3>' +
+                '<p style="color:#64748b;font-size:.85rem;margin:0 0 .75rem;">' + (reason||'You have been logged out.') + '</p>' +
+                '<p id="logout-countdown" style="color:#94a3b8;font-size:.78rem;margin:0 0 1rem;">Redirecting in <strong>' + countdown + '</strong> seconds…</p>' +
+                '<a href="index.html" style="display:inline-block;padding:.55rem 1.6rem;background:#e63946;color:#fff;border-radius:30px;font-weight:600;text-decoration:none;font-size:.85rem;transition:background .2s;" onmouseover="this.style.background=\'#d62839\'" onmouseout="this.style.background=\'#e63946\'">Go to Website</a>' +
+            '</div>';
+        document.body.appendChild(overlay);
+
+        var timer = setInterval(function(){
+            countdown--;
+            var el = document.getElementById('logout-countdown');
+            if(el) el.innerHTML = 'Redirecting in <strong>' + countdown + '</strong> second' + (countdown!==1?'s':'') + '…';
+            if(countdown <= 0){
+                clearInterval(timer);
+                window.location.replace('index.html');
+            }
+        }, 1000);
+    });
+}
+
+function onVisChange(){
+    if(document.hidden){
+        // Tab hidden — pause heartbeat, let server idle timeout handle it naturally
+        if(_heartbeatTimer) clearInterval(_heartbeatTimer);
+        _heartbeatTimer = null;
+    } else {
+        // Tab visible — check session is still alive, resume heartbeat
+        fetch('auth.php?action=heartbeat',{credentials:'same-origin'})
+            .then(function(r){return r.json();})
+            .then(function(d){
+                if(d.expired) forceLogout('Session expired');
+                else {
+                    resetIdleTimer();
+                    if(!_heartbeatTimer){
+                        _heartbeatTimer = setInterval(function(){
+                            fetch('auth.php?action=heartbeat',{credentials:'same-origin'})
+                                .then(function(r){return r.json();})
+                                .then(function(d){if(d.expired) forceLogout('Session expired');})
+                                .catch(function(){});
+                        }, 120000);
+                    }
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    // Success state
-                    statusIcon.textContent = '✓';
-                    statusText.textContent = 'Event successfully added! The changes are now live on the website.';
-                    statusMessage.className = 'status-message success';
-                    
-                    // Clear form
-                    this.reset();
-                    document.getElementById('imagePreview').style.display = 'none';
-                    
-                    // Show success message
-                    statusMessage.style.display = 'block';
-                    
-                    // Hide message after 5 seconds
-                    setTimeout(() => {
-                        statusMessage.style.display = 'none';
-                    }, 5000);
-                } else {
-                    throw new Error(data.error || 'The event could not be added');
+            }).catch(function(){});
+    }
+}
+
+/* ── SESSION CHECK ON LOAD ── */
+// Block back-button access: if no valid session, redirect immediately
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        // Page was restored from bfcache — recheck session
+        fetch('auth.php?action=check_session', {credentials:'same-origin'})
+            .then(r => r.json())
+            .then(d => {
+                if (!d.logged_in || d.user.role !== 'admin') {
+                    window.location.replace('index.html');
                 }
             })
-            .catch(error => {
-                // Error state
-                console.error('Error:', error);
-                statusIcon.textContent = '!';
-                statusText.textContent = error.message;
-                statusMessage.className = 'status-message error';
-                statusMessage.style.display = 'block';
-            })
-            .finally(() => {
-                submitBtn.textContent = 'Add Event';
-                submitBtn.disabled = false;
-            });
+            .catch(() => window.location.replace('index.html'));
+    }
+});
+
+/* ── CHANGE PASSWORD ── */
+function openChangePassword(){
+    document.getElementById('chpw-modal').classList.add('open');
+    document.getElementById('chpw-current').value = '';
+    document.getElementById('chpw-new').value = '';
+    document.getElementById('chpw-confirm').value = '';
+    var msg = document.getElementById('chpw-msg');
+    msg.style.display = 'none';
+    document.getElementById('login-history').style.display = 'none';
+}
+function closeChangePassword(){
+    document.getElementById('chpw-modal').classList.remove('open');
+}
+function submitChangePassword(e){
+    e.preventDefault();
+    var msg = document.getElementById('chpw-msg');
+    var cur = document.getElementById('chpw-current').value;
+    var np = document.getElementById('chpw-new').value;
+    var confirm = document.getElementById('chpw-confirm').value;
+
+    if(np !== confirm){
+        msg.style.display = 'block';
+        msg.style.background = '#fef2f2'; msg.style.color = '#991b1b';
+        msg.textContent = 'New passwords do not match';
+        return;
+    }
+    if(np.length < 8 || !/[A-Z]/.test(np) || !/[a-z]/.test(np) || !/[0-9]/.test(np)){
+        msg.style.display = 'block';
+        msg.style.background = '#fef2f2'; msg.style.color = '#991b1b';
+        msg.textContent = 'Password must be 8+ chars with uppercase, lowercase, and number';
+        return;
+    }
+
+    var fd = new FormData();
+    fd.append('current_password', cur);
+    fd.append('new_password', np);
+    fetch('auth.php?action=change_password',{method:'POST',credentials:'same-origin',body:fd})
+        .then(r=>r.json())
+        .then(d=>{
+            msg.style.display = 'block';
+            if(d.success){
+                msg.style.background = '#f0fdf4'; msg.style.color = '#166534';
+                msg.textContent = d.message || 'Password changed successfully';
+                document.getElementById('chpw-current').value = '';
+                document.getElementById('chpw-new').value = '';
+                document.getElementById('chpw-confirm').value = '';
+            } else {
+                msg.style.background = '#fef2f2'; msg.style.color = '#991b1b';
+                msg.textContent = d.error || 'Failed to change password';
+            }
+        })
+        .catch(()=>{
+            msg.style.display = 'block';
+            msg.style.background = '#fef2f2'; msg.style.color = '#991b1b';
+            msg.textContent = 'Network error';
         });
-    </script>
+}
+
+function loadLoginHistory(){
+    var el = document.getElementById('login-history');
+    var body = document.getElementById('login-history-body');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    if(el.style.display === 'none') return;
+    body.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:.5rem;color:var(--text-light);">Loading…</td></tr>';
+    fetch('auth.php?action=login_history',{credentials:'same-origin'})
+        .then(r=>r.json())
+        .then(d=>{
+            if(!d.success || !d.history || d.history.length === 0){
+                body.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:.5rem;color:var(--text-light);">No login history</td></tr>';
+                return;
+            }
+            body.innerHTML = d.history.map(function(h){
+                var cls = h.status === 'success' ? 'tag tag-active' : 'tag tag-rejected';
+                return '<tr><td style="font-size:.72rem;white-space:nowrap;">' + h.attempted_at + '</td><td style="font-size:.72rem;">' + h.ip_address + '</td><td><span class="' + cls + '">' + h.status + '</span></td></tr>';
+            }).join('');
+        })
+        .catch(()=>{
+            body.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:.5rem;color:var(--text-light);">Error loading history</td></tr>';
+        });
+}
+
+fetch('auth.php?action=check_session',{credentials:'same-origin'})
+    .then(r=>r.json()).then(d=>{
+        if(d.logged_in&&d.user.role==='admin'){
+            if(d.idle_timeout) _idleTimeout = d.idle_timeout;
+            showDashboard(d.user);
+        } else if(d.expired){
+            // Session was expired server-side, show login
+        }
+    })
+    .catch(()=>{});
+
+/* ── TABS ─────────────────────────────────── */
+function showTab(name){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('panel-'+name).classList.add('active');
+    var tabBtn=document.getElementById('tab-'+name);
+    if(tabBtn)tabBtn.classList.add('active');
+}
+
+/* ── LOAD ALL ─────────────────────────────── */
+function loadAll(){loadEvents();loadMembers();loadPayments();loadPublications();loadGrants();loadLeaders();loadBlogPosts();}
+
+function loadEvents(){
+    fetch('api.php?action=list_events_admin',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){_events=d.events||[];renderEvents();renderOvEvents();loadRegCounts();}
+        }).catch(()=>{});
+}
+function loadMembers(){
+    fetch('api.php?action=list_members',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){
+                var _allRows=d.members||[];
+                // Deduplicate members — keep first occurrence per member id
+                var _seen={};_members=_allRows.filter(function(r){if(_seen[r.id])return false;_seen[r.id]=true;return true;});
+                renderMembers();renderStats();renderOvMembers();
+            }
+        }).catch(()=>{});
+}
+function loadPayments(){
+    fetch('api.php?action=list_payments',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){
+                _payments=d.payments||[];
+                renderPayments();renderPayStats();
+            }
+        }).catch(()=>{});
+}
+
+/* ── STATS ────────────────────────────────── */
+function renderStats(){
+    document.getElementById('s-ev').textContent=_events.length;
+    document.getElementById('s-mem').textContent=_members.length;
+    document.getElementById('s-active').textContent=_members.filter(m=>m.status==='active').length;
+    document.getElementById('s-pend').textContent=_members.filter(m=>m.status==='pending').length;
+    var col=_payments.filter(p=>p.payment_status==='verified').reduce((a,p)=>a+parseFloat(p.amount||0),0);
+    document.getElementById('s-col').textContent=col.toLocaleString();
+    document.getElementById('s-inv').textContent=_payments.filter(p=>p.source==='payments'&&!+p.invoice_sent).length;
+    // Tab badges
+    document.getElementById('tab-ev-cnt').textContent=_events.length;
+    document.getElementById('tab-mem-cnt').textContent=_members.length;
+    document.getElementById('tab-pay-cnt').textContent=_payments.length;
+}
+function renderPayStats(){
+    var verified=_payments.filter(p=>p.payment_status==='verified');
+    var sumAll=p=>p.reduce((a,x)=>a+parseFloat(x.amount||0),0);
+    document.getElementById('ps-total').textContent='UGX '+sumAll(verified).toLocaleString();
+    document.getElementById('ps-mem-rev').textContent='UGX '+sumAll(verified.filter(p=>!p.payment_type||p.payment_type==='membership')).toLocaleString();
+    document.getElementById('ps-ev-rev').textContent='UGX '+sumAll(verified.filter(p=>p.payment_type==='event_registration')).toLocaleString();
+    document.getElementById('ps-grant-rev').textContent='UGX '+sumAll(verified.filter(p=>p.payment_type==='grant_application')).toLocaleString();
+    document.getElementById('ps-don-rev').textContent='UGX '+sumAll(verified.filter(p=>p.payment_type==='donation')).toLocaleString();
+    document.getElementById('ps-verified').textContent=verified.length;
+    document.getElementById('ps-pending').textContent=_payments.filter(p=>p.payment_status==='pending').length;
+    // Also refresh tab badge
+    document.getElementById('tab-pay-cnt').textContent=_payments.length;
+    // Update research stats grant revenue
+    var grantRev=sumAll(verified.filter(p=>p.payment_type==='grant_application'));
+    document.getElementById('rs-revenue').textContent=grantRev?'UGX '+grantRev.toLocaleString():'UGX 0';
+}
+
+/* ── EVENTS TABLE ─────────────────────────── */
+var _filteredEv=[], _evRegCounts={};
+function renderEvents(){
+    _filteredEv=filterArr(_events,document.getElementById('ev-search').value,'title','id','type','category');
+    document.getElementById('ev-count').textContent=_filteredEv.length;
+    var html='';
+    if(!_filteredEv.length){html='<tr><td colspan="9" class="empty"><div class="big">📅</div>No events found.</td></tr>';}
+    else _filteredEv.forEach(ev=>{
+        var img=ev.image?'<img class="ev-thumb" src="'+esc(ev.image)+'" alt="" onerror="this.style.display=\'none\'">':'<div class="ev-thumb" style="background:var(--bg);"></div>';
+        var isFree=ev.is_free===undefined?true:!!parseInt(ev.is_free);
+        var priceBadge=isFree?'<span class="tag" style="background:#e8f5e9;color:#2e7d32;">Free</span>':'<span class="tag" style="background:#fff3e0;color:#e65100;">UGX '+Number(ev.event_fee||0).toLocaleString()+'</span>';
+        var regCount=_evRegCounts[ev.id]||0;
+        var regBadge='<button class="btn-sm" onclick="viewRegistrants(\''+esc(ev.id)+'\')" style="display:inline-flex;align-items:center;gap:.3rem;cursor:pointer;">'
+            +'<span style="background:'+(regCount?'var(--primary-color)':'var(--text-light)')+';color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;">'+regCount+'</span>'
+            +'<span style="font-size:.72rem;">View</span></button>';
+        var homeBadge=ev.featured?'<span class="tag" style="background:#e3f2fd;color:#1976d2;font-size:.58rem;margin-left:4px;" title="Shown on Home Hero">🏠</span>':'';
+        html+='<tr><td><div class="ev-cell">'+img+'<div><div class="ev-name">'+esc(ev.title)+homeBadge+'</div><div class="ev-id">'+esc(ev.id)+'</div></div></div></td>'
+            +'<td><span class="tag tag-'+esc(ev.type)+'">'+esc(ev.type)+'</span></td>'
+            +'<td><span class="tag tag-'+esc(ev.category)+'">'+esc(ev.category)+'</span></td>'
+            +'<td><span class="tag tag-'+esc(ev.status)+'">'+esc(ev.status)+'</span></td>'
+            +'<td>'+priceBadge+'</td>'
+            +'<td class="td-center">'+regBadge+'</td>'
+            +'<td class="td-date">'+esc(ev.date)+'</td>'
+            +'<td class="td-location">'+esc(ev.location)+'</td>'
+            +'<td class="td-nowrap"><button class="btn-edit" onclick="openEditEvent(\''+esc(ev.id)+'\')">✏️ Edit</button> <button class="btn-danger" onclick="deleteEvent(\''+esc(ev.id)+'\')">🗑 Del</button></td></tr>';
+    });
+    document.getElementById('ev-body').innerHTML=html;
+}
+function filterEvents(){renderEvents();}
+function loadRegCounts(){
+    fetch('api.php?action=get_event_reg_counts',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){_evRegCounts=d.counts||{};renderEvents();}
+        }).catch(()=>{});
+}
+
+var _regModalData=[], _regModalEventId='';
+function viewRegistrants(eventId){
+    _regModalEventId=eventId;
+    var ev=_events.find(e=>e.id===eventId);
+    var isFree=ev&&(ev.is_free===undefined?true:!!parseInt(ev.is_free));
+    var priceLbl=isFree?'<span class="tag tag-free tag-free-sm">🆓 Free</span>'
+        :'<span class="tag tag-paid tag-paid-sm">💰 UGX '+Number(ev&&ev.event_fee||0).toLocaleString()+'</span>';
+    document.getElementById('reg-modal-title').innerHTML='👥 Registrants — '+(ev?esc(ev.title):esc(eventId))+' '+priceLbl;
+    document.getElementById('reg-modal-body').innerHTML='<tr><td colspan="7" class="empty">⏳ Loading…</td></tr>';
+    document.getElementById('reg-modal-stats').innerHTML='';
+    document.getElementById('reg-modal-empty').style.display='none';
+    document.getElementById('reg-search').value='';
+    openModal('reg-modal');
+
+    fetch('api.php?action=get_event_registrants&event_id='+encodeURIComponent(eventId),{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(!d.success){toast(d.error||'Failed to load registrants.','error');return;}
+            _regModalData=d.registrants||[];
+            var st=d.stats||{};
+            var statsHtml='<div class="reg-sc"><div class="s-val">'+st.total+'</div><div class="s-lbl">Total Registered</div></div>'
+                +'<div class="reg-sc"><div class="s-val green">'+st.verified+'</div><div class="s-lbl">Confirmed</div></div>';
+            if(!isFree) statsHtml+='<div class="reg-sc"><div class="s-val blue">UGX '+parseFloat(st.revenue||0).toLocaleString()+'</div><div class="s-lbl">Revenue Collected</div></div>';
+            document.getElementById('reg-modal-stats').innerHTML=statsHtml;
+            renderRegModal();
+        }).catch(()=>toast('Connection error.','error'));
+}
+function renderRegModal(){
+    var search=document.getElementById('reg-search').value.toLowerCase();
+    var data=search?_regModalData.filter(r=>(r.full_name+' '+r.email+' '+r.phone+' '+r.institution).toLowerCase().includes(search)):_regModalData;
+    if(!data.length){
+        document.getElementById('reg-modal-body').innerHTML='';
+        document.getElementById('reg-modal-empty').style.display='block';
+        return;
+    }
+    document.getElementById('reg-modal-empty').style.display='none';
+    var html='';
+    data.forEach((r,i)=>{
+        var isPaid=parseFloat(r.amount||0)>0;
+        var payBadge='<span class="tag tag-'+esc(r.payment_status)+'">'+esc(r.payment_status)+'</span>';
+        var amtStr=isPaid?'<div class="reg-amt-paid">UGX '+parseFloat(r.amount).toLocaleString()+'</div>':'<div class="reg-amt-free">🆓 Free</div>';
+        var receiptLink=r.receipt_token?'<a class="btn-sm" href="receipt.php?token='+esc(r.receipt_token)+'" target="_blank">🧾 Receipt</a>':'';
+        var verifyBtn='';
+        if(isPaid&&r.payment_status!=='verified') verifyBtn='<button class="btn-green btn-sm" onclick="verifyRegistrant('+r.id+',\'verified\')">✅ Verify Payment</button>';
+        if(isPaid&&r.payment_status==='pending') verifyBtn+=' <button class="btn-danger btn-sm" onclick="verifyRegistrant('+r.id+',\'rejected\')">✖ Reject</button>';
+        var deleteBtn='<button class="btn-sm btn-icon-del" onclick="deleteRegistrant('+r.id+')" title="Remove registrant">🗑</button>';
+        html+='<tr>'
+            +'<td class="reg-sub col-num">'+(i+1)+'</td>'
+            +'<td><div class="reg-name">'+esc(r.full_name)+'</div><div class="reg-sub">'+esc(r.email)+'</div></td>'
+            +'<td class="reg-sub">'+esc(r.phone||'–')+'</td>'
+            +'<td class="reg-sub col-inst">'+esc(r.institution||'–')+'</td>'
+            +'<td>'+payBadge+amtStr+'</td>'
+            +'<td class="reg-sub col-date">'+esc(r.registered_date||'–')+'</td>'
+            +'<td class="col-actions">'+receiptLink+verifyBtn+' '+deleteBtn+'</td></tr>';
+    });
+    document.getElementById('reg-modal-body').innerHTML=html;
+}
+function filterRegModal(){renderRegModal();}
+function verifyRegistrant(regId,status){
+    var fd=new FormData();fd.append('action','verify_registrant');fd.append('registrant_id',regId);fd.append('status',status);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){
+                toast('Payment '+status+'.','success');
+                viewRegistrants(_regModalEventId);
+                loadRegCounts();
+                loadPayments(); // sync Payments tab
+            } else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+function deleteRegistrant(regId){
+    if(!confirm('Remove this registrant? This cannot be undone.'))return;
+    var fd=new FormData();fd.append('action','delete_registrant');fd.append('registrant_id',regId);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Registrant removed.','success');viewRegistrants(_regModalEventId);loadRegCounts();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+function renderOvEvents(){
+    var html='';
+    _events.slice(0,6).forEach(ev=>{
+        html+='<tr><td class="td-ev-title">'+esc(ev.title)+'</td>'
+            +'<td><span class="tag tag-'+esc(ev.type)+'">'+esc(ev.type)+'</span></td>'
+            +'<td><span class="tag tag-'+esc(ev.category)+'">'+esc(ev.category)+'</span></td></tr>';
+    });
+    document.getElementById('ov-events-body').innerHTML=html||'<tr><td colspan="3" class="empty">No events yet.</td></tr>';
+}
+
+/* ── DELETE EVENT ─────────────────────────── */
+function deleteEvent(id){
+    if(!confirm('Delete "'+id+'"? This cannot be undone.'))return;
+    var fd=new FormData();fd.append('action','delete_event');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Event deleted.','success');loadEvents();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+
+/* ── UNIFIED EVENT MODAL (Add + Edit) ─────── */
+var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function toggleFee(){
+    var isFree=document.getElementById('ev-is-free').checked;
+    document.getElementById('ev-fee-section').style.display=isFree?'none':'block';
+    if(isFree)document.getElementById('ev-fee').value='';
+    updateProg();
+}
+
+function autoSlug(){
+    if(_editingEvId)return; // Don't change slug during edits
+    var slug=document.getElementById('ev-title').value.toLowerCase().trim().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').substring(0,80);
+    document.getElementById('ev-slug').value=slug;updateProg();
+}
+
+function buildDate(){
+    var s=document.getElementById('ev-date-start').value,e=document.getElementById('ev-date-end').value;
+    if(!s)return;
+    var sd=new Date(s+'T00:00:00');
+    if(!e){document.getElementById('ev-date').value=MONTHS[sd.getMonth()]+' '+sd.getDate()+', '+sd.getFullYear();}
+    else{var ed=new Date(e+'T00:00:00');
+        if(sd.getMonth()===ed.getMonth()&&sd.getFullYear()===ed.getFullYear())document.getElementById('ev-date').value=MONTHS[sd.getMonth()]+' '+sd.getDate()+'–'+ed.getDate()+', '+sd.getFullYear();
+        else document.getElementById('ev-date').value=MONTHS[sd.getMonth()]+' '+sd.getDate()+' – '+MONTHS[ed.getMonth()]+' '+ed.getDate()+', '+ed.getFullYear();
+    }updateProg();
+}
+
+function updateProg(){
+    var ids=['ev-title','ev-slug','ev-type','ev-alt','ev-date','ev-loc','ev-desc'];
+    var filled=ids.filter(i=>document.getElementById(i).value.trim()).length;
+    if(_hasEvImg||document.getElementById('ev-img-url').value.trim())filled++;
+    if(!document.getElementById('ev-is-free').checked&&document.getElementById('ev-fee').value)filled++;
+    var total=ids.length+1+(document.getElementById('ev-is-free').checked?0:1);
+    document.getElementById('eprog').style.width=Math.round(filled/total*100)+'%';
+}
+
+function opts(arr,selected){return arr.map(v=>'<option value="'+v+'"'+(v===selected?' selected':'')+'>'+v+'</option>').join('');}
+
+document.getElementById('ev-img-file').addEventListener('change',function(){
+    var f=this.files[0];if(!f)return;
+    if(f.size>5*1024*1024){toast('Max 5 MB.','error');this.value='';return;}
+    var r=new FileReader();r.onload=e=>{document.getElementById('ev-img-thumb').src=e.target.result;document.getElementById('ev-img-pre').style.display='block';document.getElementById('ev-img-url').value='';_hasEvImg=true;updateProg();};r.readAsDataURL(f);
+});
+document.getElementById('ev-upload').addEventListener('dragover',function(e){e.preventDefault();this.classList.add('drag');});
+document.getElementById('ev-upload').addEventListener('dragleave',function(){this.classList.remove('drag');});
+document.getElementById('ev-upload').addEventListener('drop',function(e){
+    e.preventDefault();this.classList.remove('drag');
+    var f=e.dataTransfer.files[0];
+    if(f&&f.type.startsWith('image/')){var dt=new DataTransfer();dt.items.add(f);document.getElementById('ev-img-file').files=dt.files;document.getElementById('ev-img-file').dispatchEvent(new Event('change'));}
+});
+document.querySelectorAll('#event-modal input,#event-modal select,#event-modal textarea').forEach(el=>{
+    el.addEventListener('input',updateProg);el.addEventListener('change',updateProg);
+});
+
+function clearEvImg(){document.getElementById('ev-img-file').value='';document.getElementById('ev-img-thumb').src='';document.getElementById('ev-img-pre').style.display='none';_hasEvImg=false;updateProg();}
+
+var _fpEvStart=null, _fpEvEnd=null;
+function initEvDatePickers(){
+    if(_fpEvStart) _fpEvStart.destroy();
+    if(_fpEvEnd) _fpEvEnd.destroy();
+    _fpEvStart=flatpickr('#ev-date-start',{
+        dateFormat:'Y-m-d',
+        altInput:true, altFormat:'j F Y',
+        disableMobile:true,
+        minDate:'today',
+        onChange:function(){ buildDate(); }
+    });
+    _fpEvEnd=flatpickr('#ev-date-end',{
+        dateFormat:'Y-m-d',
+        altInput:true, altFormat:'j F Y',
+        disableMobile:true,
+        minDate:'today',
+        onChange:function(){ buildDate(); }
+    });
+}
+
+function openAddEventModal(){
+    resetEvForm();
+    document.getElementById('ev-form-title').textContent='➕ Add New Event';
+    document.getElementById('ev-save-btn').textContent='💾 Save Event';
+    document.getElementById('ev-slug').readOnly=false;
+    openModal('event-modal');
+    initEvDatePickers();
+    _fpEvStart.clear();
+    _fpEvEnd.clear();
+}
+
+function openEditEvent(id){
+    var ev=_events.find(e=>e.id===id);
+    if(!ev){toast('Event not found.','error');return;}
+    resetEvForm();
+    _editingEvId=id;
+    document.getElementById('ev-form-title').textContent='✏️ Edit Event';
+    document.getElementById('ev-save-btn').textContent='💾 Save Changes';
+    document.getElementById('ev-edit-id').value=id;
+    document.getElementById('ev-slug').value=id;
+    document.getElementById('ev-slug').readOnly=true;
+    document.getElementById('ev-title').value=ev.title||'';
+    document.getElementById('ev-type').value=ev.type||'';
+    document.getElementById('ev-alt').value=ev.imageAlt||'';
+    document.getElementById('ev-date-start').value=ev.date_start||'';
+    document.getElementById('ev-date-end').value=ev.date_end||'';
+    document.getElementById('ev-date').value=ev.date||'';
+    document.getElementById('ev-loc').value=ev.location||'';
+    document.getElementById('ev-desc').value=ev.description||'';
+    document.getElementById('ev-countdown').value=ev.countdown||'';
+    // Featured flag - handle string "0"/"1" or boolean
+    var isFeatured = ev.featured === true || ev.featured === 1 || ev.featured === '1';
+    document.getElementById('ev-featured').checked=isFeatured;
+    // Image — show URL for edit, admin can replace
+    if(ev.image){document.getElementById('ev-img-url').value=ev.image;_hasEvImg=false;}
+    // Pricing - handle string "0"/"1" or boolean
+    var isFree = ev.is_free === undefined || ev.is_free === true || ev.is_free === 1 || ev.is_free === '1';
+    document.getElementById('ev-is-free').checked=isFree;
+    if(!isFree){
+        document.getElementById('ev-fee-section').style.display='block';
+        document.getElementById('ev-fee').value=parseFloat(ev.event_fee)||'';
+    }
+    // Hidden fields
+    document.getElementById('ev-cat').value=ev.category||'upcoming';
+    document.getElementById('ev-status').value=ev.status||'open';
+    updateProg();
+    openModal('event-modal');
+    initEvDatePickers();
+    if(ev.date_start) _fpEvStart.setDate(ev.date_start,true);
+    if(ev.date_end) _fpEvEnd.setDate(ev.date_end,true);
+}
+
+function resetEvForm(){
+    ['ev-title','ev-slug','ev-type','ev-alt','ev-date','ev-loc','ev-desc','ev-img-url','ev-date-start','ev-date-end','ev-fee'].forEach(id=>{
+        var el=document.getElementById(id);
+        if(el)(el.tagName==='SELECT'?el.selectedIndex=0:el.value='');
+    });
+    document.getElementById('ev-featured').checked=false;
+    document.getElementById('ev-is-free').checked=true;
+    document.getElementById('ev-fee-section').style.display='none';
+    document.getElementById('ev-cat').value='';
+    document.getElementById('ev-status').value='';
+    document.getElementById('ev-countdown').value='';
+    clearEvImg();
+    document.getElementById('eprog').style.width='0';
+    document.getElementById('ev-edit-id').value='';
+    _editingEvId=null;
+}
+
+function saveEvent(){
+    var title=document.getElementById('ev-title').value.trim();
+    var slug=document.getElementById('ev-slug').value.trim();
+    var type=document.getElementById('ev-type').value;
+    var alt=document.getElementById('ev-alt').value.trim();
+    var date=document.getElementById('ev-date').value.trim();
+    var loc=document.getElementById('ev-loc').value.trim();
+    var desc=document.getElementById('ev-desc').value.trim();
+    var dateStart=document.getElementById('ev-date-start').value;
+    var dateEnd=document.getElementById('ev-date-end').value;
+    var isFree=document.getElementById('ev-is-free').checked;
+    var fee=isFree?0:parseFloat(document.getElementById('ev-fee').value)||0;
+    var hasImg=_hasEvImg||document.getElementById('ev-img-url').value.trim();
+    var isEdit=!!_editingEvId;
+
+    if(!title||!slug||!type||!alt||!date||!loc||!desc){toast('Please fill in all required fields.','error');return;}
+    if(!hasImg&&!isEdit){toast('Please upload an image or provide an image URL.','error');return;}
+    if(!dateStart){toast('Please select a start date.','error');return;}
+    if(!isFree&&fee<=0){toast('Please enter a registration fee for paid events.','error');return;}
+
+    // Date validation
+    var today=new Date();today.setHours(0,0,0,0);
+    var startDt=new Date(dateStart+'T00:00:00');
+    if(!isEdit&&startDt<today){toast('Start date cannot be in the past.','error');return;}
+    if(dateEnd){
+        var endDt=new Date(dateEnd+'T00:00:00');
+        if(endDt<startDt){toast('End date cannot be before start date.','error');return;}
+    }
+
+    // Auto-determine status & category from dates
+    var status='open', cat='upcoming';
+    var endCheck=dateEnd?new Date(dateEnd+'T23:59:59'):new Date(dateStart+'T23:59:59');
+    if(new Date()>endCheck){status='past';cat='past';}
+    else if(new Date()>=startDt&&new Date()<=endCheck){status='open';cat='current';}
+    else{status='open';cat='upcoming';}
+
+    var btn=document.getElementById('ev-save-btn');
+    btn.disabled=true;btn.textContent='⏳ Saving…';
+
+    var fd=new FormData();
+    fd.append('title',title);fd.append('type',type);fd.append('category',cat);
+    fd.append('status',status);fd.append('imageAlt',alt);fd.append('date',date);fd.append('location',loc);
+    fd.append('countdown',document.getElementById('ev-countdown').value||'');fd.append('description',desc);
+    fd.append('date_start',dateStart);
+    if(dateEnd)fd.append('date_end',dateEnd);
+    fd.append('is_free',isFree?'1':'0');
+    fd.append('event_fee',fee);
+    fd.append('featured',document.getElementById('ev-featured').checked?'1':'0');
+    var imgFile=document.getElementById('ev-img-file').files[0];
+    if(imgFile)fd.append('imageFile',imgFile);
+    else if(document.getElementById('ev-img-url').value.trim())fd.append('image',document.getElementById('ev-img-url').value.trim());
+
+    if(isEdit){
+        fd.append('action','update_event');
+        fd.append('id',_editingEvId);
+        fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+            .then(r=>r.json()).then(d=>{
+                if(d.success){toast('✓ Event updated!','success');closeModal('event-modal');resetEvForm();loadEvents();}
+                else toast(d.error||'Failed.','error');
+            }).catch(()=>toast('Connection error.','error'))
+            .finally(()=>{btn.disabled=false;btn.textContent='💾 Save Changes';});
+    } else {
+        fd.append('id',slug);
+        fetch('save_event.php',{method:'POST',body:fd,credentials:'same-origin'})
+            .then(r=>r.json()).then(d=>{
+                if(d.success){toast('✓ Event saved!','success');closeModal('event-modal');resetEvForm();loadEvents();}
+                else toast(d.error||'Failed to save.','error');
+            }).catch(()=>toast('Connection error.','error'))
+            .finally(()=>{btn.disabled=false;btn.textContent='💾 Save Event';});
+    }
+}
+
+/* ── MEMBERS TABLE ────────────────────────── */
+var _filteredMem=[];
+function renderMembers(){
+    var statFilter=document.getElementById('mem-status-filter').value;
+    var typeFilter=document.getElementById('mem-type-filter').value;
+    var base=_members;
+    if(statFilter) base=base.filter(m=>m.status===statFilter);
+    if(typeFilter) base=base.filter(m=>m.membership_type===typeFilter);
+    _filteredMem=filterArr(base,document.getElementById('mem-search').value,'full_name','email','profession');
+    document.getElementById('mem-count').textContent=_filteredMem.length;
+    var html='';
+    var _PLAN_LABELS={'1_year':'1 Year','2_years':'2 Years','3_years':'3 Years','lifetime':'5+ Yrs Premium'};
+    if(!_filteredMem.length){html='<tr><td colspan="9" class="empty"><div class="big">👥</div>No members found.</td></tr>';}
+    else _filteredMem.forEach((m,i)=>{
+        var payStatus=m.payment_status?'<span class="tag tag-'+esc(m.payment_status)+'">'+esc(m.payment_status)+'</span>':'<span class="tag tag-past">none</span>';
+        var planLabel=_PLAN_LABELS[m.membership_type]||esc(m.membership_type);
+        var typeLabel='<span class="tag tag-upcoming">'+planLabel+'</span>';
+        html+='<tr><td style="font-size:.7rem;color:var(--text-light);">'+(i+1)+'</td>'
+            +'<td style="font-weight:600;font-size:.82rem;">'+esc(m.full_name)+'</td>'
+            +'<td style="font-size:.78rem;">'+esc(m.email)+'</td>'
+            +'<td style="font-size:.76rem;">'+esc(m.profession||'–')+'</td>'
+            +'<td>'+typeLabel+'</td>'
+            +'<td><span class="tag tag-'+esc(m.status)+'">'+esc(m.status)+'</span></td>'
+            +'<td style="font-size:.76rem;">'+esc(m.joined_date||'–')+'</td>'
+            +'<td>'+payStatus+'</td>'
+            +'<td style="white-space:nowrap;">'
+            +'<select class="btn-sm" style="padding:.28rem .5rem;font-size:.7rem;" onchange="updateMemberStatus('+m.id+',this.value)">'
+            +'<option value="">Change status…</option>'
+            +'<option value="active">✅ Active</option><option value="pending">⏳ Pending</option><option value="expired">🔴 Expired</option><option value="rejected">✖ Rejected</option>'
+            +'</select>'
+            +(m.payment_id?'<button class="btn-sm" style="margin-left:.3rem;" onclick="openPayModal('+m.id+')">💳 Payment</button>':'')
+            +'</td></tr>';
+    });
+    document.getElementById('mem-body').innerHTML=html;
+}
+function filterMembers(){renderMembers();}
+function renderOvMembers(){
+    var html='';
+    _members.slice(0,6).forEach(m=>{
+        html+='<tr><td style="font-size:.8rem;font-weight:600;">'+esc(m.full_name)+'</td>'
+            +'<td style="font-size:.74rem;">'+esc(m.profession||'–')+'</td>'
+            +'<td><span class="tag tag-'+esc(m.status)+'">'+esc(m.status)+'</span></td>'
+            +'<td style="font-size:.72rem;">'+esc(m.joined_date||'–')+'</td></tr>';
+    });
+    document.getElementById('ov-members-body').innerHTML=html||'<tr><td colspan="4" class="empty">No members yet.</td></tr>';
+}
+function updateMemberStatus(id,status){
+    if(!status)return;
+    var fd=new FormData();fd.append('action','update_member_status');fd.append('id',id);fd.append('status',status);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{if(d.success){toast('Status updated.','success');loadMembers();}else toast(d.error||'Failed.','error');})
+        .catch(()=>toast('Error.','error'));
+}
+
+/* ── PAYMENTS TABLE ───────────────────────── */
+var _filteredPay=[];
+var _PAY_TYPE_LABELS={'membership':'🪪 Membership','donation':'💝 Donation','event_registration':'🎫 Event','grant_application':'📋 Grant'};
+var _PERIOD_LABELS={'1_year':'1 Year','2_years':'2 Years','3_years':'3 Years','lifetime':'5+ Yrs Premium'};
+function renderPayments(){
+    var typeFilter=document.getElementById('pay-type-filter').value;
+    var statFilter=document.getElementById('pay-status-filter').value;
+    var base=typeFilter?_payments.filter(p=>p.payment_type===typeFilter):_payments;
+    if(statFilter) base=base.filter(p=>p.payment_status===statFilter);
+    _filteredPay=filterArr(base,document.getElementById('pay-search').value,'full_name','email','transaction_ref','transaction_id','event_title');
+    document.getElementById('pay-count').textContent=_filteredPay.length;
+    var html='';
+    if(!_filteredPay.length){html='<tr><td colspan="11" class="empty"><div class="big">💳</div>No payments found.</td></tr>';}
+    else _filteredPay.forEach((p,i)=>{
+        var ptype=p.payment_type||'membership';
+        var ptypeLabel=_PAY_TYPE_LABELS[ptype]||ptype;
+        var planCell=ptype==='membership'?esc(_PERIOD_LABELS[p.membership_period]||p.membership_period||'1 Year')
+            :ptype==='event_registration'?esc(p.event_title||'—'):'—';
+        var txDisplay=esc(p.transaction_id||p.transaction_ref||'—');
+        var validUntil=ptype==='membership'?(p.membership_period==='lifetime'?'<span style="color:#0d4593;font-weight:700;">5+ Yrs Premium</span>':(p.membership_expires_at?esc(p.membership_expires_at.substring(0,10)):'—')):'—';
+        var isEvReg=p.source==='event_registrants';
+        var invBtn=isEvReg?'':( +p.invoice_sent
+            ?'<span class="tag tag-active" style="font-size:.65rem;">✓ Sent</span>'
+            :'<button class="btn-sm btn-amber" onclick="openInvoice('+p.payment_id+')">📄 Invoice</button>');
+        var receiptBtn=p.receipt_token?'<a class="btn-sm" href="receipt.php?token='+esc(p.receipt_token)+'" target="_blank">🧾</a>':'';
+        var verifyAttr=isEvReg?'verifyEvPay('+p.registrant_id:'verifyPay('+p.payment_id;
+        html+='<tr><td style="font-size:.7rem;color:var(--text-light);">'+(i+1)+'</td>'
+            +'<td style="font-size:.8rem;"><div style="font-weight:600;">'+esc(p.full_name)+'</div><div style="font-size:.7rem;color:var(--text-light);">'+esc(p.email)+'</div></td>'
+            +'<td style="white-space:nowrap;font-size:.76rem;">'+ptypeLabel+'</td>'
+            +'<td style="font-size:.75rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(planCell)+'">'+planCell+'</td>'
+            +'<td style="font-weight:700;white-space:nowrap;">'+esc(p.currency)+' '+parseFloat(p.amount||0).toLocaleString()+'</td>'
+            +'<td style="font-size:.72rem;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+txDisplay+'">'+txDisplay+'</td>'
+            +'<td style="font-size:.74rem;">'+esc(p.payment_method||'—')+'</td>'
+            +'<td><span class="tag tag-'+esc(p.payment_status)+'">'+esc(p.payment_status)+'</span></td>'
+            +'<td style="font-size:.74rem;white-space:nowrap;">'+validUntil+'</td>'
+            +'<td style="font-size:.74rem;white-space:nowrap;">'+esc(p.paid_at?p.paid_at.substring(0,10):'—')+'</td>'
+            +'<td style="white-space:nowrap;">'
+            +(p.payment_status!=='verified'?'<button class="btn-green btn-sm" onclick="'+verifyAttr+',\'verified\')">✅</button> ':'')
+            +(p.payment_status==='pending'?'<button class="btn-danger" onclick="'+verifyAttr+',\'rejected\')">✖</button> ':'')
+            +receiptBtn+' '+invBtn
+            +(p.proof_file&&!isEvReg?' <button class="btn-sm" onclick="openPayModal('+p.member_id+')">👁</button>':'')
+            +'</td></tr>';
+    });
+    document.getElementById('pay-body').innerHTML=html;
+}
+function filterPayments(){renderPayments();}
+function goToTab(tab,filterId,val){
+    showTab(tab);
+    if(filterId){var el=document.getElementById(filterId);if(el){el.value=val;if(tab==='members')filterMembers();else if(tab==='payments')filterPayments();}}
+}
+function verifyPay(payId,status){
+    var fd=new FormData();fd.append('action','verify_payment');fd.append('payment_id',payId);fd.append('status',status);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{if(d.success){toast('Payment '+status+'.','success');loadMembers();loadPayments();}else toast(d.error||'Failed.','error');})
+        .catch(()=>toast('Error.','error'));
+}
+function verifyEvPay(regId,status){
+    var fd=new FormData();fd.append('action','verify_registrant');fd.append('registrant_id',regId);fd.append('status',status);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{if(d.success){toast('Payment '+status+'.','success');loadPayments();}else toast(d.error||'Failed.','error');})
+        .catch(()=>toast('Error.','error'));
+}
+function openPayModal(memberId){
+    var m=_members.find(x=>x.id==memberId);
+    if(!m)return;
+    var proof=m.proof_file?'<img class="proof-img" src="'+esc(m.proof_file)+'" alt="Payment proof" onerror="this.outerHTML=\'<p style=font-size:.8rem>Proof file: <a href=&quot;'+esc(m.proof_file)+'&quot; target=_blank>View file</a></p>\'">'
+        :'<p style="font-size:.82rem;color:var(--text-light);">No payment proof uploaded.</p>';
+    var eventRow='';
+    if(m.event_title){
+        eventRow='<tr><th>Event</th><td><strong>'+esc(m.event_title)+'</strong>'+(m.event_date?' <span style="color:var(--text-light);font-size:.78rem;">'+esc(m.event_date)+'</span>':'')+'</td></tr>';
+    }
+    document.getElementById('pay-modal-body').innerHTML=proof
+        +'<table class="tbl" style="margin-top:.5rem;"><tr><th>Member</th><td>'+esc(m.full_name)+'</td></tr>'
+        +'<tr><th>Email</th><td>'+esc(m.email)+'</td></tr>'
+        +eventRow
+        +'<tr><th>Amount</th><td>'+esc(m.currency)+' '+parseFloat(m.amount||0).toLocaleString()+'</td></tr>'
+        +'<tr><th>Method</th><td>'+esc(m.payment_method||'–')+'</td></tr>'
+        +'<tr><th>Reference</th><td>'+esc(m.transaction_ref||'–')+'</td></tr>'
+        +'<tr><th>Status</th><td><span class="tag tag-'+esc(m.payment_status)+'">'+esc(m.payment_status)+'</span></td></tr></table>'
+        +(m.payment_id&&m.payment_status!=='verified'?'<div style="margin-top:1rem;display:flex;gap:.5rem;"><button class="btn-green btn-sm" onclick="verifyPay('+m.payment_id+',\'verified\');closeModal(\'pay-modal\')">✅ Verify</button><button class="btn-danger" onclick="verifyPay('+m.payment_id+',\'rejected\');closeModal(\'pay-modal\')">✖ Reject</button></div>':'');
+    openModal('pay-modal');
+}
+
+/* ── INVOICE ──────────────────────────────── */
+function openInvoice(payId){
+    var p=_payments.find(x=>x.payment_id==payId&&x.source==='payments');
+    if(!p)return;
+    var invNo='INV-'+String(payId).padStart(5,'0');
+    var today=new Date().toISOString().substring(0,10);
+    document.getElementById('inv-modal-body').innerHTML='<div class="invoice">'
+        +'<div class="invoice-header"><div><div class="invoice-logo">🏥 HOSU</div><div style="font-size:.72rem;color:var(--text-light);">Hematology & Oncology Society of Uganda<br>Kampala, Uganda · info@hosu.org</div></div>'
+        +'<div class="invoice-no"><div style="font-size:.85rem;font-weight:700;">INVOICE</div><div>'+invNo+'</div><div>Date: '+today+'</div></div></div>'
+        +'<div style="margin-bottom:.75rem;font-size:.8rem;"><strong>Billed to:</strong><br>'+esc(p.full_name)+'<br>'+esc(p.email)+'</div>'
+        +'<div class="invoice-row"><span>Annual Membership Fee</span><span>–</span></div>'
+        +'<div class="invoice-row"><span>Membership Type</span><span>Annual</span></div>'
+        +'<div class="invoice-row"><span>Payment Method</span><span>'+esc(p.payment_method||'–')+'</span></div>'
+        +'<div class="invoice-row"><span>Transaction Ref</span><span>'+esc(p.transaction_ref||'–')+'</span></div>'
+        +'<div class="invoice-total"><span>Total Paid</span><span>'+esc(p.currency||'UGX')+' '+parseFloat(p.amount||100000).toLocaleString()+'</span></div></div>'
+        +'<div style="margin-top:1rem;font-size:.75rem;color:var(--text-light);">Thank you for your membership. This invoice confirms your payment has been received. Please retain for your records.</div>'
+        +'<div style="margin-top:1rem;display:flex;gap:.5rem;">'
+        +'<button class="btn-primary" onclick="printInvoice()">🖨 Print / Save PDF</button>'
+        +'<button class="btn-sm btn-green" onclick="markInvSent('+payId+')">📨 Mark Invoice Sent</button>'
+        +'<button class="btn-sm" onclick="closeModal(\'inv-modal\')">Close</button></div>';
+    openModal('inv-modal');
+}
+function printInvoice(){window.print();}
+function markInvSent(payId){
+    var fd=new FormData();fd.append('action','mark_invoice_sent');fd.append('payment_id',payId);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{if(d.success){toast('Invoice marked as sent.','success');loadMembers();loadPayments();closeModal('inv-modal');}else toast(d.error||'Failed.','error');})
+        .catch(()=>toast('Error.','error'));
+}
+
+/* ── HELPERS ──────────────────────────────── */
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-backdrop').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+
+function filterArr(arr,query){
+    var fields=Array.prototype.slice.call(arguments,2);
+    if(!query)return arr;
+    var q=query.toLowerCase();
+    return arr.filter(item=>fields.some(f=>String(item[f]||'').toLowerCase().includes(q)));
+}
+function esc(s){if(!s&&s!==0)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+var _toastT;
+function toast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className=type||'';t.style.display='block';clearTimeout(_toastT);_toastT=setTimeout(()=>t.style.display='none',4000);}
+
+/* ── PUBLICATIONS & GRANTS ────────────────── */
+var _publications=[], _grants=[], _grantAppCounts={};
+var _fpPubDate=null, _fpGrantDeadline=null;
+
+/* Flatpickr lazy-init helpers */
+function initPubDatePicker(){
+    if(_fpPubDate) _fpPubDate.destroy();
+    _fpPubDate=flatpickr('#pub-date',{
+        dateFormat:'F Y',
+        altInput:true, altFormat:'F Y',
+        disableMobile:true,
+        plugins:[],
+        monthSelectorType:'static',
+        onChange:function(sel,str,inst){
+            inst.element.value=str;
+        }
+    });
+}
+function initGrantDeadlinePicker(){
+    if(_fpGrantDeadline) _fpGrantDeadline.destroy();
+    _fpGrantDeadline=flatpickr('#grant-deadline',{
+        dateFormat:'j F Y',
+        altInput:true, altFormat:'j F Y',
+        disableMobile:true,
+        minDate:'today',
+        onChange:function(sel,str,inst){
+            inst.element.value=str;
+        }
+    });
+}
+
+function loadPublications(){
+    fetch('api.php?action=get_publications',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){_publications=d.publications||[];renderPublications();renderResearchStats();}
+        }).catch(()=>{});
+}
+function loadGrants(){
+    fetch('api.php?action=get_grants',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(!d.success)return;
+            _grants=d.grants||[];
+            renderGrants();
+            renderResearchStats();
+            loadGrantAppCounts();
+        }).catch(()=>{});
+}
+function loadGrantAppCounts(){
+    fetch('api.php?action=get_grant_app_counts',{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){_grantAppCounts=d.counts||{};renderGrants();renderResearchStats();}
+        }).catch(()=>{});
+}
+
+/* ── Research Stats ── */
+function renderResearchStats(){
+    document.getElementById('rs-pubs').textContent=_publications.length;
+    document.getElementById('rs-grants').textContent=_grants.length;
+    document.getElementById('rs-open').textContent=_grants.filter(g=>g.status==='open'||g.status==='closing').length;
+    var totalApps=0, pendingApps=0;
+    Object.keys(_grantAppCounts).forEach(function(k){
+        totalApps+=_grantAppCounts[k].total||0;
+        pendingApps+=_grantAppCounts[k].pending||0;
+    });
+    document.getElementById('rs-apps').textContent=totalApps;
+    document.getElementById('rs-pending').textContent=pendingApps;
+    // Revenue: sum from payments linked to grant applications (shown from payment stats)
+    document.getElementById('rs-revenue').textContent='—';
+    document.getElementById('tab-res-cnt').textContent=_publications.length+_grants.length;
+}
+
+/* ── Publications Table ── */
+function renderPublications(){
+    var typeFilter=document.getElementById('pub-type-filter').value;
+    var base=typeFilter?_publications.filter(p=>p.pub_type===typeFilter):_publications;
+    var filtered=filterArr(base,document.getElementById('pub-search').value,'title','authors','pub_type','pub_date');
+    document.getElementById('pub-count').textContent=filtered.length;
+    var html='';
+    if(!filtered.length){html='<tr><td colspan="6" class="empty"><div class="big">📄</div>No publications yet</td></tr>';}
+    else filtered.forEach(function(p,i){
+        html+='<tr><td class="td-idx">'+(i+1)+'</td>'
+            +'<td><span class="tag tag-conf" style="font-size:.62rem;">'+esc(p.pub_type)+'</span></td>'
+            +'<td class="td-ev-title" title="'+esc(p.title)+'">'+esc(p.title)+'</td>'
+            +'<td class="td-sm" style="max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(p.authors||'–')+'</td>'
+            +'<td class="td-date">'+esc(p.pub_date||'–')+'</td>'
+            +'<td class="td-nowrap"><div class="act-row">'
+            +(p.link?'<a href="'+esc(p.link)+'" target="_blank" class="btn-pill btn-pill-green" title="View link">🔗</a>':'')+''
+            +'<button class="btn-pill btn-pill-edit" onclick="openEditPub('+p.id+')" title="Edit">✏️</button>'
+            +'<button class="btn-pill btn-pill-del" onclick="deletePub('+p.id+')" title="Delete">🗑</button>'
+            +'</div></td></tr>';
+    });
+    document.getElementById('pub-body').innerHTML=html;
+}
+function filterPubs(){renderPublications();}
+
+/* ── Grants Table ── */
+function renderGrants(){
+    var statFilter=document.getElementById('grant-status-filter').value;
+    var base=statFilter?_grants.filter(g=>g.status===statFilter):_grants;
+    var filtered=filterArr(base,document.getElementById('grant-search').value,'title','description','currency');
+    document.getElementById('grant-count').textContent=filtered.length;
+    var html='';
+    if(!filtered.length){html='<tr><td colspan="7" class="empty"><div class="big">🏆</div>No grants found. Add one!</td></tr>';}
+    else filtered.forEach(function(g,i){
+        var statusTag=g.status==='open'?'tag-open':g.status==='closing'?'tag-closing':'tag-past';
+        var statusLabel=g.status==='open'?'Open':g.status==='closing'?'Closing':'Closed';
+        var appCount=_grantAppCounts[g.id]?_grantAppCounts[g.id].total:0;
+        var appBadge='<button class="btn-pill btn-pill-amber" onclick="viewGrantApplicants('+g.id+')" title="View applicants" style="gap:.25rem;">'
+            +'<span style="background:'+(appCount?'var(--primary)':'var(--text-light)')+';color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;">'+appCount+'</span>'
+            +'</button>';
+        html+='<tr><td class="td-idx">'+(i+1)+'</td>'
+            +'<td class="td-ev-title" title="'+esc(g.title)+'">'+esc(g.title)+'</td>'
+            +'<td class="td-amt" style="font-size:.74rem;">'+esc(g.currency)+' '+parseFloat(g.amount||0).toLocaleString()+'</td>'
+            +'<td class="td-date">'+esc(g.deadline||'–')+'</td>'
+            +'<td><span class="tag '+statusTag+'" style="font-size:.62rem;">'+statusLabel+'</span></td>'
+            +'<td class="td-center">'+appBadge+'</td>'
+            +'<td class="td-nowrap"><div class="act-row">'
+            +'<button class="btn-pill btn-pill-edit" onclick="openEditGrant('+g.id+')" title="Edit">✏️</button>'
+            +'<button class="btn-pill btn-pill-del" onclick="deleteGrant('+g.id+')" title="Delete">🗑</button>'
+            +'</div></td></tr>';
+    });
+    document.getElementById('grant-body').innerHTML=html;
+}
+function filterGrantsTable(){renderGrants();}
+
+/* ── Publication modal ── */
+function togglePubSource(){
+    var val=document.querySelector('input[name="pub-source"]:checked').value;
+    document.getElementById('pub-event-picker').style.display=val==='event'?'block':'none';
+    if(val==='event'){
+        // Populate event dropdown
+        var sel=document.getElementById('pub-event-select');
+        sel.innerHTML='<option value="">— Choose an event —</option>';
+        _events.forEach(function(ev){
+            sel.innerHTML+='<option value="'+esc(ev.id)+'">'+esc(ev.title)+' ('+esc(ev.type)+', '+esc(ev.date)+')</option>';
+        });
+    }
+}
+function fillPubFromEvent(){
+    var evId=document.getElementById('pub-event-select').value;
+    if(!evId)return;
+    var ev=_events.find(function(e){return e.id===evId;});
+    if(!ev)return;
+    document.getElementById('pub-type').value='Conference';
+    document.getElementById('pub-title').value=ev.title||'';
+    document.getElementById('pub-authors').value='HOSU';
+    // Set date from event date
+    if(ev.date){
+        document.getElementById('pub-date').value=ev.date;
+        if(_fpPubDate){
+            try{_fpPubDate.setDate(ev.date_start||ev.date,true);}catch(e){}
+        }
+    }
+    toast('Event details imported! You can edit fields before saving.','success');
+}
+function openPubModal(){
+    document.getElementById('pub-edit-id').value='';
+    document.getElementById('pub-form-title').textContent='➕ Add Publication';
+    document.getElementById('pub-save-btn').textContent='💾 Save';
+    ['pub-title','pub-authors','pub-link'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('pub-type').selectedIndex=0;
+    document.getElementById('pub-link-label').value='Read abstract';
+    document.getElementById('pub-sort').value='0';
+    document.getElementById('pub-show-home').checked=false;
+    // Reset source toggle
+    document.getElementById('pub-import-sec').style.display='';
+    var radios=document.querySelectorAll('input[name="pub-source"]');
+    if(radios[0])radios[0].checked=true;
+    document.getElementById('pub-event-picker').style.display='none';
+    openModal('pub-modal');
+    initPubDatePicker();
+    _fpPubDate.clear();
+}
+function openEditPub(id){
+    var p=_publications.find(function(x){return x.id==id;});
+    if(!p){toast('Publication not found.','error');return;}
+    document.getElementById('pub-edit-id').value=p.id;
+    document.getElementById('pub-form-title').textContent='✏️ Edit Publication';
+    document.getElementById('pub-save-btn').textContent='💾 Save Changes';
+    document.getElementById('pub-type').value=p.pub_type||'Journal';
+    document.getElementById('pub-title').value=p.title||'';
+    document.getElementById('pub-authors').value=p.authors||'';
+    document.getElementById('pub-link').value=p.link||'';
+    document.getElementById('pub-link-label').value=p.link_label||'Read abstract';
+    document.getElementById('pub-sort').value=p.sort_order||0;
+    document.getElementById('pub-show-home').checked=!!p.show_on_home;
+    // Hide import section on edit
+    document.getElementById('pub-import-sec').style.display='none';
+    openModal('pub-modal');
+    initPubDatePicker();
+    if(p.pub_date){
+        _fpPubDate.setDate(p.pub_date,true);
+        document.getElementById('pub-date').value=p.pub_date;
+    } else { _fpPubDate.clear(); }
+}
+function savePub(){
+    var id=document.getElementById('pub-edit-id').value;
+    var title=document.getElementById('pub-title').value.trim();
+    if(!title){toast('Title is required.','error');return;}
+    var fd=new FormData();
+    fd.append('action',id?'update_publication':'create_publication');
+    if(id)fd.append('id',id);
+    fd.append('pub_type',document.getElementById('pub-type').value);
+    fd.append('title',title);
+    fd.append('authors',document.getElementById('pub-authors').value.trim());
+    fd.append('pub_date',document.getElementById('pub-date').value.trim());
+    fd.append('link',document.getElementById('pub-link').value.trim());
+    fd.append('link_label',document.getElementById('pub-link-label').value.trim()||'Read abstract');
+    fd.append('sort_order',document.getElementById('pub-sort').value||'0');
+    if(document.getElementById('pub-show-home').checked)fd.append('show_on_home','1');
+    var btn=document.getElementById('pub-save-btn');
+    btn.disabled=true;
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Publication saved!','success');closeModal('pub-modal');loadPublications();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Connection error.','error'))
+        .finally(()=>{btn.disabled=false;});
+}
+function deletePub(id){
+    if(!confirm('Delete this publication?'))return;
+    var fd=new FormData();fd.append('action','delete_publication');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Deleted.','success');loadPublications();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+
+/* ── Grant modal ── */
+function openGrantModal(){
+    document.getElementById('grant-edit-id').value='';
+    document.getElementById('grant-form-title').textContent='➕ Add Grant';
+    document.getElementById('grant-save-btn').textContent='💾 Save';
+    ['grant-title','grant-amount','grant-desc','grant-apply-link'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('grant-currency').value='UGX';
+    document.getElementById('grant-status').value='open';
+    document.getElementById('grant-sort').value='0';
+    document.getElementById('grant-show-home').checked=false;
+    openModal('grant-modal');
+    initGrantDeadlinePicker();
+    _fpGrantDeadline.clear();
+}
+function openEditGrant(id){
+    var g=_grants.find(function(x){return x.id==id;});
+    if(!g){toast('Grant not found.','error');return;}
+    document.getElementById('grant-edit-id').value=g.id;
+    document.getElementById('grant-form-title').textContent='✏️ Edit Grant';
+    document.getElementById('grant-save-btn').textContent='💾 Save Changes';
+    document.getElementById('grant-title').value=g.title||'';
+    document.getElementById('grant-amount').value=g.amount||'';
+    document.getElementById('grant-currency').value=g.currency||'UGX';
+    document.getElementById('grant-status').value=g.status||'open';
+    document.getElementById('grant-desc').value=g.description||'';
+    document.getElementById('grant-apply-link').value=g.apply_link||'';
+    document.getElementById('grant-sort').value=g.sort_order||0;
+    document.getElementById('grant-show-home').checked=!!g.show_on_home;
+    openModal('grant-modal');
+    initGrantDeadlinePicker();
+    if(g.deadline){
+        _fpGrantDeadline.setDate(g.deadline,true);
+        document.getElementById('grant-deadline').value=g.deadline;
+    } else { _fpGrantDeadline.clear(); }
+}
+function saveGrant(){
+    var id=document.getElementById('grant-edit-id').value;
+    var title=document.getElementById('grant-title').value.trim();
+    if(!title){toast('Title is required.','error');return;}
+    var fd=new FormData();
+    fd.append('action',id?'update_grant':'create_grant');
+    if(id)fd.append('id',id);
+    fd.append('title',title);
+    fd.append('amount',document.getElementById('grant-amount').value||'0');
+    fd.append('currency',document.getElementById('grant-currency').value);
+    fd.append('deadline',document.getElementById('grant-deadline').value.trim());
+    fd.append('status',document.getElementById('grant-status').value);
+    fd.append('description',document.getElementById('grant-desc').value.trim());
+    fd.append('apply_link',document.getElementById('grant-apply-link').value.trim());
+    fd.append('sort_order',document.getElementById('grant-sort').value||'0');
+    if(document.getElementById('grant-show-home').checked)fd.append('show_on_home','1');
+    var btn=document.getElementById('grant-save-btn');
+    btn.disabled=true;
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Grant saved!','success');closeModal('grant-modal');loadGrants();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Connection error.','error'))
+        .finally(()=>{btn.disabled=false;});
+}
+function deleteGrant(id){
+    if(!confirm('Delete this grant opportunity?'))return;
+    var fd=new FormData();fd.append('action','delete_grant');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Deleted.','success');loadGrants();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+
+/* ── Grant Applications Modal (like reg-modal) ── */
+var _gappModalData=[], _gappGrantId=0;
+function viewGrantApplicants(grantId){
+    _gappGrantId=grantId;
+    var g=_grants.find(function(x){return x.id==grantId;});
+    var statusBadge=g?'<span class="tag tag-'+(g.status==='open'?'open':g.status==='closing'?'closing':'past')+'">'+esc(g.status)+'</span>':'';
+    document.getElementById('gapp-modal-title').innerHTML='📋 Applications — '+(g?esc(g.title):'Grant #'+grantId)+' '+statusBadge;
+    document.getElementById('gapp-body').innerHTML='<tr><td colspan="9" class="empty">⏳ Loading…</td></tr>';
+    document.getElementById('gapp-stats').innerHTML='';
+    document.getElementById('gapp-empty').style.display='none';
+    document.getElementById('gapp-search').value='';
+    document.getElementById('gapp-status-filter').value='';
+    document.getElementById('gapp-export-btn').href='api.php?action=export_grants_report_csv&grant_id='+grantId;
+    openModal('gapp-modal');
+
+    fetch('api.php?action=get_grant_applications&grant_id='+grantId,{credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(!d.success){toast(d.error||'Failed to load applications.','error');return;}
+            _gappModalData=d.applications||[];
+            var total=_gappModalData.length;
+            var approved=_gappModalData.filter(function(a){return a.status==='approved';}).length;
+            var pending=_gappModalData.filter(function(a){return a.status==='pending';}).length;
+            var rejected=_gappModalData.filter(function(a){return a.status==='rejected';}).length;
+            var revenue=_gappModalData.reduce(function(s,a){return s+parseFloat(a.paid_amount||0);},0);
+            var statsHtml='<div class="reg-sc"><div class="s-val">'+total+'</div><div class="s-lbl">Total Applications</div></div>'
+                +'<div class="reg-sc"><div class="s-val green">'+approved+'</div><div class="s-lbl">Approved</div></div>'
+                +'<div class="reg-sc"><div class="s-val" style="color:var(--amber);">'+pending+'</div><div class="s-lbl">Pending</div></div>'
+                +'<div class="reg-sc"><div class="s-val" style="color:var(--primary);">'+rejected+'</div><div class="s-lbl">Rejected</div></div>';
+            if(revenue>0) statsHtml+='<div class="reg-sc"><div class="s-val blue">UGX '+revenue.toLocaleString()+'</div><div class="s-lbl">Revenue</div></div>';
+            document.getElementById('gapp-stats').innerHTML=statsHtml;
+            renderGappModal();
+        }).catch(()=>toast('Connection error.','error'));
+}
+function renderGappModal(){
+    var search=document.getElementById('gapp-search').value.toLowerCase();
+    var statFilter=document.getElementById('gapp-status-filter').value;
+    var data=_gappModalData;
+    if(statFilter) data=data.filter(function(a){return a.status===statFilter;});
+    if(search) data=data.filter(function(a){return (a.full_name+' '+a.email+' '+a.phone+' '+a.institution).toLowerCase().includes(search);});
+    if(!data.length){
+        document.getElementById('gapp-body').innerHTML='';
+        document.getElementById('gapp-empty').style.display='block';
+        return;
+    }
+    document.getElementById('gapp-empty').style.display='none';
+    var html='';
+    data.forEach(function(a,i){
+        var statusBadge=a.status==='approved'?'<span class="tag tag-active">✅ Approved</span>'
+            :a.status==='rejected'?'<span class="tag tag-rejected">❌ Rejected</span>'
+            :'<span class="tag tag-pending">⏳ Pending</span>';
+        var payInfo=a.payment_id?'<span class="tag tag-active">'+esc((a.paid_currency||'')+' '+parseFloat(a.paid_amount||0).toLocaleString())+' ('+esc(a.payment_status||'')+')</span>'
+            :'<span style="color:var(--text-light);font-size:.74rem;">None</span>';
+        var proposalBtn=a.proposal?'<button class="btn-sm" onclick="showProposal('+a.id+')" title="View proposal">📄 Proposal</button>':'';
+        var approveBtn=a.status!=='approved'?'<button class="btn-green btn-sm" onclick="updateGappStatus('+a.id+',\'approved\')">✅</button> ':'';
+        var rejectBtn=a.status!=='rejected'?'<button class="btn-danger" onclick="updateGappStatus('+a.id+',\'rejected\')" style="font-size:.72rem;">✖</button> ':'';
+        var deleteBtn='<button class="btn-sm btn-icon-del" onclick="deleteGapp('+a.id+')" title="Remove application">🗑</button>';
+        var dateStr=a.created_at?a.created_at.substring(0,10):'—';
+        html+='<tr>'
+            +'<td class="td-idx">'+(i+1)+'</td>'
+            +'<td><div class="reg-name">'+esc(a.full_name)+'</div><div class="reg-sub">'+esc(a.email)+'</div></td>'
+            +'<td class="reg-sub">'+esc(a.phone||'–')+'</td>'
+            +'<td class="reg-sub col-inst">'+esc(a.institution||'–')+'</td>'
+            +'<td>'+proposalBtn+'</td>'
+            +'<td>'+statusBadge+'</td>'
+            +'<td>'+payInfo+'</td>'
+            +'<td class="reg-sub col-date">'+esc(dateStr)+'</td>'
+            +'<td class="col-actions">'+approveBtn+rejectBtn+deleteBtn+'</td></tr>';
+    });
+    document.getElementById('gapp-body').innerHTML=html;
+}
+function filterGappModal(){renderGappModal();}
+function showProposal(appId){
+    var a=_gappModalData.find(function(x){return x.id==appId;});
+    if(!a||!a.proposal)return;
+    // Show in a simple alert-style overlay
+    var overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;z-index:9500;background:rgba(18,41,74,.35);display:flex;align-items:center;justify-content:center;padding:2rem;';
+    overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+    overlay.innerHTML='<div style="background:var(--white);border-radius:14px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.18);animation:popIn .28s cubic-bezier(.22,1,.36,1);">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:1;">'
+        +'<h3 style="font-size:.9rem;font-weight:700;">📄 Proposal — '+esc(a.full_name)+'</h3>'
+        +'<button onclick="this.closest(\'div[style]\').parentElement.remove()" style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.05);border:none;border-radius:50%;font-size:.9rem;cursor:pointer;color:var(--text-light);">×</button></div>'
+        +'<div style="padding:1rem;font-size:.85rem;line-height:1.7;white-space:pre-wrap;color:var(--text);">'+esc(a.proposal)+'</div></div>';
+    document.body.appendChild(overlay);
+}
+function updateGappStatus(appId,status){
+    var fd=new FormData();
+    fd.append('action','update_grant_application_status');
+    fd.append('id',appId);
+    fd.append('status',status);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Status updated to '+status+'.','success');viewGrantApplicants(_gappGrantId);loadGrantAppCounts();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+function deleteGapp(appId){
+    if(!confirm('Remove this application? This cannot be undone.'))return;
+    var fd=new FormData();fd.append('action','delete_grant_application');fd.append('id',appId);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+        .then(r=>r.json()).then(d=>{
+            if(d.success){toast('Application removed.','success');viewGrantApplicants(_gappGrantId);loadGrantAppCounts();}
+            else toast(d.error||'Failed.','error');
+        }).catch(()=>toast('Error.','error'));
+}
+// ── Leadership Management ───────────────────────────────────────
+var _leaders=[];
+var _leaderPhotoFile=null;
+function loadLeaders(){
+    fetch('api.php?action=get_leaders',{credentials:'same-origin'}).then(r=>r.json()).then(d=>{
+        if(!d.success)return;
+        _leaders=d.leaders||[];
+        document.getElementById('tab-lead-cnt').textContent=_leaders.length;
+        document.getElementById('ld-total').textContent=_leaders.length;
+        document.getElementById('ld-active').textContent=_leaders.filter(l=>l.is_active==='1'||l.is_active===1).length;
+        document.getElementById('ld-with-bio').textContent=_leaders.filter(l=>l.biography&&l.biography.trim()).length;
+        document.getElementById('lead-count').textContent=_leaders.length;
+        var tb=document.getElementById('lead-body');
+        if(!_leaders.length){tb.innerHTML='<tr><td colspan="7" class="empty">No leaders added yet. Click "+ Add Leader" to start.</td></tr>';return;}
+        tb.innerHTML=_leaders.map(function(l,i){
+            var thumb=l.photo_url?'<img src="'+esc(l.photo_url)+'" style="width:36px;height:36px;border-radius:8px;object-fit:cover;">':'<span style="display:inline-flex;width:36px;height:36px;border-radius:8px;background:var(--bg);align-items:center;justify-content:center;font-size:.9rem;">👤</span>';
+            var hasBio=l.biography&&l.biography.trim()?'<span class="tag tag-active">Yes</span>':'<span class="tag tag-pending">No</span>';
+            var status=l.is_active==='1'||l.is_active===1?'<span class="tag tag-active">Active</span>':'<span class="tag tag-expired">Inactive</span>';
+            return '<tr><td>'+(i+1)+'</td><td><div style="display:flex;align-items:center;gap:.5rem;">'+thumb+'<span style="font-weight:600;">'+esc(l.name)+'</span></div></td><td>'+esc(l.title)+'</td><td>'+hasBio+'</td><td>'+l.sort_order+'</td><td>'+status+'</td><td><button class="btn-xs btn-outline-xs" onclick="editLeader('+l.id+')">✏️</button> <button class="btn-xs btn-danger-xs" onclick="deleteLeader('+l.id+')">🗑️</button></td></tr>';
+        }).join('');
+    }).catch(function(){});
+}
+function openLeaderModal(ld){
+    _leaderPhotoFile=null;
+    document.getElementById('ld-photo-file').value='';
+    document.getElementById('ld-edit-id').value=ld?ld.id:'';
+    document.getElementById('ld-existing-photo').value=ld?ld.photo_url:'';
+    document.getElementById('ld-name').value=ld?ld.name:'';
+    document.getElementById('ld-title').value=ld?ld.title:'';
+    document.getElementById('ld-quals').value=ld?ld.qualifications:'';
+    document.getElementById('ld-bio').value=ld?ld.biography:'';
+    document.getElementById('ld-photo').value=ld?ld.photo_url:'';
+    document.getElementById('ld-order').value=ld?ld.sort_order:0;
+    var isActive=ld?(ld.is_active==='1'||ld.is_active===1?1:0):1;
+    setLeaderStatus(isActive);
+    document.getElementById('ld-form-title').textContent=ld?'✏️ Edit Leader':'➕ Add Leader';
+    document.getElementById('ld-save-text').textContent=ld?'💾 Update Leader':'💾 Save Leader';
+    // Set photo preview
+    if(ld&&ld.photo_url){
+        showLeaderPhotoPreview(ld.photo_url);
+    } else {
+        clearLeaderPhotoPreview();
+    }
+    document.getElementById('leader-modal').style.display='flex';
+}
+function closeLeaderModal(){document.getElementById('leader-modal').style.display='none';_leaderPhotoFile=null;}
+function editLeader(id){
+    var ld=_leaders.find(function(l){return l.id==id;});
+    if(ld)openLeaderModal(ld);
+}
+function setLeaderStatus(val){
+    document.getElementById('ld-active').value=val;
+    var onEl=document.getElementById('ld-status-on');
+    var offEl=document.getElementById('ld-status-off');
+    onEl.className='ld-status-opt'+(val==1?' active-on':'');
+    offEl.className='ld-status-opt'+(val==0?' active-off':'');
+}
+function showLeaderPhotoPreview(src){
+    var img=document.getElementById('ld-photo-img');
+    var placeholder=document.getElementById('ld-photo-placeholder');
+    var removeBtn=document.getElementById('ld-photo-remove');
+    img.src=src;img.style.display='block';
+    placeholder.style.display='none';
+    removeBtn.style.display='';
+}
+function clearLeaderPhotoPreview(){
+    var img=document.getElementById('ld-photo-img');
+    var placeholder=document.getElementById('ld-photo-placeholder');
+    var removeBtn=document.getElementById('ld-photo-remove');
+    img.src='';img.style.display='none';
+    placeholder.style.display='';
+    removeBtn.style.display='none';
+}
+function handleLeaderPhoto(input){
+    if(!input.files||!input.files[0])return;
+    var file=input.files[0];
+    var allowed=['image/jpeg','image/png','image/webp'];
+    if(allowed.indexOf(file.type)===-1){toast('Only JPG, PNG or WebP images are allowed.','error');input.value='';return;}
+    if(file.size>5*1024*1024){toast('Photo must be under 5 MB.','error');input.value='';return;}
+    _leaderPhotoFile=file;
+    document.getElementById('ld-photo').value='';
+    var reader=new FileReader();
+    reader.onload=function(e){showLeaderPhotoPreview(e.target.result);};
+    reader.readAsDataURL(file);
+}
+function previewLeaderPhotoUrl(url){
+    if(!url.trim()){if(!_leaderPhotoFile)clearLeaderPhotoPreview();return;}
+    _leaderPhotoFile=null;
+    document.getElementById('ld-photo-file').value='';
+    showLeaderPhotoPreview(url);
+}
+function removeLeaderPhoto(){
+    _leaderPhotoFile=null;
+    document.getElementById('ld-photo-file').value='';
+    document.getElementById('ld-photo').value='';
+    clearLeaderPhotoPreview();
+}
+// Drag & drop support
+(function(){
+    var drop=document.getElementById('ld-upload-drop');
+    if(!drop)return;
+    ['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('dragover');});});
+    ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('dragover');});});
+    drop.addEventListener('drop',function(e){
+        if(e.dataTransfer.files&&e.dataTransfer.files[0]){
+            document.getElementById('ld-photo-file').files=e.dataTransfer.files;
+            handleLeaderPhoto(document.getElementById('ld-photo-file'));
+        }
+    });
+})();
+function saveLeader(){
+    var name=document.getElementById('ld-name').value.trim();
+    var title=document.getElementById('ld-title').value.trim();
+    if(!name){toast('Full Name is required.','error');document.getElementById('ld-name').focus();return;}
+    if(!title){toast('Title / Position is required.','error');document.getElementById('ld-title').focus();return;}
+    var btn=document.getElementById('ld-save-btn');
+    btn.disabled=true;
+    document.getElementById('ld-save-text').textContent='⏳ Saving...';
+    var fd=new FormData();
+    fd.append('action','save_leader');
+    var id=document.getElementById('ld-edit-id').value;
+    if(id)fd.append('id',id);
+    fd.append('name',name);
+    fd.append('title',title);
+    fd.append('qualifications',document.getElementById('ld-quals').value);
+    fd.append('biography',document.getElementById('ld-bio').value);
+    fd.append('sort_order',document.getElementById('ld-order').value);
+    fd.append('is_active',document.getElementById('ld-active').value);
+    if(_leaderPhotoFile){
+        fd.append('photo',_leaderPhotoFile);
+    } else {
+        fd.append('photo_url',document.getElementById('ld-photo').value);
+    }
+    fd.append('existing_photo',document.getElementById('ld-existing-photo').value);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'}).then(r=>r.json()).then(d=>{
+        btn.disabled=false;
+        document.getElementById('ld-save-text').textContent=id?'💾 Update Leader':'💾 Save Leader';
+        if(d.success){toast(id?'Leader updated.':'Leader added.','success');closeLeaderModal();loadLeaders();}
+        else toast(d.error||'Failed.','error');
+    }).catch(()=>{
+        btn.disabled=false;
+        document.getElementById('ld-save-text').textContent=id?'💾 Update Leader':'💾 Save Leader';
+        toast('Network error.','error');
+    });
+}
+function deleteLeader(id){
+    if(!confirm('Delete this leader? This cannot be undone.'))return;
+    var fd=new FormData();fd.append('action','delete_leader');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'}).then(r=>r.json()).then(d=>{
+        if(d.success){toast('Leader deleted.','success');loadLeaders();}
+        else toast(d.error||'Failed.','error');
+    }).catch(()=>toast('Error.','error'));
+}
+// Load leadership data when tab is shown
+var _origShowTab=window.showTab;
+if(typeof _origShowTab!=='function'){
+    _origShowTab=function(name){
+        document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        var panel=document.getElementById('panel-'+name);if(panel)panel.classList.add('active');
+        var tabBtn=document.getElementById('tab-'+name);if(tabBtn)tabBtn.classList.add('active');
+    };
+}
+window.showTab=function(name){
+    _origShowTab(name);
+    if(name==='leadership')loadLeaders();
+    if(name==='blog')loadBlogPosts();
+};
+
+/* ── BLOG MANAGEMENT ─────────────────────── */
+var _blogPosts=[];
+function loadBlogPosts(){
+    fetch('api.php?action=get_posts',{credentials:'same-origin'})
+    .then(r=>r.json()).then(posts=>{
+        if(Array.isArray(posts)){_blogPosts=posts;renderBlogTable();renderBlogStats();}
+    }).catch(()=>{});
+}
+
+function renderBlogStats(){
+    var total=_blogPosts.length;
+    var cats=[...new Set(_blogPosts.map(p=>p.category))];
+    var comments=_blogPosts.reduce((s,p)=>s+parseInt(p.comment_count||0),0);
+    document.getElementById('bp-total').textContent=total;
+    document.getElementById('bp-cats').textContent=cats.length;
+    document.getElementById('bp-comments').textContent=comments;
+    document.getElementById('bp-count').textContent=total;
+    var badge=document.getElementById('tab-blog-cnt');if(badge)badge.textContent=total;
+    // populate category filter
+    var sel=document.getElementById('bp-cat-filter');
+    var cur=sel.value;
+    sel.innerHTML='<option value="">All Categories</option>';
+    cats.forEach(c=>{sel.innerHTML+='<option value="'+c+'">'+c+'</option>';});
+    sel.value=cur;
+}
+
+function renderBlogTable(){
+    var filter=document.getElementById('bp-cat-filter').value;
+    var list=filter?_blogPosts.filter(p=>p.category===filter):_blogPosts.slice();
+    // Ensure newest first
+    list.sort(function(a,b){ return (b.id||0)-(a.id||0); });
+    var tb=document.getElementById('bp-body');
+    if(!list.length){tb.innerHTML='<tr><td colspan="6" class="empty"><div class="big">📝</div>No posts found.</td></tr>';return;}
+    tb.innerHTML=list.map(function(p){
+        var img=p.image||'uploads/default-blog.jpg';
+        return '<tr>'
+        +'<td><img src="'+img.replace(/\\\\/g,'/')+'" class="ev-thumb" alt=""></td>'
+        +'<td><div class="ev-name" title="'+p.title+'">'+p.title+'</div><div class="ev-id">ID: '+p.id+'</div></td>'
+        +'<td><span class="tag tag-conf">'+p.category+'</span></td>'
+        +'<td>'+p.author+'</td>'
+        +'<td>'+(p.formatted_date||p.created_at)+'</td>'
+        +'<td><button class="btn-edit" onclick="editBlogPost('+p.id+')">✏️ Edit</button> <button class="btn-danger" onclick="deleteBlogPost('+p.id+')">🗑️</button></td>'
+        +'</tr>';
+    }).join('');
+}
+
+function openBlogModal(post){
+    document.getElementById('bp-edit-id').value=post?post.id:'';
+    document.getElementById('bp-title').value=post?post.title:'';
+    document.getElementById('bp-category').value=post?post.category:'General';
+    document.getElementById('bp-author').value=post?post.author:'';
+    document.getElementById('bp-content').value=post?post.content:'';
+    document.getElementById('bp-form-title').textContent=post?'✏️ Edit Post':'➕ New Blog Post';
+    document.getElementById('bp-img-pre').style.display='none';
+    document.getElementById('bp-avatar-pre').style.display='none';
+    document.getElementById('bp-img-file').value='';
+    document.getElementById('bp-avatar-file').value='';
+    if(post&&post.image&&post.image.indexOf('default')===-1){
+        document.getElementById('bp-img-thumb').src=post.image.replace(/\\\\/g,'/');
+        document.getElementById('bp-img-pre').style.display='block';
+    }
+    if(post&&post.avatar&&post.avatar.indexOf('default')===-1){
+        document.getElementById('bp-avatar-thumb').src=post.avatar.replace(/\\\\/g,'/');
+        document.getElementById('bp-avatar-pre').style.display='block';
+    }
+    document.getElementById('blog-modal').classList.add('open');
+}
+
+function editBlogPost(id){
+    var p=_blogPosts.find(x=>x.id==id);
+    if(p)openBlogModal(p);
+}
+
+function clearBlogImg(){document.getElementById('bp-img-file').value='';document.getElementById('bp-img-pre').style.display='none';}
+function clearBlogAvatar(){document.getElementById('bp-avatar-file').value='';document.getElementById('bp-avatar-pre').style.display='none';}
+
+// image preview listeners
+document.getElementById('bp-img-file').addEventListener('change',function(){
+    if(this.files&&this.files[0]){
+        var r=new FileReader();r.onload=function(e){document.getElementById('bp-img-thumb').src=e.target.result;document.getElementById('bp-img-pre').style.display='block';};r.readAsDataURL(this.files[0]);
+    }
+});
+document.getElementById('bp-avatar-file').addEventListener('change',function(){
+    if(this.files&&this.files[0]){
+        var r=new FileReader();r.onload=function(e){document.getElementById('bp-avatar-thumb').src=e.target.result;document.getElementById('bp-avatar-pre').style.display='block';};r.readAsDataURL(this.files[0]);
+    }
+});
+
+function saveBlogPost(){
+    var id=document.getElementById('bp-edit-id').value;
+    var title=document.getElementById('bp-title').value.trim();
+    var content=document.getElementById('bp-content').value.trim();
+    if(!title||!content){toast('Title and content are required.','error');return;}
+    var fd=new FormData();
+    fd.append('action',id?'update_post':'create_post');
+    if(id)fd.append('id',id);
+    fd.append('title',title);
+    fd.append('content',content);
+    fd.append('category',document.getElementById('bp-category').value);
+    fd.append('author',document.getElementById('bp-author').value||'HOSU Admin');
+    var imgFile=document.getElementById('bp-img-file').files[0];
+    if(imgFile)fd.append('image',imgFile);
+    var avFile=document.getElementById('bp-avatar-file').files[0];
+    if(avFile)fd.append('avatar',avFile);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+    .then(r=>r.json()).then(d=>{
+        if(d.success||d.post_id){
+            toast(id?'Post updated!':'Post published!','success');
+            closeModal('blog-modal');loadBlogPosts();
+        } else toast(d.error||'Failed to save.','error');
+    }).catch(()=>toast('Network error.','error'));
+}
+
+function deleteBlogPost(id){
+    if(!confirm('Delete this post? This cannot be undone.'))return;
+    var fd=new FormData();fd.append('action','delete_post');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+    .then(r=>r.json()).then(d=>{
+        if(d.success){toast('Post deleted.','success');loadBlogPosts();}
+        else toast(d.error||'Failed.','error');
+    }).catch(()=>toast('Error.','error'));
+}
+
+/* ── COMMENTS MANAGEMENT ─────────────────── */
+var _allComments=[];
+function loadBlogComments(){
+    fetch('api.php?action=get_all_comments',{credentials:'same-origin'})
+    .then(r=>r.json()).then(comments=>{
+        if(Array.isArray(comments)){_allComments=comments;renderCommentsTable();renderCommentsStats();}
+    }).catch(()=>{});
+}
+
+function renderCommentsStats(){
+    document.getElementById('cm-count').textContent=_allComments.length;
+    document.getElementById('bp-comments').textContent=_allComments.length;
+    // populate post filter
+    var sel=document.getElementById('cm-post-filter');
+    var cur=sel.value;
+    var posts=[...new Set(_allComments.map(c=>c.post_title).filter(Boolean))];
+    sel.innerHTML='<option value="">All Posts</option>';
+    posts.forEach(t=>{sel.innerHTML+='<option value="'+t+'">'+t+'</option>';});
+    sel.value=cur;
+}
+
+function renderCommentsTable(){
+    var filter=document.getElementById('cm-post-filter').value;
+    var list=filter?_allComments.filter(c=>c.post_title===filter):_allComments;
+    var delAll=document.getElementById('cm-del-all');
+    if(delAll)delAll.style.display=list.length>1?'inline-flex':'none';
+    var tb=document.getElementById('cm-body');
+    if(!list.length){tb.innerHTML='<tr><td colspan="5" class="empty"><div class="big">💬</div>No comments found.</td></tr>';return;}
+    tb.innerHTML=list.map(function(c){
+        var text=(c.content||c.comment||'').substring(0,80);
+        if((c.content||c.comment||'').length>80) text+='…';
+        return '<tr>'
+        +'<td><strong style="font-size:.78rem;">'+c.author+'</strong></td>'
+        +'<td style="max-width:250px;"><span style="font-size:.76rem;color:#4a5568;" title="'+(c.content||c.comment||'').replace(/"/g,'&quot;')+'">'+text+'</span></td>'
+        +'<td><span class="tag tag-conf" style="font-size:.62rem;">'+(c.post_title||'Unknown')+'</span></td>'
+        +'<td style="font-size:.72rem;white-space:nowrap;">'+(c.formatted_date||c.created_at)+'</td>'
+        +'<td><button class="btn-danger" onclick="deleteAdminComment('+c.id+')">🗑️ Delete</button></td>'
+        +'</tr>';
+    }).join('');
+}
+
+function deleteAdminComment(id){
+    if(!confirm('Delete this comment?'))return;
+    var fd=new FormData();fd.append('action','delete_comment');fd.append('id',id);
+    fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'})
+    .then(r=>r.json()).then(d=>{
+        if(d.success){toast('Comment deleted.','success');loadBlogComments();loadBlogPosts();}
+        else toast(d.error||'Failed.','error');
+    }).catch(()=>toast('Error.','error'));
+}
+
+function deleteAllFilteredComments(){
+    var filter=document.getElementById('cm-post-filter').value;
+    var list=filter?_allComments.filter(c=>c.post_title===filter):_allComments;
+    if(!list.length)return;
+    if(!confirm('Delete '+list.length+' comment(s)? This cannot be undone.'))return;
+    var promises=list.map(function(c){
+        var fd=new FormData();fd.append('action','delete_comment');fd.append('id',c.id);
+        return fetch('api.php',{method:'POST',body:fd,credentials:'same-origin'});
+    });
+    Promise.all(promises).then(function(){
+        toast('All filtered comments deleted.','success');
+        loadBlogComments();loadBlogPosts();
+    }).catch(()=>toast('Error deleting some comments.','error'));
+}
+
+// Patch loadBlogPosts to also load comments
+var _origLoadBlogPosts=loadBlogPosts;
+loadBlogPosts=function(){
+    _origLoadBlogPosts();
+    setTimeout(loadBlogComments,300);
+};
+
+// Initial load handled by loadAll() above
+</script>
 </body>
 </html>

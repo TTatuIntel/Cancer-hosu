@@ -3,1121 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About the Hematology & Oncology Society of Uganda (HOSU) - Our mission to cure or control cancer through Research, Education, and Service delivery">
+    <meta name="description" content="About HOSU - Hematology & Oncology Society of Uganda">
     <title>About Us - HOSU</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="donate-float.css">
     <style>
-        /* Base styles (same as index) */
         :root {
             --primary-color: #e63946;
+            --primary-light: #f8d7da;
+            --primary-dark: #c81d2a;
             --secondary-color: #0d4593;
-            --text-color: #12294a;
+            --secondary-light: #e6f0ff;
+            --secondary-dark: #072a5e;
+            --text-color: #001848;
+            --text-light: #4a5568;
             --background-light: #f1faee;
-            --background-dark: #1d3557;
             --white: #ffffff;
             --accent-color: #a8dadc;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
             --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
             --navbar-height: 90px;
+            --section-width: 92%;
+            --section-max-width: 1280px;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.5; color: var(--text-color); background: var(--white); }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-        }
-
-        /* Navbar styles (same as index) */
-        .navbar {
-            background: rgba(255, 255, 255, 0.521);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-            height: var(--navbar-height);
-        }
-
-        .navbar.scrolled {
-            background: rgb(255, 255, 255);
-            backdrop-filter: blur(15px);
-            box-shadow: var(--shadow);
-        }
-
-        .logo img {
-            width: 250px;
-            height: 90px;
-            object-fit: contain;
-            transition: var(--transition);
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: var(--transition);
+        /* Hero */
+        .page-hero {
+            padding-top: var(--navbar-height);
             position: relative;
-        }
-
-        .nav-links a:not(.cta-button)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .nav-links a:not(.cta-button):hover::after {
-            width: 100%;
-        }
-
-        .nav-links .cta-button {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            transition: var(--transition);
-        }
-
-        .nav-links .cta-button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-       
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* About Page Specific Styles */
-        .about-hero {
-            padding-top: calc(var(--navbar-height) + 2rem);
-            background: linear-gradient(to right, var(--background-light), var(--white));
-            min-height: 400px;
+            min-height: 380px;
             display: flex;
-            align-items: center;
-        }
-
-        .about-hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .about-hero h1 {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .about-hero p {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        .mission-vision {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
-        .mission-vision-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .mission-vision-card {
-            padding: 2rem;
-            background: var(--background-light);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .mission-vision-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .mission-vision-card h2 {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .mission-vision-card h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .leadership-section {
-            padding: 4rem 5%;
-            background: var(--background-light);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--primary-color);
-            margin: 1rem auto 0;
-        }
-
-        .leadership-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .leader-card {
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .leader-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .leader-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .leader-info {
-            padding: 1.5rem;
-        }
-
-        .leader-info h3 {
-            color: var(--secondary-color);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .leader-info .position {
-            color: var(--primary-color);
-            font-weight: 500;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .values-section {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .value-card {
-            padding: 2rem;
-            background: var(--background-light);
-            border-radius: 15px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .value-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .value-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* Footer styles (same as index) */
-        footer {
-            background: var(--background-dark);
-            color: var(--white);
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-section h4 {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-color);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Executive Council Styles (from index.html) */
-        .members-section {
-            padding: 4rem 5%;
-            background: var(--background-light);
-            position: relative;
             overflow: hidden;
         }
-
-        .members-container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
+        .hero-inner {
+            display: flex;
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+            gap: 3%;
+            align-items: center;
+            min-height: 320px;
+            position: relative;
+            z-index: 5;
         }
-
-        .members-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            max-width: 700px;
+        .hero-content {
+            width: 50%;
             margin-left: auto;
-            margin-right: auto;
-        }
-
-        .members-carousel {
-            position: relative;
-            height: auto; /* Adjusted to fit content */
-            margin: 0 auto;
-            max-width: 1000px;
-        }
-
-        .member-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            display: flex;
-            justify-content: space-around; /* Better spacing for cards */
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-
-        .member-slide.active {
-            position: relative;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .member-card {
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-            width: 250px; /* Slightly wider for better image display */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: auto; /* Let height adjust to content */
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .member-image {
-            width: 100%;
-            aspect-ratio: 3 / 4; /* Common aspect ratio for portrait photos */
-            overflow: hidden;
-            position: relative;
-        }
-
-        .member-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Show full image without cropping */
-            object-position: center; /* Center the image */
-            background-color: #f7fafc; /* Background for transparency or padding */
-            transition: transform 0.5s ease;
-        }
-
-        .member-card:hover .member-image img {
-            transform: scale(1.02); /* Reduced scale for better visibility */
-        }
-
-        .member-info {
-            padding: 1rem;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: linear-gradient(to bottom, var(--white), #f7fafc);
-        }
-
-        .member-title {
-            color: var(--primary-color);
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            text-transform: uppercase;
-        }
-
-        .member-name {
-            color: var(--secondary-color);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .member-profession {
-            color: var(--text-color);
-            font-size: 0.85rem;
-        }
-
-        .read-more-button {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-        }
-
-        .read-more-button:hover {
-            background-color: #b3e5e7; /* Slightly darker shade of accent-color */
-            transform: translateY(-2px);
-        }
-
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .carousel-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #d1d5db; /* Equivalent to gray-300 */
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .carousel-dot.active {
-            background: var(--primary-color);
-            transform: scale(1.2);
-        }
-
-        .carousel-arrows {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 1rem;
             z-index: 10;
-            width: 100%;
-            pointer-events: none;
-        }
-
-        .carousel-arrow {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--white);
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            pointer-events: auto;
-            border: none;
-            font-size: 1.5rem;
-        }
-
-        .carousel-arrow:hover {
-            background: var(--secondary-color);
-            color: var(--white);
-            transform: scale(1.1);
-        }
-
-        .carousel-arrow.prev {
-            left: 10px;
-        }
-
-        .carousel-arrow.next {
-            right: 10px;
-        }
-
-        /* Member details overlay */
-        .member-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1050;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .member-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .member-details-card {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 550px;
-            max-height: 85vh;
-            overflow-y: auto;
             position: relative;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
+            min-height: 200px;
+            background: rgba(255,255,255,0.55);
+            -webkit-backdrop-filter: blur(16px) saturate(1.3);
+            backdrop-filter: blur(16px) saturate(1.3);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
+        .hero-slide { display: none; flex-direction: column; animation: heroFadeIn 0.6s ease; }
+        .hero-slide.active { display: flex; }
+        @keyframes heroFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .member-overlay.active .member-details-card {
-            transform: translateY(0);
-        }
-
-        .close-overlay {
+        .hero-image-container {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #edf2f7;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.4rem;
-            transition: background-color 0.3s ease;
-            color: var(--text-color);
-        }
-
-        .close-overlay:hover {
-            background: #e2e8f0;
-        }
-
-        .detail-member-image {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            overflow: hidden;
-            border: 4px solid var(--accent-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .detail-member-image img {
+            inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            overflow: hidden;
+            z-index: 0;
         }
-
-        .detail-member-title {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            text-align: center;
+        .hero-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0.45) 70%, rgba(255,255,255,0.6) 100%),
+                linear-gradient(to bottom, transparent 80%, var(--white) 100%);
         }
-
-        .detail-member-name {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            text-align: center;
+        @keyframes fadeIn { to { opacity: 1; } }
+        .hero-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: opacity 1s ease, transform 8s ease;
+            opacity: 0; transform: scale(1.05);
         }
+        .hero-background.active { opacity: 1; transform: scale(1); }
+        .hero-background.bg-1 { background-image: url('img/IMG_7787.jpg'); }
+        .hero-background.bg-2 { background-image: url('img/IMG_7770.jpg'); }
+        .hero-background.bg-3 { background-image: url('img/IMG_7776.jpg'); }
+        .hero-background.bg-4 { background-image: url('img/IMG_7789.jpg'); }
+        .hero-background.bg-5 { background-image: url('img/IMG_7798.jpg'); }
 
-        .member-bio {
-            margin-top: 1.5rem;
-            color: var(--text-color);
-            font-size: 1rem;
-            line-height: 1.7;
+        .hero-pills { display: flex; gap: 0.3rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+        .hero-pill { background: rgba(255,255,255,0.85); color: var(--secondary-color); font-size: 0.68rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 12px; border: 1px solid rgba(13,69,147,0.1); display: inline-flex; align-items: center; gap: 0.2rem; }
+        .hero-pill i { font-size: 0.6rem; }
+        .hero-content h1 { font-size: 1.3rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 0.3rem; position: relative; display: inline-block; }
+        .hero-content h1::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 50px; height: 2.5px; background: var(--primary-color); }
+        .hero-content p { font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem; line-height: 1.55; }
+
+        .hero-readmore { display: inline-flex; align-items: center; color: var(--primary-color); font-weight: 600; font-size: 0.82rem; transition: all 0.3s ease; margin-top: 0.25rem; position: relative; cursor: pointer; }
+        .hero-readmore:hover { color: #c81d2a; transform: translateX(4px); }
+
+        /* Scroll target offset for navbar */
+        .mv-card[id], .objectives-section[id] { scroll-margin-top: calc(var(--navbar-height) + 1rem); }
+        /* Brief highlight when scrolled to */
+        @keyframes scrollHighlight {
+            0% { box-shadow: 0 0 0 0 rgba(230,57,70,0.35); }
+            50% { box-shadow: 0 0 0 8px rgba(230,57,70,0.12); }
+            100% { box-shadow: 0 0 0 0 rgba(230,57,70,0); }
         }
+        .scroll-highlight { animation: scrollHighlight 1.2s ease; }
 
-        .member-bio h4 {
-            color: var(--secondary-color);
-            margin: 1.25rem 0 0.5rem;
-            font-size: 1.2rem;
+        .hero-stats { display: flex; gap: 1.25rem; margin-top: 0.65rem; background: rgba(255,255,255,0.45); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1.5px solid rgba(13,69,147,0.12); border-radius: 30px; padding: 0.4rem 1.25rem; width: fit-content; animation: statsSlideUp 0.7s ease 0.2s both; }
+        @keyframes statsSlideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-stat { text-align: center; }
+        .hero-stat-number { font-size: 1.1rem; font-weight: 700; color: var(--secondary-color); display: block; }
+        .hero-stat-label { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; font-weight: 600; }
+        .hero-indicators { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
+        .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(18,41,74,0.2); cursor: pointer; transition: all 0.3s ease; }
+        .hero-dot.active { background: var(--primary-color); width: 22px; border-radius: 4px; }
+
+        /* Section Title */
+        .section-title { text-align: center; font-size: 1.15rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 0.5rem; overflow: visible; position: relative; z-index: 1; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 2.5px; background: var(--primary-color); margin: 0.3rem auto 0; border-radius: 2px; }
+
+        /* Mission, Vision & Values */
+        .mission-vision { padding: 1.5rem 0 0.75rem; background: var(--white); display: flex; justify-content: center; position: relative; z-index: 10; }
+        .mission-vision-container { width: var(--section-width); max-width: var(--section-max-width); }
+        .mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 0.5rem; }
+        .mv-card { background: var(--white); border: 1px solid rgba(13,69,147,0.08); border-radius: 12px; padding: 0.75rem 0.9rem; position: relative; overflow: hidden; transition: var(--transition); }
+        .mv-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); }
+        .mv-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .mv-icon-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.35rem; font-size: 0.8rem; color: var(--white); }
+        .mv-icon-mission { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+        .mv-icon-vision { background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark)); }
+        .mv-icon-values { background: linear-gradient(135deg, #a8dadc, #457b9d); }
+        .mv-card h3 { color: var(--secondary-color); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .mv-card p { color: var(--text-color); font-size: 0.75rem; line-height: 1.45; }
+        .mv-card ul { list-style: none; padding: 0; margin: 0.15rem 0 0; }
+        .mv-card li { font-size: 0.72rem; color: var(--text-color); line-height: 1.4; padding: 0.1rem 0; padding-left: 0.85rem; position: relative; }
+        .mv-card li::before { content: ''; position: absolute; left: 0; top: 0.45rem; width: 5px; height: 5px; border-radius: 50%; background: var(--primary-color); }
+
+        /* Objectives */
+        .objectives-section { padding: 0.75rem 0 0.5rem; background: var(--gray-100); display: flex; justify-content: center; }
+        .objectives-container { width: var(--section-width); max-width: var(--section-max-width); }
+        .objectives-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
+        .obj-card { background: var(--white); border: 1px solid rgba(13,69,147,0.08); border-radius: 10px; padding: 0.7rem; transition: var(--transition); text-align: center; }
+        .obj-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .obj-icon { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.8rem; margin: 0 auto 0.35rem; }
+        .obj-card h4 { color: var(--secondary-color); font-size: 0.74rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .obj-card p { color: var(--text-light); font-size: 0.68rem; line-height: 1.4; }
+
+        /* Leadership */
+        .leadership-section { padding: 0.75rem 0 0.5rem; background: linear-gradient(135deg, var(--gray-100) 0%, var(--white) 50%, var(--gray-100) 100%); display: flex; justify-content: center; }
+        .leadership-container { width: var(--section-width); max-width: var(--section-max-width); }
+        .members-carousel { position: relative; margin-top: 0.6rem; overflow: hidden; padding: 0 2.5rem; }
+        .carousel-track { display: flex; will-change: transform; }
+        .carousel-track.animating { transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .member-card { flex: 0 0 calc(25% - 0.75rem); margin: 0 0.375rem; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid rgba(13,69,147,0.08); transition: opacity 0.4s ease, box-shadow 0.4s ease; cursor: pointer; opacity: 1; position: relative; }
+        .member-card:hover { box-shadow: var(--shadow-lg); }
+        .member-image { width: 100%; height: 260px; overflow: hidden; background: linear-gradient(135deg, var(--gray-100), var(--gray-200)); position: relative; display: flex; align-items: center; justify-content: center; }
+        .member-image::after { display: none; }
+        .member-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; transition: transform 0.4s ease; }
+        .member-card:hover .member-image img { transform: scale(1.05); }
+        .member-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.25rem 0.4rem 0.25rem; text-align: center; background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.5) 80%, transparent 100%); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); z-index: 2; line-height: 1.2; }
+        .member-title { display: inline-block; color: var(--white); font-size: 0.56rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.1rem; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); padding: 0.12rem 0.5rem; border-radius: 10px; }
+        .member-name { color: var(--secondary-color); font-size: 0.78rem; font-weight: 700; margin-bottom: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+        .read-more-btn { background: linear-gradient(135deg, var(--accent-color), #8ecfd1); color: var(--text-color); border: none; padding: 0.18rem 0.6rem; border-radius: 12px; cursor: pointer; font-size: 0.62rem; font-weight: 500; transition: all 0.3s ease; margin-top: 0; }
+        .read-more-btn:hover { background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark)); color: var(--white); transform: translateY(-1px); }
+        /* Arrows on the sides */
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--secondary-color); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.12); border: 1.5px solid rgba(13,69,147,0.1); font-size: 1.1rem; transition: all 0.3s ease; }
+        .carousel-arrow:hover { background: var(--secondary-color); color: var(--white); transform: translateY(-50%) scale(1.1); box-shadow: 0 4px 12px rgba(13,69,147,0.25); }
+        .carousel-arrow:active { transform: translateY(-50%) scale(0.95); }
+        .carousel-arrow.prev { left: 0; }
+        .carousel-arrow.next { right: 0; }
+        /* Dots centered below */
+        .carousel-controls { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 0.75rem; }
+        .carousel-dots { display: flex; gap: 0.4rem; align-items: center; }
+        .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-300); cursor: pointer; transition: all 0.4s ease; }
+        .carousel-dot:hover { transform: scale(1.3); filter: brightness(1.2); }
+        .carousel-dot.active { width: 22px; border-radius: 4px; background: var(--dot-color, var(--primary-color)); box-shadow: 0 0 6px var(--dot-glow, rgba(230,57,70,0.5)), 0 0 14px var(--dot-glow, rgba(230,57,70,0.25)); animation: dotGlow 1.5s ease-in-out infinite alternate; }
+        .carousel-dot:not(.active) { background: var(--dot-color, var(--gray-300)); opacity: 0.4; }
+        @keyframes dotGlow { 0% { box-shadow: 0 0 4px var(--dot-glow, rgba(230,57,70,0.4)), 0 0 8px var(--dot-glow, rgba(230,57,70,0.15)); } 100% { box-shadow: 0 0 10px var(--dot-glow, rgba(230,57,70,0.7)), 0 0 20px var(--dot-glow, rgba(230,57,70,0.35)); } }
+        .carousel-progress { display: none; }
+        /* View All button */
+        .view-all-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.6rem auto 0; padding: 0.4rem 1.2rem; background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark)); color: var(--white); border: none; border-radius: 20px; cursor: pointer; font-size: 0.75rem; font-weight: 600; transition: all 0.3s ease; letter-spacing: 0.3px; }
+        .view-all-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+        .view-all-btn svg { transition: transform 0.3s ease; }
+        .view-all-btn.expanded svg { transform: rotate(180deg); }
+        .view-all-controls { display: flex; justify-content: center; }
+        /* View All expanded grid */
+        .leaders-grid-expanded { display: none; margin-top: 0.8rem; }
+        .leaders-grid-expanded.active { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; animation: fadeInGrid 0.4s ease; }
+        .leaders-grid-expanded .member-card { flex: none; margin: 0; opacity: 1; }
+        @keyframes fadeInGrid { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 992px) { .member-card { flex: 0 0 calc(33.333% - 0.75rem); } .leaders-grid-expanded.active { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .member-card { flex: 0 0 calc(50% - 0.75rem); } .member-image { height: 220px; } .leaders-grid-expanded.active { grid-template-columns: repeat(2, 1fr); } .members-carousel { padding: 0 2rem; } .carousel-arrow { width: 30px; height: 30px; } }
+        @media (max-width: 480px) { .member-card { flex: 0 0 calc(100% - 0.75rem); } .member-image { height: 200px; } .leaders-grid-expanded.active { grid-template-columns: 1fr; } .members-carousel { padding: 0 1.5rem; } .carousel-arrow { width: 26px; height: 26px; } }
+
+        /* Member Overlay */
+        .member-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: var(--transition); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+        .member-overlay.active { opacity: 1; visibility: visible; }
+        .member-details { background: var(--white); border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; position: relative; }
+        .close-overlay { position: absolute; top: 0.75rem; right: 0.75rem; background: var(--gray-200); border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; transition: var(--transition); }
+        .close-overlay:hover { background: var(--primary-color); color: var(--white); }
+        .detail-image { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1rem; overflow: hidden; border: 3px solid var(--accent-color); }
+        .detail-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+        .detail-title { color: var(--primary-color); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; text-align: center; }
+        .detail-name { color: var(--secondary-color); font-size: 1.2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+        .detail-qualifications { color: var(--text-light); font-size: 0.78rem; text-align: center; margin-bottom: 0.75rem; font-style: italic; }
+        .detail-bio { color: var(--text-color); font-size: 0.85rem; line-height: 1.6; }
+        .detail-bio-loading { text-align: center; color: var(--text-light); font-size: 0.8rem; padding: 1rem 0; }
+
+        /* Footer */
+        footer { background: var(--gray-100); padding: 1rem 0 0.4rem; border-top: 1px solid var(--gray-300); }
+        .footer-content { display: grid; grid-template-columns: 1fr 1.2fr 1.4fr 1fr; gap: 1rem; width: var(--section-width); max-width: var(--section-max-width); margin: 0 auto; }
+        .footer-section h4 { color: var(--secondary-color); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem; position: relative; display: inline-block; }
+        .footer-section h4::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 20px; height: 2px; background: var(--primary-color); }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 0.3rem; }
+        .footer-section a { color: var(--text-light); font-size: 0.8rem; transition: var(--transition); }
+        .footer-section a:hover { color: var(--primary-color); }
+        .footer-section address { font-style: normal; font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+        .footer-section p { font-size: 0.78rem; color: var(--text-light); line-height: 1.4; }
+        .social-links { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
+        .social-links a { width: 30px; height: 30px; border-radius: 50%; background: var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--secondary-color); transition: var(--transition); }
+        .social-links a:hover { background: var(--secondary-color); color: var(--white); }
+        .footer-dev-name { font-size: 0.8rem; font-weight: 600; color: var(--secondary-color); }
+        .footer-dev-contact { font-size: 0.75rem; color: var(--text-light); }
+        .copyright { text-align: center; margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid var(--gray-300); font-size: 0.72rem; color: var(--text-light); width: var(--section-width); max-width: var(--section-max-width); margin-left: auto; margin-right: auto; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .objectives-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
-        .member-contact-info {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            background: #f7fafc;
-            padding: 1.25rem;
-            border-radius: 8px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-color);
-            font-size: 0.95rem;
-        }
-
-        .contact-item svg {
-            color: var(--primary-color);
-            flex-shrink: 0;
-        }
-
-        .partner-logo:hover img {
-            transform: scale(1.5);
-            filter: brightness(1.5);
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            :root {
-                --navbar-height: 70px;
-            }
+            .page-hero { min-height: 280px; }
+            .hero-inner { flex-direction: column; min-height: 0; padding: 1rem 0; }
+            .hero-content { width: 92%; margin: 0 auto; text-align: center; align-items: center; padding: 1.2rem; background: rgba(255,255,255,0.7); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+            .hero-content h1::after { left: 50%; transform: translateX(-50%); }
+            .hero-image-container { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; }
+            .hero-image-container::after { background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.3) 50%, var(--white) 100%); }
+            .hero-stats { margin: 0.75rem auto 0; }
+            .hero-pills { justify-content: center; }
+            .hero-indicators { justify-content: center; }
 
-            .navbar {
-                padding: 1rem;
-            }
-
-            .logo img {
-                width: 200px;
-                height: 70px;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .about-hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-hero p {
-                font-size: 1.1rem;
-            }
-
-            .mission-vision-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .leadership-grid {
-                grid-template-columns: 1fr;
-            }
-
-            /* Adjust responsive behavior for members carousel */
-            .members-carousel {
-                height: auto; /* Adjusted for stacked layout */
-            }
-
-            .member-slide {
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem;
-            }
-
-            .member-card {
-                width: 280px; /* Slightly wider for better visibility on mobile */
-            }
+            .mv-grid { grid-template-columns: 1fr; }
+            .mv-card { padding: 0.85rem 1rem; }
+            .objectives-grid { grid-template-columns: 1fr 1fr; }
+            .member-card { width: 160px; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
         }
+        @media (max-width: 480px) {
+            .objectives-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 0.5rem; border-radius: 12px; padding: 0.6rem 1.25rem; }
+        }
+
+        /* Login Popup */
+        .login-trigger-wrap { position: relative; }
+        .login-float-popup { display: none; position: absolute; top: calc(100% + 10px); right: 0; z-index: 1001; width: 280px; background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5); border-radius: 12px; padding: 1rem; box-shadow: var(--shadow-lg); }
+        .login-float-popup.active { display: block; }
+        .login-float-popup::after { content: ''; position: absolute; top: -6px; right: 20px; width: 12px; height: 12px; background: rgba(255,255,255,0.9); border-top: 1px solid rgba(255,255,255,0.5); border-left: 1px solid rgba(255,255,255,0.5); transform: rotate(45deg); }
+        .lfp-close { position: absolute; top: 0.5rem; right: 0.5rem; width: 20px; height: 20px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .lfp-close:hover { background: var(--primary-color); color: var(--white); }
     </style>
 </head>
 <body>
-   <!-- Navbar -->
-   <nav class="navbar">
-    <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-        <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="img/logo2.png" alt="HOSU - Hematology &amp; Oncology Society of Uganda" loading="eager">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="events.html">Events</a>
+                <a href="research.html">Research</a>
+                <a href="membership.html">Membership</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <div class="login-trigger-wrap">
+                    <a href="#" class="cta-button login-trigger" onclick="toggleLoginPopup(event)">Member Portal</a>
+                    <div class="login-float-popup" id="loginPopup"></div>
+                </div>
+            </div>
+            <div class="menu-toggle" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">&#9776;</div>
         </div>
-        <div class="nav-links" style="align-items: center; gap: 2rem;">
-            <a href="index.html">Home</a>           
-            <a href="events.html">Events</a>
-            <a href="research.html">Research</a> 
-            <a href="membership.html">Membership</a>           
-            <a href="about.html">About</a>
-            <a href="blog.html">Blog</a>
-            <a href="contact.html">Contact</a>
-            <a href="login.html" class="cta-button">Member Portal</a>
-        </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
-    </div>
-</nav>
+    </nav>
 
-    <section class="about-hero">
-        <div class="about-hero-content">
-            <h1>About HOSU</h1>
-            <p>The Hematology & Oncology Society of Uganda (HOSU) is fully registered as a company limited by guarantee by the Uganda Registration Services Bureau. Registration No: 80034950959778</p>
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="hero-inner">
+            <div class="hero-image-container" id="heroImageContainer">
+                <div class="hero-background bg-1 active"></div>
+                <div class="hero-background bg-2"></div>
+                <div class="hero-background bg-3"></div>
+                <div class="hero-background bg-4"></div>
+                <div class="hero-background bg-5"></div>
+            </div>
+            <div class="hero-content">
+                <!-- Slide 1: Intro -->
+                <article class="hero-slide active" data-slide="intro">
+                    <div class="hero-pills">
+                        <span class="hero-pill"><i class="fas fa-heart-pulse"></i> Healthcare</span>
+                        <span class="hero-pill"><i class="fas fa-microscope"></i> Research</span>
+                        <span class="hero-pill"><i class="fas fa-graduation-cap"></i> Education</span>
+                    </div>
+                    <h1>About HOSU</h1>
+                    <p>The Hematology &amp; Oncology Society of Uganda (HOSU) is dedicated to advancing cancer care through research, education, and service delivery across Uganda.</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">150+</span>
+                            <span class="hero-stat-label">Members</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">2019</span>
+                            <span class="hero-stat-label">Founded</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">50+</span>
+                            <span class="hero-stat-label">Events</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Slide 2: Mission -->
+                <article class="hero-slide" data-slide="mission">
+                    <div class="hero-pills">
+                        <span class="hero-pill"><i class="fas fa-bullseye"></i> Purpose</span>
+                        <span class="hero-pill"><i class="fas fa-hand-holding-medical"></i> Service</span>
+                    </div>
+                    <h1>Our Mission</h1>
+                    <p>To cure or control cancer through Research, Education, and Service delivery. We are committed to improving cancer outcomes for all Ugandans.</p>
+                    <a href="#section-mission" class="hero-readmore">Read More &rarr;</a>
+                </article>
+
+                <!-- Slide 3: Vision -->
+                <article class="hero-slide" data-slide="vision">
+                    <div class="hero-pills">
+                        <span class="hero-pill"><i class="fas fa-eye"></i> Vision</span>
+                        <span class="hero-pill"><i class="fas fa-star"></i> Aspiration</span>
+                    </div>
+                    <h1>Our Vision</h1>
+                    <p>No one should die of cancer. We envision a Uganda where every person has access to quality cancer prevention, diagnosis, treatment, and care.</p>
+                    <a href="#section-vision" class="hero-readmore">Read More &rarr;</a>
+                </article>
+
+                <!-- Slide 4: Core Values -->
+                <article class="hero-slide" data-slide="values">
+                    <div class="hero-pills">
+                        <span class="hero-pill"><i class="fas fa-gem"></i> Values</span>
+                        <span class="hero-pill"><i class="fas fa-shield-halved"></i> Integrity</span>
+                    </div>
+                    <h1>Our Core Values</h1>
+                    <p>We uphold excellence, compassion, collaboration, and integrity in every aspect of cancer care&mdash;placing patients and evidence at the heart of everything we do.</p>
+                    <a href="#section-values" class="hero-readmore">Read More &rarr;</a>
+                </article>
+
+                <!-- Slide 5: Objectives -->
+                <article class="hero-slide" data-slide="objectives">
+                    <div class="hero-pills">
+                        <span class="hero-pill"><i class="fas fa-list-check"></i> Goals</span>
+                        <span class="hero-pill"><i class="fas fa-chart-line"></i> Impact</span>
+                    </div>
+                    <h1>Our Objectives</h1>
+                    <p>Advancing scientific knowledge, enhancing accessibility of cancer services, promoting education, supporting research, and advocating for HOSU members across Uganda.</p>
+                    <a href="#section-objectives" class="hero-readmore">Read More &rarr;</a>
+                </article>
+
+                <div class="hero-indicators">
+                    <span class="hero-dot active" data-index="0" aria-label="About"></span>
+                    <span class="hero-dot" data-index="1" aria-label="Mission"></span>
+                    <span class="hero-dot" data-index="2" aria-label="Vision"></span>
+                    <span class="hero-dot" data-index="3" aria-label="Values"></span>
+                    <span class="hero-dot" data-index="4" aria-label="Objectives"></span>
+                </div>
+            </div>
         </div>
     </section>
 
+
+    <!-- Mission, Vision & Values -->
     <section class="mission-vision">
-        <div class="mission-vision-grid">
-            <div class="mission-vision-card">
-                <h2>Our Mission</h2>
-                <p>To cure or control cancer through Research, Education, and Service delivery.</p>
-            </div>
-            <div class="mission-vision-card">
-                <h2>Our Vision</h2>
-                <p>No one should die of cancer.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="values-section">
-        <h2 class="section-title">Our Objectives</h2>
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon">🔬</div>
-                <h3>Promote Evidence-Based Practice</h3>
-                <p>Advance scientific knowledge and evidence-based practice in Haematology and Oncology care in Uganda.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">🤝</div>
-                <h3>Improve Accessibility</h3>
-                <p>Implement strategies to enhance quality and accessibility of Haematology and Oncology services.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">💡</div>
-                <h3>Education and Training</h3>
-                <p>Promote comprehensive education and training for all healthcare cadres in Haematology and Oncology.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">❤️</div>
-                <h3>Research Excellence</h3>
-                <p>Support cutting-edge research in Haematology and Oncology specific to Uganda's needs.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">🔍</div>
-                <h3>Quality Assurance</h3>
-                <p>Ensure quality assurance in training, research, and service delivery.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">👥</div>
-                <h3>Member Advocacy</h3>
-                <p>Represent, promote, and defend the rights of HOSU members.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">📄</div>
-                <h3>Knowledge Dissemination</h3>
-                <p>Synthesize, disseminate, and evaluate information relevant to Haematology and Oncology practice in Uganda.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">💰</div>
-                <h3>Member Support</h3>
-                <p>Provide financial support, resources, and services to improve members' quality of life.</p>
+        <div class="mission-vision-container">
+            <h2 class="section-title">Our Purpose</h2>
+            <div class="mv-grid">
+                <div class="mv-card" id="section-mission">
+                    <div class="mv-icon-circle mv-icon-mission"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>To cure or control cancer through Research, Education, and Service delivery. We are committed to improving cancer outcomes for all Ugandans.</p>
+                </div>
+                <div class="mv-card" id="section-vision">
+                    <div class="mv-icon-circle mv-icon-vision"><i class="fas fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>No one should die of cancer. We envision a Uganda where every person has access to quality cancer prevention, diagnosis, treatment, and care.</p>
+                </div>
+                <div class="mv-card" id="section-values">
+                    <div class="mv-icon-circle mv-icon-values"><i class="fas fa-gem"></i></div>
+                    <h3>Our Core Values</h3>
+                    <ul>
+                        <li><strong>Excellence</strong> — Highest standards in clinical care &amp; research</li>
+                        <li><strong>Compassion</strong> — Dignity, empathy &amp; respect for every patient</li>
+                        <li><strong>Collaboration</strong> — Partnerships across institutions &amp; borders</li>
+                        <li><strong>Integrity</strong> — Ethical practice &amp; transparency</li>
+                        <li><strong>Innovation</strong> — Evidence-based approaches &amp; new technologies</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Leadership Section with Executive Council -->
+    <!-- Objectives -->
+    <section class="objectives-section" id="section-objectives">
+        <div class="objectives-container">
+            <h2 class="section-title">Our Objectives</h2>
+            <div class="objectives-grid">
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-flask"></i></div>
+                    <h4>Evidence-Based Practice</h4>
+                    <p>Advance scientific knowledge in Haematology and Oncology care.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-universal-access"></i></div>
+                    <h4>Accessibility</h4>
+                    <p>Enhance quality and accessibility of cancer services.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h4>Education</h4>
+                    <p>Promote comprehensive training for healthcare professionals.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-microscope"></i></div>
+                    <h4>Research</h4>
+                    <p>Support cutting-edge research specific to Uganda's needs.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-award"></i></div>
+                    <h4>Quality Assurance</h4>
+                    <p>Ensure quality in training, research, and service delivery.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h4>Member Advocacy</h4>
+                    <p>Represent and defend the interests of HOSU members.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-book-open"></i></div>
+                    <h4>Knowledge Sharing</h4>
+                    <p>Disseminate information relevant to oncology practice.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h4>Member Support</h4>
+                    <p>Provide resources to improve members' quality of life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership -->
     <section class="leadership-section" id="leadership">
-        <h2 class="section-title">Our Leadership</h2>
-        
-        <!-- Executive Council Section (moved from index.html) -->
-        <div class="members-container">
-            <p class="members-subtitle">Meet the leaders shaping the future of cancer care in Uganda</p>
-            
-            <div class="members-carousel">
-                <!-- Carousel Navigation Arrows -->
-                <div class="carousel-arrows">
-                    <button class="carousel-arrow prev" aria-label="Previous slide">‹</button>
-                    <button class="carousel-arrow next" aria-label="Next slide">›</button>
+        <div class="leadership-container">
+            <h2 class="section-title">Our Leadership</h2>
+            <div class="members-carousel" id="carouselWrapper">
+                <button class="carousel-arrow prev" aria-label="Previous">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="carousel-track" id="leadershipTrack">
+                    <!-- Leaders loaded dynamically from database -->
                 </div>
-                
-                <!-- Slide 1 -->
-                <div class="member-slide active">
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture1.jpg" alt="Dr. Ddungu Henry" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">President</div>
-                            <h3 class="member-name">Dr. Ddungu Henry</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('ddungu-henry')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture2.jpg" alt="Dr. Nabbosa Valeria" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">President Elect</div>
-                            <h3 class="member-name">Dr. Nabbosa Valeria</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('nabbosa-valeria')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture3.jpg" alt="Dr. Odhiambo Clara Atieno" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">General Secretary</div>
-                            <h3 class="member-name">Dr. Odhiambo Clara Atieno</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('odhiambo-clara')">Read More</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 2 -->
-                <div class="member-slide">
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture4.jpg" alt="Dr. Niyonzima Nixon" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Treasurer</div>
-                            <h3 class="member-name">Dr. Niyonzima Nixon</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('niyonzima-nixon')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture5.jpg" alt="Dr. Kakungulu Edward" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Publicity Secretary</div>
-                            <h3 class="member-name">Dr. Kakungulu Edward</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('kakungulu-edward')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture6.jpg" alt="Dr. Namazzi Ruth" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Hematology</div>
-                            <h3 class="member-name">Dr. Namazzi Ruth</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('namazzi-ruth')">Read More</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="member-slide">
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture7.jpg" alt="Dr. Akullo Anne" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Pediatric Oncology</div>
-                            <h3 class="member-name">Dr. Akullo Anne</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('akullo-anne')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture8.jpg" alt="Dr. Bogere Naghib" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Medical Oncology</div>
-                            <h3 class="member-name">Dr. Bogere Naghib</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('bogere-naghib')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture9.jpg" alt="Dr. Asiimwe Lois" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Surgical Oncology</div>
-                            <h3 class="member-name">Dr. Asiimwe Lois</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('asiimwe-lois')">Read More</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Slide 4 -->
-                <div class="member-slide">
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture10.jpg" alt="Dr. Kibudde Solomon" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Radiation Oncology</div>
-                            <h3 class="member-name">Dr. Kibudde Solomon</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('kibudde-solomon')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture11.jpg" alt="Dr. Ssali Francis" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Research</div>
-                            <h3 class="member-name">Dr. Ssali Francis</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('ssali-francis')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture12.jpg" alt="Dr. Lukande Robert" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Pathology</div>
-                            <h3 class="member-name">Dr. Lukande Robert</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('lukande-robert')">Read More</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional slides for other council members -->
-                <!-- Slide 5 -->
-                <div class="member-slide">
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture13.jpg" alt="Dr. Kadhumbula Sylvester" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Laboratory</div>
-                            <h3 class="member-name">Dr. Kadhumbula Sylvester</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('kadhumbula-sylvester')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture14.jpg" alt="Ms. Irumba Lisa" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Palliative Care</div>
-                            <h3 class="member-name">Ms. Irumba Lisa</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('irumba-lisa')">Read More</button>
-                        </div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="img/Picture15.jpg" alt="Mr. Moses Echodu" loading="lazy">
-                        </div>
-                        <div class="member-info">
-                            <div class="member-title">Representative Civil Society Organizations</div>
-                            <h3 class="member-name">Mr. Moses Echodu</h3>
-                            <div class="member-profession"></div>
-                            <button class="read-more-button" onclick="showMemberDetails('moses-echodu')">Read More</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="carousel-progress"></div>
+                <button class="carousel-arrow next" aria-label="Next">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
             </div>
-            
-            <div class="carousel-controls">
-                <div class="carousel-dot active" data-slide="0"></div>
-                <div class="carousel-dot" data-slide="1"></div>
-                <div class="carousel-dot" data-slide="2"></div>
-                <div class="carousel-dot" data-slide="3"></div>
-                <div class="carousel-dot" data-slide="4"></div>
+            <div class="carousel-controls" id="carouselControls">
+                <div class="carousel-dots"></div>
             </div>
+            <div class="view-all-controls">
+                <button class="view-all-btn" id="viewAllBtn" onclick="toggleViewAll()">
+                    View All
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+            </div>
+            <div class="leaders-grid-expanded" id="leadersGrid"></div>
         </div>
-        
-        <!-- Member Details Overlay -->
+
+        <!-- Member Overlay -->
         <div id="member-overlay" class="member-overlay">
-            <div class="member-details-card">
+            <div class="member-details">
                 <button class="close-overlay" onclick="closeMemberDetails()">×</button>
-                <div class="detail-member-image">
-                    <img id="detail-image" src="/placeholder.svg?height=150&width=150" alt="Council Member" loading="lazy">
-                </div>
-                <div class="detail-member-title" id="detail-title">Position</div>
-                <h2 class="detail-member-name" id="detail-name">Member Name</h2>
-                <div class="member-bio" id="detail-bio">
-                    <p>Loading member information...</p>
-                </div>
-                <div class="member-contact-info" id="detail-contact">
-                    <!-- Contact info will be populated by JavaScript -->
-                </div>
+                <div class="detail-image"><img id="detail-img" src="" alt=""></div>
+                <div class="detail-title" id="detail-title"></div>
+                <h2 class="detail-name" id="detail-name"></h2>
+                <div class="detail-qualifications" id="detail-qualifications"></div>
+                <div class="detail-bio" id="detail-bio"><div class="detail-bio-loading">Loading biography...</div></div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="about.html">About HOSU</a></li>
-                    <li><a href="membership.html">Membership Benefits</a></li>
-                    <li><a href="research.html">Research Initiatives</a></li>
-                    <li><a href="#leadership">Society Leadership</a></li>
+                    <li><a href="membership.html">Membership</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -1125,151 +540,445 @@
                 <address>
                     HOSU Headquarters<br>
                     Kampala, Uganda<br>
-                    ☎ <a href="tel:+256123456789">+256 123 456 789</a><br>
-                    ✉ <a href="/cdn-cgi/l/email-protection#b7ded9d1d8f7dfdec4c299d8c5d0"><span class="__cf_email__" data-cfemail="f79e999198b79f9e8482d9988590">[email&#160;protected]</span></a>
+                    <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                    <a href="mailto:info@hosu.org">info@hosu.org</a>
                 </address>
             </div>
             <div class="footer-section">
                 <h4>Stay Connected</h4>
-                <p>Follow us on social media for the latest updates and announcements.</p>
+                <p>Follow us for updates.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
+                    <a href="#" aria-label="LinkedIn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg></a>
+                    <a href="#" aria-label="Twitter"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a>
                 </div>
-
-                <h4>Designed By</h4>
-                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                    <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
-                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <p class="footer-dev-name">TattuIntel</p>
+                <p class="footer-dev-contact"><a href="tel:+256770495837">+256 770 495837</a></p>
+                <p class="footer-dev-contact"><a href="mailto:tattuintel@gmail.com">tattuintel@gmail.com</a></p>
             </div>
         </div>
         <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+            <p>&copy; 2026 Hematology & Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <script src="bio-data.js"></script>
+
     <script>
-        // Mobile menu toggle
+        // Navbar scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.pageYOffset > 50));
+
+        // Mobile menu
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking outside
+        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
                 navLinks.classList.remove('active');
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Close mobile menu if open
-                    navLinks.classList.remove('active');
+        // Hero Slideshow
+        let heroIndex = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const heroBgs = document.querySelectorAll('.hero-background');
+        const heroDots = document.querySelectorAll('.hero-dot');
+
+        function showHeroSlide(index) {
+            document.querySelectorAll('.hero-float-popup.active').forEach(function(p) { p.classList.remove('active'); });
+            heroSlides.forEach(function(s) { s.classList.remove('active'); });
+            heroBgs.forEach(function(b) { b.classList.remove('active'); });
+            heroDots.forEach(function(d) { d.classList.remove('active'); });
+            heroSlides[index].classList.add('active');
+            heroBgs[index % heroBgs.length].classList.add('active');
+            heroDots[index].classList.add('active');
+            heroIndex = index;
+            // Re-trigger stats animation when "About HOSU" slide is active
+            var stats = heroSlides[index].querySelector('.hero-stats');
+            if (stats) {
+                stats.style.animation = 'none';
+                stats.offsetHeight; // force reflow
+                stats.style.animation = '';
+            }
+        }
+
+        let heroTimer = setInterval(function() {
+            showHeroSlide((heroIndex + 1) % heroSlides.length);
+        }, 6000);
+
+        function resetHeroTimer() {
+            clearInterval(heroTimer);
+            heroTimer = setInterval(function() {
+                showHeroSlide((heroIndex + 1) % heroSlides.length);
+            }, 6000);
+        }
+
+        heroDots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                showHeroSlide(parseInt(dot.dataset.index, 10));
+                resetHeroTimer();
+            });
+        });
+
+        // Highlight target section when Read More is clicked
+        document.querySelectorAll('.hero-readmore[href^="#section-"]').forEach(function(link) {
+            link.addEventListener('click', function() {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    setTimeout(function() {
+                        target.classList.remove('scroll-highlight');
+                        void target.offsetWidth;
+                        target.classList.add('scroll-highlight');
+                    }, 400);
                 }
             });
         });
 
-        // Member carousel functionality
-        let currentSlide = 0;
-        const memberSlides = document.querySelectorAll('.member-slide');
-        const carouselDots = document.querySelectorAll('.carousel-dot');
-        const prevButton = document.querySelector('.carousel-arrow.prev');
-        const nextButton = document.querySelector('.carousel-arrow.next');
+        // Infinite Continuous Carousel
+        const track = document.getElementById('leadershipTrack');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        const prevBtn = document.querySelector('.members-carousel .carousel-arrow.prev');
+        const nextBtn = document.querySelector('.members-carousel .carousel-arrow.next');
+        const progressBar = document.querySelector('.carousel-progress');
+        const carouselWrapper = document.getElementById('carouselWrapper');
+        const carouselControls = document.getElementById('carouselControls');
+        const leadersGrid = document.getElementById('leadersGrid');
+        const viewAllBtn = document.getElementById('viewAllBtn');
 
-        function showSlide(index) {
-            memberSlides.forEach(slide => slide.classList.remove('active'));
-            carouselDots.forEach(dot => dot.classList.remove('active'));
-            
-            memberSlides[index].classList.add('active');
-            carouselDots[index].classList.add('active');
-            currentSlide = index;
+        let currentIndex = 0;
+        let autoPlayInterval;
+        let progressInterval;
+        const autoPlayDelay = 2500;
+        let totalCards = 0;
+        let cardsPerView = 4;
+        let cardWidth = 0;
+        let isTransitioning = false;
+        let originalCardsHTML = '';
+        let viewAllExpanded = false;
+
+        function buildCardHTML(leader) {
+            var safeName = leader.name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            var safeTitle = leader.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            var photo = (leader.photo_url || 'img/Picture1.jpg').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            return '<div class="member-card" onclick="showMemberDetails(this)">'
+                + '<div class="member-image"><img src="' + photo + '" alt="' + safeName + '" loading="lazy"></div>'
+                + '<div class="member-info">'
+                + '<div class="member-title">' + safeTitle + '</div>'
+                + '<h3 class="member-name">' + safeName + '</h3>'
+                + '<button class="read-more-btn">View Bio</button>'
+                + '</div></div>';
         }
 
+        // Fetch leaders from API and build carousel
+        function loadLeadership() {
+            fetch('api.php?action=get_leaders')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.success && d.leaders && d.leaders.length) {
+                        // Sort by title hierarchy: President first, then VP, President Elect, etc.
+                        var titlePriority = function(title) {
+                            var t = (title || '').toLowerCase();
+                            if (/\bpresident\b/.test(t) && !/elect/.test(t) && !/vice/.test(t)) return 1;
+                            if (/vice\s*president/.test(t)) return 2;
+                            if (/president\s*elect/.test(t)) return 3;
+                            if (/general\s*secretary/.test(t)) return 4;
+                            if (/treasurer/.test(t)) return 5;
+                            if (/secretary/.test(t)) return 6;
+                            return 100;
+                        };
+                        d.leaders.sort(function(a, b) {
+                            return titlePriority(a.title) - titlePriority(b.title) || (a.sort_order || 0) - (b.sort_order || 0);
+                        });
+                        originalCardsHTML = d.leaders.map(buildCardHTML).join('');
+                        // Build "View All" grid
+                        leadersGrid.innerHTML = d.leaders.map(buildCardHTML).join('');
+                        // Build infinite track: clone sets before and after
+                        rebuildInfiniteTrack();
+                        initCarousel();
+                    }
+                })
+                .catch(function() {});
+        }
+
+        function rebuildInfiniteTrack() {
+            // We place: [clone-set] [original-set] [clone-set]
+            track.innerHTML = originalCardsHTML + originalCardsHTML + originalCardsHTML;
+        }
+
+        function initCarousel() {
+            var allCards = track.querySelectorAll('.member-card');
+            totalCards = allCards.length / 3; // original count
+            updateCardsPerView();
+            computeCardWidth();
+            // Position at the start of the middle (original) set
+            currentIndex = totalCards;
+            jumpToIndex(currentIndex);
+            generateDots();
+            startAutoPlay();
+        }
+
+        function computeCardWidth() {
+            var firstCard = track.querySelector('.member-card');
+            if (firstCard) {
+                var style = window.getComputedStyle(firstCard);
+                cardWidth = firstCard.offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+            }
+        }
+
+        function updateCardsPerView() {
+            if (window.innerWidth <= 480) cardsPerView = 1;
+            else if (window.innerWidth <= 768) cardsPerView = 2;
+            else if (window.innerWidth <= 992) cardsPerView = 3;
+            else cardsPerView = 4;
+        }
+
+        var dotColors = [
+            { color: '#e63946', glow: 'rgba(230,57,70,0.5)' },
+            { color: '#0d4593', glow: 'rgba(13,69,147,0.5)' },
+            { color: '#2a9d8f', glow: 'rgba(42,157,143,0.5)' },
+            { color: '#e9c46a', glow: 'rgba(233,196,106,0.55)' }
+        ];
+        var activeDotIndex = 0;
+
+        function generateDots() {
+            dotsContainer.innerHTML = '';
+            for (var i = 0; i < dotColors.length; i++) {
+                var dot = document.createElement('div');
+                var c = dotColors[i];
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.style.setProperty('--dot-color', c.color);
+                dot.style.setProperty('--dot-glow', c.glow);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function renderDots() {
+            var dots = dotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach(function(dot, i) { dot.classList.toggle('active', i === activeDotIndex); });
+        }
+
+        function advanceDot() {
+            activeDotIndex = (activeDotIndex + 1) % dotColors.length;
+            renderDots();
+        }
+
+        function retreatDot() {
+            activeDotIndex = (activeDotIndex - 1 + dotColors.length) % dotColors.length;
+            renderDots();
+        }
+
+        function jumpToIndex(index) {
+            track.classList.remove('animating');
+            currentIndex = index;
+            track.style.transform = 'translateX(-' + (currentIndex * cardWidth) + 'px)';
+        }
+
+        function goToSlide(index, direction) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex = index;
+            track.classList.add('animating');
+            track.style.transform = 'translateX(-' + (currentIndex * cardWidth) + 'px)';
+            if (direction === 'prev') { retreatDot(); } else { advanceDot(); }
+            resetProgress();
+        }
+
+        track.addEventListener('transitionend', function() {
+            isTransitioning = false;
+            track.classList.remove('animating');
+            if (currentIndex >= totalCards * 2) {
+                currentIndex = currentIndex - totalCards;
+                track.style.transform = 'translateX(-' + (currentIndex * cardWidth) + 'px)';
+            } else if (currentIndex < totalCards) {
+                currentIndex = currentIndex + totalCards;
+                track.style.transform = 'translateX(-' + (currentIndex * cardWidth) + 'px)';
+            }
+        });
+
         function nextSlide() {
-            const next = (currentSlide + 1) % memberSlides.length;
-            showSlide(next);
+            goToSlide(currentIndex + 1, 'next');
         }
 
         function prevSlide() {
-            const prev = (currentSlide - 1 + memberSlides.length) % memberSlides.length;
-            showSlide(prev);
+            goToSlide(currentIndex - 1, 'prev');
         }
 
-        // Set up event listeners for arrow buttons
-        prevButton.addEventListener('click', prevSlide);
-        nextButton.addEventListener('click', nextSlide);
+        // Progress bar animation
+        function resetProgress() {
+            progressBar.style.width = '0%';
+            clearInterval(progressInterval);
+            var progress = 0;
+            progressInterval = setInterval(function() {
+                progress += 100 / (autoPlayDelay / 50);
+                progressBar.style.width = Math.min(progress, 100) + '%';
+            }, 50);
+        }
 
-        // Click events for dots
-        carouselDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-            });
+        function startAutoPlay() {
+            stopAutoPlay();
+            resetProgress();
+            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+            clearInterval(progressInterval);
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', function() { prevSlide(); startAutoPlay(); });
+        nextBtn.addEventListener('click', function() { nextSlide(); startAutoPlay(); });
+        track.addEventListener('mouseenter', stopAutoPlay);
+        track.addEventListener('mouseleave', function() { if (!viewAllExpanded) startAutoPlay(); });
+
+        // Touch support
+        var touchStartX = 0;
+        track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; stopAutoPlay(); }, { passive: true });
+        track.addEventListener('touchend', function(e) {
+            var diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
+            startAutoPlay();
+        }, { passive: true });
+
+        // Resize handler
+        window.addEventListener('resize', function() {
+            if (totalCards === 0) return;
+            updateCardsPerView();
+            computeCardWidth();
+            generateDots();
+            jumpToIndex(currentIndex);
         });
 
-        // Member details overlay functionality
-        function showMemberDetails(memberId) {
-            const overlay = document.getElementById('member-overlay');
-            overlay.classList.add('active');
-            
-            // Populate member details
-            const memberCard = document.querySelector(`[onclick="showMemberDetails('${memberId}')"]`).closest('.member-card');
-            document.getElementById('detail-name').textContent = memberCard.querySelector('.member-name').textContent;
-            document.getElementById('detail-title').textContent = memberCard.querySelector('.member-title').textContent;
-            document.getElementById('detail-image').src = memberCard.querySelector('.member-image img').src;
-            
-            // Note: Bio and contact info would typically be populated from bio-data.js
-            // For now, we'll show a placeholder
-            document.getElementById('detail-bio').innerHTML = '<p>Bio information for this member is not available at this time.</p>';
-            document.getElementById('detail-contact').innerHTML = '<p>Contact information not available.</p>';
-        }
-
-        function closeMemberDetails() {
-            const overlay = document.getElementById('member-overlay');
-            overlay.classList.remove('active');
-        }
-
-        // Close overlay when clicking outside the details card
-        document.getElementById('member-overlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeMemberDetails();
+        // View All toggle
+        function toggleViewAll() {
+            viewAllExpanded = !viewAllExpanded;
+            if (viewAllExpanded) {
+                stopAutoPlay();
+                carouselWrapper.style.display = 'none';
+                carouselControls.style.display = 'none';
+                leadersGrid.classList.add('active');
+                viewAllBtn.classList.add('expanded');
+                viewAllBtn.childNodes[0].textContent = 'Show Less ';
+            } else {
+                carouselWrapper.style.display = '';
+                carouselControls.style.display = '';
+                leadersGrid.classList.remove('active');
+                viewAllBtn.classList.remove('expanded');
+                viewAllBtn.childNodes[0].textContent = 'View All ';
+                computeCardWidth();
+                jumpToIndex(currentIndex);
+                startAutoPlay();
             }
+        }
+
+        // Load leaders on page load
+        loadLeadership();
+
+        // Member details with biography from API
+        var _bioCache = {};
+        function showMemberDetails(card) {
+            var overlay = document.getElementById('member-overlay');
+            var name = card.querySelector('.member-name').textContent;
+            var title = card.querySelector('.member-title').textContent;
+            var imgSrc = card.querySelector('.member-image img').src;
+            document.getElementById('detail-img').src = imgSrc;
+            document.getElementById('detail-title').textContent = title;
+            document.getElementById('detail-name').textContent = name;
+            document.getElementById('detail-qualifications').textContent = '';
+            document.getElementById('detail-bio').innerHTML = '<div class="detail-bio-loading">Loading biography...</div>';
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Fetch bio from API
+            if (_bioCache[name]) {
+                renderBio(_bioCache[name]);
+            } else {
+                fetch('api.php?action=get_leader_bio&name=' + encodeURIComponent(name))
+                    .then(function(r) { return r.json(); })
+                    .then(function(d) {
+                        if (d.success && d.leader) {
+                            _bioCache[name] = d.leader;
+                            renderBio(d.leader);
+                        } else {
+                            document.getElementById('detail-bio').textContent = 'Biography will be available soon.';
+                            document.getElementById('detail-qualifications').textContent = '';
+                        }
+                    })
+                    .catch(function() {
+                        document.getElementById('detail-bio').textContent = 'Biography will be available soon.';
+                    });
+            }
+        }
+        function renderBio(leader) {
+            document.getElementById('detail-qualifications').textContent = leader.qualifications || '';
+            document.getElementById('detail-bio').textContent = leader.biography || 'Biography will be available soon.';
+            if (leader.photo_url) document.getElementById('detail-img').src = leader.photo_url;
+        }
+        function closeMemberDetails() {
+            document.getElementById('member-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('member-overlay').addEventListener('click', function(e) {
+            if (e.target === this) closeMemberDetails();
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMemberDetails(); });
+
+        // Login popup
+        var _loginState = null;
+        function renderLoginPopup(popup) {
+            if (_loginState && _loginState.loggedIn) {
+                var u = _loginState.user;
+                popup.innerHTML = '<button class="lfp-close" onclick="this.parentElement.classList.remove(\'active\')">×</button>'
+                    + '<div style="text-align:center;"><div style="width:36px;height:36px;border-radius:50%;background:var(--secondary-color);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;font-weight:600;">' + u.username.charAt(0).toUpperCase() + '</div>'
+                    + '<div style="font-weight:600;font-size:0.85rem;color:var(--secondary-color);">' + u.username + '</div>'
+                    + '<div style="font-size:0.7rem;color:var(--text-light);">' + u.role + '</div></div>'
+                    + (u.role === 'admin' ? '<a href="admin.html" style="display:block;margin:0.6rem 0 0.3rem;text-align:center;padding:0.4rem;background:var(--secondary-color);color:#fff;border-radius:6px;font-size:0.78rem;">Admin Dashboard</a>' : '')
+                    + '<button onclick="doLogout()" style="width:100%;margin-top:0.3rem;padding:0.4rem;background:rgba(230,57,70,0.08);color:var(--primary-color);border:1px solid rgba(230,57,70,0.2);border-radius:6px;font-size:0.78rem;cursor:pointer;">Sign Out</button>';
+            } else {
+                popup.innerHTML = '<button class="lfp-close" onclick="this.parentElement.classList.remove(\'active\')">×</button>'
+                    + '<h3 style="font-size:0.85rem;color:var(--secondary-color);margin-bottom:0.1rem;">🔐 Member Portal</h3>'
+                    + '<p style="font-size:0.7rem;color:var(--text-light);margin-bottom:0.6rem;">Sign in to your account</p>'
+                    + '<div id="lfp-error" style="display:none;font-size:0.7rem;color:var(--primary-color);background:rgba(230,57,70,0.07);border-radius:4px;padding:0.3rem;margin-bottom:0.4rem;"></div>'
+                    + '<label style="font-size:0.68rem;font-weight:600;display:block;margin-bottom:0.15rem;">Username or Email</label>'
+                    + '<input type="text" id="lfp-identity" placeholder="username or email" style="width:100%;padding:0.4rem;border:1px solid var(--gray-300);border-radius:6px;font-size:0.78rem;margin-bottom:0.4rem;">'
+                    + '<label style="font-size:0.68rem;font-weight:600;display:block;margin-bottom:0.15rem;">Password</label>'
+                    + '<input type="password" id="lfp-pass" placeholder="Password" style="width:100%;padding:0.4rem;border:1px solid var(--gray-300);border-radius:6px;font-size:0.78rem;margin-bottom:0.5rem;">'
+                    + '<button onclick="doLogin()" style="width:100%;padding:0.45rem;background:var(--primary-color);color:#fff;border:none;border-radius:6px;font-size:0.78rem;font-weight:600;cursor:pointer;">Sign In</button>'
+                    + '<div style="text-align:center;margin-top:0.5rem;font-size:0.68rem;color:var(--text-light);">New? <a href="register.html" style="color:var(--secondary-color);font-weight:600;">Register</a></div>';
+            }
+        }
+        window.toggleLoginPopup = function(e) {
+            e.preventDefault();
+            var popup = document.getElementById('loginPopup');
+            if (popup.classList.contains('active')) { popup.classList.remove('active'); return; }
+            renderLoginPopup(popup);
+            popup.classList.add('active');
+            fetch('auth.php?action=check_session', { credentials:'same-origin' })
+                .then(r => r.json())
+                .then(d => { _loginState = d.logged_in ? { loggedIn: true, user: d.user } : { loggedIn: false }; renderLoginPopup(popup); })
+                .catch(() => { _loginState = { loggedIn: false }; });
+        };
+        window.doLogin = function() {
+            var identity = document.getElementById('lfp-identity').value.trim();
+            var pass = document.getElementById('lfp-pass').value;
+            var err = document.getElementById('lfp-error');
+            if (!identity || !pass) { err.textContent = 'Fill all fields'; err.style.display = 'block'; return; }
+            err.style.display = 'none';
+            fetch('auth.php?action=login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ identity, password: pass }) })
+                .then(r => r.json())
+                .then(d => { if (d.success) { _loginState = { loggedIn: true, user: d.user }; renderLoginPopup(document.getElementById('loginPopup')); } else { err.textContent = d.error || 'Login failed'; err.style.display = 'block'; } })
+                .catch(() => { err.textContent = 'Network error'; err.style.display = 'block'; });
+        };
+        window.doLogout = function() {
+            fetch('auth.php?action=logout', { credentials:'same-origin' }).then(() => { _loginState = { loggedIn: false }; renderLoginPopup(document.getElementById('loginPopup')); });
+        };
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.login-trigger-wrap')) document.getElementById('loginPopup').classList.remove('active');
         });
     </script>
+<script src="donate-float.js"></script>
 </body>
 </html>

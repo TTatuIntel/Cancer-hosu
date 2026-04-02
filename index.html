@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="navbar.css">
+<link rel="stylesheet" href="donate-float.css">
 <style>
 /* CSS for home page - ensuring uniform colors with blog page */
 :root {
@@ -31,7 +34,7 @@
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
     --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --navbar-height: 70px;
+    --navbar-height: 90px;
     --border-radius: 8px;
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -39,12 +42,12 @@
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
     --content-width: 1200px;
-    --section-width: 90%;
-    --section-max-width: 1000px;
-    --hero-height: 600px;
-    --section-padding: 2.5rem; /* Reduced from 3rem */
-    --hero-content-width: 45%;
-    --hero-image-width: 50%;
+    --section-width: 92%;
+    --section-max-width: 1280px;
+    --hero-height: auto;
+    --section-padding: 2rem;
+    --hero-content-width: 48%;
+    --hero-image-width: 48%;
 }
 
 * {
@@ -109,8 +112,8 @@ section {
 /* Navbar styles - Enhanced with transparent blur */
 .navbar {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
@@ -127,8 +130,8 @@ section {
 /* Add this class when scrolling */
 .navbar.scrolled {
     background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -220,15 +223,16 @@ section {
 .hero {
     position: relative;
     color: var(--text-color);
-    padding-top: 10px;
-    overflow: hidden;
+    padding-top: var(--navbar-height);
+    overflow: visible;
     background-color: var(--gray-100);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: var(--hero-height);
     padding-bottom: 0;
-    margin-top: 20;
+    margin-top: 0;
+    z-index: 20;
 }
 
 .hero-container {
@@ -239,9 +243,11 @@ section {
     margin: 0 auto;
     position: relative;
     overflow: visible;
-    padding: var(--spacing-lg) 0;
-    gap: 5%;
+    padding: 1.25rem 0;
+    gap: 3%;
     justify-content: space-between;
+    align-items: center;
+    min-height: 380px;
 }
 
 .hero-content {
@@ -249,30 +255,237 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: var(--spacing-md) 0;
+    padding: 0.5rem 0;
     z-index: 10;
     text-align: left;
     position: relative;
-    animation: slideInLeft 0.8s ease-out;
+    min-height: 280px;
 }
 
-@keyframes slideInLeft {
-    from { transform: translateX(-50px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+/* Hero Slides */
+.hero-slide {
+    display: none;
+    flex-direction: column;
+    animation: heroFadeIn 0.6s ease;
+}
+
+.hero-slide.active {
+    display: flex;
+}
+
+@keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(255,255,255,0.85);
+    color: var(--secondary-color);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(13,69,147,0.12);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.hero-readmore {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 0.25rem;
+    position: relative;
+}
+
+.hero-readmore:hover {
+    color: #c81d2a;
+    transform: translateX(4px);
+}
+
+/* Floating Popup near Read More */
+.hero-float-popup {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: -8px;
+    z-index: 200;
+    width: 360px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem 1.2rem;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: floatPopDown 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-float-popup.active {
+    display: block;
+}
+/* Arrow pointing up */
+.hero-float-popup::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 20px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.72);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+}
+/* Scrollbar styling */
+.hero-float-popup::-webkit-scrollbar {
+    width: 4px;
+}
+.hero-float-popup::-webkit-scrollbar-track {
+    background: transparent;
+}
+.hero-float-popup::-webkit-scrollbar-thumb {
+    background: rgba(13, 69, 147, 0.15);
+    border-radius: 4px;
+}
+.float-popup-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+.float-popup-close:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+.hero-float-popup h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 0.4rem;
+    padding-right: 1.8rem;
+    letter-spacing: -0.01em;
+}
+.hero-float-popup p {
+    font-size: 0.76rem;
+    color: var(--text-color);
+    line-height: 1.55;
+    margin-bottom: 0.35rem;
+    opacity: 0.9;
+}
+.hero-float-popup h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0.45rem 0 0.25rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid rgba(13, 69, 147, 0.1);
+    display: inline-block;
+}
+.hero-float-popup ul {
+    padding-left: 0.9rem;
+    margin-bottom: 0.35rem;
+}
+.hero-float-popup li {
+    font-size: 0.73rem;
+    color: var(--text-color);
+    line-height: 1.5;
+    margin-bottom: 0.15rem;
+    opacity: 0.88;
+}
+.hero-float-popup li strong {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+@keyframes floatPopDown {
+    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Hero Dot Indicators */
+.hero-indicators {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(18, 41, 74, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+    background: var(--primary-color);
+    width: 22px;
+    border-radius: 4px;
 }
 
 .hero-image-container {
-    position: relative;
-    width: var(--hero-image-width);
-    aspect-ratio: 16/9;
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 58%;
+    aspect-ratio: 4/3;
     overflow: hidden;
-    border-radius: 0 0 0 80px;
-    box-shadow: var(--shadow-lg);
+    border-radius: 0;
+    box-shadow: none;
     animation: fadeIn 1s ease-out 0.3s forwards;
     opacity: 0;
-    z-index: 1;
-    max-height: 500px;
-    margin-right: 0;
+    z-index: 0;
+    max-height: 420px;
+}
+
+.hero-image-container::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        linear-gradient(to right, #f7fafc 0%, rgba(247,250,252,0.85) 8%, rgba(247,250,252,0.5) 18%, rgba(247,250,252,0.15) 30%, transparent 45%),
+        linear-gradient(to left, #f7fafc 0%, rgba(247,250,252,0.4) 3%, transparent 10%),
+        linear-gradient(to bottom, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%),
+        linear-gradient(to top, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%);
 }
 
 @keyframes fadeIn {
@@ -291,18 +504,55 @@ section {
     transition: opacity 1s ease, transform 8s ease;
     opacity: 0;
     transform: scale(1.05);
+    z-index: 1;
 }
 
+#hero-bg-0{background-image:url('img/IMG_7825.webp')}
+#hero-bg-1{background-image:url('img/IMG_7891.jpg')}
+#hero-bg-2{background-image:url('img/IMG_8022.webp')}
+#hero-bg-3{background-image:url('img/IMG_8316.jpg')}
+#hero-bg-4{background-image:url('img/IMG_8317.webp')}
 .hero-background.active {
     opacity: 1;
     transform: scale(1);
 }
 
+/* Dynamic backgrounds for featured content */
+.hero-background.dynamic-bg {
+    background: linear-gradient(135deg, rgba(29, 78, 137, 0.9), rgba(230, 57, 70, 0.8));
+}
+.hero-background.event-bg {
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.9) 0%, rgba(29, 78, 137, 0.85) 100%);
+}
+.hero-background.publication-bg {
+    background: linear-gradient(135deg, rgba(29, 78, 137, 0.95) 0%, rgba(44, 62, 80, 0.9) 100%);
+}
+.hero-background.grant-bg {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9) 0%, rgba(29, 78, 137, 0.85) 100%);
+}
+
+/* Event image backgrounds get a dark overlay for text readability */
+.hero-background[style*="background-image"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(29, 78, 137, 0.7) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(230, 57, 70, 0.4) 100%
+    );
+    pointer-events: none;
+}
+
 /* Typography */
 .hero h1 {
-    font-size: clamp(1.7rem, 3.5vw, 2.3rem); /* Slightly reduced */
+    font-size: clamp(1.25rem, 2.4vw, 1.65rem);
     line-height: 1.2;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
     color: var(--secondary-color);
     font-weight: 700;
     position: relative;
@@ -320,8 +570,8 @@ section {
 }
 
 .hero p {
-    font-size: clamp(0.95rem, 2vw, 1.1rem); /* Slightly reduced */
-    margin-bottom: 1.8rem;
+    font-size: clamp(0.8rem, 1.3vw, 0.88rem);
+    margin-bottom: 1rem;
     color: var(--text-light);
     line-height: 1.6;
 }
@@ -413,69 +663,270 @@ section {
     box-shadow: 0 0 10px 2px rgba(230, 57, 70, 0.5);
 }
 
-/* Partner Logos Section - UPDATED: Colored logos with hover effects */
+/* ══════════════════════════════════════════════════════════════════
+   Featured Hero Slides (Admin-controlled dynamic content)
+   ══════════════════════════════════════════════════════════════════ */
+.hero-slide.featured-hero-slide {
+    /* Inherits standard hero styling */
+}
+
+.hero-slide.featured-hero-slide h1 {
+    /* Match regular hero h1 styling */
+    font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.hero-slide.featured-hero-slide h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: var(--primary-color);
+}
+
+.hero-slide.featured-hero-slide p {
+    /* Match regular hero p styling */
+    font-size: clamp(0.8rem, 1.3vw, 0.88rem);
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.hero-slide[data-slide="featured-event"],
+.hero-slide[data-slide="featured-publication"],
+.hero-slide[data-slide="featured-grant"] {
+    /* Same base styling as other hero slides */
+}
+
+.hero-slide .featured-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+    background: rgba(230, 57, 70, 0.1);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    color: var(--primary-color);
+    border: 1px solid rgba(230, 57, 70, 0.2);
+}
+
+.hero-slide .featured-label .featured-label-icon {
+    font-size: 0.9rem;
+}
+
+.featured-label--event {
+    background: rgba(230, 57, 70, 0.1);
+    color: var(--primary-color);
+    border-color: rgba(230, 57, 70, 0.2);
+}
+
+.featured-label--publication {
+    background: rgba(29, 78, 137, 0.1);
+    color: var(--secondary-color);
+    border-color: rgba(29, 78, 137, 0.2);
+}
+
+.featured-label--grant {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border-color: rgba(40, 167, 69, 0.2);
+}
+
+.hero-slide .featured-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.75rem 0;
+}
+
+.hero-slide .featured-meta-tag,
+.hero-slide .featured-meta-item {
+    /* Match hero-pill styling */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(255,255,255,0.85);
+    color: var(--secondary-color);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(13,69,147,0.12);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.hero-slide .featured-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.hero-slide .featured-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-slide .featured-cta .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.hero-slide .featured-amount {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #28a745;
+    margin: 0.5rem 0;
+}
+
+.hero-slide .featured-deadline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+.hero-slide .featured-status {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 16px;
+    margin-left: 0.5rem;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.featured-status--open {
+    background: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.featured-status--closing,
+.featured-status--soon {
+    background: rgba(255, 193, 7, 0.15);
+    color: #d97706;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+/* Partner Logos Section */
 .partners-section {
-    padding: var(--spacing-sm) 0; /* Reduced padding */
-    background: var(--white);
+    padding: 0.5rem 0 1rem;
+    background: rgba(247, 250, 252, 0.5);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
     position: relative;
     display: flex;
     justify-content: center;
+    overflow: visible;
+    z-index: 5;
 }
 
 .partners-container {
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
+    overflow: hidden;
 }
 
 .partners-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0rem;
+    justify-content: flex-start;
+    margin-bottom: 0.5rem;
 }
 
 .partners-title {
-    font-size: 1.5rem; /* Smaller font */
+    font-size: 1rem;
     color: var(--text-light);
     font-weight: 600;
     text-align: left;
     margin: 0;
 }
 
+.partners-track {
+    display: flex;
+    animation: scrollPartners 25s linear infinite;
+    width: max-content;
+}
+
+.partners-track:hover {
+    animation-play-state: paused;
+}
+
 .partners-grid {
     display: flex;
-    justify-content: flex-start; /* Left-aligned */
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1.1rem; /* Reduced gap */
+    gap: 2rem;
+    flex-shrink: 0;
+    padding-right: 2rem;
+}
+
+@keyframes scrollPartners {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 .partner-logo {
-    height: 70px; /* Maintain smaller height */
-    max-width: 150px; /* Maintain smaller width */
+    height: 46px;
+    min-width: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    flex-shrink: 0;
 }
+
+/* Individual logo size fixes for small/short source images */
+.partner-logo--uci { min-width: 143px; height: 57px; }
+.partner-logo--onco { min-width: 154px; height: 55px; }
+.partner-logo--mulago { min-width: 165px; height: 42px; }
 
 .partner-logo img {
     max-height: 100%;
     max-width: 100%;
     object-fit: contain;
-    filter: none; /* Ensure logos are in full color */
-    opacity: 2; /* Full opacity by default */
+    filter: none;
+    opacity: 1;
 }
 
 .partner-logo:hover img {
-    transform: scale(1.5); /* Slight scale on hover for interactivity */
-    filter: brightness(1.5); /* Slightly brighten on hover */
+    transform: scale(1.1);
+    filter: brightness(1.1);
 }
 
-/* Events Section - ENHANCED with new features */
+/* Events Section */
 .events-section {
-    padding: var(--spacing-md) 0 var(--spacing-sm);
+    padding: 1.5rem 0 1rem;
     background: var(--background-light);
     position: relative;
     overflow: hidden;
@@ -561,7 +1012,6 @@ section {
     position: relative;
     transition: transform 0.5s ease;
     scroll-snap-type: x mandatory; /* Added for smooth scrolling */
-    -webkit-overflow-scrolling: touch; /* Better iOS scrolling */
 }
 
 .carousel-slide {
@@ -952,322 +1402,174 @@ section {
     transform: translateX(4px);
 }
 
-/* Tabs Section */
-.tabs-section {
-    padding: var(--spacing-xs) 0;
-    background: var(--gray-100);
-    position: relative;
-    display: flex;
-    justify-content: center;
+/* Specialty Section - Dynamic Layout */
+.specialty-section {
+    background: var(--white);
+    padding: 2rem 0 2.5rem;
 }
 
-.tabs-container {
+.specialty-container {
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
-}
-
-.tabs-nav {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.4rem;
+    gap: 2.5rem;
+    align-items: center;
 }
 
-.tab-button {
-    padding: 0.6rem 1.25rem;
-    background: var(--white);
-    border: none;
-    border-radius: var(--border-radius);
-    color: var(--text-light);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: var(--shadow-sm);
-    font-size: 0.9rem;
+.specialty-image-col {
+    flex: 0 0 42%;
+    max-width: 42%;
 }
 
-.tab-button:hover {
-    background: var(--secondary-light);
-    color: var(--secondary-color);
-    transform: translateY(-2px);
+.specialty-img-stack {
+    position: relative;
+    padding-bottom: 1.5rem;
+    padding-right: 1.5rem;
 }
 
-.tab-button.active {
-    background: var(--secondary-color);
-    color: var(--white);
+.specialty-img {
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
 }
 
-/* Tab Content Sections */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
+.specialty-img--main {
+    width: 100%;
+    height: 280px;
     display: block;
 }
 
-/* Surgical Oncology Section Styles */
-.surgical-oncology-section {
-    background-color: var(--white);
-    padding: var(--section-padding) 0;
+.specialty-img--accent {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 45%;
+    height: 130px;
+    border: 3px solid var(--white);
+    z-index: 2;
 }
 
-.surgical-oncology-container {
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
+.specialty-text-col {
+    flex: 1;
+    min-width: 0;
 }
 
-.surgical-oncology-intro {
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.surgical-oncology-intro p {
-    max-width: 800px;
-    margin: 0 auto;
-    color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.7;
-}
-
-.role-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-}
-
-.role-card {
-    background: var(--gray-100);
-    border-radius: var(--border-radius);
-    padding: 1.25rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.role-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.role-card h3 {
+.specialty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--secondary-color);
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
     position: relative;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.6rem;
 }
 
-.role-card h3::after {
+.specialty-title::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 40px;
-    height: 2px;
+    width: 50px;
+    height: 3px;
     background: var(--primary-color);
+    border-radius: 2px;
 }
 
-.role-card p {
+.specialty-desc {
     color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    margin-bottom: 1rem;
 }
 
-.myths-section {
-    background-color: var(--background-light);
-    padding: var(--section-padding) 0;
-}
-
-.myths-container {
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
-}
-
-.myths-list {
-    margin-top: 1.5rem;
-}
-
-.myth-item {
-    background: var(--white);
-    border-radius: var(--border-radius);
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.myth-item:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-}
-
-.myth-item h3 {
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
+.specialty-highlights {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
 }
 
-.myth-item h3 span {
-    background: var(--primary-light);
-    color: var(--primary-color);
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+.specialty-pill {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    margin-right: 0.6rem;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.myth-item p {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    padding-left: 2.25rem;
-}
-
-.testimonials-section {
-    background-color: var(--white);
-    padding: var(--section-padding) 0;
-}
-
-.testimonials-container {
-    width: var(--section-width);
-    max-width: var(--section-max-width);
-    margin: 0 auto;
-}
-
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.testimonial-card {
+    gap: 0.35rem;
     background: var(--gray-100);
-    border-radius: var(--border-radius);
-    padding: 1.75rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.testimonial-card::before {
-    content: '"';
-    position: absolute;
-    top: 1rem;
-    left: 1.5rem;
-    font-size: 3.5rem;
-    color: var(--primary-color);
-    opacity: 0.2;
-    line-height: 1;
-}
-
-.testimonial-content {
-    position: relative;
-    z-index: 1;
-}
-
-.testimonial-text {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    margin-bottom: 1.25rem;
-    font-style: italic;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.testimonial-author-image {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.testimonial-author-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.testimonial-author-info h4 {
     color: var(--secondary-color);
-    font-size: 0.95rem;
-    margin-bottom: 0.2rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid rgba(13, 69, 147, 0.1);
+    transition: var(--transition);
 }
 
-.testimonial-author-info p {
-    color: var(--text-light);
-    font-size: 0.8rem;
+.specialty-pill:hover {
+    background: var(--secondary-light);
+    transform: translateY(-1px);
+}
+
+.specialty-pill span {
+    font-size: 0.85rem;
+}
+
+.specialty-readmore {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.specialty-readmore:hover {
+    color: #c81d2a;
+    transform: translateX(4px);
+}
+
+/* Responsive - Specialty */
+@media (max-width: 768px) {
+    .specialty-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .specialty-image-col {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+    }
+    .specialty-img--main {
+        height: 200px;
+    }
+    .specialty-img--accent {
+        width: 40%;
+        height: 100px;
+    }
 }
 
 /* CTA Section */
 .cta-section {
-    padding: var(--section-padding) 0;
-    background-color: var(--secondary-color);
-    color: var(--white);
+    padding: 1.25rem 0;
+    background: rgba(247, 250, 252, 0.6);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--text-color);
     text-align: center;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    min-height: 320px;
+    overflow: visible;
+    z-index: 100;
+    border-top: 1px solid var(--gray-300);
 }
 
 .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('img/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.2;
-    z-index: 1;
+    display: none;
 }
 
 .cta-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 100%;
-    max-width: var(--section-max-width);
-    height: 100%;
-    background-image: url('img/IMG_8316-vL0gZYs6wSPIpVcRIYCgcYvR0qdtCv.webp');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.15;
-    z-index: 1;
-    filter: blur(1px);
+    display: none;
 }
 
 .cta-section .container {
@@ -1275,108 +1577,99 @@ section {
     z-index: 2;
     width: var(--section-width);
     max-width: var(--section-max-width);
+    overflow: visible;
 }
 
 .cta-inner {
     background-color: transparent;
-    padding: 2rem;
+    padding: 0.75rem 1.25rem;
     border-radius: var(--border-radius);
-    backdrop-filter: blur(4px);
-    max-width: 700px;
+    max-width: 520px;
     margin: 0 auto;
+    overflow: visible;
 }
 
 .cta-section .section-title {
-    color: var(--white);
-    margin-bottom: 0.75rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
 }
 
 .cta-section .section-title::after {
-    background: var(--white);
+    background: var(--primary-color);
+    width: 30px;
+    height: 2px;
 }
 
 .cta-section p {
-    max-width: 600px;
-    margin: 0 auto 1.25rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    max-width: 460px;
+    margin: 0 auto 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-light);
 }
 
 .cta-section .cta-buttons {
     display: flex;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
-    margin-top: 1.25rem;
+    margin-top: 0.6rem;
+    position: relative;
+    overflow: visible;
 }
 
 .cta-section .cta-button {
-    background: var(--white);
-    color: var(--secondary-color);
-    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 0.5rem 1.25rem;
     border-radius: 30px;
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 38px;
+    min-width: 38px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0.2rem;
-    font-size: 0.95rem;
+    margin: 0.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     transition: var(--transition);
-    border: 2px solid var(--white);
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
 }
 
 .cta-section .cta-button:hover {
-    background: transparent;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
     color: var(--white);
-}
-
-.cta-section .cta-button.outline {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.cta-section .cta-button.outline:hover {
-    background: var(--white);
-    color: var(--secondary-color);
+    transform: translateY(-2px);
 }
 
 /* Footer */
 footer {
-    background: var(--background-dark);
-    color: var(--white);
-    padding: var(--section-padding) 0 var(--spacing-md);
+    background: var(--gray-100);
+    color: var(--text-color);
+    padding: 1rem 0 0.6rem;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-top: 1px solid var(--gray-300);
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1.2fr 1.4fr 1fr;
+    gap: 1.25rem;
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin: 0 auto;
 }
 
 .footer-section h4 {
-    color: var(--accent-color);
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
     font-weight: 600;
     position: relative;
     display: inline-block;
@@ -1385,42 +1678,60 @@ footer::before {
 .footer-section h4::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -4px;
     left: 0;
-    width: 30px;
+    width: 24px;
     height: 2px;
-    background: var(--accent-color);
+    background: var(--primary-color);
+    border-radius: 2px;
 }
 
 .footer-section ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .footer-section li {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.45rem;
 }
 
 .footer-section a {
-    color: var(--gray-400);
+    color: var(--text-light);
     transition: var(--transition);
     display: inline-block;
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
+    font-size: 0.88rem;
 }
 
 .footer-section a:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
     transform: translateX(3px);
 }
 
 .footer-section a:focus-visible {
-    outline: 2px solid var(--accent-color);
+    outline: 2px solid var(--secondary-color);
     outline-offset: 2px;
+}
+
+.footer-section address {
+    font-style: normal;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.footer-section p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 0.35rem;
 }
 
 .social-links {
     display: flex;
-    gap: 0.6rem;
-    margin-top: 1rem;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
     flex-wrap: wrap;
 }
 
@@ -1428,27 +1739,27 @@ footer::before {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--gray-200);
     transition: var(--transition);
-    color: var(--white);
+    color: var(--secondary-color);
 }
 
 .social-links a:hover {
-    background: var(--accent-color);
+    background: var(--secondary-color);
     transform: translateY(-2px);
-    color: var(--background-dark);
+    color: var(--white);
 }
 
 .copyright {
     text-align: center;
-    margin-top: 2rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-300);
+    font-size: 0.78rem;
+    color: var(--text-light);
     width: var(--section-width);
     max-width: var(--section-max-width);
     margin-left: auto;
@@ -1620,7 +1931,6 @@ footer::before {
 
 /* NEW: Scroll snap for smooth scrolling */
 .events-carousel {
-    scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
 }
 
@@ -1628,10 +1938,39 @@ footer::before {
     display: none; /* Chrome, Safari, Opera */
 }
 
+.hero-slide[data-slide="intro"] h1 {
+    text-align: center;
+}
+
+.footer-dev-info p {
+    margin: 0;
+}
+
+.footer-dev-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.35rem;
+}
+
+.footer-dev-contact {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.footer-dev-contact:last-child {
+    margin-bottom: 0;
+}
+
+.footer-dev-contact a {
+    color: var(--text-light);
+}
+
 /* NEW: Drag to scroll visual feedback */
 .events-carousel.dragging {
-    cursor: grabbing;
     cursor: -webkit-grabbing;
+    cursor: grabbing;
 }
 
 .events-carousel.dragging .event-card {
@@ -1679,11 +2018,16 @@ footer::before {
     }
     
     .hero-image-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
         max-height: 350px;
     }
 
     :root {
-        --navbar-height: 60px;
+        --navbar-height: 90px;
         --hero-height: auto;
         --section-padding: 1.75rem;
         --hero-content-width: 100%;
@@ -1697,11 +2041,15 @@ footer::before {
 
 @media (max-width: 768px) {
     :root {
-        --navbar-height: 60px;
+        --navbar-height: 90px;
         --hero-height: auto;
         --section-padding: 1.25rem;
         --hero-content-width: 100%;
         --hero-image-width: 100%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
     }
 
     .navbar-container {
@@ -1785,11 +2133,16 @@ footer::before {
     }
 
     .hero-image-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
         width: 100%;
         max-width: 550px;
         aspect-ratio: 16/9;
         margin: 1rem auto 0;
-        border-radius: 8px;
+        border-radius: 0;
+        max-height: none;
     }
 
     .section-title {
@@ -1825,6 +2178,10 @@ footer::before {
 @media (max-width: 480px) {
     .container, .navbar-container, .hero-container, .stats-container, .footer-content, .copyright {
         width: 90%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
     }
     
     :root {
@@ -2227,19 +2584,14 @@ footer::before {
 <!-- Custom cursor element -->
 <div class="custom-cursor" id="custom-cursor"></div>
 
-<!-- Floating Donation Button -->
-<div class="floating-donate">
-    <a href="#donate" id="donate-button" class="donate-button">
-        <span class="donate-icon">❤</span>
-        Support Us
-    </a>
-</div>
+<!-- Floating Donation Button - REMOVED (handled by donate-float.js) -->
+<!-- The floating Support Us button is injected by donate-float.js -->
 
 <!-- Navbar -->
 <nav class="navbar">
 <div class="navbar-container">
     <div class="logo">
-        <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
+        <img src="img/logo2.png" alt="HOSU - Hematology & Oncology Society of Uganda" loading="eager">
     </div>
     <div class="nav-links">
         <a href="index.html">Home</a>           
@@ -2249,7 +2601,10 @@ footer::before {
         <a href="about.html">About</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
-        <a href="login.html" class="cta-button">Member Portal</a>
+        <div class="login-trigger-wrap">
+            <a href="#" class="cta-button login-trigger" onclick="toggleLoginPopup(event)">Member Portal</a>
+            <div class="login-float-popup" id="loginPopup"></div>
+        </div>
     </div>
     <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
 </div>
@@ -2259,805 +2614,176 @@ footer::before {
 <section id="home" class="hero">
 <div class="hero-container">
     <div class="hero-content">
-        <h1 style="text-align: center;">Transforming Cancer Care in Uganda</h1>
-        <p>The Hematology & Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
-        <div class="cta-buttons">
-            <a href="membership.html" class="interactive-button" id="join-button">
-                Join Our Community
-                <span class="icon">→</span>
+        <!-- Slide 0: Default intro -->
+        <div class="hero-slide active" data-slide="intro">
+            <h1>Transforming Cancer<br>Care in Uganda</h1>
+            <p>The Hematology &amp; Oncology Society of Uganda (HOSU) is dedicated to improving patient outcomes through collaborative research, professional education, and advocacy for accessible cancer treatment.</p>
+            <div class="cta-buttons">
+                <a href="membership.html" class="interactive-button" id="join-button">
+                    Join Our Community
+                    <span class="icon">→</span>
+                </a>
+            </div>
+        </div>
+        <!-- Slide 1: Surgical Oncology -->
+        <div class="hero-slide" data-slide="surgical-oncology">
+            <h1>Surgical Oncology</h1>
+            <p>Focuses on the diagnosis, staging, and treatment of cancer through surgery — often combined with other therapies for the best outcomes.</p>
+            <div class="hero-pills">
+                <span class="hero-pill">🔬 Diagnosis</span>
+                <span class="hero-pill">📋 Staging</span>
+                <span class="hero-pill">💊 Curative</span>
+                <span class="hero-pill">🤝 Palliative</span>
+                <span class="hero-pill">🔧 Reconstructive</span>
+            </div>
+            <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'surgical-oncology'); return false;">Read More →
+                <div class="hero-float-popup" data-popup="surgical-oncology"></div>
             </a>
+        </div>
+        <!-- Slide 2: Medical Oncology -->
+        <div class="hero-slide" data-slide="medical-oncology">
+            <h1>Medical Oncology</h1>
+            <p>Treats cancer with medicines — chemotherapy, targeted therapy, immunotherapy, and hormonal therapy — tailored to each patient's needs.</p>
+            <div class="hero-pills">
+                <span class="hero-pill">💉 Chemotherapy</span>
+                <span class="hero-pill">🛡️ Immunotherapy</span>
+                <span class="hero-pill">🎯 Targeted Therapy</span>
+                <span class="hero-pill">⚖️ Hormone Therapy</span>
+                <span class="hero-pill">🧬 Precision Medicine</span>
+            </div>
+            <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'medical-oncology'); return false;">Read More →
+                <div class="hero-float-popup" data-popup="medical-oncology"></div>
+            </a>
+        </div>
+        <!-- Slide 3: Radiation Oncology -->
+        <div class="hero-slide" data-slide="radiation-oncology">
+            <h1>Radiation Oncology</h1>
+            <p>Uses high-energy radiation to target and destroy cancer cells while sparing healthy tissue, alone or combined with other treatments.</p>
+            <div class="hero-pills">
+                <span class="hero-pill">📡 External Beam</span>
+                <span class="hero-pill">🔬 Brachytherapy</span>
+                <span class="hero-pill">⚡ Stereotactic</span>
+                <span class="hero-pill">🔵 Proton Therapy</span>
+                <span class="hero-pill">🖥️ Image-Guided</span>
+            </div>
+            <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'radiation-oncology'); return false;">Read More →
+                <div class="hero-float-popup" data-popup="radiation-oncology"></div>
+            </a>
+        </div>
+        <!-- Slide 4: Pediatric Oncology -->
+        <div class="hero-slide" data-slide="pediatric-oncology">
+            <h1>Pediatric Oncology</h1>
+            <p>Focuses on cancers in children and adolescents — leukemia, brain tumors, and sarcomas — with care tailored to young patients.</p>
+            <div class="hero-pills">
+                <span class="hero-pill">🩸 Leukemia</span>
+                <span class="hero-pill">🧠 Brain Tumors</span>
+                <span class="hero-pill">🦴 Sarcoma Care</span>
+                <span class="hero-pill">💛 Supportive Care</span>
+                <span class="hero-pill">📈 Follow-Up</span>
+            </div>
+            <a href="#" class="hero-readmore" onclick="toggleFloatPopup(this, 'pediatric-oncology'); return false;">Read More →
+                <div class="hero-float-popup" data-popup="pediatric-oncology"></div>
+            </a>
+        </div>
+
+        <!-- Slide indicators -->
+        <div class="hero-indicators">
+            <span class="hero-dot active" data-index="0"></span>
+            <span class="hero-dot" data-index="1"></span>
+            <span class="hero-dot" data-index="2"></span>
+            <span class="hero-dot" data-index="3"></span>
+            <span class="hero-dot" data-index="4"></span>
         </div>
     </div>            
     <div class="hero-image-container">
-        <div class="hero-background active" style="background-image: url('img/IMG_7825.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_7958.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_7926.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_7900.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_7977.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_8022.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_8005.webp')"></div>
-        <div class="hero-background" style="background-image: url('img/IMG_8317.webp')"></div>
+        <div id="hero-bg-0" class="hero-background active"></div>
+        <div id="hero-bg-1" class="hero-background"></div>
+        <div id="hero-bg-2" class="hero-background"></div>
+        <div id="hero-bg-3" class="hero-background"></div>
+        <div id="hero-bg-4" class="hero-background"></div>
     </div>
 </div>
+
 </section>
 
-<!-- Partner Logos Section -->
 <section id="partners" class="partners-section">
     <div class="partners-container">
         <div class="partners-header">
             <h2 class="partners-title">Our Partners</h2>
         </div>
         
+        <div class="partners-track">
         <div class="partners-grid">
-            <!-- Partner Logos - No Names -->
-            <div class="partner-logo">
-                <img src="img/uci.png" alt="Partner Logo" loading="lazy">
+            <div class="partner-logo partner-logo--uci">
+                <img src="img/uci.png" alt="Uganda Cancer Institute" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/ado.png" alt="Partner Logo" loading="lazy">
+                <img src="img/ado.png" alt="Adonis Healthcare" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/Agakhan.png" alt="Partner Logo" loading="lazy">
+                <img src="img/Agakhan.png" alt="Aga Khan University Hospital" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/future.png" alt="Partner Logo" loading="lazy">
+                <img src="img/future.png" alt="Future Healthcare" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/hetero.png" alt="Partner Logo" loading="lazy">
+                <img src="img/hetero.png" alt="Hetero" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/metro.png" alt="Partner Logo" loading="lazy">
+                <img src="img/metro.png" alt="Metropolis" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/msn.png" alt="Partner Logo" loading="lazy">
+                <img src="img/msn.png" alt="MSN" loading="lazy">
+            </div>
+            <div class="partner-logo partner-logo--mulago">
+                <img src="img/mulago.png" alt="Mulago National Referral Hospital" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/mulago.png" alt="Partner Logo" loading="lazy">
+                <img src="img/nsambya.png" alt="Nsambya Hospital" loading="lazy">
+            </div>
+            <div class="partner-logo partner-logo--onco">
+                <img src="img/onco.png" alt="OncoPharm" loading="lazy">
+            </div>
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="partners-grid">
+            <div class="partner-logo partner-logo--uci">
+                <img src="img/uci.png" alt="Uganda Cancer Institute" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/nsambya.png" alt="Partner Logo" loading="lazy">
+                <img src="img/ado.png" alt="Adonis Healthcare" loading="lazy">
             </div>
             <div class="partner-logo">
-                <img src="img/onco.png" alt="Partner Logo" loading="lazy">
+                <img src="img/Agakhan.png" alt="Aga Khan University Hospital" loading="lazy">
             </div>
+            <div class="partner-logo">
+                <img src="img/future.png" alt="Future Healthcare" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/hetero.png" alt="Hetero" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/metro.png" alt="Metropolis" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/msn.png" alt="MSN" loading="lazy">
+            </div>
+            <div class="partner-logo partner-logo--mulago">
+                <img src="img/mulago.png" alt="Mulago National Referral Hospital" loading="lazy">
+            </div>
+            <div class="partner-logo">
+                <img src="img/nsambya.png" alt="Nsambya Hospital" loading="lazy">
+            </div>
+            <div class="partner-logo partner-logo--onco">
+                <img src="img/onco.png" alt="OncoPharm" loading="lazy">
+            </div>
+        </div>
         </div>
     </div>
 </section>
 
-<section id="events" class="events-section">
-    <div class="events-container">
-        <div class="events-wrapper">
-            <!-- Left Column: Current and Upcoming Events -->
-            <div class="upcoming-events-column">
-                <h2 class="section-title">Events Overview</h2>
-                <p class="events-subtitle">Explore our latest events designed to advance oncology care and research</p>
-                
-                <div class="events-row">
-                    <!-- Current Events -->
-                    <div class="current-events-section">
-                        <button class="filter-button active" data-filter="all" tabindex="0">Current Events</button>
-                        <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0">
-                            <div class="event-image">
-                                <img src="img/IMG_7891.jpg" height="110" width="200"alt="Tech Summit 2025" loading="lazy">
-                            </div>
-                            <div class="event-content">
-                                <span class="event-type">Conference</span>
-                                <div class="event-date">April 17, 2025</div>
-                                <h3 class="event-title">Tech Summit 2025</h3>
-                                <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
-                                <div class="event-countdown">
-                                    <span class="countdown-label">Happening Now</span>
-                                </div>
-                                <div class="event-footer">
-                                    <div class="event-location">📍 Kampala</div>
-                                    <span class="register-button">Details</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
-                    <!-- Upcoming Events -->
-                    <div class="upcoming-events-section">
-                        <button class="filter-button active" data-filter="all" tabindex="0">Upcoming Events</button>
-                        <a href="events.html#tech-summit-2025" class="event-card current-event-card" data-type="conference" data-event-id="tech-summit-2025" tabindex="0">
-                            <div class="event-image">
-                                <img src="img/IMG_7994.jpg"alt="Tech Summit 2025" loading="lazy">
-                            </div>
-                            <div class="event-content">
-                                <span class="event-type">Conference</span>
-                                <div class="event-date">April 26, 2025</div>
-                                <h3 class="event-title">Tech Summit 2025</h3>
-                                <p class="event-description">Join industry leaders to discuss the future of technology in healthcare.</p>
-                                <div class="event-countdown">
-                                    <span class="countdown-label">Happening Soon</span>
-                                </div>
-                                <div class="event-footer">
-                                    <div class="event-location">📍 Kampala</div>
-                                    <span class="register-button">Details</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Right Column: Other Events -->
-            <div class="other-events-column">
-                <h2 class="section-title">New and Upcoming Events</h2>
-                <p class="events-subtitle">Join us for conferences, workshops, and webinars designed to advance oncology care and research</p>
-                <div class="event-filters">
-                    <button class="filter-button active" data-filter="all" tabindex="0">All Events</button>
-                    <button class="filter-button" data-filter="conference" tabindex="0">Conferences</button>
-                    <button class="filter-button" data-filter="workshop" tabindex="0">Workshops</button>
-                    <button class="filter-button" data-filter="webinar" tabindex="0">Webinars</button>
-                </div>
-                <div class="events-carousel-container">
-                    <div class="events-carousel">
-                        <!-- Slide 1 -->
-                        <div class="carousel-slide active-slide" data-has-content="true">
-                            <a href="events.html#uci-pcau-hosu" class="event-card featured-event" data-type="conference" data-event-id="uci-pcau-hosu" tabindex="0">
-                                <span class="featured-badge">Featured</span>
-                                <div class="event-image">
-                                    <img src="img/IMG_8005.jpg"alt="UCI – PCAU – HOSU Conference" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Conference</span>
-                                    <div class="event-date">Sept 10-12, 2025</div>
-                                    <h3 class="event-title">UCI – PCAU – HOSU Conference</h3>
-                                    <p class="event-description">The 5th edition of the Uganda Conference on Cancer and Palliative Care.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">1 year, 5 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Kampala</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="events.html#oncology-symposium-2025" class="event-card" data-type="conference" data-event-id="oncology-symposium-2025" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_8022.jpg" alt="Oncology Symposium 2025" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Conference</span>
-                                    <div class="event-date">Nov 20-22, 2025</div>
-                                    <h3 class="event-title">Oncology Symposium 2025</h3>
-                                    <p class="event-description">A global gathering of oncology experts to discuss the latest advancements.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">7 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Kampala</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="events.html#annual-oncology-2024" class="event-card" data-type="conference" data-event-id="annual-oncology-2024" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_8316.jpg" alt="Annual Oncology Conference 2024" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Conference</span>
-                                    <div class="event-date">Sept 15-18, 2024</div>
-                                    <h3 class="event-title">Annual Oncology Conference</h3>
-                                    <p class="event-description">Join leading oncologists and researchers for our flagship conference.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">5 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 London</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="events.html#immunotherapy-workshop" class="event-card" data-type="workshop" data-event-id="immunotherapy-workshop" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_8317.jpg" alt="Immunotherapy Workshop" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Workshop</span>
-                                    <div class="event-date">July 8-9, 2024</div>
-                                    <h3 class="event-title">Immunotherapy Workshop</h3>
-                                    <p class="event-description">A hands-on workshop on the latest developments in immunotherapy.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">3 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Boston</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="carousel-slide" data-has-content="true">
-                            <a href="events.html#digital-pathology" class="event-card" data-type="webinar" data-event-id="digital-pathology" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_7756.jpg" alt="Digital Pathology Webinar" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Webinar</span>
-                                    <div class="event-date">June 25, 2024</div>
-                                    <h3 class="event-title">Digital Pathology in Oncology</h3>
-                                    <p class="event-description">Learn about advances in digital pathology for cancer diagnosis.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">2 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">🌐 Online</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="events.html#surgical-oncology" class="event-card" data-type="workshop" data-event-id="surgical-oncology" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_7761.jpg" alt="Surgical Oncology Techniques" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Workshop</span>
-                                    <div class="event-date">Aug 12-13, 2024</div>
-                                    <h3 class="event-title">Surgical Oncology Techniques</h3>
-                                    <p class="event-description">A workshop on the latest surgical techniques for oncology specialists.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">4 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">📍 Kampala</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="events.html#research-updates" class="event-card" data-type="webinar" data-event-id="research-updates" tabindex="0">
-                                <div class="event-image">
-                                    <img src="img/IMG_7770.jpg" alt="Cancer Research Updates" loading="lazy">
-                                </div>
-                                <div class="event-content">
-                                    <span class="event-type">Webinar</span>
-                                    <div class="event-date">July 20, 2024</div>
-                                    <h3 class="event-title">Cancer Research Updates</h3>
-                                    <p class="event-description">Stay up-to-date with the latest research findings in oncology.</p>
-                                    <div class="event-countdown">
-                                        <span class="countdown-label">Starts in:</span>
-                                        <span class="countdown-time">3 months</span>
-                                    </div>
-                                    <div class="event-footer">
-                                        <div class="event-location">🌐 Online</div>
-                                        <span class="register-button">Details</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="carousel-nav" id="carousel-nav"></div>
-                    <div class="carousel-position-indicator">
-                        <div class="carousel-position-indicator-progress"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Past Events Highlight -->
-        <div class="past-events-highlight centered">
-            <h3 class="highlight-title">Past Event Highlights</h3>
-            <div class="highlight-content">
-                <div class="highlight-image">
-                    <img src="img/IMG_7994.jpg" alt="2023 Conference Highlights" loading="lazy">
-                </div>
-                <div class="highlight-text">
-                    <p>Our 2023 Annual Conference brought together 250+ oncology professionals from 15 countries.</p>
-                    <a href="events.html#past-events" class="highlight-link">View Past Events</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- View All Events - Moved to Bottom of Past Events -->
-        <div class="view-all-events">
-            <a href="events.html" class="view-all-button">
-                View All Events
-                <span>→</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* Events Section Styling */
-    .events-section {
-        padding: 40px 20px;
-        background-color: #f9fafb;
-    }
-
-    .events-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .events-wrapper {
-        display: flex;
-        gap: 30px;
-    }
-
-    /* Column Styles */
-    .upcoming-events-column,
-    .other-events-column {
-        flex: 1; /* Equal flex to ensure same size */
-        min-width: 0;
-    }
-
-    .section-title {
-        font-size: 1.875rem;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 10px;
-    }
-
-    .events-subtitle {
-        font-size: 1rem;
-        color: #6b7280;
-        margin-bottom: 20px;
-    }
-
-    /* Events Row Layout */
-    .events-row {
-        display: flex;
-        gap: 20px;
-        width: 100%;
-    }
-
-    .current-events-section,
-    .upcoming-events-section {
-        flex: 1;
-        min-width: 0;
-    }
-
-    /* Event Card Styling */
-    .event-card {
-        display: block;
-        margin-top: 10px;
-        text-decoration: none;
-        color: #1f2937;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .event-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .current-event-card {
-        width: 250px;
-    }
-
-    .event-image img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .event-content {
-        padding: 10px;
-    }
-
-    .event-type {
-        font-size: 0.75rem;
-        color: #10b981;
-        text-transform: uppercase;
-        font-weight: 500;
-    }
-
-    .event-date {
-        font-size: 0.875rem;
-        color: #6b7280;
-        margin-top: 5px;
-    }
-
-    .event-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        margin: 5px 0;
-    }
-
-    .event-description {
-        font-size: 0.875rem;
-        color: #4b5563;
-        margin-bottom: 10px;
-    }
-
-    .event-countdown {
-        font-size: 0.75rem;
-        color: #ef4444;
-        margin-bottom: 10px;
-    }
-
-    .event-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.875rem;
-    }
-
-    .event-location {
-        color: #6b7280;
-    }
-
-    .register-button {
-        color: #10b981;
-        font-weight: 500;
-        cursor: pointer;
-    }
-
-    .register-button:hover {
-        text-decoration: underline;
-    }
-
-    /* Carousel and Filters */
-    .event-filters {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .filter-button {
-        padding: 6px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background-color: #fff;
-        cursor: pointer;
-        font-size: 0.875rem;
-    }
-
-    .filter-button.active {
-        background-color: #10b981;
-        color: #fff;
-        border-color: #10b981;
-    }
-
-    .events-carousel-container {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .events-carousel {
-        display: flex;
-        transition: transform 0.5s ease;
-    }
-
-    .carousel-slide {
-        display: flex;
-        gap: 20px;
-        min-width: 100%;
-    }
-
-    .featured-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background-color: #ef4444;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-    }
-
-    /* Past Events Highlight */
-    .past-events-highlight {
-        margin-top: 40px;
-        text-align: center;
-    }
-
-    .highlight-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #1f2937;
-        margin-bottom: 15px;
-    }
-
-    .highlight-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .highlight-image img {
-        border-radius: 8px;
-    }
-
-    .highlight-text {
-        max-width: 400px;
-    }
-
-    .highlight-link {
-        color: #10b981;
-        font-weight: 500;
-        text-decoration: none;
-    }
-
-    .highlight-link:hover {
-        text-decoration: underline;
-    }
-
-    /* View All Events */
-    .view-all-events {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .view-all-button {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 16px;
-        background-color: #10b981;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: 500;
-    }
-
-    .view-all-button:hover {
-        background-color: #059669;
-    }
-
-    .view-all-button span {
-        margin-left: 5px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .events-wrapper {
-            flex-direction: column;
-        }
-
-        .events-row {
-            flex-direction: column;
-        }
-
-        .event-card {
-            width: 100%;
-            max-width: 300px;
-            margin: 10px auto;
-        }
-
-        .highlight-content {
-            flex-direction: column;
-        }
-    }
-</style>
-
-<!-- Tabs Section -->
-<section id="tabs" class="tabs-section">
-<div class="tabs-container">
-    <div class="tabs-nav">
-        <button class="tab-button active" data-tab="surgical-oncology">Surgical Oncology</button>
-        <button class="tab-button" data-tab="medical-oncology">Medical Oncology</button>
-        <button class="tab-button" data-tab="radiation-oncology">Radiation Oncology</button>
-        <button class="tab-button" data-tab="pediatric-oncology">Pediatric Oncology</button>
-    </div>
-</div>
-</section>
-
-<!-- Surgical Oncology Section -->
-<section id="surgical-oncology" class="tab-content active surgical-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Surgical Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Surgical Oncology is a medical subspecialty that focuses on the diagnosis, staging, and treatment of cancer through surgery. It is often used in conjunction with other therapies/treatments for cancer. It focuses on the surgical management of tumors or other complications that arise in cancer treatment. A Surgical Oncologist (aka Onco surgeon) is a medical doctor who specializes in diagnosis and treatment of cancer through surgery.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Role of Surgery in Cancer Care</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>Diagnosis</h3>
-            <p>To confirm a diagnosis of cancer, usually through taking a sample of tissue</p>
-        </div>
-        <div class="role-card">
-            <h3>Staging</h3>
-            <p>To determine the stage of disease (extent of cancer spread) usually via minimally invasive procedures</p>
-        </div>
-        <div class="role-card">
-            <h3>Curative</h3>
-            <p>To achieve cure by completely removing the diseased part of the body that is affected by cancer</p>
-        </div>
-        <div class="role-card">
-            <h3>Palliative</h3>
-            <p>To relieve symptoms caused by the cancer for example obstruction, bleeding, pain</p>
-        </div>
-        <div class="role-card">
-            <h3>Reconstructive</h3>
-            <p>To restore function and repair the damage done by cancer in the body</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Myths Section for Surgical Oncology -->
-<section id="surgical-myths" class="tab-content active myths-section">
-<div class="myths-container">
-    <h2 class="section-title">Myths about Cancer Surgery</h2>
-    <div class="myths-list">
-        <div class="myth-item">
-            <h3><span>1</span> Biopsies hasten the spread of cancer and must always be avoided</h3>
-            <p>This is false. Modern biopsy techniques are designed to minimize any risk of cancer spread. Biopsies are essential diagnostic tools that help determine the appropriate treatment plan.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>2</span> Cancer cannot be cured by surgery</h3>
-            <p>This is a misconception. For many early-stage cancers, surgery can be curative, especially when the cancer is localized and has not spread to other parts of the body.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>3</span> There is no role of surgery in management of early stages of cancer</h3>
-            <p>On the contrary, surgery often plays a critical role in early-stage cancer treatment, offering the best chance for complete removal of the cancer before it spreads.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>4</span> There is no difference between general surgery and cancer surgery</h3>
-            <p>Surgical oncologists receive specialized training in cancer biology, multidisciplinary treatment approaches, and advanced surgical techniques specific to cancer treatment.</p>
-        </div>
-        <div class="myth-item">
-            <h3><span>5</span> Cancer surgery always results in disability and disfigurement</h3>
-            <p>Modern surgical techniques, including minimally invasive approaches and reconstructive procedures, aim to preserve function and appearance while effectively treating the cancer.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Testimonials Section for Surgical Oncology -->
-<section id="surgical-testimonials" class="tab-content active testimonials-section">
-<div class="testimonials-container">
-    <h2 class="section-title">Patient Testimonials</h2>
-    <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem; color: var(--text-light);">Hope after cancer surgery - stories from our patients</p>
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">After my breast cancer diagnosis, I was terrified of surgery. Dr. Namuli explained everything clearly and performed a procedure that not only removed the cancer but preserved my appearance. Two years later, I'm cancer-free and living life to the fullest.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7825.webp" alt="Sarah K." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Sarah K.</h4>
-                        <p>Breast Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">I was diagnosed with colorectal cancer at stage 2. The surgical team at HOSU performed a minimally invasive procedure that removed the tumor completely. My recovery was faster than expected, and I was able to return to work within weeks.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7900.webp" alt="Robert M." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Robert M.</h4>
-                        <p>Colorectal Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial-card">
-            <div class="testimonial-content">
-                <p class="testimonial-text">When I was diagnosed with thyroid cancer, I worried about the scar on my neck. The surgical oncologist used an advanced technique that left minimal scarring. The care I received was exceptional, and I'm grateful for the team's expertise.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-author-image">
-                        <img src="img/IMG_7958.webp" alt="Grace T." loading="lazy">
-                    </div>
-                    <div class="testimonial-author-info">
-                        <h4>Grace T.</h4>
-                        <p>Thyroid Cancer Survivor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Medical Oncology Section -->
-<section id="medical-oncology" class="tab-content medical-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Medical Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Medical Oncology is a specialty that focuses on treating cancer with medicines such as chemotherapy, targeted therapy, immunotherapy, and hormonal therapy. Medical oncologists are physicians who specialize in the diagnosis and treatment of cancer using these systemic treatments. They work closely with other specialists to develop comprehensive treatment plans tailored to each patient's specific cancer type and stage.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Types of Medical Oncology Treatments</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>Chemotherapy</h3>
-            <p>Powerful drugs that kill rapidly dividing cells throughout the body, including cancer cells</p>
-        </div>
-        <div class="role-card">
-            <h3>Immunotherapy</h3>
-            <p>Treatments that boost the body's natural defenses to fight cancer by helping the immune system recognize and attack cancer cells</p>
-        </div>
-        <div class="role-card">
-            <h3>Targeted Therapy</h3>
-            <p>Drugs that target specific genes, proteins, or the tissue environment that contributes to cancer growth and survival</p>
-        </div>
-        <div class="role-card">
-            <h3>Hormone Therapy</h3>
-            <p>Treatments that block or lower the amount of hormones in the body to slow or stop the growth of hormone-sensitive tumors</p>
-        </div>
-        <div class="role-card">
-            <h3>Precision Medicine</h3>
-            <p>Tailoring treatment based on genetic understanding of a person's disease to optimize effectiveness and minimize side effects</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Radiation Oncology Section -->
-<section id="radiation-oncology" class="tab-content radiation-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Radiation Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Radiation Oncology is a medical specialty that uses high-energy radiation to treat cancer. Radiation oncologists employ precise techniques to target and destroy cancer cells while sparing healthy tissue. This treatment can be used alone or in combination with surgery and medical oncology to improve outcomes for patients with various types of cancer.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Types of Radiation Therapy</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>External Beam Radiation</h3>
-            <p>Delivers radiation from a machine outside the body, targeting the tumor with high precision</p>
-        </div>
-        <div class="role-card">
-            <h3>Brachytherapy</h3>
-            <p>Involves placing radioactive sources inside or near the tumor to deliver a high dose of radiation directly</p>
-        </div>
-        <div class="role-card">
-            <h3>Stereotactic Radiosurgery</h3>
-            <p>High-dose radiation delivered in a single or few sessions to treat small tumors with extreme precision</p>
-        </div>
-        <div class="role-card">
-            <h3>Proton Therapy</h3>
-            <p>Uses protons instead of X-rays to deliver radiation, allowing for precise targeting with less damage to surrounding tissues</p>
-        </div>
-        <div class="role-card">
-            <h3>Image-Guided Radiation Therapy</h3>
-            <p>Uses imaging during treatment to improve the precision and accuracy of radiation delivery</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<!-- Pediatric Oncology Section -->
-<section id="pediatric-oncology" class="tab-content pediatric-oncology-section">
-<div class="surgical-oncology-container">
-    <h2 class="section-title">Pediatric Oncology</h2>
-    <div class="surgical-oncology-intro">
-        <p>Pediatric Oncology focuses on the diagnosis and treatment of cancers in children and adolescents. Pediatric oncologists specialize in managing cancers such as leukemia, brain tumors, and sarcomas, using a combination of surgery, chemotherapy, radiation, and other therapies tailored to young patients to maximize outcomes and minimize long-term effects.</p>
-    </div>
-    
-    <h3 class="text-secondary text-center" style="margin-bottom: 1.5rem;">Key Aspects of Pediatric Oncology</h3>
-    <div class="role-cards">
-        <div class="role-card">
-            <h3>Leukemia Treatment</h3>
-            <p>Uses chemotherapy and sometimes stem cell transplants to treat cancers of the blood and bone marrow</p>
-        </div>
-        <div class="role-card">
-            <h3>Brain Tumor Management</h3>
-            <p>Combines surgery, radiation, and chemotherapy to address tumors in the brain and spinal cord</p>
-        </div>
-        <div class="role-card">
-            <h3>Sarcoma Care</h3>
-            <p>Focuses on treating cancers of the bone and soft tissues with a multidisciplinary approach</p>
-        </div>
-        <div class="role-card">
-            <h3>Supportive Care</h3>
-            <p>Provides psychological and social support to children and families to improve quality of life during treatment</p>
-        </div>
-        <div class="role-card">
-            <h3>Long-Term Follow-Up</h3>
-            <p>Monitors survivors for late effects of treatment to ensure healthy development into adulthood</p>
-        </div>
-    </div>
-</div>
-</section>
 
 <!-- CTA Section -->
 <section class="cta-section">
@@ -3066,199 +2792,997 @@ footer::before {
         <h2 class="section-title">Make a Difference</h2>
         <p>Join us in our mission to transform cancer care in Uganda through research, education, and advocacy.</p>
         <div class="cta-buttons">
-            <button id="donate-button" class="cta-button">Support Us</button>
-        </div>
-    </div>
-</div>
-
-<!-- Donation Overlay -->
-<div id="donation-overlay" class="overlay">
-    <div class="overlay-content">
-        <button id="close-overlay" class="close-button">×</button>
-        <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy">
-        </div>
-        <h2>Support HOSU's Mission</h2>
-        <p>Your donation helps transform cancer care in Uganda.</p>
-        <div class="donation-form">
-            <label for="donation-amount">Donation Amount (UGX)</label>
-            <input type="number" id="donation-amount" placeholder="Enter amount" min="1000" step="1000">
-            <div class="donation-options">
-                <button class="amount-option" data-amount="5000">5,000</button>
-                <button class="amount-option" data-amount="10000">10,000</button>
-                <button class="amount-option" data-amount="25000">25,000</button>
-                <button class="amount-option" data-amount="50000">50,000</button>
+            <div class="donate-trigger-wrap">
+                <button class="cta-button donate-trigger">Support Us</button>
+                <div class="donate-float-popup" id="cta-donate-popup"></div>
             </div>
-            <label for="donor-name">Your Name (Optional)</label>
-            <input type="text" id="donor-name" placeholder="Enter your name">
-            <label for="donor-email">Your Email (Optional)</label>
-            <input type="email" id="donor-email" placeholder="Enter your email">
-            <button id="submit-donation" class="submit-button">Donate Now</button>
         </div>
     </div>
 </div>
 </section>
 
 <style>
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.overlay-content {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    max-width: 500px;
-    width: 90%;
+/* Floating Donate Popup */
+.donate-trigger-wrap {
     position: relative;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-family: Arial, sans-serif;
+    display: inline-block;
+    z-index: 9999;
 }
-
-.logo {
-    margin-bottom: 1rem;
+.donate-trigger-wrap--fixed {
+    position: relative;
 }
-
-.logo img {
-    max-width: 150px;
-    height: auto;
-}
-
-.close-button {
+.donate-float-popup {
+    display: none;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #e74c3c;
-}
-
-.close-button:hover {
-    color: #c0392b;
-}
-
-.donation-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.donation-form label {
-    font-weight: bold;
-    color: #2c3e50;
+    z-index: 99999;
+    width: 320px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.99);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(200, 200, 200, 0.4);
+    border-radius: 12px;
+    padding: 1rem 1rem 0.8rem;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: donatePopUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     text-align: left;
 }
-
-.donation-form input {
-    padding: 0.75rem;
-    border: 2px solid #3498db;
-    border-radius: 5px;
-    font-size: 1rem;
-    outline: none;
+/* Position classes for smart positioning */
+.donate-float-popup.pos-top {
+    bottom: calc(100% + 12px);
+    right: 0;
 }
-
-.donation-form input:focus {
-    border-color: #2980b9;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+.donate-float-popup.pos-top::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    right: 24px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-right: 1px solid rgba(255, 255, 255, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
 }
-
-.donation-options {
+.donate-float-popup.pos-bottom {
+    top: calc(100% + 12px);
+    bottom: auto;
+    right: 0;
+}
+.donate-float-popup.pos-bottom::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 24px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+}
+.donate-float-popup.pos-left {
+    right: calc(100% + 12px);
+    bottom: 0;
+    top: auto;
+}
+.donate-float-popup.pos-left::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    bottom: 20px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-right: 1px solid rgba(255, 255, 255, 0.55);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+}
+.donate-float-popup.active {
+    display: block;
+}
+/* Legacy arrow - hidden */
+.donate-float-popup::after {
+    display: none;
+}
+.donate-float-popup .dfp-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 22px;
+    height: 22px;
     display: flex;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.08);
+    border: none;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+.donate-float-popup .dfp-close:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+/* Modal header with underline */
+.donate-float-popup .dfp-modal-header {
+    text-align: center;
+    margin-bottom: 0.15rem;
+}
+.donate-float-popup .dfp-modal-header h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0;
+}
+.donate-float-popup .dfp-modal-header h3::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    margin: 0.2rem auto 0;
+}
+.donate-float-popup h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 0.15rem;
+    padding-right: 1.8rem;
+}
+.donate-float-popup .dfp-subtitle {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    margin-bottom: 0.35rem;
+    text-align: center;
+}
+/* Form grid - 2 columns for compact layout */
+.donate-float-popup .dfp-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.2rem 0.35rem;
+    margin-bottom: 0.2rem;
+}
+.donate-float-popup .dfp-fg-full {
+    grid-column: 1 / -1;
+}
+.donate-float-popup .dfp-invalid-phone {
+    font-size: 0.62rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 0;
+}
+.donate-float-popup .dfp-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.1rem;
+    display: block;
+}
+.donate-float-popup .dfp-input {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: rgba(255,255,255,0.9);
+    box-sizing: border-box;
+}
+.donate-float-popup .dfp-input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(13,69,147,0.08);
+}
+.donate-float-popup .dfp-amounts {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    margin: 0.15rem 0 0.3rem;
+}
+.donate-float-popup .dfp-amt {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--gray-300);
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: all 0.2s;
+    font-family: inherit;
+}
+.donate-float-popup .dfp-amt:hover,
+.donate-float-popup .dfp-amt.selected {
+    background: var(--secondary-color);
+    color: var(--white);
+    border-color: var(--secondary-color);
+}
+/* Payment divider */
+.donate-float-popup .dfp-pay-divider {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0.25rem 0 0.2rem;
+    text-align: center;
+}
+/* Payment chips */
+.donate-float-popup .dfp-pay-chips {
+    display: flex;
+    gap: 0.2rem;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 0.2rem;
 }
-
-.amount-option {
-    padding: 0.5rem 1rem;
-    border: 2px solid #3498db;
-    background: #ecf0f1;
-    border-radius: 5px;
+.donate-float-popup .dfp-pay-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--gray-300);
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: all 0.2s;
+    font-family: inherit;
 }
-
-.amount-option:hover {
-    background: #3498db;
-    color: #fff;
+.donate-float-popup .dfp-pay-chip i {
+    font-size: 0.65rem;
+    color: var(--primary-color);
 }
-
-.submit-button {
-    padding: 0.75rem;
-    background: #3498db;
-    color: #fff;
-    border: none;
+.donate-float-popup .dfp-pay-chip:hover {
+    border-color: var(--secondary-color);
+    background: rgba(13,69,147,0.04);
+}
+.donate-float-popup .dfp-pay-chip.selected {
+    border-color: var(--primary-color);
+    background: rgba(230,57,70,0.08);
+    color: var(--primary-color);
+}
+.donate-float-popup .dfp-pay-chip .dfp-chip-img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+.donate-float-popup .dfp-mtn-chip {
+    border-color: #ffcc00;
+    background: rgba(255,204,0,0.06);
+}
+.donate-float-popup .dfp-mtn-chip.selected {
+    background: rgba(255,204,0,0.16);
+    border-color: #ffcc00;
+}
+.donate-float-popup .dfp-airtel-chip {
+    border-color: #e40000;
+    background: rgba(228,0,0,0.03);
+}
+.donate-float-popup .dfp-airtel-chip.selected {
+    background: rgba(228,0,0,0.1);
+    border-color: #e40000;
+}
+/* Bank info */
+.donate-float-popup .dfp-bank-info {
+    background: rgba(13,69,147,0.06);
+    border: 1px solid rgba(13,69,147,0.15);
     border-radius: 5px;
-    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+    margin: 0.2rem 0;
+    font-size: 0.6rem;
+    color: var(--text-color);
+}
+.donate-float-popup .dfp-bank-info p {
+    margin: 0.05rem 0;
+}
+.donate-float-popup .dfp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    margin-bottom: 0.3rem;
+}
+.donate-float-popup .dfp-field {
+    margin-bottom: 0.15rem;
+}
+.donate-float-popup .dfp-submit {
+    width: 100%;
+    padding: 0.4rem 0;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all 0.2s;
+    margin-top: 0.2rem;
+    font-family: inherit;
+}
+.donate-float-popup .dfp-submit:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+.donate-float-popup .dfp-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+@keyframes donatePopUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* Scrollbar */
+.donate-float-popup::-webkit-scrollbar {
+    width: 4px;
+}
+.donate-float-popup::-webkit-scrollbar-thumb {
+    background: rgba(13,69,147,0.12);
+    border-radius: 4px;
 }
 
-.submit-button:hover {
-    background: #2980b9;
+/* Login Floating Popup */
+.login-trigger-wrap {
+    position: relative;
+    display: inline-block;
 }
-
-.cta-button {
-    padding: 0.75rem 1.5rem;
-    background: #3498db;
-    color: #fff;
+.login-float-popup {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    z-index: 1001;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    padding: 1.2rem 1.3rem 1.1rem;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.14),
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: loginPopUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: left;
+}
+.login-float-popup.active {
+    display: block;
+}
+/* Arrow pointing up */
+.login-float-popup::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 24px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.78);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+}
+.login-float-popup .lfp-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.06);
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+.login-float-popup .lfp-close:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+.login-float-popup h3 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 0.15rem;
+    padding-right: 1.8rem;
+}
+.login-float-popup .lfp-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 0.7rem;
+}
+.login-float-popup .lfp-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+.login-float-popup .lfp-input {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: rgba(255,255,255,0.6);
+    box-sizing: border-box;
+}
+.login-float-popup .lfp-input:focus {
+    border-color: var(--secondary-color);
+}
+.login-float-popup .lfp-field {
+    margin-bottom: 0.5rem;
+}
+.login-float-popup .lfp-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+    font-size: 0.72rem;
+}
+.login-float-popup .lfp-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-light);
+    cursor: pointer;
+}
+.login-float-popup .lfp-options label input {
+    accent-color: var(--secondary-color);
+}
+.login-float-popup .lfp-options a {
+    color: var(--secondary-color);
     text-decoration: none;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: 500;
 }
-
-.cta-button:hover {
-    background: #2980b9;
+.login-float-popup .lfp-options a:hover {
+    text-decoration: underline;
+}
+.login-float-popup .lfp-submit {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+.login-float-popup .lfp-submit:hover {
+    background: var(--secondary-dark);
+    transform: translateY(-1px);
+}
+.login-float-popup .lfp-footer {
+    text-align: center;
+    margin-top: 0.6rem;
+    font-size: 0.72rem;
+    color: var(--text-light);
+}
+.login-float-popup .lfp-footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+.login-float-popup .lfp-footer a:hover {
+    text-decoration: underline;
+}
+@keyframes loginPopUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 </style>
 
 <script>
-document.getElementById('donate-button').addEventListener('click', () => {
-    document.getElementById('donation-overlay').style.display = 'flex';
-});
+// Donate floating popup - matching membership application design
+const donatePopupHTML = `
+    <button class="dfp-close" onclick="closeDonatePopups()">&times;</button>
+    <div class="dfp-modal-header"><h3>Support HOSU</h3></div>
+    <p class="dfp-subtitle">Your donation transforms cancer care in Uganda.</p>
+    <div class="dfp-form-grid">
+        <div class="dfp-field dfp-fg-full">
+            <label class="dfp-label">Full Name</label>
+            <input type="text" class="dfp-input dfp-name" placeholder="Your full name" required>
+        </div>
+        <div class="dfp-field">
+            <label class="dfp-label">Phone Number</label>
+            <input type="tel" class="dfp-input dfp-phone" placeholder="0772123456" maxlength="10" required>
+        </div>
+        <div class="dfp-field">
+            <label class="dfp-label">Email</label>
+            <input type="email" class="dfp-input dfp-email" placeholder="Your email">
+        </div>
+        <div class="dfp-invalid-phone dfp-fg-full" style="display:none">Invalid phone number.</div>
+    </div>
+    <div class="dfp-field">
+        <label class="dfp-label">Amount (UGX)</label>
+        <input type="number" class="dfp-input dfp-amount" placeholder="Enter amount" min="1000">
+    </div>
+    <div class="dfp-amounts">
+        <button type="button" class="dfp-amt" data-amt="5000">5,000</button>
+        <button type="button" class="dfp-amt" data-amt="10000">10,000</button>
+        <button type="button" class="dfp-amt" data-amt="25000">25,000</button>
+        <button type="button" class="dfp-amt" data-amt="50000">50,000</button>
+    </div>
+    <div class="dfp-pay-divider">Payment Method</div>
+    <div class="dfp-pay-chips">
+        <button type="button" class="dfp-pay-chip" data-method="bank">
+            <i class="fas fa-university"></i> Bank
+        </button>
+        <button type="button" class="dfp-pay-chip" data-method="banktobank">
+            <i class="fas fa-exchange-alt"></i> Bank to Bank
+        </button>
+        <button type="button" class="dfp-pay-chip" data-method="visa">
+            <i class="fab fa-cc-visa"></i> Visa
+        </button>
+        <button type="button" class="dfp-pay-chip dfp-mtn-chip" data-method="mtn">
+            <img src="img/mtn.png" alt="MTN" class="dfp-chip-img"> MTN
+        </button>
+        <button type="button" class="dfp-pay-chip dfp-airtel-chip" data-method="airtel">
+            <img src="img/airtel.png" alt="Airtel" class="dfp-chip-img"> Airtel
+        </button>
+    </div>
+    <div class="dfp-bank-info" style="display:none">
+        <p><strong>Account:</strong> HOSU Limited</p>
+        <p><strong>No:</strong> 9030025235214</p>
+        <p><strong>Bank:</strong> Stanbic Bank, Mulago</p>
+    </div>
+    <button class="dfp-submit" disabled>Process Payment</button>
+`;
 
-document.getElementById('close-overlay').addEventListener('click', () => {
-    document.getElementById('donation-overlay').style.display = 'none';
-});
+var _dfpSelectedMethod = null;
 
-document.querySelectorAll('.amount-option').forEach(button => {
-    button.addEventListener('click', () => {
-        document.getElementById('donation-amount').value = button.getAttribute('data-amount');
+// Smart positioning function based on viewport
+function positionDonatePopup(popup) {
+    // Remove existing position classes
+    popup.classList.remove('pos-top', 'pos-bottom', 'pos-left');
+    
+    var btn = popup.closest('.donate-trigger-wrap');
+    if (!btn) btn = popup.parentElement;
+    var btnRect = btn.getBoundingClientRect();
+    var viewportHeight = window.innerHeight;
+    var viewportWidth = window.innerWidth;
+    var popupHeight = 420;
+    var popupWidth = 320;
+    
+    var spaceAbove = btnRect.top;
+    var spaceBelow = viewportHeight - btnRect.bottom;
+    var spaceLeft = btnRect.left;
+    
+    // Determine best position
+    if (spaceAbove >= popupHeight + 20) {
+        popup.classList.add('pos-top');
+    } else if (spaceBelow >= popupHeight + 20) {
+        popup.classList.add('pos-bottom');
+    } else if (spaceLeft >= popupWidth + 20) {
+        popup.classList.add('pos-left');
+    } else if (spaceBelow >= spaceAbove) {
+        popup.classList.add('pos-bottom');
+    } else {
+        popup.classList.add('pos-top');
+    }
+}
+
+function openDonatePopup(popup) {
+    // Close ALL other popups first
+    closeDonatePopups();
+    closeAllFloatPopups();
+    closeLoginPopup();
+    // Also close floating popup from donate-float.js
+    if (typeof window._dfpClose === 'function') window._dfpClose();
+    _dfpSelectedMethod = null;
+
+    popup.innerHTML = donatePopupHTML;
+    
+    // Position popup before showing
+    positionDonatePopup(popup);
+    popup.classList.add('active');
+    
+    // Scroll to top to show header
+    popup.scrollTop = 0;
+
+    // Wire up amount buttons inside this popup
+    popup.querySelectorAll('.dfp-amt').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            popup.querySelectorAll('.dfp-amt').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            popup.querySelector('.dfp-amount').value = btn.getAttribute('data-amt');
+            validateDonateForm(popup);
+        });
+    });
+
+    // Wire up payment method chips
+    popup.querySelectorAll('.dfp-pay-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+            popup.querySelectorAll('.dfp-pay-chip').forEach(function(c) { c.classList.remove('selected'); });
+            chip.classList.add('selected');
+            _dfpSelectedMethod = chip.getAttribute('data-method');
+            var bankInfo = popup.querySelector('.dfp-bank-info');
+            if (bankInfo) {
+                bankInfo.style.display = (_dfpSelectedMethod === 'bank' || _dfpSelectedMethod === 'banktobank') ? 'block' : 'none';
+            }
+            validateDonateForm(popup);
+        });
+    });
+
+    // Wire up real-time validation
+    ['dfp-name', 'dfp-phone', 'dfp-amount', 'dfp-email'].forEach(function(cls) {
+        var el = popup.querySelector('.' + cls);
+        if (el) el.addEventListener('input', function() { validateDonateForm(popup); });
+    });
+
+    // Wire up submit button
+    var submitBtn = popup.querySelector('.dfp-submit');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function() { submitFloatDonate(popup); });
+    }
+
+    // Stop clicks inside popup from bubbling
+    popup.addEventListener('click', function(e) { e.stopPropagation(); });
+
+    // Auto-scroll so popup is visible
+    setTimeout(function() {
+        popup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+}
+
+function validateDonateForm(popup) {
+    var name = popup.querySelector('.dfp-name');
+    var phone = popup.querySelector('.dfp-phone');
+    var amount = popup.querySelector('.dfp-amount');
+    var phoneErr = popup.querySelector('.dfp-invalid-phone');
+    var submitBtn = popup.querySelector('.dfp-submit');
+
+    var nameOk = name && name.value.trim().length > 0;
+    var phoneVal = phone ? phone.value.trim().replace(/\D/g, '') : '';
+    var phoneOk = phoneVal.length === 10;
+    var amountOk = amount && amount.value && Number(amount.value) >= 1000;
+    var methodOk = !!_dfpSelectedMethod;
+
+    // Show/hide phone error
+    if (phoneErr) {
+        phoneErr.style.display = (phone && phone.value.trim().length > 0 && !phoneOk) ? 'block' : 'none';
+    }
+
+    // Enable/disable submit button
+    if (submitBtn) {
+        submitBtn.disabled = !(nameOk && phoneOk && amountOk && methodOk);
+    }
+}
+
+function closeDonatePopups() {
+    document.querySelectorAll('.donate-float-popup.active').forEach(function(p) {
+        p.classList.remove('active');
+    });
+    _dfpSelectedMethod = null;
+}
+
+async function submitFloatDonate(popup) {
+    var name = popup.querySelector('.dfp-name').value.trim();
+    var email = popup.querySelector('.dfp-email').value.trim();
+    var phone = popup.querySelector('.dfp-phone').value.trim().replace(/\D/g, '');
+    var amount = parseInt(popup.querySelector('.dfp-amount').value);
+
+    // Validation
+    if (!name) { alert('Please enter your full name.'); return; }
+    if (phone.length !== 10) { alert('Please enter a valid 10-digit phone number.'); return; }
+    if (!amount || amount < 1000) { alert('Please enter a valid amount (minimum UGX 1,000).'); return; }
+    if (!_dfpSelectedMethod) { alert('Please select a payment method.'); return; }
+
+    // Bank or Bank-to-Bank - show details
+    if (_dfpSelectedMethod === 'bank' || _dfpSelectedMethod === 'banktobank') {
+        alert('Please transfer UGX ' + amount.toLocaleString() + ' to:\n\nAccount: HOSU Limited\nNo: 9030025235214\nBank: Stanbic Bank, Mulago\n\nContact us after transferring to confirm your donation.');
+        closeDonatePopups();
+        return;
+    }
+
+    // Visa - coming soon
+    if (_dfpSelectedMethod === 'visa') {
+        alert('Visa card payments coming soon. Please use MTN or Airtel Mobile Money.');
+        return;
+    }
+
+    // MTN or Airtel - process payment
+    var methodLabel = _dfpSelectedMethod === 'mtn' ? 'MTN Mobile Money' : 'Airtel Money';
+    var submitBtn = popup.querySelector('.dfp-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+
+    try {
+        // Pre-register donation
+        var preFd = new FormData();
+        preFd.append('fullName', name);
+        preFd.append('email', email);
+        preFd.append('phone', phone);
+        preFd.append('profession', 'Donor');
+        preFd.append('institution', '');
+        preFd.append('paymentMethod', methodLabel);
+        preFd.append('paymentType', 'donation');
+        preFd.append('membershipPeriod', '');
+        preFd.append('amount', amount);
+        var txnId = 'DON-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        preFd.append('transactionId', txnId);
+        preFd.append('transactionRef', txnId);
+        
+        var preRes = await fetch('api.php?action=pre_register', { method: 'POST', body: preFd }).then(r => r.json());
+        
+        alert('Payment request sent to ' + methodLabel + '.\n\nPlease check your phone and enter your PIN to complete the payment of UGX ' + amount.toLocaleString() + '.\n\nThank you, ' + name + '!');
+        closeDonatePopups();
+    } catch(e) {
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Process Payment';
+    }
+}
+
+// Wire up all donate triggers
+document.querySelectorAll('.donate-trigger').forEach(function(trigger) {
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var wrap = trigger.closest('.donate-trigger-wrap');
+        var popup = wrap.querySelector('.donate-float-popup');
+        if (popup.classList.contains('active')) {
+            closeDonatePopups();
+        } else {
+            openDonatePopup(popup);
+        }
     });
 });
 
-document.getElementById('submit-donation').addEventListener('click', () => {
-    const amount = document.getElementById('donation-amount').value;
-    const name = document.getElementById('donor-name').value;
-    const email = document.getElementById('donor-email').value;
-    
-    if (amount && amount >= 1000) {
-        alert(`Thank you${name ? ", " + name : ""}! Your donation of UGX ${amount} to HOSU has been submitted.`);
-        document.getElementById('donation-overlay').style.display = 'none';
-        document.getElementById('donation-amount').value = '';
-        document.getElementById('donor-name').value = '';
-        document.getElementById('donor-email').value = '';
-    } else {
-        alert('Please enter a valid donation amount (minimum UGX 1,000).');
+// Close donate popups on outside click
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.donate-trigger-wrap')) {
+        closeDonatePopups();
     }
 });
+
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeDonatePopups();
+        closeLoginPopup();
+        closeAllFloatPopups();
+    }
+});
+</script>
+
+<script>
+// Login floating popup
+(function() {
+    var _loginState = null;
+
+    function renderLoginPopup(popup) {
+        if (_loginState && _loginState.loggedIn) {
+            var u = _loginState.user;
+            var isAdmin = u.role === 'admin';
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<div style="text-align:center;padding-bottom:0.5rem;">'
+                + '<div style="width:42px;height:42px;border-radius:50%;background:var(--secondary-color);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">'
+                + u.username.charAt(0).toUpperCase() + '</div>'
+                + '<div style="font-weight:700;font-size:0.9rem;color:var(--secondary-color);">' + u.username + '</div>'
+                + '<div style="font-size:0.72rem;color:var(--text-light);text-transform:capitalize;">' + u.role + ' Account</div>'
+                + '</div>'
+                + (isAdmin ? '<a href="admin.html" style="display:block;margin:0.75rem 0 0.3rem;width:100%;text-align:center;padding:0.5rem;background:var(--secondary-color);color:#fff;border-radius:6px;font-weight:600;font-size:0.82rem;text-decoration:none;">&#9881; Admin Dashboard</a>' : '')
+                + '<button onclick="doLogout()" style="width:100%;margin-top:0.4rem;padding:0.45rem;background:rgba(230,57,70,0.08);color:var(--primary-color);border:1px solid rgba(230,57,70,0.2);border-radius:6px;font-weight:600;font-size:0.82rem;cursor:pointer;">Sign Out</button>';
+        } else {
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<h3>&#128274; Member Portal</h3>'
+                + '<p style="font-size:0.73rem;color:var(--text-light);margin-bottom:0.75rem;">Sign in to your HOSU account</p>'
+                + '<div id="lfp-error" style="display:none;font-size:0.75rem;color:var(--primary-color);background:rgba(230,57,70,0.07);border-radius:5px;padding:0.35rem 0.6rem;margin-bottom:0.5rem;"></div>'
+                + '<label for="lfp-identity" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Username or Email</label>'
+                + '<input type="text" id="lfp-identity" placeholder="username or email" autocomplete="username" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.5rem;font-family:inherit;">'
+                + '<label for="lfp-pass" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Password</label>'
+                + '<input type="password" id="lfp-pass" placeholder="Enter password" autocomplete="current-password" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+                + '<button id="lfp-submit" onclick="doLogin()" style="width:100%;padding:0.5rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Sign In</button>'
+                + '<div id="lfp-lockout" style="display:none;font-size:0.73rem;color:#92400e;background:#fef3c7;border-radius:6px;padding:0.4rem 0.6rem;margin-top:0.45rem;text-align:center;"></div>'
+                + '<div style="text-align:center;margin-top:0.45rem;"><a href="#" onclick="showResetForm(event)" style="font-size:0.72rem;color:var(--secondary-color);font-weight:600;text-decoration:none;">Forgot Password?</a></div>'
+                + '<div style="text-align:center;margin-top:0.3rem;font-size:0.72rem;color:var(--text-light);">New member? <a href="register.html" style="color:var(--secondary-color);font-weight:600;">Register</a></div>';
+        }
+    }
+
+    window.toggleLoginPopup = function(e) {
+        e.preventDefault();
+        var popup = document.getElementById('loginPopup');
+        var isActive = popup.classList.contains('active');
+        if (isActive) { popup.classList.remove('active'); return; }
+        if (typeof closeDonatePopups === 'function') closeDonatePopups();
+        if (typeof closeAllFloatPopups === 'function') closeAllFloatPopups();
+        renderLoginPopup(popup);
+        popup.classList.add('active');
+        fetch('auth.php?action=check_session', { credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                _loginState = d.logged_in ? { loggedIn: true, user: d.user } : { loggedIn: false };
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    window.closeLoginPopup = function() {
+        var popup = document.getElementById('loginPopup');
+        if (popup) popup.classList.remove('active');
+    };
+
+    window.doLogin = function() {
+        var identity = document.getElementById('lfp-identity').value.trim();
+        var password = document.getElementById('lfp-pass').value;
+        var errEl = document.getElementById('lfp-error');
+        var lockEl = document.getElementById('lfp-lockout');
+        var btn = document.getElementById('lfp-submit');
+        if(lockEl) lockEl.style.display = 'none';
+        if (!identity || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display='block'; return; }
+        btn.textContent = 'Signing in\u2026'; btn.disabled = true;
+        var fd = new FormData();
+        fd.append('action','login'); fd.append('identity',identity); fd.append('password',password);
+        fetch('auth.php', { method:'POST', body:fd, credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.success) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var popup = document.getElementById('loginPopup');
+                    renderLoginPopup(popup);
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
+                } else {
+                    errEl.textContent = d.error || 'Invalid credentials.'; errEl.style.display='block';
+                    btn.textContent = 'Sign In'; btn.disabled = false;
+                    // Show lockout warning
+                    if (d.locked && lockEl) {
+                        var mins = Math.ceil((d.retry_after || 900) / 60);
+                        lockEl.innerHTML = '&#128274; Account locked. Try again in <strong>' + mins + '</strong> minute(s).';
+                        lockEl.style.display = 'block';
+                        btn.disabled = true; btn.textContent = 'Locked';
+                        btn.style.background = '#94a3b8';
+                        setTimeout(function(){ btn.disabled = false; btn.textContent = 'Sign In'; btn.style.background = ''; if(lockEl) lockEl.style.display = 'none'; }, (d.retry_after || 900) * 1000);
+                    } else if (d.attempts_left !== undefined && d.attempts_left <= 2 && lockEl) {
+                        lockEl.innerHTML = '&#9888; ' + d.attempts_left + ' attempt(s) remaining before lockout.';
+                        lockEl.style.display = 'block';
+                    }
+                }
+            }).catch(function() {
+                errEl.textContent = 'Connection error. Please try again.'; errEl.style.display='block';
+                btn.textContent = 'Sign In'; btn.disabled = false;
+            });
+    };
+
+    window.doLogout = function() {
+        fetch('auth.php?action=logout', { credentials:'same-origin' })
+            .then(function() {
+                _loginState = { loggedIn: false };
+                var trigger = document.querySelector('.login-trigger');
+                if (trigger) trigger.textContent = 'Member Portal';
+                var popup = document.getElementById('loginPopup');
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    /* ── PASSWORD RESET FLOW ── */
+    var _resetToken = null;
+    window.showResetForm = function(e) {
+        if(e) e.preventDefault();
+        var popup = document.getElementById('loginPopup');
+        popup.innerHTML =
+            '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+            + '<h3>&#128273; Reset Password</h3>'
+            + '<p style="font-size:0.73rem;color:var(--text-light);margin-bottom:0.65rem;">Enter your admin email or phone number</p>'
+            + '<div id="rst-msg" style="display:none;font-size:0.75rem;border-radius:5px;padding:0.35rem 0.6rem;margin-bottom:0.5rem;"></div>'
+            + '<div id="rst-step1">'
+            + '<label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Email</label>'
+            + '<input type="email" id="rst-email" placeholder="admin@hosu.org" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:0.82rem;margin-bottom:0.4rem;font-family:inherit;">'
+            + '<label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Or Phone Number</label>'
+            + '<input type="tel" id="rst-phone" placeholder="+256..." style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+            + '<button onclick="requestReset()" style="width:100%;padding:0.5rem;background:var(--secondary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Send Reset Code</button>'
+            + '</div>'
+            + '<div id="rst-step2" style="display:none;">'
+            + '<label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">6-Digit Code</label>'
+            + '<input type="text" id="rst-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:0.82rem;margin-bottom:0.4rem;font-family:inherit;text-align:center;letter-spacing:0.3rem;font-weight:700;">'
+            + '<label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">New Password</label>'
+            + '<input type="password" id="rst-newpw" placeholder="Min 8 chars, uppercase+lowercase+number" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid #d1d5db;border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+            + '<button onclick="submitReset()" style="width:100%;padding:0.5rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Reset Password</button>'
+            + '</div>'
+            + '<div style="text-align:center;margin-top:0.6rem;"><a href="#" onclick="backToLogin(event)" style="font-size:0.72rem;color:var(--secondary-color);font-weight:600;text-decoration:none;">&larr; Back to Login</a></div>';
+    };
+
+    window.backToLogin = function(e) {
+        if(e) e.preventDefault();
+        _resetToken = null;
+        var popup = document.getElementById('loginPopup');
+        renderLoginPopup(popup);
+    };
+
+    window.requestReset = function() {
+        var email = document.getElementById('rst-email').value.trim();
+        var phone = document.getElementById('rst-phone').value.trim();
+        var msg = document.getElementById('rst-msg');
+        if(!email && !phone) { msg.textContent = 'Enter email or phone'; msg.style.display='block'; msg.style.background='rgba(230,57,70,0.07)'; msg.style.color='var(--primary-color)'; return; }
+        var fd = new FormData();
+        fd.append('email', email); fd.append('phone', phone);
+        fetch('auth.php?action=request_reset', {method:'POST', body:fd, credentials:'same-origin'})
+            .then(function(r){return r.json();})
+            .then(function(d){
+                msg.style.display = 'block';
+                if(d.success) {
+                    _resetToken = d.token || null;
+                    msg.style.background = '#f0fdf4'; msg.style.color = '#166534';
+                    msg.innerHTML = d.message || 'Reset code sent.';
+                    if(d.dev_code) {
+                        msg.innerHTML += '<br><strong style="font-size:1rem;letter-spacing:0.15rem;">' + d.dev_code + '</strong><br><span style="font-size:0.68rem;color:#92400e;">Dev mode: code shown here. In production sent via email/SMS.</span>';
+                    }
+                    document.getElementById('rst-step1').style.display = 'none';
+                    document.getElementById('rst-step2').style.display = 'block';
+                } else {
+                    msg.style.background = 'rgba(230,57,70,0.07)'; msg.style.color = 'var(--primary-color)';
+                    msg.textContent = d.error || 'Error';
+                }
+            }).catch(function(){ msg.textContent='Network error'; msg.style.display='block'; msg.style.background='rgba(230,57,70,0.07)'; msg.style.color='var(--primary-color)'; });
+    };
+
+    window.submitReset = function() {
+        var code = document.getElementById('rst-code').value.trim();
+        var newpw = document.getElementById('rst-newpw').value;
+        var msg = document.getElementById('rst-msg');
+        if(!code || !newpw) { msg.textContent = 'Enter code and new password'; msg.style.display='block'; msg.style.background='rgba(230,57,70,0.07)'; msg.style.color='var(--primary-color)'; return; }
+        if(!_resetToken) { msg.textContent = 'No reset token. Start over.'; msg.style.display='block'; msg.style.background='rgba(230,57,70,0.07)'; msg.style.color='var(--primary-color)'; return; }
+        var fd = new FormData();
+        fd.append('token', _resetToken); fd.append('code', code); fd.append('new_password', newpw);
+        fetch('auth.php?action=reset_password', {method:'POST', body:fd, credentials:'same-origin'})
+            .then(function(r){return r.json();})
+            .then(function(d){
+                msg.style.display = 'block';
+                if(d.success) {
+                    msg.style.background = '#f0fdf4'; msg.style.color = '#166534';
+                    msg.innerHTML = '&#10003; ' + (d.message || 'Password reset!');
+                    _resetToken = null;
+                    document.getElementById('rst-step2').style.display = 'none';
+                    setTimeout(function(){ backToLogin(); }, 2500);
+                } else {
+                    msg.style.background = 'rgba(230,57,70,0.07)'; msg.style.color = 'var(--primary-color)';
+                    msg.textContent = d.error || 'Error';
+                }
+            }).catch(function(){ msg.textContent='Network error'; msg.style.display='block'; msg.style.background='rgba(230,57,70,0.07)'; msg.style.color='var(--primary-color)'; });
+    };
+
+    document.addEventListener('click', function(e) {
+        var popup = document.getElementById('loginPopup');
+        if (popup && popup.classList.contains('active') && !e.target.closest('.login-trigger-wrap')) {
+            popup.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('auth.php?action=check_session', { credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.logged_in) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
+                }
+            }).catch(function(){});
+    });
+})();
 </script>
 
 <!-- Footer -->
@@ -3284,40 +3808,46 @@ document.getElementById('submit-donation').addEventListener('click', () => {
     </div>
     <div class="footer-section">
         <h4>Stay Connected</h4>
-                <p>Follow us on social media for the latest updates and announcements.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
-                </div>
-
-        <h4>Designed By
-        </h4>
-        <div class="partner-logo">
-            <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy">
+        <p>Follow us on social media for the latest updates and announcements.</p>
+        <div class="social-links">
+            <a href="#" class="social-link" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="footer-section">
+        <h4>Developer</h4>
+        <div class="footer-dev-info">
+            <p class="footer-dev-name">TattuIntel</p>
+            <p class="footer-dev-contact">
+                <a href="tel:+256770495837">+256 770 495837</a>
+            </p>
+            <p class="footer-dev-contact">
+                <a href="mailto:tattuintel@gmail.com">tattuintel@gmail.com</a>
+            </p>
         </div>
     </div>
 </div>
 
 <div class="copyright">
-    <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
+    <p>&copy; 2026 Hematology &amp; Oncology Society of Uganda. All rights reserved.</p>
 </div>
 </footer>
 
@@ -3484,18 +4014,239 @@ if (joinButton) {
     });
 }
 
-// Dynamic background images
-let currentIndex = 0;
-const backgrounds = document.querySelectorAll('.hero-background');
+// Synced hero slideshow: text slides + background images + dots
+// Wrapped in IIFE for dynamic slide support
+var HeroSlideshow = (function() {
+    var heroIndex = 0;
+    var heroSlides = [];
+    var heroBgs = [];
+    var heroDots = [];
+    var heroTimer = null;
 
-function changeBackground() {
-    const nextIndex = (currentIndex + 1) % backgrounds.length;
-    backgrounds[currentIndex].classList.remove('active');
-    backgrounds[nextIndex].classList.add('active');
-    currentIndex = nextIndex;
+    function init() {
+        heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
+        heroBgs = Array.from(document.querySelectorAll('.hero-background'));
+        heroDots = Array.from(document.querySelectorAll('.hero-dot'));
+        heroIndex = 0;
+
+        // Bind dot clicks
+        heroDots.forEach(function(dot, idx) {
+            dot.onclick = function() {
+                showSlide(idx);
+                resetTimer();
+            };
+        });
+
+        startTimer();
+    }
+
+    function showSlide(index) {
+        // Close any open floating popups on slide change
+        document.querySelectorAll('.hero-float-popup.active').forEach(function(p) {
+            p.classList.remove('active');
+        });
+
+        if (heroSlides.length === 0) return;
+        if (index < 0) index = heroSlides.length - 1;
+        if (index >= heroSlides.length) index = 0;
+
+        heroSlides.forEach(function(s) { s.classList.remove('active'); });
+        heroBgs.forEach(function(b) { b.classList.remove('active'); });
+        heroDots.forEach(function(d) { d.classList.remove('active'); });
+
+        heroSlides[index].classList.add('active');
+        // Use exact index matching for backgrounds (1:1 with slides)
+        if (heroBgs[index]) {
+            heroBgs[index].classList.add('active');
+        }
+        if (heroDots[index]) {
+            heroDots[index].classList.add('active');
+        }
+
+        heroIndex = index;
+    }
+
+    function startTimer() {
+        if (heroTimer) clearInterval(heroTimer);
+        heroTimer = setInterval(function() {
+            showSlide((heroIndex + 1) % heroSlides.length);
+        }, 6000);
+    }
+
+    function resetTimer() {
+        startTimer();
+    }
+
+    function stopTimer() {
+        if (heroTimer) clearInterval(heroTimer);
+    }
+
+    function addSlide(slideHtml, bgClass) {
+        var heroContent = document.querySelector('.hero-content');
+        var indicators = document.querySelector('.hero-indicators');
+        var bgContainer = document.querySelector('.hero-image-container');
+        if (!heroContent || !indicators) return;
+
+        // Insert slide before indicators
+        var temp = document.createElement('div');
+        temp.innerHTML = slideHtml;
+        var newSlide = temp.firstChild;
+        heroContent.insertBefore(newSlide, indicators);
+
+        // Add new dot
+        var newDot = document.createElement('span');
+        newDot.className = 'hero-dot';
+        newDot.setAttribute('data-index', heroDots.length);
+        indicators.appendChild(newDot);
+
+        // Add background if container exists
+        if (bgContainer && bgClass) {
+            var newBg = document.createElement('div');
+            newBg.className = 'hero-background ' + bgClass;
+            bgContainer.appendChild(newBg);
+        }
+
+        // Reinitialize
+        init();
+    }
+
+    function getIndex() {
+        return heroIndex;
+    }
+
+    function getTotalSlides() {
+        return heroSlides.length;
+    }
+
+    // Auto-init on load
+    init();
+
+    return {
+        init: init,
+        show: showSlide,
+        reset: resetTimer,
+        stop: stopTimer,
+        addSlide: addSlide,
+        getIndex: getIndex,
+        getTotalSlides: getTotalSlides
+    };
+})();
+
+// Legacy compatibility
+function showHeroSlide(index) { HeroSlideshow.show(index); }
+function resetHeroTimer() { HeroSlideshow.reset(); }
+
+// Hero popup content data
+const heroPopupData = {
+    'surgical-oncology': {
+        title: 'Surgical Oncology',
+        content: `
+            <p>Surgical oncology uses surgery to diagnose, stage, and treat cancer — a critical part of multidisciplinary tumor management.</p>
+            <h4>Key Areas</h4>
+            <ul>
+                <li><strong>Diagnostic</strong> — Biopsies to confirm diagnosis and extent of disease.</li>
+                <li><strong>Curative</strong> — Complete removal of tumors with cancer-free margins.</li>
+                <li><strong>Staging</strong> — Determining how far cancer has spread.</li>
+                <li><strong>Palliative</strong> — Relieving symptoms when a cure is not possible.</li>
+                <li><strong>Reconstructive</strong> — Restoring function after tumor removal.</li>
+            </ul>
+        `
+    },
+    'medical-oncology': {
+        title: 'Medical Oncology',
+        content: `
+            <p>Medical oncology treats cancer with systemic therapies that reach cancer cells throughout the body.</p>
+            <h4>Treatment Modalities</h4>
+            <ul>
+                <li><strong>Chemotherapy</strong> — Cytotoxic drugs given in cycles to kill rapidly dividing cells.</li>
+                <li><strong>Immunotherapy</strong> — Harnesses the immune system to attack cancer cells.</li>
+                <li><strong>Targeted Therapy</strong> — Drugs targeting specific molecular pathways in tumors.</li>
+                <li><strong>Hormone Therapy</strong> — Blocks hormones that fuel certain cancers.</li>
+                <li><strong>Precision Medicine</strong> — Genetic profiling to select optimal treatment.</li>
+            </ul>
+        `
+    },
+    'radiation-oncology': {
+        title: 'Radiation Oncology',
+        content: `
+            <p>Radiation oncology uses high-energy beams to destroy cancer cells while sparing healthy tissue.</p>
+            <h4>Techniques</h4>
+            <ul>
+                <li><strong>External Beam</strong> — Focused beams delivered from outside the body.</li>
+                <li><strong>Brachytherapy</strong> — Radioactive sources placed inside or near the tumor.</li>
+                <li><strong>Stereotactic</strong> — High-dose radiation to small, well-defined tumors.</li>
+                <li><strong>Proton Therapy</strong> — Proton beams that spare surrounding tissue.</li>
+                <li><strong>Image-Guided</strong> — Imaging during treatment for precise targeting.</li>
+            </ul>
+        `
+    },
+    'pediatric-oncology': {
+        title: 'Pediatric Oncology',
+        content: `
+            <p>Pediatric oncology diagnoses and treats cancers in children and adolescents with age-appropriate protocols.</p>
+            <h4>Common Cancers</h4>
+            <ul>
+                <li><strong>Leukemia</strong> — Most common childhood cancer, affecting blood and bone marrow.</li>
+                <li><strong>Brain Tumors</strong> — Including medulloblastoma and gliomas.</li>
+                <li><strong>Sarcomas</strong> — Bone and soft tissue cancers.</li>
+                <li><strong>Lymphomas</strong> — Hodgkin and non-Hodgkin lymphoma.</li>
+            </ul>
+            <h4>Specialized Care</h4>
+            <ul>
+                <li><strong>Supportive Care</strong> — Managing side effects, nutrition, and psychological support.</li>
+                <li><strong>Long-Term Follow-Up</strong> — Monitoring survivors into adulthood.</li>
+            </ul>
+        `
+    }
+};
+
+// Open / Close floating popup near Read More
+function toggleFloatPopup(link, specialty) {
+    const popup = link.querySelector('.hero-float-popup');
+    if (!popup) return;
+
+    // If already open, close it
+    if (popup.classList.contains('active')) {
+        popup.classList.remove('active');
+        resetHeroTimer();
+        return;
+    }
+
+    // Close ALL other popups first
+    closeAllFloatPopups();
+    closeDonatePopups();
+    closeLoginPopup();
+
+    // Fill content
+    const data = heroPopupData[specialty];
+    if (!data) return;
+    popup.innerHTML = '<button class="float-popup-close" onclick="event.stopPropagation(); closeAllFloatPopups();">&times;</button>'
+        + '<h3>' + data.title + '</h3>' + data.content;
+
+    popup.classList.add('active');
+    clearInterval(heroTimer);
+
+    // Auto-scroll so popup is visible
+    setTimeout(function() {
+        popup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
 }
 
-setInterval(changeBackground, 5000);
+function closeAllFloatPopups() {
+    document.querySelectorAll('.hero-float-popup.active').forEach(function(p) {
+        p.classList.remove('active');
+    });
+    resetHeroTimer();
+}
+
+// Close floating popups on click outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.hero-readmore')) {
+        closeAllFloatPopups();
+    }
+});
+
+// Close floating popups on Escape — handled by unified Escape above
 
 // Mobile menu toggle
 const menuToggle = document.querySelector('.menu-toggle');
@@ -3569,59 +4320,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Tab navigation functionality
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
-
-// Function to show tab content
-function showTabContent(tabId) {
-    // Hide all tab content sections
-    tabContents.forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Show sections related to the selected tab
-    const tabSections = document.querySelectorAll(`.tab-content[id^="${tabId}"], .tab-content#${tabId}`);
-    tabSections.forEach(section => {
-        section.classList.add('active');
-    });
-}
-
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to clicked button
-        button.classList.add('active');
-        
-        // Get tab to show
-        const tabToShow = button.getAttribute('data-tab');
-        
-        // Show the tab content
-        showTabContent(tabToShow);
-        
-        // Scroll to the tab section
-        const targetSection = document.getElementById(tabToShow);
-        if (targetSection) {
-            const headerOffset = 120;
-            const elementPosition = targetSection.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Initialize tabs - show the active tab content on page load
-const activeTab = document.querySelector('.tab-button.active');
-if (activeTab) {
-    const initialTabId = activeTab.getAttribute('data-tab');
-    showTabContent(initialTabId);
-}
+// Tab navigation is handled by hero slideshow sync above
 
 // ENHANCED carousel functionality with interactive elements
 // document.addEventListener('DOMContentLoaded', function() {
@@ -4389,7 +5088,176 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-</script>
 
+/* ══════════════════════════════════════════════════════════════════
+   Featured Content - Dynamic Hero Slides
+   ══════════════════════════════════════════════════════════════════ */
+(function() {
+    function loadFeaturedHeroSlides() {
+        fetch('api.php?action=get_home_featured', { credentials: 'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (!data.success || !data.featured) return;
+
+                var heroContent = document.querySelector('.hero-content');
+                var indicators = document.querySelector('.hero-indicators');
+                var bgContainer = document.querySelector('.hero-image-container');
+                if (!heroContent || !indicators) return;
+
+                var slidesAdded = 0;
+
+                // Add featured events as hero slides with their own images
+                if (data.featured.events && data.featured.events.length > 0) {
+                    data.featured.events.forEach(function(ev) {
+                        var slideHtml = createEventSlide(ev);
+                        var imageUrl = ev.image || null;
+                        // Events use their own image, or a default event-themed background
+                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, imageUrl, 'event-bg');
+                        slidesAdded++;
+                    });
+                }
+
+                // Add featured publications as hero slides
+                if (data.featured.publications && data.featured.publications.length > 0) {
+                    data.featured.publications.forEach(function(pub) {
+                        var slideHtml = createPublicationSlide(pub);
+                        // Publications use a default research-themed background
+                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, null, 'publication-bg');
+                        slidesAdded++;
+                    });
+                }
+
+                // Add featured grants as hero slides
+                if (data.featured.grants && data.featured.grants.length > 0) {
+                    data.featured.grants.forEach(function(grant) {
+                        var slideHtml = createGrantSlide(grant);
+                        // Grants use a default funding-themed background
+                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, null, 'grant-bg');
+                        slidesAdded++;
+                    });
+                }
+
+                // Reinitialize hero slideshow if slides were added
+                if (slidesAdded > 0 && typeof HeroSlideshow !== 'undefined') {
+                    HeroSlideshow.init();
+                }
+            })
+            .catch(function(err) {
+                console.error('Failed to load featured content for hero:', err);
+            });
+    }
+
+    function insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, imageUrl, bgClass) {
+        // Create slide element
+        var temp = document.createElement('div');
+        temp.innerHTML = slideHtml;
+        var newSlide = temp.firstElementChild;
+        
+        // Insert before indicators
+        heroContent.insertBefore(newSlide, indicators);
+
+        // Add new dot indicator
+        var dotCount = indicators.querySelectorAll('.hero-dot').length;
+        var newDot = document.createElement('span');
+        newDot.className = 'hero-dot';
+        newDot.setAttribute('data-index', dotCount);
+        indicators.appendChild(newDot);
+
+        // Add background image if container exists
+        if (bgContainer) {
+            var newBg = document.createElement('div');
+            newBg.className = 'hero-background';
+            if (imageUrl) {
+                // Use the actual event/content image (quote URL for paths with spaces)
+                newBg.style.backgroundImage = "url('" + imageUrl + "')";
+                newBg.style.backgroundSize = 'cover';
+                newBg.style.backgroundPosition = 'center';
+            } else if (bgClass) {
+                newBg.classList.add(bgClass);
+            } else {
+                // Default gradient background for content without images
+                newBg.classList.add('dynamic-bg');
+            }
+            bgContainer.appendChild(newBg);
+        }
+    }
+
+    function escHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function createEventSlide(ev) {
+        var dateDisplay = ev.date || '';
+        var locationDisplay = ev.location || '';
+        var countdownBadge = ev.countdown ? '<span class="featured-status featured-status--soon">' + escHtml(ev.countdown) + '</span>' : '';
+
+        return '<div class="hero-slide featured-hero-slide" data-type="event">' +
+            '<span class="featured-label"><span class="featured-label-icon">📅</span> Featured Event</span>' +
+            '<h1>' + escHtml(ev.title) + '</h1>' +
+            '<div class="featured-meta">' +
+                (dateDisplay ? '<span class="featured-meta-item">🗓 ' + escHtml(dateDisplay) + '</span>' : '') +
+                (locationDisplay ? '<span class="featured-meta-item">📍 ' + escHtml(locationDisplay) + '</span>' : '') +
+            '</div>' +
+            '<p>' + escHtml(ev.description || 'Join us for this exciting event.') + '</p>' +
+            '<div class="featured-cta">' +
+                '<a href="events.html#' + escHtml(ev.id) + '" class="btn btn-primary">View Event Details</a>' +
+                countdownBadge +
+            '</div>' +
+        '</div>';
+    }
+
+    function createPublicationSlide(pub) {
+        var typeIcon = pub.pub_type === 'Conference' ? '🎤' : pub.pub_type === 'Review' ? '📖' : '📄';
+        var typeLabel = pub.pub_type || 'Publication';
+        var linkBtn = pub.link ? 
+            '<a href="' + escHtml(pub.link) + '" target="_blank" rel="noopener" class="btn btn-primary">' + escHtml(pub.link_label || 'Read Publication') + '</a>' : 
+            '<a href="research.html#publications" class="btn btn-primary">View All Publications</a>';
+
+        return '<div class="hero-slide featured-hero-slide" data-type="publication">' +
+            '<span class="featured-label"><span class="featured-label-icon">' + typeIcon + '</span> ' + escHtml(typeLabel) + '</span>' +
+            '<h1>' + escHtml(pub.title) + '</h1>' +
+            '<div class="featured-meta">' +
+                (pub.pub_date ? '<span class="featured-meta-item">📅 ' + escHtml(pub.pub_date) + '</span>' : '') +
+                (pub.authors ? '<span class="featured-meta-item">✍️ ' + escHtml(pub.authors) + '</span>' : '') +
+            '</div>' +
+            '<p>' + escHtml(pub.abstract || 'Read our latest research publication.') + '</p>' +
+            '<div class="featured-cta">' +
+                linkBtn +
+            '</div>' +
+        '</div>';
+    }
+
+    function createGrantSlide(grant) {
+        var statusClass = grant.status === 'open' ? 'featured-status--open' : grant.status === 'closing' ? 'featured-status--soon' : '';
+        var statusLabel = grant.status === 'open' ? 'Applications Open' : grant.status === 'closing' ? 'Closing Soon' : '';
+        var amountDisplay = grant.amount && parseFloat(grant.amount) > 0 ? (grant.currency || 'UGX') + ' ' + Number(grant.amount).toLocaleString() : '';
+
+        return '<div class="hero-slide featured-hero-slide" data-type="grant">' +
+            '<span class="featured-label"><span class="featured-label-icon">💰</span> Grant Opportunity</span>' +
+            '<h1>' + escHtml(grant.title) + '</h1>' +
+            '<div class="featured-meta">' +
+                (amountDisplay ? '<span class="featured-meta-item featured-amount">💵 ' + escHtml(amountDisplay) + '</span>' : '') +
+                (grant.deadline ? '<span class="featured-meta-item">⏰ Deadline: ' + escHtml(grant.deadline) + '</span>' : '') +
+            '</div>' +
+            '<p>' + escHtml(grant.description || 'Explore this funding opportunity.') + '</p>' +
+            '<div class="featured-cta">' +
+                '<a href="research.html#grants" class="btn btn-primary">Learn More</a>' +
+                (statusClass ? '<span class="featured-status ' + statusClass + '">' + statusLabel + '</span>' : '') +
+            '</div>' +
+        '</div>';
+    }
+
+    // Load after HeroSlideshow is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(loadFeaturedHeroSlides, 100);
+        });
+    } else {
+        setTimeout(loadFeaturedHeroSlides, 100);
+    }
+})();
+</script>
+<script src="donate-float.js"></script>
 </body>
 </html>

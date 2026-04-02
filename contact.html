@@ -8,648 +8,554 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="donate-float.css">
     <style>
-        /* Base styles */
         :root {
             --primary-color: #e63946;
+            --primary-light: #f8d7da;
+            --primary-dark: #c81d2a;
             --secondary-color: #0d4593;
-            --text-color: #12294a;
+            --secondary-light: #e6f0ff;
+            --secondary-dark: #072a5e;
+            --text-color: #001848;
+            --text-light: #4a5568;
             --background-light: #f1faee;
-            --background-dark: #1d3557;
             --white: #ffffff;
             --accent-color: #a8dadc;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
             --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
             --navbar-height: 90px;
+            --section-width: 92%;
+            --section-max-width: 1280px;
             --error-color: #dc2626;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.5; color: var(--text-color); background: var(--white); }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-        }
-
-        /* Navbar styles */
-        .navbar {
-            background: rgba(255, 255, 255, 0.521);
-            backdrop-filter: blur(15px);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-            height: var(--navbar-height);
-        }
-
-        .logo img {
-            width: 250px;
-            height: 90px;
-            object-fit: contain;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: var(--transition);
+        /* Hero — full-bleed background matching about page */
+        .page-hero {
+            padding-top: var(--navbar-height);
             position: relative;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-
-        .nav-links a:not(.cta-button)::after {
+        .hero-inner {
+            display: flex;
+            width: var(--section-width);
+            max-width: var(--section-max-width);
+            gap: 3%;
+            align-items: center;
+            min-height: 320px;
+            position: relative;
+            z-index: 5;
+        }
+        .hero-content {
+            width: 50%;
+            margin-left: auto;
+            z-index: 10;
+            position: relative;
+            min-height: 200px;
+            background: rgba(255,255,255,0.55);
+            -webkit-backdrop-filter: blur(16px) saturate(1.3);
+            backdrop-filter: blur(16px) saturate(1.3);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        .hero-image-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .hero-image-container::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: var(--transition);
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0.45) 70%, rgba(255,255,255,0.6) 100%),
+                linear-gradient(to bottom, transparent 80%, var(--white) 100%);
         }
-
-        .nav-links a:not(.cta-button):hover::after {
-            width: 100%;
+        .hero-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: opacity 1s ease, transform 8s ease;
+            opacity: 0; transform: scale(1.05);
         }
-
-        .nav-links .cta-button {
+        .hero-background.active { opacity: 1; transform: scale(1); }
+        .hero-background.bg-1 { background-image: url('img/IMG_7776.jpg'); }
+        .hero-background.bg-2 { background-image: url('img/IMG_7787.jpg'); }
+        .hero-background.bg-3 { background-image: url('img/IMG_7798.jpg'); }
+        .hero-background.bg-4 { background-image: url('img/IMG_7770.jpg'); }
+        .hero-background.bg-5 { background-image: url('img/IMG_8022.jpg'); }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .hero-pills { display: flex; gap: 0.3rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+        .hero-pill { background: rgba(255,255,255,0.85); color: var(--secondary-color); font-size: 0.68rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 12px; border: 1px solid rgba(13,69,147,0.1); display: inline-flex; align-items: center; gap: 0.2rem; }
+        .hero-pill i { font-size: 0.6rem; }
+        .hero-content h1 { font-size: 1.3rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 0.3rem; position: relative; display: inline-block; }
+        .hero-content h1::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 50px; height: 2.5px; background: var(--primary-color); }
+        .hero-content p { font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem; line-height: 1.55; }
+        .hero-stats { display: flex; gap: 1.25rem; margin-top: 0.65rem; background: rgba(255,255,255,0.45); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1.5px solid rgba(13,69,147,0.12); border-radius: 30px; padding: 0.4rem 1.25rem; width: fit-content; }
+        .hero-stat { text-align: center; }
+        .hero-stat-number { font-size: 1.1rem; font-weight: 700; color: var(--secondary-color); display: block; }
+        .hero-stat-label { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; font-weight: 600; }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.65rem;
+            padding: 0.45rem 1.3rem;
             background: var(--primary-color);
             color: var(--white);
-            padding: 0.75rem 1.5rem;
+            font-size: 0.82rem;
+            font-weight: 600;
             border-radius: 30px;
             transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 3px 10px rgba(230,57,70,0.25);
         }
+        .hero-cta i { font-size: 0.75rem; }
+        .hero-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(230,57,70,0.35); }
 
-        .nav-links .cta-button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
+        /* Section Title */
+        .section-title { text-align: center; font-size: 1.1rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 0.3rem; overflow: visible; position: relative; z-index: 1; }
+        .section-title::after { content: ''; display: block; width: 36px; height: 2.5px; background: var(--primary-color); margin: 0.25rem auto 0; border-radius: 2px; }
 
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* Contact Page Specific Styles */
-        .contact-hero {
-            padding-top: calc(var(--navbar-height) + 2rem);
-            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            text-align: center;
-        }
-
-        .contact-hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .contact-hero h1 {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .contact-hero p {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.3s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        .contact-section {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
+        /* Contact Section */
+        .contact-section { padding: 0.8rem 0 0.4rem; background: var(--gray-100); display: flex; justify-content: center; }
+        .contact-container { width: var(--section-width); max-width: var(--section-max-width); }
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+            align-items: stretch;
         }
 
+        /* Form */
         .contact-form {
-            background: var(--background-light);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+            background: var(--white);
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(13,69,147,0.06);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
-
+        .contact-form .form-group:last-of-type {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-form .form-group:last-of-type textarea {
+            flex: 1;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .form-group { margin-bottom: 0.5rem; }
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+            font-size: 0.76rem;
             color: var(--secondary-color);
+            letter-spacing: 0.01em;
         }
-
+        .form-group .input-wrap {
+            position: relative;
+        }
+        .form-group .input-wrap i {
+            position: absolute;
+            left: 0.6rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-300);
+            font-size: 0.72rem;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        .form-group .input-wrap input,
+        .form-group .input-wrap select {
+            padding-left: 2rem;
+        }
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--accent-color);
-            border-radius: 8px;
-            background: var(--white);
+            padding: 0.4rem 0.65rem;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 7px;
+            background: var(--gray-100);
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-color);
             transition: var(--transition);
         }
-
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #a0aec0; }
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--secondary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 2px rgba(13,69,147,0.07);
         }
-
-        .form-group.error input,
-        .form-group.error textarea,
-        .form-group.error select {
-            border-color: var(--error-color);
-        }
-
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .form-group.error .error-message {
-            display: block;
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
+        .form-group .input-wrap:focus-within i { color: var(--secondary-color); }
+        .form-group.error input, .form-group.error textarea, .form-group.error select { border-color: var(--error-color); box-shadow: 0 0 0 2px rgba(220,38,38,0.08); }
+        .error-message { color: var(--error-color); font-size: 0.7rem; margin-top: 0.15rem; display: none; }
+        .form-group.error .error-message { display: block; }
+        .form-group textarea { min-height: 50px; resize: vertical; line-height: 1.5; }
+        .form-label-icon { margin-right: 0.2rem; font-size: 0.65rem; color: var(--primary-color); }
+        .submit-btn-icon { margin-right: 0.3rem; font-size: 0.72rem; }
         .submit-button {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
-            padding: 1rem 2rem;
+            padding: 0.42rem 1rem;
             border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 500;
+            border-radius: 7px;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
+            font-family: inherit;
+            margin-top: 0.1rem;
+            letter-spacing: 0.01em;
+            box-shadow: 0 3px 10px rgba(230,57,70,0.2);
         }
+        .submit-button:hover { background: linear-gradient(135deg, var(--primary-dark), #a01520); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(230,57,70,0.3); }
 
-        .submit-button:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
+        /* Info Cards */
         .contact-info {
+            background: var(--white);
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(13,69,147,0.06);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 0.5rem;
+            justify-content: space-between;
         }
-
         .info-card {
-            background: var(--background-light);
-            padding: 2rem;
-            border-radius: 15px;
+            background: var(--gray-100);
+            padding: 0.6rem 0.75rem;
+            border-radius: 10px;
+            border: 1px solid rgba(13,69,147,0.04);
             transition: var(--transition);
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .info-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .info-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .info-card p,
-        .info-card address {
-            margin-bottom: 0.5rem;
-            font-style: normal;
-        }
-
-        .info-card a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .info-card a:hover {
-            color: var(--secondary-color);
-        }
-
-        .map-section {
-            padding: 4rem 5%;
-            background: var(--background-light);
-        }
-
-        .map-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            height: 400px;
-            border-radius: 15px;
+            position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Footer styles */
-        footer {
-            background: var(--background-dark);
-            color: var(--white);
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-section h4 {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-color);
-        }
-
-        .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
+            gap: 0.6rem;
             align-items: center;
+            flex: 1;
+        }
+        .info-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); border-radius: 0 2px 2px 0; }
+        .info-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .info-icon { width: 30px; height: 30px; min-width: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.78rem; }
+        .info-card-text { flex: 1; }
+        .info-card h3 { color: var(--secondary-color); font-size: 0.78rem; font-weight: 700; margin-bottom: 0.1rem; }
+        .info-card p, .info-card address { font-size: 0.74rem; color: var(--text-light); font-style: normal; line-height: 1.4; margin-bottom: 0; }
+        .info-card a { color: var(--primary-color); font-weight: 500; transition: var(--transition); }
+        .info-card a:hover { color: var(--secondary-color); }
+
+        /* Map — full-width below grid */
+        .map-card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(13,69,147,0.06);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+            height: 140px;
+            margin-top: 0.5rem;
+        }
+        .map-card iframe { width: 100%; height: 100%; border: none; }
+
+        /* Footer */
+        footer {
+            background: var(--gray-100);
+            color: var(--text-color);
+            padding: 0.5rem 0 0.4rem;
+            display: flex;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
+            align-items: center;
+            flex-direction: column;
+            border-top: 1px solid var(--gray-300);
+            margin-top: 0;
         }
+        .footer-content { display: grid; grid-template-columns: 1fr 1.2fr 1.4fr 1fr; gap: 1rem; width: var(--section-width); max-width: var(--section-max-width); }
+        .footer-section h4 { color: var(--secondary-color); font-size: 0.82rem; margin-bottom: 0.5rem; font-weight: 600; position: relative; display: inline-block; }
+        .footer-section h4::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 20px; height: 2px; background: var(--primary-color); border-radius: 2px; }
+        .footer-section ul { list-style: none; }
+        .footer-section li { margin-bottom: 0.3rem; }
+        .footer-section a { color: var(--text-light); transition: var(--transition); display: inline-block; padding: 0.1rem 0; font-size: 0.8rem; }
+        .footer-section a:hover { color: var(--primary-color); transform: translateX(3px); }
+        .footer-section address { font-style: normal; font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+        .footer-section p { font-size: 0.78rem; color: var(--text-light); line-height: 1.4; margin-bottom: 0.25rem; }
+        .social-links { display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--gray-200); transition: var(--transition); color: var(--secondary-color); }
+        .social-links a:hover { background: var(--secondary-color); transform: translateY(-2px); color: var(--white); }
+        .copyright { text-align: center; margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid var(--gray-300); font-size: 0.72rem; color: var(--text-light); width: var(--section-width); max-width: var(--section-max-width); }
+        .footer-dev-name { font-size: 0.8rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.25rem; }
+        .footer-dev-contact { font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.15rem; }
+        .footer-dev-contact:last-child { margin-bottom: 0; }
+        .footer-dev-contact a { color: var(--text-light); }
 
-        .social-links a:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .partner-logo:hover img {
-            transform: scale(1.5);
-            filter: brightness(1.5);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            :root {
-                --navbar-height: 70px;
-            }
-
-            .navbar {
-                padding: 1rem;
-            }
-
-            .logo img {
-                width: 200px;
-                height: 70px;
-            }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                padding: 1rem;
-                box-shadow: var(--shadow);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .contact-hero h1 {
-                font-size: 2rem;
-            }
-
-            .contact-hero p {
-                font-size: 1.1rem;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .map-container {
-                height: 300px;
-            }
+            .page-hero { min-height: 280px; }
+            .hero-inner { flex-direction: column; min-height: 0; padding: 1rem 0; }
+            .hero-content { width: 92%; margin: 0 auto; text-align: center; align-items: center; padding: 1.2rem; background: rgba(255,255,255,0.7); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+            .hero-content h1::after { left: 50%; transform: translateX(-50%); }
+            .hero-image-container { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; }
+            .hero-image-container::after { background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.3) 50%, var(--white) 100%); }
+            .hero-stats { margin: 0.75rem auto 0; }
+            .hero-pills { justify-content: center; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-form { padding: 0.8rem 0.9rem; }
+            .form-row { grid-template-columns: 1fr 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
         }
+
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="navbar-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <div class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
-                <img src="img/hlogo2.png" alt="HOSU Logo" loading="lazy" style="width: 180px; height: 65px; object-fit: contain;">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="img/logo2.png" alt="HOSU - Hematology & Oncology Society of Uganda" loading="eager">
             </div>
-            <div class="nav-links" style="align-items: center; gap: 2rem;">
-                <a href="index.html">Home</a>           
+            <div class="nav-links">
+                <a href="index.html">Home</a>
                 <a href="events.html">Events</a>
-                <a href="research.html">Research</a> 
-                <a href="membership.html">Membership</a>           
+                <a href="research.html">Research</a>
+                <a href="membership.html">Membership</a>
                 <a href="about.html">About</a>
                 <a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a>
-                <a href="login.html" class="cta-button">Member Portal</a>
+                <div class="login-trigger-wrap">
+                    <a href="#" class="cta-button login-trigger" onclick="toggleLoginPopup(event)">Member Portal</a>
+                    <div class="login-float-popup" id="loginPopup"></div>
+                </div>
             </div>
-            <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
+            <div class="menu-toggle" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">☰</div>
         </div>
     </nav>
 
-    <section class="contact-hero">
-        <div class="contact-hero-content">
-            <h1>Contact Us</h1>
-            <p>Have questions? We're here to help. Reach out to our team for support and information.</p>
-        </div>
-    </section>
-
-    <section class="contact-section">
-        <div class="contact-grid">
-            <div class="contact-form">
-                <form id="contactForm" action="https://formspree.io/f/mblojwdd" method="POST" onsubmit="return handleSubmit(event)">
-                    <input type="hidden" name="_to" value="info@hosu.org">
-                    <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required aria-describedby="nameError">
-                        <div id="nameError" class="error-message">Please enter your name</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required aria-describedby="emailError">
-                        <div id="emailError" class="error-message">Please enter a valid email address</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <select id="subject" name="subject" required aria-describedby="subjectError">
-                            <option value="">Select a subject</option>
-                            <option value="Membership Inquiry">Membership Inquiry</option>
-                            <option value="Research Collaboration">Research Collaboration</option>
-                            <option value="Events Information">Events Information</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <div id="subjectError" class="error-message">Please select a subject</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required aria-describedby="messageError"></textarea>
-                        <div id="messageError" class="error-message">Please enter your message</div>
-                    </div>
-                    <button type="submit" class="submit-button">Send Message</button>
-                </form>
+    <!-- Hero — full-bleed background matching about page -->
+    <section class="page-hero">
+        <div class="hero-inner">
+            <div class="hero-image-container">
+                <div class="hero-background bg-1 active"></div>
+                <div class="hero-background bg-2"></div>
+                <div class="hero-background bg-3"></div>
+                <div class="hero-background bg-4"></div>
+                <div class="hero-background bg-5"></div>
             </div>
-            <div class="contact-info">
-                <div class="info-card">
-                    <div class="info-icon">📍</div>
-                    <h3>Visit Us</h3>
-                    <address>
-                        HOSU Headquarters<br>
-                        123 Medical Innovation Way<br>
-                        Global Health City, GH 54321
-                    </address>
+            <div class="hero-content">
+                <div class="hero-pills">
+                    <span class="hero-pill"><i class="fas fa-envelope"></i> Get In Touch</span>
+                    <span class="hero-pill"><i class="fas fa-handshake"></i> Collaborate</span>
+                    <span class="hero-pill"><i class="fas fa-map-marker-alt"></i> Kampala, UG</span>
                 </div>
-                <div class="info-card">
-                    <div class="info-icon">📞</div>
-                    <h3>Call Us</h3>
-                    <p>Main: <a href="tel:+18001234567">+1 (800) 123-4567</a></p>
-                    <p>Support: <a href="tel:+18001234568">+1 (800) 123-4568</a></p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">✉️</div>
-                    <h3>Email Us</h3>
-                    <p>General: <a href="mailto:info@hosu.org">info@hosu.org</a></p>
-                    <p>Support: <a href="mailto:support@hosu.org">support@hosu.org</a></p>
-                </div>
+                <h1>Contact HOSU</h1>
+                <p>Have questions about membership, events, or research collaboration? Our team at the Hematology &amp; Oncology Society of Uganda is ready to assist you.</p>
+                <a href="#contact" class="hero-cta"><i class="fas fa-envelope"></i> Contact Us</a>
             </div>
         </div>
     </section>
 
-    <section class="map-section">
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.991441291371!2d2.2922926159167166!3d48.85837007928754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sEiffel%20Tower!5e0!3m2!1sen!2sus!4v1647891702983!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- Contact Form & Info -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <h2 class="section-title">Send Us a Message</h2>
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form id="contactForm" action="https://formspree.io/f/mblojwdd" method="POST" onsubmit="return handleSubmit(event)">
+                        <input type="hidden" name="_to" value="info@hosu.org">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-user form-label-icon"></i>Name</label>
+                                <div class="input-wrap">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="name" name="name" placeholder="Your full name" required aria-describedby="nameError">
+                                </div>
+                                <div id="nameError" class="error-message">Please enter your name</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope form-label-icon"></i>Email</label>
+                                <div class="input-wrap">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="email" name="email" placeholder="you@example.com" required aria-describedby="emailError">
+                                </div>
+                                <div id="emailError" class="error-message">Please enter a valid email</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject"><i class="fas fa-tag form-label-icon"></i>Subject</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-tag"></i>
+                                <select id="subject" name="subject" required aria-describedby="subjectError">
+                                    <option value="">Select a subject</option>
+                                    <option value="Membership Inquiry">Membership Inquiry</option>
+                                    <option value="Research Collaboration">Research Collaboration</option>
+                                    <option value="Events Information">Events Information</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div id="subjectError" class="error-message">Please select a subject</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-comment-dots form-label-icon"></i>Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us how we can help you..." required aria-describedby="messageError"></textarea>
+                            <div id="messageError" class="error-message">Please enter your message</div>
+                        </div>
+                        <button type="submit" class="submit-button"><i class="fas fa-paper-plane submit-btn-icon"></i>Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-card-text">
+                            <h3>Visit Us</h3>
+                            <address>HOSU Headquarters<br>Mulago Hospital Complex<br>Kampala, Uganda</address>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="info-card-text">
+                            <h3>Call Us</h3>
+                            <p>Office: <a href="tel:+256414541044">+256 (414) 541-044</a></p>
+                            <p>Mobile: <a href="tel:+256700123456">+256 (700) 123-456</a></p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-card-text">
+                            <h3>Email Us</h3>
+                            <p>General: <a href="mailto:info@hosu.org">info@hosu.org</a></p>
+                            <p>Membership: <a href="mailto:membership@hosu.org">membership@hosu.org</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map-card">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.757533529753!2d32.5754!3d0.3476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbc0f883e4b67%3A0x510241e617c83e0!2sMulago%20National%20Referral%20Hospital!5e0!3m2!1sen!2sug!4v1647891702983!5m2!1sen!2sug" allowfullscreen="" loading="lazy" title="Mulago National Referral Hospital location map" referrerpolicy="no-referrer"></iframe>
+            </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="about.html">About HOSU</a></li>
-                    <li><a href="membership.html">Membership Benefits</a></li>
-                    <li><a href="research.html">Research Initiatives</a></li>
-                    <li><a href="leadership.html">Society Leadership</a></li>
+                    <li><a href="membership.html">Membership</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <address>
                     HOSU Headquarters<br>
-                    123 Medical Innovation Way<br>
-                    Global Health City, GH 54321<br>
-                    ☎ <a href="tel:+18001234567">+1 (800) 123-4567</a><br>
-                    ✉ <a href="mailto:info@hosu.org">info@hosu.org</a>
+                    Kampala, Uganda<br>
+                    <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                    <a href="mailto:info@hosu.org">info@hosu.org</a>
                 </address>
             </div>
             <div class="footer-section">
-               <h4>Stay Connected</h4>
-                <p>Follow us on social media for the latest updates and announcements.</p>
+                <h4>Stay Connected</h4>
+                <p>Follow us for updates.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
+                    <a href="#" aria-label="LinkedIn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg></a>
+                    <a href="#" aria-label="Twitter"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a>
                 </div>
-                <h4>Designed By</h4>
-                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                    <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
-                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <p class="footer-dev-name">TattuIntel</p>
+                <p class="footer-dev-contact"><a href="tel:+256770495837">+256 770 495837</a></p>
+                <p class="footer-dev-contact"><a href="mailto:tattuintel@gmail.com">tattuintel@gmail.com</a></p>
             </div>
         </div>
         <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society Union. All rights reserved.</p>
+            <p>&copy; 2026 Hematology &amp; Oncology Society of Uganda. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
-        // Mobile menu toggle
+        // Hero background rotation
+        (function() {
+            var bgs = document.querySelectorAll('.hero-background');
+            if (bgs.length > 1) {
+                var idx = 0;
+                setInterval(function() {
+                    bgs[idx].classList.remove('active');
+                    idx = (idx + 1) % bgs.length;
+                    bgs[idx].classList.add('active');
+                }, 5000);
+            }
+        })();
+
+        // Navbar
+        const navbar = document.querySelector('.navbar');
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navLinks.classList.toggle('active');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.pageYOffset > 50);
         });
-
-        // Close mobile menu when clicking outside
+        menuToggle.addEventListener('click', (e) => { e.stopPropagation(); navLinks.classList.toggle('active'); });
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) {
-                navLinks.classList.remove('active');
-            }
+            if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) navLinks.classList.remove('active');
         });
 
-        // Form submission handler
+        // Form submission
         async function handleSubmit(event) {
             event.preventDefault();
             const form = event.target;
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const subject = document.getElementById('subject');
-            const message = document.getElementById('message');
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const subjectEl = document.getElementById('subject');
+            const messageEl = document.getElementById('message');
             let isValid = true;
 
-            // Reset error states
-            [name, email, subject, message].forEach(field => {
-                field.parentElement.classList.remove('error');
-            });
+            [nameEl, emailEl, subjectEl, messageEl].forEach(f => f.parentElement.classList.remove('error'));
 
-            // Validate name
-            if (!name.value.trim()) {
-                name.parentElement.classList.add('error');
-                isValid = false;
-            }
+            if (!nameEl.value.trim()) { nameEl.parentElement.classList.add('error'); isValid = false; }
+            if (!emailEl.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { emailEl.parentElement.classList.add('error'); isValid = false; }
+            if (!subjectEl.value) { subjectEl.parentElement.classList.add('error'); isValid = false; }
+            if (!messageEl.value.trim()) { messageEl.parentElement.classList.add('error'); isValid = false; }
 
-            // Validate email
-            if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-                email.parentElement.classList.add('error');
-                isValid = false;
-            }
-
-            // Validate subject
-            if (!subject.value) {
-                subject.parentElement.classList.add('error');
-                isValid = false;
-            }
-
-            // Validate message
-            if (!message.value.trim()) {
-                message.parentElement.classList.add('error');
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return false;
-            }
+            if (!isValid) return false;
 
             try {
                 const response = await fetch(form.action, {
@@ -657,40 +563,178 @@
                     body: new FormData(form),
                     headers: { 'Accept': 'application/json' }
                 });
-
                 if (response.ok) {
                     alert('Thank you for your message. We will get back to you soon!');
                     form.reset();
                 } else {
-                    const error = await response.json();
-                    alert(`Error: ${error.message || 'Failed to send message. Please try again later.'}`);
+                    const err = await response.json();
+                    alert('Error: ' + (err.message || 'Failed to send message. Please try again later.'));
                 }
-            } catch (error) {
+            } catch (e) {
                 alert('Error: Failed to send message. Please try again later.');
-                console.error('Fetch error:', error);
             }
-
             return false;
         }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Close mobile menu if open
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
     </script>
+<style>
+.login-trigger-wrap { position: relative; display: inline-block; }
+.login-float-popup {
+    display: none; position: absolute; top: calc(100% + 14px); right: 0; z-index: 1001; width: 300px;
+    background: rgba(255,255,255,0.78); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.55); border-radius: 14px; padding: 1.2rem 1.3rem 1.1rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+    animation: loginPopUp 0.3s cubic-bezier(0.22,1,0.36,1); text-align: left;
+}
+.login-float-popup.active { display: block; }
+.login-float-popup::after {
+    content: ''; position: absolute; top: -7px; right: 24px; width: 14px; height: 14px;
+    background: rgba(255,255,255,0.78); border-top: 1px solid rgba(255,255,255,0.55);
+    border-left: 1px solid rgba(255,255,255,0.55); transform: rotate(45deg);
+    -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+}
+.login-float-popup .lfp-close {
+    position: absolute; top: 0.55rem; right: 0.6rem; width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.06);
+    border: none; border-radius: 50%; font-size: 0.9rem; color: var(--text-light);
+    cursor: pointer; line-height: 1; transition: all 0.2s ease;
+}
+.login-float-popup .lfp-close:hover { background: var(--primary-color); color: var(--white); }
+.login-float-popup h3 { font-size: 0.92rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.15rem; padding-right: 1.8rem; }
+.login-float-popup .lfp-subtitle { font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.7rem; }
+.login-float-popup .lfp-label { font-size: 0.72rem; font-weight: 600; color: var(--text-color); margin-bottom: 0.25rem; display: block; }
+.login-float-popup .lfp-input {
+    width: 100%; padding: 0.45rem 0.6rem; border: 1.5px solid var(--gray-300); border-radius: 8px;
+    font-size: 0.8rem; font-family: inherit; outline: none; transition: border-color 0.2s;
+    background: rgba(255,255,255,0.6); box-sizing: border-box;
+}
+.login-float-popup .lfp-input:focus { border-color: var(--secondary-color); }
+.login-float-popup .lfp-field { margin-bottom: 0.5rem; }
+.login-float-popup .lfp-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; font-size: 0.72rem; }
+.login-float-popup .lfp-options label { display: flex; align-items: center; gap: 0.3rem; color: var(--text-light); cursor: pointer; }
+.login-float-popup .lfp-options label input { accent-color: var(--secondary-color); }
+.login-float-popup .lfp-options a { color: var(--secondary-color); text-decoration: none; font-weight: 500; }
+.login-float-popup .lfp-options a:hover { text-decoration: underline; }
+.login-float-popup .lfp-submit {
+    width: 100%; padding: 0.5rem; background: var(--secondary-color); color: var(--white);
+    border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+}
+.login-float-popup .lfp-submit:hover { background: var(--secondary-dark); transform: translateY(-1px); }
+.login-float-popup .lfp-footer { text-align: center; margin-top: 0.6rem; font-size: 0.72rem; color: var(--text-light); }
+.login-float-popup .lfp-footer a { color: var(--primary-color); font-weight: 600; text-decoration: none; }
+.login-float-popup .lfp-footer a:hover { text-decoration: underline; }
+@keyframes loginPopUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+<script>
+(function() {
+    var _loginState = null;
+
+    function renderLoginPopup(popup) {
+        if (_loginState && _loginState.loggedIn) {
+            var u = _loginState.user;
+            var isAdmin = u.role === 'admin';
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<div style="text-align:center;padding-bottom:0.5rem;">'
+                + '<div style="width:42px;height:42px;border-radius:50%;background:var(--secondary-color);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">'
+                + u.username.charAt(0).toUpperCase() + '</div>'
+                + '<div style="font-weight:700;font-size:0.9rem;color:var(--secondary-color);">' + u.username + '</div>'
+                + '<div style="font-size:0.72rem;color:var(--text-light);text-transform:capitalize;">' + u.role + ' Account</div>'
+                + '</div>'
+                + (isAdmin ? '<a href="admin.html" style="display:block;margin:0.75rem 0 0.3rem;width:100%;text-align:center;padding:0.5rem;background:var(--secondary-color);color:#fff;border-radius:6px;font-weight:600;font-size:0.82rem;text-decoration:none;">&#9881; Admin Dashboard</a>' : '')
+                + '<button onclick="doLogout()" style="width:100%;margin-top:0.4rem;padding:0.45rem;background:rgba(230,57,70,0.08);color:var(--primary-color);border:1px solid rgba(230,57,70,0.2);border-radius:6px;font-weight:600;font-size:0.82rem;cursor:pointer;">Sign Out</button>';
+        } else {
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<h3>&#128274; Member Portal</h3>'
+                + '<p style="font-size:0.73rem;color:var(--text-light);margin-bottom:0.75rem;">Sign in to your HOSU account</p>'
+                + '<div id="lfp-error" style="display:none;font-size:0.75rem;color:var(--primary-color);background:rgba(230,57,70,0.07);border-radius:5px;padding:0.35rem 0.6rem;margin-bottom:0.5rem;"></div>'
+                + '<label for="lfp-identity" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Username or Email</label>'
+                + '<input type="text" id="lfp-identity" placeholder="username or email" autocomplete="username" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.5rem;font-family:inherit;">'
+                + '<label for="lfp-pass" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Password</label>'
+                + '<input type="password" id="lfp-pass" placeholder="Enter password" autocomplete="current-password" style="width:100%;padding:0.45rem 0.65rem;border:1.5px solid var(--gray-300,#d1d5db);border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+                + '<button id="lfp-submit" onclick="doLogin()" style="width:100%;padding:0.5rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Sign In</button>'
+                + '<div style="text-align:center;margin-top:0.6rem;font-size:0.72rem;color:var(--text-light);">New member? <a href="register.html" style="color:var(--secondary-color);font-weight:600;">Register</a></div>';
+        }
+    }
+
+    window.toggleLoginPopup = function(e) {
+        e.preventDefault();
+        var popup = document.getElementById('loginPopup');
+        var isActive = popup.classList.contains('active');
+        if (isActive) { popup.classList.remove('active'); return; }
+        renderLoginPopup(popup);
+        popup.classList.add('active');
+        fetch('auth.php?action=check_session', { credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                _loginState = d.logged_in ? { loggedIn: true, user: d.user } : { loggedIn: false };
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    window.doLogin = function() {
+        var identity = document.getElementById('lfp-identity').value.trim();
+        var password = document.getElementById('lfp-pass').value;
+        var errEl = document.getElementById('lfp-error');
+        var btn = document.getElementById('lfp-submit');
+        if (!identity || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display='block'; return; }
+        btn.textContent = 'Signing in\u2026'; btn.disabled = true;
+        var fd = new FormData();
+        fd.append('action','login'); fd.append('identity',identity); fd.append('password',password);
+        fetch('auth.php', { method:'POST', body:fd, credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.success) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var popup = document.getElementById('loginPopup');
+                    renderLoginPopup(popup);
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
+                } else {
+                    errEl.textContent = d.error || 'Invalid credentials.'; errEl.style.display='block';
+                    btn.textContent = 'Sign In'; btn.disabled = false;
+                }
+            }).catch(function() {
+                errEl.textContent = 'Connection error. Please try again.'; errEl.style.display='block';
+                btn.textContent = 'Sign In'; btn.disabled = false;
+            });
+    };
+
+    window.doLogout = function() {
+        fetch('auth.php?action=logout', { credentials:'same-origin' })
+            .then(function() {
+                _loginState = { loggedIn: false };
+                var trigger = document.querySelector('.login-trigger');
+                if (trigger) trigger.textContent = 'Member Portal';
+                var popup = document.getElementById('loginPopup');
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    document.addEventListener('click', function(e) {
+        var popup = document.getElementById('loginPopup');
+        if (popup && popup.classList.contains('active') && !e.target.closest('.login-trigger-wrap')) {
+            popup.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('auth.php?action=check_session', { credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.logged_in) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
+                }
+            }).catch(function(){});
+    });
+})();
+</script>
+<script src="donate-float.js"></script>
 </body>
 </html>

@@ -1,0 +1,482 @@
+/* ============================================================
+   FLOATING DONATE BUTTON + POPUP — donate-float.css
+   Include on ALL pages for consistent Support Us experience.
+   ============================================================ */
+
+.floating-donate {
+    position: fixed;
+    right: 20px;
+    bottom: 80px;
+    z-index: 999;
+}
+
+.donate-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: var(--primary-color, #e63946);
+    color: var(--white, #ffffff);
+    padding: 0.6rem 1.25rem;
+    border-radius: 30px;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.donate-button:hover {
+    background: var(--primary-dark, #c81d2a);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+.donate-icon {
+    font-size: 1.1rem;
+}
+
+.donate-trigger-wrap {
+    position: relative;
+    display: inline-block;
+}
+.donate-trigger-wrap--fixed {
+    position: relative;
+}
+
+.donate-float-popup {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    width: 320px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.99);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(200, 200, 200, 0.4);
+    border-radius: 12px;
+    padding: 1rem 1rem 0.8rem;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.25),
+        0 6px 16px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: donatePopUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: left;
+}
+
+/* Default: opens upward from button */
+.donate-float-popup.pos-top {
+    bottom: calc(100% + 12px);
+    right: 0;
+}
+.donate-float-popup.pos-top::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    right: 24px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-right: 1px solid rgba(255, 255, 255, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+}
+
+/* Opens downward */
+.donate-float-popup.pos-bottom {
+    top: calc(100% + 12px);
+    bottom: auto;
+    right: 0;
+}
+.donate-float-popup.pos-bottom::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 24px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-left: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+}
+
+/* Opens to the left */
+.donate-float-popup.pos-left {
+    right: calc(100% + 12px);
+    bottom: 0;
+    top: auto;
+}
+.donate-float-popup.pos-left::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    bottom: 20px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.97);
+    border-right: 1px solid rgba(255, 255, 255, 0.55);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    transform: rotate(45deg);
+}
+.donate-float-popup.active {
+    display: block;
+}
+
+/* Legacy arrow - hidden when using pos- classes */
+.donate-float-popup::after {
+    display: none;
+}
+
+.donate-float-popup .dfp-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.08);
+    border: none;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    color: var(--text-light, #4a5568);
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+.donate-float-popup .dfp-close:hover {
+    background: var(--primary-color, #e63946);
+    color: var(--white, #fff);
+}
+
+/* --- Modal header --- */
+.donate-float-popup .dfp-modal-header {
+    text-align: center;
+    margin-bottom: 0.15rem;
+}
+.donate-float-popup .dfp-modal-header h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary-color, #0d4593);
+    margin: 0;
+}
+.donate-float-popup .dfp-modal-header h3::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--primary-color, #e63946);
+    border-radius: 2px;
+    margin: 0.2rem auto 0;
+}
+.donate-float-popup .dfp-subtitle {
+    font-size: 0.65rem;
+    color: var(--text-light, #4a5568);
+    margin-bottom: 0.35rem;
+    text-align: center;
+}
+
+/* --- 2-col form grid for compact layout --- */
+.donate-float-popup .dfp-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.2rem 0.35rem;
+    margin-bottom: 0.2rem;
+}
+.donate-float-popup .dfp-fg-full {
+    grid-column: 1 / -1;
+}
+.donate-float-popup .dfp-invalid-phone {
+    font-size: 0.68rem;
+    color: var(--primary-color, #e63946);
+    font-weight: 600;
+    margin: 0;
+}
+
+.donate-float-popup .dfp-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-color, #001848);
+    margin-bottom: 0.1rem;
+    display: block;
+}
+.donate-float-popup .dfp-input {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--gray-300, #e2e8f0);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: rgba(255,255,255,0.9);
+    box-sizing: border-box;
+}
+.donate-float-popup .dfp-input:focus {
+    border-color: var(--secondary-color, #0d4593);
+}
+.donate-float-popup .dfp-amounts {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    margin: 0.15rem 0 0.3rem;
+}
+.donate-float-popup .dfp-amt {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--gray-300, #e2e8f0);
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-color, #001848);
+    transition: all 0.2s;
+    font-family: inherit;
+}
+.donate-float-popup .dfp-amt:hover,
+.donate-float-popup .dfp-amt.selected {
+    background: var(--secondary-color, #0d4593);
+    color: var(--white, #fff);
+    border-color: var(--secondary-color, #0d4593);
+}
+.donate-float-popup .dfp-field {
+    margin-bottom: 0.15rem;
+}
+
+/* --- Payment chips (matching membership design) --- */
+.donate-float-popup .dfp-pay-divider {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--secondary-color, #0d4593);
+    margin: 0.25rem 0 0.2rem;
+    text-align: center;
+}
+.donate-float-popup .dfp-pay-chips {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 0.2rem;
+}
+.donate-float-popup .dfp-pay-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--gray-300, #e2e8f0);
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--text-color, #001848);
+    transition: all 0.2s;
+    font-family: inherit;
+}
+.donate-float-popup .dfp-pay-chip i {
+    font-size: 0.65rem;
+    color: var(--primary-color, #e63946);
+}
+.donate-float-popup .dfp-pay-chip:hover {
+    border-color: var(--secondary-color, #0d4593);
+    background: rgba(13, 69, 147, 0.04);
+}
+.donate-float-popup .dfp-pay-chip.selected {
+    border-color: var(--primary-color, #e63946);
+    background: rgba(230,57,70,0.08);
+    color: var(--primary-color, #e63946);
+}
+.donate-float-popup .dfp-chip-img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+.donate-float-popup .dfp-mtn-chip {
+    border-color: var(--mtn-yellow, #ffcc00);
+    background: rgba(255,204,0,0.06);
+}
+.donate-float-popup .dfp-mtn-chip.selected {
+    background: rgba(255,204,0,0.16);
+    border-color: var(--mtn-yellow, #ffcc00);
+}
+.donate-float-popup .dfp-airtel-chip {
+    border-color: var(--airtel-red, #e40000);
+    background: rgba(228,0,0,0.03);
+}
+.donate-float-popup .dfp-airtel-chip.selected {
+    background: rgba(228,0,0,0.1);
+    border-color: var(--airtel-red, #e40000);
+}
+
+/* --- Bank info card --- */
+.donate-float-popup .dfp-bank-info {
+    background: rgba(13, 69, 147, 0.06);
+    border: 1px solid rgba(13, 69, 147, 0.15);
+    border-radius: 5px;
+    padding: 0.3rem 0.5rem;
+    margin: 0.2rem 0;
+    font-size: 0.6rem;
+    color: var(--text-color, #001848);
+}
+.donate-float-popup .dfp-bank-info p {
+    margin: 0.05rem 0;
+}
+
+/* --- Submit / Process Payment button --- */
+.donate-float-popup .dfp-submit {
+    width: 100%;
+    padding: 0.4rem 0;
+    background: var(--primary-color, #e63946);
+    color: var(--white, #fff);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.2rem;
+    font-family: inherit;
+}
+.donate-float-popup .dfp-submit:hover:not(:disabled) {
+    background: var(--primary-dark, #c81d2a);
+    transform: translateY(-1px);
+}
+.donate-float-popup .dfp-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --- Processing step indicator --- */
+.donate-float-popup .dfp-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 1rem 0 1.2rem;
+}
+.donate-float-popup .dfp-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+.donate-float-popup .dfp-step span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-light, #4a5568);
+}
+.donate-float-popup .dfp-step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 2px solid var(--gray-300, #e2e8f0);
+    background: var(--white, #fff);
+    color: var(--text-light, #4a5568);
+    transition: all 0.3s;
+}
+.donate-float-popup .dfp-step-dot.active {
+    border-color: var(--secondary-color, #0d4593);
+    background: var(--secondary-color, #0d4593);
+    color: var(--white, #fff);
+}
+.donate-float-popup .dfp-step-dot.done {
+    border-color: #27ae60;
+    background: #27ae60;
+    color: var(--white, #fff);
+}
+.donate-float-popup .dfp-step-line {
+    width: 36px;
+    height: 2px;
+    background: var(--gray-300, #e2e8f0);
+    margin: 0 0.2rem;
+    margin-bottom: 1.3rem;
+    transition: background 0.3s;
+}
+.donate-float-popup .dfp-step-line.active {
+    background: var(--secondary-color, #0d4593);
+}
+.donate-float-popup .dfp-step-line.done {
+    background: #27ae60;
+}
+
+/* --- Spinner --- */
+.donate-float-popup .dfp-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--gray-300, #e2e8f0);
+    border-top-color: var(--secondary-color, #0d4593);
+    border-radius: 50%;
+    margin: 0.5rem auto;
+    animation: dfpSpin 0.7s linear infinite;
+}
+@keyframes dfpSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Process messages --- */
+.donate-float-popup .dfp-process-msg {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-color, #001848);
+    margin: 0.5rem 0 0.2rem;
+}
+.donate-float-popup .dfp-process-sub {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-light, #4a5568);
+    margin: 0 0 0.3rem;
+}
+.donate-float-popup .dfp-countdown {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--primary-color, #e63946);
+    margin: 0.3rem 0;
+}
+
+@keyframes donatePopUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .donate-float-popup {
+        width: calc(100vw - 40px);
+        right: -10px;
+    }
+}
+.donate-float-popup::-webkit-scrollbar {
+    width: 4px;
+}
+.donate-float-popup::-webkit-scrollbar-thumb {
+    background: rgba(13,69,147,0.12);
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .floating-donate {
+        right: 12px;
+        bottom: 16px;
+    }
+    .donate-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+    }
+    .donate-float-popup {
+        width: 290px;
+        right: -10px;
+    }
+}

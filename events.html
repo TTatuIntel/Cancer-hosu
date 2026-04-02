@@ -1,2036 +1,2560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HOSU Events - Conferences, workshops, and webinars for oncology professionals">
-    <title>Events - HOSU</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-      <!-- <script src="data.js" defer></script> -->
-    <style>
-        /* Base styles and variables */
-        :root {
-            --primary-color: #e63946;
-            --primary-light: #f8d7da;
-            --primary-dark: #c81d2a;
-            --secondary-color: #0d4593;
-            --secondary-light: #e6f0ff;
-            --secondary-dark: #072a5e;
-            --text-color: #001848;
-            --text-light: #4a5568;
-            --background-light: #f1faee;
-            --background-dark: #1d3557;
-            --white: #ffffff;
-            --accent-color: #a8dadc;
-            --gray-100: #f7fafc;
-            --gray-200: #edf2f7;
-            --gray-300: #e2e8f0;
-            --gray-400: #cbd5e0;
-            --gray-500: #a0aec0;
-            --transition: all 0.3s ease;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --navbar-height: 70px;
-            --border-radius: 8px;
-            --card-width: 280px;
-            --card-height: 360px;
-            --card-image-height: 160px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Navbar styles */
-        .navbar {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            height: var(--navbar-height);
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .logo img {
-            width: 180px;
-            height: 65px;
-            object-fit: contain;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-            padding: 0.5rem 0.25rem;
-        }
-
-        .nav-links a:not(.cta-button)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:not(.cta-button):hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:not(.cta-button):hover {
-            color: var(--primary-color);
-        }
-
-        .nav-links .cta-button {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.5rem 1.25rem;
-            border-radius: 30px;
-            min-height: 40px;
-            min-width: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-sm);
-            border: none;
-        }
-
-        .nav-links .cta-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Page header */
-        .page-header {
-            padding-top: calc(var(--navbar-height) + 2rem);
-            background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('img/pattern.svg');
-            background-size: cover;
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .page-header h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .page-header p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin: 1.5rem auto;
-            max-width: 600px;
-        }
-
-        /* Breadcrumbs */
-        .breadcrumbs {
-            background: var(--white);
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .breadcrumbs-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .breadcrumbs-list {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .breadcrumbs-item {
-            display: flex;
-            align-items: center;
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-
-        .breadcrumbs-item:not(:last-child)::after {
-            content: '/';
-            margin: 0 0.5rem;
-            color: var(--gray-400);
-        }
-
-        .breadcrumbs-item a {
-            color: var(--secondary-color);
-            transition: var(--transition);
-        }
-
-        .breadcrumbs-item a:hover {
-            color: var(--primary-color);
-        }
-
-        .breadcrumbs-item.active {
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        /* Event filters */
-        .events-filter {
-            background: var(--white);
-            padding: 1.5rem 0;
-            position: sticky;
-            top: var(--navbar-height);
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .filter-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .filter-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .filter-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--secondary-color);
-        }
-
-        .filter-count {
-            background: var(--secondary-light);
-            color: var(--secondary-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .filter-options {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-button {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--gray-300);
-            border-radius: 20px;
-            background: transparent;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .filter-button:hover {
-            border-color: var(--secondary-color);
-            color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .filter-button.active {
-            background: var(--secondary-color);
-            color: var(--white);
-            border-color: var(--secondary-color);
-        }
-
-        .filter-button .count {
-            background: var(--gray-200);
-            color: var(--text-light);
-            padding: 0.1rem 0.4rem;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .filter-button.active .count {
-            background: var(--white);
-            color: var(--secondary-color);
-        }
-
-        .search-container {
-            position: relative;
-            margin-top: 1rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--gray-300);
-            border-radius: 30px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px var(--secondary-light);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-500);
-        }
-
-        /* Events section */
-        .events-section {
-            padding: 2rem 0;
-            background: var(--background-light);
-        }
-
-        .events-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .view-options {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .view-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--white);
-            border: 1px solid var(--gray-300);
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-light);
-        }
-
-        .view-button:hover {
-            background: var(--gray-200);
-            color: var(--secondary-color);
-        }
-
-        .view-button.active {
-            background: var(--secondary-color);
-            color: var(--white);
-            border-color: var(--secondary-color);
-        }
-
-        /* Events grid layout */
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Event card styles */
-        .event-card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: var(--card-height);
-            position: relative;
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .event-image {
-            height: var(--card-image-height);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .event-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .event-card:hover .event-image img {
-            transform: scale(1.05);
-        }
-
-        .event-type {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            z-index: 2;
-            text-transform: uppercase;
-        }
-
-        .event-type[data-type="conference"] {
-            background: rgba(13, 69, 147, 0.9);
-            color: white;
-        }
-
-        .event-type[data-type="workshop"] {
-            background: rgba(42, 157, 143, 0.9);
-            color: white;
-        }
-
-        .event-type[data-type="webinar"] {
-            background: rgba(131, 56, 236, 0.9);
-            color: white;
-        }
-
-        .event-status {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .event-status[data-status="open"] {
-            background: rgba(72, 187, 120, 0.9);
-            color: white;
-        }
-
-        .event-status[data-status="closing"] {
-            background: rgba(237, 137, 54, 0.9);
-            color: white;
-        }
-
-        .event-status[data-status="full"] {
-            background: rgba(229, 62, 62, 0.9);
-            color: white;
-        }
-
-        .event-content {
-            padding: 1rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .event-date {
-            color: var(--primary-color);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .event-date::before {
-            content: "📅";
-            font-size: 0.9rem;
-        }
-
-        .event-title {
-            font-size: 1.1rem;
-            color: var(--secondary-color);
-            margin-bottom: 0.75rem;
-            line-height: 1.3;
-            font-weight: 600;
-        }
-
-        .event-description {
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            flex-grow: 1;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .event-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 0.75rem;
-            border-top: 1px solid var(--gray-200);
-            margin-top: auto;
-        }
-
-        .event-location {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        .event-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .action-button {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--gray-100);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .action-button:hover {
-            background: var(--secondary-light);
-            color: var(--secondary-color);
-        }
-
-        .register-button {
-            padding: 0.4rem 0.75rem;
-            background: var(--primary-color);
-            color: var(--white);
-            border-radius: 20px;
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .register-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .event-countdown {
-            position: absolute;
-            bottom: var(--card-image-height);
-            right: 0;
-            background: rgba(230, 57, 70, 0.9);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transform: translateY(50%);
-            z-index: 2;
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 40px;
-            left: -30px;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.25rem 2rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transform: rotate(-45deg);
-            z-index: 2;
-        }
-
-        /* Featured events carousel */
-        .featured-events {
-            margin-bottom: 3rem;
-        }
-
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            margin: 0 -1.5rem;
-        }
-
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease;
-            padding: 1rem 1.5rem;
-        }
-
-        .carousel-slide {
-            flex: 0 0 var(--card-width);
-            margin-right: 1.5rem;
-        }
-
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .carousel-arrow {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--white);
-            border:  1px solid var(--gray-300);
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-light);
-        }
-
-        .carousel-arrow:hover {
-            background: var(--secondary-color);
-            color: var(--white);
-            border-color: var(--secondary-color);
-        }
-
-        .carousel-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--gray-300);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .carousel-dot.active {
-            background: var(--primary-color);
-            transform: scale(1.2);
-        }
-
-        .carousel-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            width: 0%;
-            background: var(--primary-color);
-            transition: width 3s linear;
-        }
-
-        /* Month dividers */
-        .month-divider {
-            margin: 2.5rem 0 1.5rem;
-            position: relative;
-            text-align: left;
-        }
-
-        .month-title {
-            font-size: 1.2rem;
-            color: var(--secondary-color);
-            background: var(--background-light);
-            padding: 0 1rem 0 0;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-        }
-
-        .month-divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--gray-300);
-            z-index: 0;
-        }
-
-        /* Past events section */
-        .past-events {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--gray-300);
-        }
-
-        .past-events-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-        }
-
-        .past-events-title {
-            font-size: 1.3rem;
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .toggle-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .past-events-header.collapsed .toggle-icon {
-            transform: rotate(-90deg);
-        }
-
-        .past-events-content {
-            max-height: 2000px;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .past-events-header.collapsed + .past-events-content {
-            max-height: 0;
-        }
-
-        /* Resources section */
-        .resources-card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .resources-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--secondary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary-color);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .resources-content {
-            flex-grow: 1;
-        }
-
-        .resources-title {
-            font-size: 1.1rem;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .resources-description {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .resources-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .resource-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--secondary-color);
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .resource-link:hover {
-            color: var(--primary-color);
-        }
-
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 100;
-            box-shadow: var(--shadow-md);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--background-dark);
-            color: var(--white);
-            padding: 3rem 0 1.5rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h4 {
-            color: var(--accent-color);
-            font-size: 1.1rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .footer-section h4::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--accent-color);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-section a {
-            color: var(--gray-400);
-            transition: var(--transition);
-        }
-
-        .footer-section a:hover {
-            color: var(--white);
-            padding-left: 0.25rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.25rem;
-        }
-
-        .social-link {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray-500);
-            font-size: 0.85rem;
-        }
-
-        /* Category headers */
-        .category-header {
-            background: var(--secondary-light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .category-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--secondary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .category-content {
-            flex-grow: 1;
-        }
-
-        .category-title {
-            font-size: 1.3rem;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .category-description {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* Scroll to section animation */
-        .scroll-target {
-            scroll-margin-top: calc(var(--navbar-height) + 20px);
-        }
-
-        /* Highlight effect for targeted events */
-        .event-card:target {
-            box-shadow: 0 0 0 3px var(--primary-color), var(--shadow-md);
-            animation: highlight-pulse 2s ease-in-out;
-        }
-
-        @keyframes highlight-pulse {
-            0%, 100% { box-shadow: 0 0 0 3px var(--primary-color), var(--shadow-md); }
-            50% { box-shadow: 0 0 0 6px var(--primary-color), var(--shadow-md); }
-        }
-
-        /* Highlight target class for JavaScript targeting */
-        .highlight-target {
-            box-shadow: 0 0 0 3px var(--primary-color), var(--shadow-md);
-            animation: highlight-pulse 2s ease-in-out;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 1024px) {
-            :root {
-                --card-width: 260px;
-                --card-height: 340px;
-                --card-image-height: 140px;
-            }
-
-            .events-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 1.25rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0.75rem 1rem;
-            }
-
-            .logo img {
-                width: 150px;
-                height: 55px;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: var(--navbar-height);
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                flex-direction: column;
-                padding: 1rem 0;
-                box-shadow: var(--shadow-md);
-                z-index: 1000;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                width: 100%;
-                text-align: center;
-                padding: 0.75rem 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .filter-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-
-            .filter-options {
-                overflow-x: auto;
-                padding-bottom: 0.5rem;
-                width: 100%;
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-            }
-
-            .filter-button {
-                flex: 0 0 auto;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .events-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-            }
-
-            :root {
-                --card-width: 100%;
-                --card-height: auto;
-                --card-image-height: 180px;
-            }
-
-            .event-card {
-                min-height: 360px;
-            }
-
-            .carousel-slide {
-                flex: 0 0 85%;
-                margin-right: 1rem;
-            }
-
-            .resources-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.25rem;
-            }
-
-            .resources-icon {
-                margin: 0 auto 1rem;
-            }
-
-            .resources-links {
-                justify-content: center;
-            }
-
-            .category-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .category-icon {
-                margin: 0 auto 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .page-header p {
-                font-size: 0.95rem;
-            }
-
-            .event-image {
-                height: 160px;
-            }
-
-            .carousel-controls {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-        }
-
-        /* Accessibility improvements */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-
-            .carousel-track {
-                transition: none;
-            }
-
-            .carousel-progress {
-                display: none;
-            }
-        }
-
-            .partner-logo:hover img {
-                transform: scale(1.5);
-                filter: brightness(1.5);
-            }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HOSU Events - Conferences, workshops, and webinars for oncology professionals">
+<title>Events - HOSU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="navbar.css">
+<link rel="stylesheet" href="donate-float.css">
+<style>
+:root {
+    --primary-color: #e63946;
+    --primary-light: #f8d7da;
+    --primary-dark: #c81d2a;
+    --secondary-color: #0d4593;
+    --secondary-light: #e6f0ff;
+    --secondary-dark: #072a5e;
+    --text-color: #001848;
+    --text-light: #4a5568;
+    --background-light: #f1faee;
+    --background-dark: #1d3557;
+    --white: #ffffff;
+    --accent-color: #a8dadc;
+    --gray-100: #f7fafc;
+    --gray-200: #edf2f7;
+    --gray-300: #e2e8f0;
+    --gray-400: #cbd5e0;
+    --gray-500: #a0aec0;
+    --transition: all 0.3s ease;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --navbar-height: 90px;
+    --border-radius: 8px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --section-width: 92%;
+    --section-max-width: 1280px;
+    --section-padding: 2rem;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; }
+
+/* Navbar styles handled by navbar.css */
+
+/* ===== Hero — identical layout to home page ===== */
+.page-hero {
+    padding-top: var(--navbar-height);
+    background-color: var(--gray-100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+    min-height: 380px;
+}
+.hero-inner {
+    display: flex;
+    flex-direction: row;
+    width: var(--section-width);
+    max-width: var(--section-max-width);
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+    padding: 1.25rem 0;
+    gap: 3%;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 380px;
+}
+/* Text panel — RIGHT side, image is on the left */
+.hero-content {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 0;
+    z-index: 10;
+    text-align: left;
+    position: relative;
+    min-height: 280px;
+    margin-left: auto;
+}
+/* Image panel — LEFT side */
+.hero-image-container {
+    position: absolute;
+    left: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 58%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 0;
+    animation: heroImgFadeIn 1s ease-out 0.3s forwards;
+    opacity: 0;
+    z-index: 0;
+    max-height: 420px;
+}
+.hero-image-container::after {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        linear-gradient(to left, #f7fafc 0%, rgba(247,250,252,0.85) 8%, rgba(247,250,252,0.5) 18%, rgba(247,250,252,0.15) 30%, transparent 45%),
+        linear-gradient(to right, #f7fafc 0%, rgba(247,250,252,0.4) 3%, transparent 10%),
+        linear-gradient(to bottom, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%),
+        linear-gradient(to top, #f7fafc 0%, rgba(247,250,252,0.5) 3%, transparent 12%);
+}
+@keyframes heroImgFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+/* Individual background images inside container — matches home .hero-background */
+.hero-background {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease, transform 8s ease;
+    opacity: 0;
+    transform: scale(1.05);
+}
+.hero-background.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Hero slides — each is a full content block */
+.hero-slide {
+    display: none; flex-direction: column;
+    animation: heroSlideIn 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.hero-slide.active { display: flex; }
+@keyframes heroSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Status badge on dynamic slides */
+.hero-status-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 0.5rem;
+}
+.hero-status-badge.live { color: var(--primary-color); }
+.hero-status-badge.upcoming-status { color: var(--secondary-color); }
+.hero-status-badge.past-status { color: var(--text-light); }
+.hero-status-badge .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--primary-color);
+    animation: heroPulse 1.5s ease-in-out infinite;
+}
+@keyframes heroPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+
+.hero-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+.hero-pill {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    background: rgba(255,255,255,0.85); color: var(--secondary-color);
+    font-size: 0.72rem; font-weight: 600; padding: 0.3rem 0.6rem;
+    border-radius: 16px; border: 1px solid rgba(13,69,147,0.12);
+}
+.hero-content h1 {
+    font-size: clamp(1.25rem, 2.4vw, 1.65rem); line-height: 1.2; margin-bottom: 0.6rem;
+    color: var(--secondary-color); font-weight: 700; position: relative; display: inline-block;
+}
+.hero-content h1::after {
+    content: ''; position: absolute; bottom: -8px; left: 0;
+    width: 80px; height: 3px; background: var(--primary-color);
+}
+.hero-content p {
+    font-size: clamp(0.8rem, 1.3vw, 0.88rem); margin-bottom: 1rem;
+    color: var(--text-light); line-height: 1.6; margin-top: 1rem;
+}
+.hero-stats { display: flex; gap: 2rem; margin-top: 1.25rem; }
+.hero-stat { text-align: left; }
+.hero-stat-number { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); display: block; line-height: 1.2; }
+.hero-stat-label { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+/* Event detail mini on hero slides */
+.hero-event-detail {
+    display: flex; align-items: center; gap: 0.85rem;
+    margin-top: 0.75rem; cursor: pointer;
+    transition: all 0.25s ease;
+}
+.hero-event-detail:hover { transform: translateX(4px); }
+.hero-event-meta-list {
+    display: flex; flex-direction: column; gap: 0.25rem;
+    font-size: 0.78rem; color: var(--text-light);
+}
+.hero-event-meta-list span { display: flex; align-items: center; gap: 0.35rem; }
+/* Hero event extra meta (time, venue) shown directly */
+/* Hero register button */
+.hero-register-btn {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: var(--primary-color); color: white; border: none;
+    padding: 0.4rem 1rem; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: all 0.3s ease; margin-top: 0.5rem;
+    box-shadow: 0 2px 8px rgba(230,57,70,0.25);
+    text-decoration: none; width: fit-content;
+}
+.hero-register-btn:hover {
+    background: var(--primary-dark); transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(230,57,70,0.35);
+}
+
+/* Hero dot indicators */
+.hero-indicators {
+    display: flex; gap: 0.4rem; margin-top: 1rem;
+}
+.hero-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(18,41,74,0.2); cursor: pointer; transition: all 0.3s ease;
+}
+.hero-dot.active { background: var(--primary-color); width: 22px; border-radius: 4px; }
+
+/* ===== Main Content ===== */
+.main-content {
+    padding: var(--section-padding) 0;
+    background: var(--gray-100);
+}
+.main-inner {
+    width: var(--section-width);
+    max-width: var(--section-max-width);
+    margin: 0 auto;
+}
+
+/* Filter bar — compact inline */
+.filter-bar {
+    display: flex; align-items: center; gap: 0.75rem;
+    flex-wrap: wrap; margin-bottom: 1.5rem;
+    background: var(--white); padding: 0.65rem 1rem;
+    border-radius: var(--border-radius); box-shadow: var(--shadow-sm);
+}
+.filter-group { display: flex; align-items: center; gap: 0.35rem; }
+.filter-group label {
+    font-size: 0.72rem; font-weight: 600; color: var(--text-light);
+    white-space: nowrap; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.filter-select, .filter-date {
+    padding: 0.4rem 0.6rem; border: 1px solid var(--gray-300); border-radius: 6px;
+    font-size: 0.8rem; font-family: inherit; background: var(--white);
+    color: var(--text-color); cursor: pointer; transition: var(--transition); min-width: 140px;
+}
+.filter-select:focus, .filter-date:focus {
+    outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 3px var(--secondary-light);
+}
+.filter-search { position: relative; flex: 1 1 200px; min-width: 160px; }
+.filter-search input {
+    width: 100%; padding: 0.4rem 0.75rem 0.4rem 2rem;
+    border: 1px solid var(--gray-300); border-radius: 6px;
+    font-size: 0.8rem; font-family: inherit; transition: var(--transition); background: var(--white);
+}
+.filter-search input:focus {
+    outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 3px var(--secondary-light);
+}
+.filter-search-icon { position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); color: var(--gray-500); font-size: 0.75rem; }
+.filter-count {
+    background: var(--secondary-light); color: var(--secondary-color);
+    padding: 0.25rem 0.65rem; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 600; white-space: nowrap; flex-shrink: 0;
+}
+.filter-reset {
+    background: none; border: 1px solid var(--gray-300); padding: 0.35rem 0.6rem;
+    border-radius: 6px; font-size: 0.72rem; font-family: inherit;
+    color: var(--text-light); cursor: pointer; transition: var(--transition); white-space: nowrap;
+}
+.filter-reset:hover { background: var(--gray-100); color: var(--primary-color); border-color: var(--primary-color); }
+
+/* Calendar + Event list layout — events primary, calendar compact sidebar */
+.calendar-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+/* Compact Calendar */
+.full-calendar {
+    background: var(--white); border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm); overflow: hidden;
+    position: sticky;
+    top: calc(var(--navbar-height) + 1rem);
+}
+/* Countdown above calendar */
+.cal-countdown {
+    background: linear-gradient(135deg, var(--secondary-color), #1a5bb5);
+    color: white; padding: 0.6rem 0.85rem;
+    text-align: center;
+}
+.cal-countdown-label {
+    font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.8px; opacity: 0.85; margin-bottom: 0.2rem;
+}
+.cal-countdown-event {
+    font-size: 0.7rem; font-weight: 700; margin-bottom: 0.35rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-countdown-timer {
+    display: flex; justify-content: center; gap: 0.5rem;
+}
+.cal-countdown-unit {
+    display: flex; flex-direction: column; align-items: center;
+}
+.cal-countdown-value {
+    font-size: 1.1rem; font-weight: 800; line-height: 1.2;
+    background: rgba(255,255,255,0.15); border-radius: 6px;
+    padding: 0.2rem 0.4rem; min-width: 32px;
+}
+.cal-countdown-text {
+    font-size: 0.5rem; text-transform: uppercase; opacity: 0.75;
+    letter-spacing: 0.5px; margin-top: 0.1rem;
+}
+.cal-header {
+    background: var(--secondary-color); color: white;
+    padding: 0.55rem 0.85rem; display: flex;
+    justify-content: space-between; align-items: center;
+}
+.cal-header .cal-title { font-size: 0.85rem; font-weight: 700; }
+.cal-nav {
+    background: none; border: none; color: white; cursor: pointer;
+    font-size: 0.85rem; padding: 0.2rem 0.4rem; border-radius: 4px;
+    transition: background 0.2s;
+}
+.cal-nav:hover { background: rgba(255,255,255,0.2); }
+.cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    padding: 0.4rem;
+    gap: 1px;
+}
+.cal-day-name {
+    text-align: center; font-size: 0.6rem; font-weight: 600;
+    color: var(--text-light); padding: 0.3rem 0; text-transform: uppercase;
+}
+.cal-day {
+    text-align: center; font-size: 0.7rem; padding: 0.3rem 0.15rem;
+    border-radius: 6px; cursor: default; position: relative;
+    color: var(--text-color); transition: all 0.2s;
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1px;
+}
+.cal-day.other-month { color: var(--gray-400); }
+.cal-day.today {
+    background: var(--secondary-light); color: var(--secondary-color); font-weight: 700;
+}
+.cal-day.has-event {
+    cursor: pointer; font-weight: 700;
+    background: rgba(220, 38, 38, 0.08);
+    color: var(--primary-dark);
+}
+.cal-day.has-event::after {
+    content: ''; position: absolute; bottom: 2px; left: 50%;
+    transform: translateX(-50%); width: 6px; height: 6px;
+    background: var(--primary-color); border-radius: 50%;
+    box-shadow: 0 0 0 1.5px rgba(220, 38, 38, 0.25);
+}
+.cal-day.has-event.has-live {
+    background: rgba(220, 38, 38, 0.15);
+    color: var(--primary-dark);
+    animation: cal-pulse 2s ease-in-out infinite;
+}
+@keyframes cal-pulse {
+    0%, 100% { box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.2); }
+    50% { box-shadow: inset 0 0 0 1.5px rgba(220, 38, 38, 0.45); }
+}
+.cal-day.has-event.has-live::after { background: var(--primary-color); width: 8px; height: 8px; box-shadow: 0 0 4px rgba(220, 38, 38, 0.5); }
+.cal-day.has-event.has-upcoming { background: rgba(13, 69, 147, 0.08); color: var(--secondary-color); }
+.cal-day.has-event.has-upcoming::after { background: var(--secondary-color); box-shadow: 0 0 0 1.5px rgba(13, 69, 147, 0.25); }
+.cal-day.has-event.has-past { background: rgba(150, 150, 150, 0.08); color: var(--text-light); }
+.cal-day.has-event.has-past::after { background: var(--gray-400); box-shadow: none; }
+.cal-day.has-event:hover { background: var(--primary-light); color: var(--primary-dark); transform: scale(1.12); z-index: 2; }
+.cal-day.selected { background: var(--secondary-color); color: white; font-weight: 700; box-shadow: 0 2px 8px rgba(13, 69, 147, 0.3); transform: scale(1.1); z-index: 2; }
+.cal-day.selected::after { background: white; box-shadow: none; }
+.cal-day.has-multi::after {
+    width: 12px; height: 5px; border-radius: 3px;
+}
+/* Tooltip on event days */
+.cal-day[title] { position: relative; }
+.cal-day.has-event[title]:hover::before {
+    content: attr(title);
+    position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+    background: var(--secondary-color); color: white; font-size: 0.58rem; font-weight: 600;
+    padding: 3px 7px; border-radius: 4px; white-space: nowrap; z-index: 10;
+    pointer-events: none; max-width: 150px; overflow: hidden; text-overflow: ellipsis;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+.cal-legend {
+    padding: 0.4rem 0.85rem; border-top: 1px solid var(--gray-200);
+    display: flex; gap: 0.6rem; flex-wrap: wrap;
+}
+.cal-legend-item {
+    display: flex; align-items: center; gap: 0.2rem;
+    font-size: 0.6rem; color: var(--text-light);
+}
+.cal-legend-dot { width: 5px; height: 5px; border-radius: 50%; }
+.cal-legend-dot.dot-event { background: var(--primary-color); }
+.cal-legend-dot.dot-live { background: #dc2626; animation: cal-pulse 1.5s infinite; }
+.cal-legend-dot.dot-today { background: var(--secondary-color); }
+.cal-legend-dot.dot-selected { background: var(--secondary-color); width: 10px; border-radius: 2px; }
+
+/* ===== Event List Panel (primary content) ===== */
+.event-panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+.event-panel-header h2 {
+    font-size: 1rem; color: var(--secondary-color); font-weight: 700;
+    display: flex; align-items: center; gap: 0.4rem;
+}
+.event-panel-header .panel-count {
+    background: var(--primary-color); color: white;
+    font-size: 0.62rem; padding: 0.12rem 0.4rem; border-radius: 10px; font-weight: 600;
+}
+.event-panel-tabs {
+    display: flex; gap: 0.25rem; margin-bottom: 0.75rem;
+}
+.panel-tab {
+    background: var(--gray-100); border: 1px solid var(--gray-200);
+    padding: 0.3rem 0.7rem; border-radius: 16px;
+    font-size: 0.7rem; font-weight: 600; font-family: inherit;
+    color: var(--text-light); cursor: pointer; transition: var(--transition);
+}
+.panel-tab.active { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+.panel-tab:hover:not(.active) { background: var(--gray-200); color: var(--text-color); }
+
+/* Spotlight Event Cards */
+.event-list { display: flex; flex-direction: column; gap: 0.55rem; }
+.spotlight-card {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 10px; padding: 0.55rem 0.75rem; cursor: pointer;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+}
+.spotlight-card:hover {
+    background: var(--gray-100); box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.spotlight-card img {
+    width: 50px; height: 50px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+}
+.spotlight-card-body { flex: 1; min-width: 0; }
+.spotlight-card-title {
+    font-size: 0.8rem; font-weight: 600; color: var(--text-color);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    margin-bottom: 0.1rem;
+}
+.spotlight-card-meta {
+    font-size: 0.68rem; color: var(--text-light); display: flex; gap: 0.75rem;
+}
+.spotlight-card-badge {
+    font-size: 0.58rem; font-weight: 700; padding: 0.18rem 0.45rem;
+    border-radius: 6px; flex-shrink: 0; align-self: center; text-transform: uppercase;
+}
+.spotlight-card-badge.badge-live { background: rgba(230,57,70,0.12); color: var(--primary-color); }
+.spotlight-card-badge.badge-upcoming { background: rgba(13,69,147,0.1); color: var(--secondary-color); }
+.spotlight-card-badge.badge-past { background: rgba(0,0,0,0.06); color: var(--text-light); }
+.spotlight-card-badge.badge-conf { background: rgba(13,69,147,0.1); color: var(--secondary-color); }
+.spotlight-card-badge.badge-work { background: rgba(42,157,143,0.1); color: #2a9d8f; }
+.spotlight-card-badge.badge-web { background: rgba(131,56,236,0.1); color: #8338ec; }
+
+.event-list-empty {
+    text-align: center; padding: 1.25rem 1rem; color: var(--text-light);
+    font-size: 0.8rem; background: var(--white); border-radius: var(--border-radius);
+    border: 1px dashed var(--gray-300);
+}
+
+/* Pagination — View More / View Less */
+.event-list-pagination {
+    display: flex; justify-content: center; align-items: center;
+    gap: 0.75rem; margin-top: 0.75rem;
+}
+.view-more-btn {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: var(--white); border: 1px solid var(--gray-300);
+    padding: 0.45rem 1.1rem; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600; font-family: inherit;
+    color: var(--secondary-color); cursor: pointer; transition: var(--transition);
+}
+.view-more-btn:hover { background: var(--secondary-color); color: white; border-color: var(--secondary-color); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.pagination-info {
+    font-size: 0.68rem; color: var(--text-light); font-weight: 500;
+}
+
+/* Date selection info */
+.selected-date-info {
+    background: var(--secondary-light); border-radius: 8px;
+    padding: 0.4rem 0.65rem; margin-bottom: 0.65rem;
+    font-size: 0.75rem; color: var(--secondary-color); font-weight: 500;
+    display: none; align-items: center; gap: 0.4rem;
+}
+.selected-date-info.visible { display: flex; }
+.clear-date {
+    background: none; border: none; color: var(--primary-color);
+    cursor: pointer; font-size: 0.7rem; font-weight: 600;
+    margin-left: auto; text-decoration: underline;
+}
+
+/* ===== CTA Popup Toast ===== */
+.cta-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9000;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+    border: 1px solid var(--gray-300);
+    padding: 1.1rem 1.25rem;
+    max-width: 340px;
+    width: calc(100% - 2rem);
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .4s ease;
+    pointer-events: none;
+}
+.cta-toast.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+.cta-toast-close {
+    position: absolute; top: .5rem; right: .6rem;
+    background: none; border: none; cursor: pointer;
+    color: var(--gray-500); font-size: 1.1rem; line-height: 1;
+    padding: .15rem; border-radius: 4px; transition: color .2s;
+}
+.cta-toast-close:hover { color: var(--text-color); }
+.cta-toast-title {
+    font-size: .9rem; font-weight: 700; color: var(--secondary-color);
+    margin-bottom: .3rem; padding-right: 1.25rem;
+}
+.cta-toast-title::after {
+    content: ''; display: block; width: 24px; height: 2px;
+    background: var(--primary-color); margin-top: .35rem;
+}
+.cta-toast p {
+    font-size: .78rem; line-height: 1.5; color: var(--text-light); margin-bottom: .6rem;
+}
+.cta-toast-btns {
+    display: flex; gap: .45rem; flex-wrap: wrap;
+}
+.cta-toast-btn {
+    background: var(--secondary-color); color: var(--white);
+    padding: .4rem 1rem; border-radius: 20px; font-size: .76rem;
+    font-weight: 600; text-decoration: none; display: inline-flex;
+    align-items: center; justify-content: center;
+    transition: background .2s, transform .2s; border: none; cursor: pointer;
+}
+.cta-toast-btn:hover { background: var(--primary-color); transform: translateY(-1px); }
+.cta-toast-progress {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: var(--primary-color); border-radius: 0 0 12px 12px;
+    width: 100%; transform-origin: left;
+    animation: toastCountdown 5s linear forwards;
+    animation-play-state: paused;
+}
+.cta-toast.visible .cta-toast-progress { animation-play-state: running; }
+@keyframes toastCountdown { to { width: 0; } }
+@media (max-width: 480px) {
+    .cta-toast { right: .75rem; bottom: 1rem; max-width: calc(100% - 1.5rem); }
+}
+@media print { .cta-toast { display: none !important; } }
+
+/* ===== Footer ===== */
+footer {
+    background: var(--gray-100); color: var(--text-color); padding: 1rem 0 0.6rem;
+    position: relative; display: flex; justify-content: center; align-items: center;
+    flex-direction: column; border-top: 1px solid var(--gray-300);
+}
+.footer-content {
+    display: grid; grid-template-columns: 1fr 1.2fr 1.4fr 1fr;
+    gap: 1.25rem; width: var(--section-width); max-width: var(--section-max-width); margin: 0 auto;
+}
+.footer-section h4 {
+    color: var(--secondary-color); font-size: 0.95rem; margin-bottom: 0.75rem;
+    font-weight: 600; position: relative; display: inline-block;
+}
+.footer-section h4::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 24px; height: 2px; background: var(--primary-color); border-radius: 2px;
+}
+.footer-section ul { list-style: none; margin: 0; padding: 0; }
+.footer-section li { margin-bottom: 0.45rem; }
+.footer-section a { color: var(--text-light); transition: var(--transition); display: inline-block; padding: 0.15rem 0; font-size: 0.88rem; }
+.footer-section a:hover { color: var(--primary-color); transform: translateX(3px); }
+.footer-section address { font-style: normal; font-size: 0.88rem; color: var(--text-light); line-height: 1.6; }
+.footer-section p { font-size: 0.85rem; color: var(--text-light); line-height: 1.5; margin-bottom: 0.35rem; }
+.social-links { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+.social-links a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gray-200); transition: var(--transition); color: var(--secondary-color);
+}
+.social-links a:hover { background: var(--secondary-color); transform: translateY(-2px); color: var(--white); }
+.copyright {
+    text-align: center; margin-top: 1rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-300); font-size: 0.78rem; color: var(--text-light);
+    width: var(--section-width); max-width: var(--section-max-width); margin-left: auto; margin-right: auto;
+}
+
+/* ===== Back to Top ===== */
+.back-to-top {
+    position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px;
+    border-radius: 50%; background: var(--primary-color); color: var(--white);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+    z-index: 999; box-shadow: var(--shadow-md); font-size: 1.1rem; border: none;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--primary-dark); }
+
+/* ===== Event Detail Popup — glassmorphism ===== */
+.event-detail-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(18,41,74,0.3);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 3rem 2rem;
+}
+.event-detail-overlay.active { opacity: 1; visibility: visible; }
+.event-detail-popup {
+    background: rgba(255,255,255,0.72);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 16px;
+    width: 100%; max-width: 500px;
+    max-height: calc(100vh - 6rem); overflow-y: auto;
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.13),
+        0 4px 14px rgba(0,0,0,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+    animation: floatPopUp 0.3s cubic-bezier(0.22,1,0.36,1);
+    position: relative;
+}
+@keyframes floatPopUp {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.edp-close {
+    position: absolute; top: 0.6rem; right: 0.65rem; width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.06); border: none; border-radius: 50%;
+    font-size: 1rem; color: var(--text-light); cursor: pointer;
+    transition: all 0.2s; z-index: 5;
+}
+.edp-close:hover { background: var(--primary-color); color: white; }
+.edp-image { width: 100%; height: 170px; object-fit: cover; border-radius: 16px 16px 0 0; }
+.edp-body { padding: 1rem 1.25rem 1.35rem; }
+.edp-badges { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+.edp-badge {
+    padding: 0.2rem 0.55rem; border-radius: 12px;
+    font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
+}
+.edp-badge.type-conf { background: rgba(13,69,147,0.12); color: var(--secondary-color); }
+.edp-badge.type-work { background: rgba(42,157,143,0.12); color: #2a9d8f; }
+.edp-badge.type-web { background: rgba(131,56,236,0.12); color: #8338ec; }
+.edp-badge.status-open { background: rgba(72,187,120,0.12); color: #38a169; }
+.edp-badge.status-closing { background: rgba(237,137,54,0.12); color: #dd6b20; }
+.edp-badge.status-live { background: rgba(230,57,70,0.12); color: var(--primary-color); font-weight: 700; }
+.edp-badge.status-past { background: rgba(160,174,192,0.15); color: var(--gray-500); }
+.edp-title { font-size: 1.25rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.5rem; line-height: 1.3; }
+.edp-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem; }
+.edp-meta-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: var(--text-light); }
+.edp-meta-item strong { color: var(--text-color); }
+.edp-desc { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; margin-bottom: 1rem; }
+.edp-actions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+.edp-btn {
+    padding: 0.55rem 1.25rem; border-radius: 30px; font-size: 0.82rem;
+    font-weight: 600; cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+    display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none;
+}
+.edp-btn-primary { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+.edp-btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); transform: translateY(-2px); }
+.edp-btn-secondary { background: transparent; color: var(--secondary-color); border-color: var(--secondary-color); }
+.edp-btn-secondary:hover { background: var(--secondary-color); color: white; transform: translateY(-2px); }
+
+/* ===== Registration Modal ===== */
+.reg-overlay {
+    position: fixed; inset: 0; z-index: 9100;
+    background: rgba(18,41,74,0.35);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.reg-overlay.active { opacity: 1; visibility: visible; }
+.reg-modal {
+    background: rgba(255,255,255,0.82);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    backdrop-filter: blur(28px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 18px;
+    width: min(92vw, 420px);
+    max-height: min(90vh, 680px); overflow-y: auto;
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.13),
+        0 4px 14px rgba(0,0,0,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+    animation: floatPopUp 0.3s cubic-bezier(0.22,1,0.36,1);
+    position: relative;
+    flex-shrink: 0;
+}
+.reg-close {
+    position: absolute; top: 0.5rem; right: 0.55rem; width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.06); border: none; border-radius: 50%;
+    font-size: 0.9rem; color: var(--text-light); cursor: pointer;
+    transition: all 0.2s; z-index: 5;
+}
+.reg-close:hover { background: var(--primary-color); color: white; }
+/* Event banner inside modal */
+.reg-event-banner {
+    display: flex; gap: 0.6rem; align-items: center;
+    background: var(--secondary-color); color: white;
+    padding: 0.65rem 0.9rem; border-radius: 18px 18px 0 0;
+}
+.reg-event-img {
+    width: 48px; height: 40px; border-radius: 8px;
+    object-fit: cover; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.3);
+}
+.reg-event-info { flex: 1; min-width: 0; }
+.reg-event-badge {
+    font-size: 0.55rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; opacity: 0.8; margin-bottom: 0.1rem;
+}
+.reg-event-title {
+    font-size: 0.8rem; font-weight: 700; line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.reg-event-meta {
+    font-size: 0.65rem; opacity: 0.8; margin-top: 0.1rem;
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+/* Modal body */
+.reg-body { padding: 0.9rem 1rem; }
+.reg-title {
+    font-size: 0.88rem; font-weight: 700; color: var(--secondary-color);
+    margin-bottom: 0.15rem;
+}
+.reg-subtitle {
+    font-size: 0.68rem; color: var(--text-light); margin-bottom: 0.6rem;
+}
+.reg-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 0.45rem;
+}
+.reg-grid .full { grid-column: span 2; }
+.reg-label {
+    display: block; font-size: 0.68rem; font-weight: 600;
+    color: var(--text-color); margin-bottom: 1px;
+}
+.reg-label span { color: var(--primary-color); }
+.reg-input, .reg-select, .reg-textarea {
+    width: 100%; padding: 0.35rem 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px; font-family: inherit; font-size: 0.74rem;
+    background: rgba(255,255,255,0.8); color: var(--text-color);
+    transition: border 0.2s, box-shadow 0.2s;
+}
+.reg-input:focus, .reg-select:focus, .reg-textarea:focus {
+    outline: none; border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(13,69,147,0.08);
+}
+.reg-textarea { resize: vertical; min-height: 50px; }
+/* Payment chips (matching membership design) */
+.reg-payment-label {
+    font-size: 0.68rem; font-weight: 700; color: var(--secondary-color);
+    margin: 0.4rem 0 0.25rem; display: block; text-align: center;
+}
+.reg-pay-chips {
+    display: flex; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.35rem; justify-content: center;
+}
+.reg-pay-chip {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    padding: 0.28rem 0.6rem;
+    border: 1.5px solid var(--gray-300, #e2e8f0); border-radius: 20px;
+    cursor: pointer; transition: all 0.2s; background: rgba(255,255,255,0.5);
+    font-size: 0.68rem; font-weight: 600; color: var(--text-color);
+    font-family: inherit;
+}
+.reg-pay-chip:hover {
+    border-color: var(--secondary-color); background: rgba(13,69,147,0.04);
+}
+.reg-pay-chip.selected {
+    border-color: var(--primary-color); background: rgba(230,57,70,0.08); color: var(--primary-color);
+}
+.reg-chip-icon { font-size: 0.78rem; }
+.reg-chip-visa { font-weight: 900; font-style: italic; font-size: 0.65rem; letter-spacing: -0.5px; }
+.reg-chip-img { width: 18px; height: 18px; object-fit: contain; }
+.reg-mtn-chip { border-color: #ffcc00; background: rgba(255,204,0,0.06); }
+.reg-mtn-chip.selected { background: rgba(255,204,0,0.16); border-color: #ffcc00; }
+.reg-airtel-chip { border-color: #e4002b; background: rgba(228,0,0,0.03); }
+.reg-airtel-chip.selected { background: rgba(228,0,0,0.1); border-color: #e4002b; }
+.reg-bank-info {
+    background: rgba(13,69,147,0.06); border: 1px solid rgba(13,69,147,0.15);
+    border-radius: 8px; padding: 0.4rem 0.6rem; margin: 0.2rem 0;
+    font-size: 0.68rem; color: var(--text-color);
+}
+.reg-bank-info p { margin: 0.1rem 0; }
+/* Processing step indicator */
+.reg-process { text-align: center; padding: 1rem; }
+.reg-process-steps {
+    display: flex; align-items: center; justify-content: center; margin: 0.3rem 0 0.8rem;
+}
+.reg-proc-step { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.reg-proc-step span { font-size: 0.6rem; font-weight: 600; color: var(--text-light); }
+.reg-proc-dot {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 700;
+    border: 2px solid var(--gray-300); background: white; color: var(--text-light);
+    transition: all 0.3s;
+}
+.reg-proc-dot.active { border-color: var(--secondary-color); background: var(--secondary-color); color: white; }
+.reg-proc-dot.done { border-color: #27ae60; background: #27ae60; color: white; }
+.reg-proc-line {
+    width: 32px; height: 2px; background: var(--gray-300);
+    margin: 0 0.2rem; margin-bottom: 1rem; transition: background 0.3s;
+}
+.reg-proc-line.active { background: var(--secondary-color); }
+.reg-proc-line.done { background: #27ae60; }
+.reg-proc-spinner {
+    width: 32px; height: 32px;
+    border: 3px solid var(--gray-300); border-top-color: var(--secondary-color);
+    border-radius: 50%; margin: 0.4rem auto;
+    animation: regSpin 0.7s linear infinite;
+}
+@keyframes regSpin { to { transform: rotate(360deg); } }
+.reg-proc-msg { font-size: 0.78rem; font-weight: 600; color: var(--text-color); margin: 0.4rem 0 0.15rem; }
+.reg-proc-sub { font-size: 0.68rem; color: var(--text-light); margin: 0 0 0.2rem; }
+.reg-proc-countdown { font-size: 0.68rem; font-weight: 600; color: var(--primary-color); margin: 0.2rem 0; }
+/* Submit */
+.reg-submit {
+    width: 100%; background: var(--primary-color); color: white; border: none;
+    padding: 0.48rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+    font-family: inherit; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+}
+.reg-submit:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.reg-submit:active { transform: translateY(0); }
+/* Success state */
+.reg-success {
+    display: none; text-align: center; padding: 1.2rem 1rem;
+}
+.reg-success-icon {
+    width: 48px; height: 48px; background: rgba(56,161,105,0.12);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin: 0 auto 0.6rem;
+}
+.reg-success h3 {
+    font-size: 0.95rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 0.3rem;
+}
+.reg-success p {
+    font-size: 0.74rem; color: var(--text-light); line-height: 1.5; margin-bottom: 0.8rem;
+}
+.reg-back-btn {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    background: var(--secondary-color); color: white; border: none;
+    padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.74rem;
+    font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s;
+}
+.reg-back-btn:hover { background: var(--secondary-dark); transform: translateY(-1px); }
+@media (max-width: 600px) {
+    .reg-grid { grid-template-columns: 1fr; }
+    .reg-grid .full { grid-column: span 1; }
+    .reg-pay-chips { flex-direction: column; align-items: center; }
+    .reg-event-img { width: 40px; height: 34px; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px) {
+    .hero-image-container { max-height: 400px; }
+}
+@media (max-width: 992px) {
+    :root { --section-padding: 1.75rem; }
+    .hero-content { width: 55%; }
+    .hero-image-container { width: 50%; }
+    .calendar-layout { grid-template-columns: 1fr; }
+    .full-calendar { order: -1; max-width: 360px; }
+}
+@media (max-width: 768px) {
+    :root { --section-padding: 1.25rem; }
+    .hero-image-container { display: none; }
+    .page-hero { background: var(--gray-100); overflow: hidden; }
+    .hero-content { width: 100%; min-height: 0; }
+    .hero-inner { padding: 1.5rem var(--spacing-sm); min-height: 0; gap: 0; }
+    .filter-bar { gap: 0.5rem; }
+    .filter-group label { display: none; }
+    .full-calendar { max-width: 100%; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .event-detail-popup { max-width: 95%; }
+    .edp-image { height: 180px; }
+    .edp-body { padding: 1rem; }
+    .edp-title { font-size: 1.05rem; }
+}
+@media (max-width: 480px) {
+    :root { --section-padding: 1.1rem; }
+    .hero-stats { gap: 1rem; flex-wrap: wrap; }
+    .hero-stat-number { font-size: 1.2rem; }
+    .footer-content { grid-template-columns: 1fr; }
+    .spotlight-card img { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+/* Developer footer */
+.footer-dev-name { font-size:0.88rem; font-weight:600; color:var(--secondary-color); margin-bottom:0.35rem; }
+.footer-dev-contact { font-size:0.82rem; color:var(--text-light); margin-bottom:0.25rem; }
+.footer-dev-contact:last-child { margin-bottom:0; }
+.footer-dev-contact a { color:var(--text-light); }
+/* Registration modal elements */
+#reg-error-msg { display:none; background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:8px; padding:.4rem .7rem; margin-bottom:.4rem; font-size:.72rem; font-weight:500; }
+.reg-label-optional { color:var(--text-light); font-size:0.65rem; font-weight:400; }
+#reg-free-notice { display:none; }
+.reg-free-banner { background:linear-gradient(135deg,#e8f5e9,#c8e6c9); border-radius:8px; padding:0.5rem 0.7rem; text-align:center; font-weight:600; color:#2e7d32; font-size:0.74rem; }
+#reg-fee-display { display:none; background:linear-gradient(135deg,#fff3e0,#ffe0b2); border-radius:8px; padding:0.4rem 0.7rem; margin-bottom:0.3rem; text-align:center; font-weight:600; color:#e65100; font-size:0.74rem; }
+.reg-payment-required { color:var(--primary-color); }
+.reg-pay-desc { font-size:0.58rem; font-weight:400; color:var(--text-light); }
+.reg-success-actions { display:flex; gap:.4rem; justify-content:center; flex-wrap:wrap; margin-top:.4rem; }
+#reg-receipt-link { display:none; align-items:center; gap:.3rem; background:var(--primary-color); color:#fff; padding:.38rem .9rem; border-radius:20px; text-decoration:none; font-size:.74rem; font-weight:600; }
+</style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-container">
         <div class="logo">
-            <img src="img/hlogo2.png" alt="HOSU Logo">
+            <img src="img/logo2.png" alt="HOSU - Hematology &amp; Oncology Society of Uganda" loading="eager">
         </div>
         <div class="nav-links">
-            <a href="index.html">Home</a>           
+            <a href="index.html">Home</a>
             <a href="events.html">Events</a>
-            <a href="research.html">Research</a> 
-            <a href="membership.html">Membership</a>           
+            <a href="research.html">Research</a>
+            <a href="membership.html">Membership</a>
             <a href="about.html">About</a>
             <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
-            <a href="login.html" class="cta-button">Member Portal</a>
+            <div class="login-trigger-wrap">
+                <a href="#" class="cta-button login-trigger" onclick="toggleLoginPopup(event)">Member Portal</a>
+                <div class="login-float-popup" id="loginPopup"></div>
+            </div>
         </div>
-        <div class="menu-toggle" aria-label="Toggle navigation menu">☰</div>
-    </nav>
+        <div class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">&#9776;</div>
+    </div>
+</nav>
 
-    <!-- Page Header -->
-    <header class="page-header">
-        <div class="header-content">
-            <h1>Events & Conferences</h1>
-            <p>Join us for conferences, workshops, and webinars designed to advance oncology care and research in Uganda and beyond.</p>
+<!-- Hero — two-column layout matching home page -->
+<section class="page-hero">
+    <div class="hero-inner">
+        <!-- Left: text / slide content -->
+        <div class="hero-content" id="heroContent">
+            <!-- Slides built dynamically by JS -->
         </div>
-    </header>
-
-    <!-- Breadcrumbs -->
-    <div class="breadcrumbs">
-        <div class="breadcrumbs-container">
-            <ul class="breadcrumbs-list">
-                <li class="breadcrumbs-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumbs-item active">Events</li>
-            </ul>
+        <!-- Right: cycling background images, identical to home page hero-image-container -->
+        <div class="hero-image-container" id="heroImageContainer">
+            <div class="hero-background active"></div>
         </div>
     </div>
+</section>
 
-    <!-- Filters Section -->
-    <section class="events-filter">
-        
-        <div class="filter-container">
-        
-            <div class="filter-header">
-                <h2 class="filter-title">Filter Events</h2>
-                <span class="filter-count">Showing 9 events</span>
-                <a href="admin2.html" style="color:#007BFF; font-size:20px; font-weight:bold; text-decoration:none;">Add Event</a>
+<!-- Main Content — Calendar-Centric -->
+<section class="main-content">
+    <div class="main-inner">
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label for="filter-category">Category</label>
+                <select id="filter-category" class="filter-select">
+                    <option value="all">All Events</option>
+                    <option value="current">Happening Now</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="conferences">Conferences</option>
+                    <option value="workshops">Workshops</option>
+                    <option value="webinars">Webinars</option>
+                    <option value="featured">Featured</option>
+                    <option value="past">Past Events</option>
+                </select>
             </div>
-            <div class="filter-options">
-                <button class="filter-button" data-filter="current">Current <span class="count">1</span></button>
-                <button class="filter-button" data-filter="upcoming">Upcoming <span class="count">1</span></button>
-                <button class="filter-button active" data-filter="all">All Events <span class="count">9</span></button>
-                <button class="filter-button" data-filter="conference">Conferences <span class="count">3</span></button>
-                <button class="filter-button" data-filter="workshop">Workshops <span class="count">3</span></button>
-                <button class="filter-button" data-filter="webinar">Webinars <span class="count">3</span></button>
-                <button class="filter-button" data-filter="upcoming">Upcoming <span class="count">6</span></button>
-                <button class="filter-button" data-filter="past">Past <span class="count">3</span></button>
+            <div class="filter-search">
+                <span class="filter-search-icon">&#128269;</span>
+                <input type="text" id="search-input" placeholder="Search events...">
             </div>
-            <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Search events by title, location, or speaker...">
+            <span class="filter-count" id="filter-count">0 events</span>
+            <button class="filter-reset" id="filter-reset">Reset</button>
+        </div>
+
+        <!-- Events Panel + Compact Calendar -->
+        <div class="calendar-layout">
+
+            <!-- Event List Panel (primary) -->
+            <div class="event-panel">
+                <div class="event-panel-header">
+                    <h2 id="panel-title">&#128197; Events <span class="panel-count" id="panel-count">0</span></h2>
+                </div>
+                <div class="selected-date-info" id="selected-date-info">
+                    <span id="selected-date-text"></span>
+                    <button class="clear-date" id="clear-date">Clear</button>
+                </div>
+                <div class="event-panel-tabs" id="panel-tabs">
+                    <button class="panel-tab active" data-tab="all">All</button>
+                    <button class="panel-tab" data-tab="current">Live</button>
+                    <button class="panel-tab" data-tab="upcoming">Upcoming</button>
+                    <button class="panel-tab" data-tab="past">Past</button>
+                </div>
+                <div class="event-list" id="event-list"></div>
+                <div class="event-list-pagination" id="event-pagination"></div>
+            </div>
+
+            <!-- Compact Calendar (sidebar) -->
+            <div class="full-calendar">
+                <div class="cal-countdown" id="cal-countdown"></div>
+                <div class="cal-header">
+                    <button class="cal-nav" id="cal-prev" aria-label="Previous month">&#9664;</button>
+                    <span class="cal-title" id="cal-title"></span>
+                    <button class="cal-nav" id="cal-next" aria-label="Next month">&#9654;</button>
+                </div>
+                <div class="cal-grid" id="cal-grid"></div>
+                <div class="cal-legend">
+                    <span class="cal-legend-item"><span class="cal-legend-dot dot-live"></span> Happening Now</span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot dot-event"></span> Upcoming</span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot dot-today"></span> Today</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA Popup Toast -->
+<div class="cta-toast" id="ctaToast">
+    <button class="cta-toast-close" aria-label="Close" onclick="dismissToast()">&times;</button>
+    <div class="cta-toast-title">Don't Miss Out</div>
+    <p>Join HOSU for early access to events, workshops &amp; member-only webinars.</p>
+    <div class="cta-toast-btns">
+        <a href="membership.html" class="cta-toast-btn">Become a Member</a>
+        <a href="contact.html" class="cta-toast-btn">Contact Us</a>
+    </div>
+    <div class="cta-toast-progress"></div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="about.html">About HOSU</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="events.html">Events</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <address>
+                HOSU Headquarters<br>
+                Kampala, Uganda<br>
+                <a href="tel:+256123456789">+256 (123) 456-789</a><br>
+                <a href="mailto:info@hosu.org">info@hosu.org</a>
+            </address>
+        </div>
+        <div class="footer-section">
+            <h4>Stay Connected</h4>
+            <p>Follow us on social media for the latest updates and announcements.</p>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+                </a>
+                <a href="#" aria-label="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg>
+                </a>
             </div>
         </div>
-        
-    </section>
-
-    <!-- Events Section -->
-    <section class="events-section">
-        <div class="events-container">
-            <!-- Featured Events -->
-            <div class="featured-events">
-                <div class="section-header">
-                    <h2 class="section-title">Featured Events</h2>
-                    <div class="view-options">
-                        <button class="view-button active" aria-label="Grid view">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
-                            </svg>
-                        </button>
-                        <button class="view-button" aria-label="List view">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            
-                <div class="carousel-container">
-                    <div class="carousel-track" id="featured-carousel" style="display: flex; align-items: stretch;"></div>
-                    <div class="carousel-progress"></div>
-                </div>
-            
-                <div class="carousel-controls">
-                    <div class="carousel-arrows">
-                        <button class="carousel-arrow prev" aria-label="Previous slide">❮</button>
-                        <button class="carousel-arrow next" aria-label="Next slide">❯</button>
-                    </div>
-                    <div class="carousel-dots" id="carousel-dots"></div>
-                </div>
+        <div class="footer-section">
+            <h4>Developer</h4>
+            <div>
+                <p class="footer-dev-name">TattuIntel</p>
+                <p class="footer-dev-contact"><a href="tel:+256770495837">+256 770 495837</a></p>
+                <p class="footer-dev-contact"><a href="mailto:tattuintel@gmail.com">tattuintel@gmail.com</a></p>
             </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2026 Hematology &amp; Oncology Society of Uganda. All rights reserved.</p>
+    </div>
+</footer>
 
-            <!-- Current Events Section -->
-            <section id="current-events" class="scroll-target">
-                <div class="category-header">
-                    <div class="category-icon">🔥</div>
-                    <div class="category-content">
-                        <h2 class="category-title">Current Events</h2>
-                        <p class="category-description">Join our ongoing or imminent events focused on innovations in healthcare.</p>
+<button class="back-to-top" aria-label="Back to top">&#8593;</button>
+
+<!-- Event Detail Popup -->
+<div class="event-detail-overlay" id="eventDetailOverlay">
+    <div class="event-detail-popup" id="eventDetailPopup">
+        <button class="edp-close" id="edp-close">&times;</button>
+        <div id="edp-content"></div>
+    </div>
+</div>
+
+<!-- Registration Modal -->
+<div class="reg-overlay" id="regOverlay">
+    <div class="reg-modal" id="regModal">
+        <button class="reg-close" id="reg-close">&times;</button>
+        <!-- Event banner -->
+        <div class="reg-event-banner" id="reg-event-banner">
+            <img class="reg-event-img" id="reg-event-img" src="" alt="">
+            <div class="reg-event-info">
+                <div class="reg-event-badge" id="reg-event-badge">Conference</div>
+                <div class="reg-event-title" id="reg-event-title">Event Title</div>
+                <div class="reg-event-meta" id="reg-event-meta"></div>
+            </div>
+        </div>
+        <!-- Form -->
+        <div class="reg-body" id="reg-form-area">
+            <div id="reg-error-msg"></div>
+            <div class="reg-title">Register for this Event</div>
+            <div class="reg-subtitle">Complete the form below — we'll send confirmation to your email</div>
+            <form id="reg-form" novalidate>
+                <div class="reg-grid">
+                    <div>
+                        <label class="reg-label" for="reg-firstName">First Name <span>*</span></label>
+                        <input class="reg-input" type="text" id="reg-firstName" name="firstName" required placeholder="John">
                     </div>
-                </div>
-                <div class="events-grid" id="current-events-grid"></div>
-            </section>
-
-                        <!-- Upcoming Events Section -->
-                        <section id="upcoming-events" class="scroll-target">
-                            <div class="category-header">
-                                <div class="category-icon">⏳</div>
-                                <div class="category-content">
-                                    <h2 class="category-title">Upcoming Events</h2>
-                                    <p class="category-description">Explore our upcoming conferences, workshops, and webinars advancing healthcare technology.</p>
-                                </div>
-                            </div>
-                            <div class="events-grid" id="upcoming-events-grid"></div>
-                        </section>
-            <!-- Conference Events Section -->
-           <!-- Conference Events Section -->
-            <section id="conference-events" class="scroll-target">
-                <div class="category-header">
-                    <div class="category-icon">🎓</div>
-                    <div class="category-content">
-                        <h2 class="category-title">Conferences</h2>
-                        <p class="category-description">Join our flagship conferences featuring keynote speakers, research presentations, and networking opportunities with leading oncology professionals.</p>
+                    <div>
+                        <label class="reg-label" for="reg-lastName">Last Name <span>*</span></label>
+                        <input class="reg-input" type="text" id="reg-lastName" name="lastName" required placeholder="Doe">
                     </div>
-                </div>
-                <div class="events-grid" id="conference-events-grid"></div>
-            </section>
-
-                        <!-- Workshop Events Section -->
-            <section id="workshop-events" class="scroll-target">
-                <div class="category-header">
-                    <div class="category-icon">👨‍🔬</div>
-                    <div class="category-content">
-                        <h2 class="category-title">Workshops</h2>
-                        <p class="category-description">Hands-on workshops focusing on practical skills and the latest techniques in oncology treatment and research.</p>
+                    <div>
+                        <label class="reg-label" for="reg-email">Email Address <span>*</span></label>
+                        <input class="reg-input" type="email" id="reg-email" name="email" required placeholder="you@example.com">
                     </div>
-                </div>
-                <div class="events-grid" id="workshop-events-grid"></div>
-            </section>
-
-                        <!-- Webinar Events Section -->
-            <section id="webinar-events" class="scroll-target">
-                <div class="category-header">
-                    <div class="category-icon">💻</div>
-                    <div class="category-content">
-                        <h2 class="category-title">Webinars</h2>
-                        <p class="category-description">Online educational sessions covering the latest research, treatments, and best practices in oncology care.</p>
+                    <div>
+                        <label class="reg-label" for="reg-phone">Phone Number <span>*</span></label>
+                        <input class="reg-input" type="tel" id="reg-phone" name="phone" required placeholder="+256 7XX XXX XXX">
                     </div>
-                </div>
-                <div class="events-grid" id="webinar-events-grid"></div>
-            </section>
-
-
-            <!-- Past Events Section -->
-            <div class="past-events" id="past-events">
-                <div class="past-events-header">
-                    <h2 class="past-events-title">
-                        <span>Past Events</span>
-                        <span class="toggle-icon">▼</span>
-                    </h2>
-                    <div class="filter-count">3 events</div>
-                </div>
-                <div class="past-events-content">
-                    <div class="events-grid" id="past-events-grid"></div>
-
-                    <!-- Resources Section -->
-                    <div class="resources-card">
-                        <div class="resources-icon">📚</div>
-                        <div class="resources-content">
-                            <h3 class="resources-title">Event Resources</h3>
-                            <p class="resources-description">Access presentations, recordings, and materials from our past events.</p>
-                            <div class="resources-links">
-                                <a href="#" class="resource-link">📊 Presentation Slides</a>
-                                <a href="#" class="resource-link">🎥 Event Recordings</a>
-                                <a href="#" class="resource-link">📝 Research Papers</a>
-                                <a href="#" class="resource-link">📋 Conference Proceedings</a>
-                            </div>
+                    <div>
+                        <label class="reg-label" for="reg-institution">Institution / Organization <span class="reg-label-optional">(optional)</span></label>
+                        <input class="reg-input" type="text" id="reg-institution" name="institution" placeholder="Makerere University">
+                    </div>
+                    <div>
+                        <label class="reg-label" for="reg-position">Position / Title</label>
+                        <input class="reg-input" type="text" id="reg-position" name="position" placeholder="Oncologist">
+                    </div>
+                    <!-- Free event notice (hidden by default) -->
+                    <div class="full" id="reg-free-notice">
+                        <div class="reg-free-banner">&#127881; This is a <strong>FREE</strong> event — no payment required!</div>
+                    </div>
+                    <!-- Paid event fee + payment methods -->
+                    <div class="full" id="reg-payment-section">
+                        <div id="reg-fee-display">Registration Fee: <span id="reg-fee-amount"></span></div>
+                        <label class="reg-payment-label">Payment Method <span class="reg-payment-required">*</span></label>
+                        <div class="reg-pay-chips" id="reg-pay-chips">
+                            <button type="button" class="reg-pay-chip" data-method="bank" onclick="window._regSelectPay('bank')">
+                                <span class="reg-chip-icon">&#127974;</span> Bank
+                            </button>
+                            <button type="button" class="reg-pay-chip" data-method="visa" onclick="window._regSelectPay('visa')">
+                                <span class="reg-chip-icon reg-chip-visa">VISA</span> Visa
+                            </button>
+                            <button type="button" class="reg-pay-chip reg-mtn-chip" data-method="mtn" onclick="window._regSelectPay('mtn')">
+                                <img src="img/mtn.png" alt="MTN" class="reg-chip-img"> MTN
+                            </button>
+                            <button type="button" class="reg-pay-chip reg-airtel-chip" data-method="airtel" onclick="window._regSelectPay('airtel')">
+                                <img src="img/airtel.png" alt="Airtel" class="reg-chip-img"> Airtel
+                            </button>
+                        </div>
+                        <div id="reg-bank-info" class="reg-bank-info" style="display:none">
+                            <p><strong>Account:</strong> HOSU Limited</p>
+                            <p><strong>No:</strong> 9030025235214</p>
+                            <p><strong>Bank:</strong> Stanbic Bank, Mulago</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" aria-label="Back to top">↑</button>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="about.html">About HOSU</a></li>
-                    <li><a href="membership.html">Membership Benefits</a></li>
-                    <li><a href="research.html">Research Initiatives</a></li>
-                    <li><a href="leadership.html">Society Leadership</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <address>
-                    HOSU Headquarters<br>
-                    Kampala, Uganda<br>
-                    <a href="tel:+256123456789">+256 (123) 456-789</a><br>
-                    <a href="mailto:info@hosu.org">info@hosu.org</a>
-                </address>
-            </div>
-            <div class="footer-section">
-                <h4>Stay Connected</h4>
-                <p>Follow us on social media for the latest updates and announcements.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <h4>Designed By
-                </h4>
-                <div class="partner-logo" style="height: 70px; max-width: 150px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-                    <img src="img/calogo.jpg" alt="Partner Logo" loading="lazy" style="max-height: 100%; max-width: 100%; object-fit: contain; filter: none; opacity: 1;">
-                </div>
+                <button type="submit" class="reg-submit">&#128221; Complete Registration</button>
+            </form>
+        </div>
+        <!-- Success state -->
+        <div class="reg-success" id="reg-success">
+            <div class="reg-success-icon">&#10003;</div>
+            <h3>Registration Confirmed!</h3>
+            <p>Thank you for registering for <strong id="reg-confirmed-title"></strong>. <span id="reg-confirmed-msg">A confirmation email has been sent to your inbox.</span></p>
+            <div class="reg-success-actions">
+                <a id="reg-receipt-link" href="#" target="_blank">🧾 View Receipt</a>
+                <button class="reg-back-btn" id="reg-back-btn">&#8592; Back to Events</button>
             </div>
         </div>
-        <div class="copyright">
-            <p>© 2024 Hematology & Oncology Society of Uganda. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-
-function openRegistrationForm(eventId) {
-    // You can customize this form as needed
-    const formHtml = `
-        <div class="registration-modal">
-            <div class="modal-content">
-                <h2>Register for Event</h2>
-                <form id="event-registration-form">
-                    <input type="hidden" name="eventId" value="${eventId}">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <button type="submit">Submit Registration</button>
-                </form>
+        <!-- Processing modal -->
+        <div class="reg-process" id="reg-process" style="display:none">
+            <div class="reg-process-steps">
+                <div class="reg-proc-step"><div class="reg-proc-dot active" id="reg-pd1">1</div><span>Register</span></div>
+                <div class="reg-proc-line" id="reg-pl1"></div>
+                <div class="reg-proc-step"><div class="reg-proc-dot" id="reg-pd2">2</div><span>Authorize</span></div>
+                <div class="reg-proc-line" id="reg-pl2"></div>
+                <div class="reg-proc-step"><div class="reg-proc-dot" id="reg-pd3">3</div><span>Receipt</span></div>
             </div>
+            <div class="reg-proc-spinner" id="reg-spinner"></div>
+            <p class="reg-proc-msg" id="reg-proc-msg">Processing, please wait...</p>
+            <p class="reg-proc-sub" id="reg-proc-sub"></p>
+            <div id="reg-countdown" class="reg-proc-countdown" style="display:none"></div>
+            <button class="reg-submit" id="reg-proc-close" style="display:none" onclick="window._regBackToForm()">Close</button>
         </div>
-    `;
-    
-    // Create and show the modal
-    const modal = document.createElement('div');
-    modal.innerHTML = formHtml;
-    document.body.appendChild(modal);
-    
-    // Handle form submission
-    modal.querySelector('#event-registration-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Handle form submission here (AJAX call, etc.)
-        alert('Registration submitted!');
-        document.body.removeChild(modal);
-    });
-    
-    // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            document.body.removeChild(modal);
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // eventsData is populated from the database via fetch
+    var eventsData = { featured:[], current:[], upcoming:[], conferences:[], workshops:[], webinars:[], past:[] };
+    var _regCurrentEvent = null;  // tracks which event the registration modal is open for
+
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function parseEventDate(dateStr, ev) {
+        // Prefer date_start (ISO format) if available on the event object
+        if (ev && ev.date_start) {
+            var parts = ev.date_start.split('-');
+            if (parts.length === 3) return new Date(+parts[0], +parts[1] - 1, +parts[2]);
         }
+        var m = dateStr.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
+        if (m) return new Date(+m[3], MONTHS.indexOf(m[1]), +m[2]);
+        return null;
+    }
+
+    function parseEventEndDate(ev) {
+        if (ev && ev.date_end) {
+            var parts = ev.date_end.split('-');
+            if (parts.length === 3) return new Date(+parts[0], +parts[1] - 1, +parts[2]);
+        }
+        return parseEventDate(ev ? ev.date : '', ev);
+    }
+
+    function getAllEvents() {
+        var all = [];
+        // Priority order: current first, then upcoming, then type-specific, then past last
+        var categories = ['current','upcoming','featured','conferences','workshops','webinars','past'];
+        for (var i = 0; i < categories.length; i++) {
+            var cat = categories[i];
+            var arr = eventsData[cat] || [];
+            for (var j = 0; j < arr.length; j++) {
+                all.push(Object.assign({}, arr[j], { _category: cat }));
+            }
+        }
+        return all;
+    }
+
+    function getUniqueEvents() {
+        var all = getAllEvents();
+        var seen = {};
+        return all.filter(function(ev) {
+            // Deduplicate by title+date to catch same events with different IDs
+            var key = (ev.title + '|' + ev.date).toLowerCase();
+            if (seen[key]) return false;
+            seen[key] = true;
+            return true;
+        });
+    }
+
+    // Sort: current/live first, then upcoming, then by date (newest first), past last
+    function sortByPriority(events) {
+        var categoryOrder = { 'current': 0, 'upcoming': 1, 'featured': 2, 'conferences': 3, 'workshops': 3, 'webinars': 3, 'past': 4 };
+        return events.slice().sort(function(a, b) {
+            // Status priority
+            var aCat = categoryOrder[a._category] !== undefined ? categoryOrder[a._category] : 3;
+            var bCat = categoryOrder[b._category] !== undefined ? categoryOrder[b._category] : 3;
+            // Override: if status is past, treat as past regardless of _category
+            if (a.status === 'past' && a._category !== 'current') aCat = 4;
+            if (b.status === 'past' && b._category !== 'current') bCat = 4;
+            if (aCat !== bCat) return aCat - bCat;
+            // Same priority group: sort by date (nearest future first, then most recent past)
+            var da = parseEventDate(a.date, a), db = parseEventDate(b.date, b);
+            if (!da) return 1; if (!db) return -1;
+            // Within upcoming/current: soonest first; within past: most recent first
+            if (aCat <= 1) return da.getTime() - db.getTime();
+            return db.getTime() - da.getTime();
+        });
+    }
+
+    // ===== Calendar =====
+    var calMonth, calYear;
+    var allEventDates = {};
+    var selectedDateKey = null;
+    var currentPanelTab = 'all';
+    var countdownInterval = null;
+
+    function buildEventDatesMap() {
+        var all = getUniqueEvents();
+        allEventDates = {};
+        for (var i = 0; i < all.length; i++) {
+            var startD = parseEventDate(all[i].date, all[i]);
+            var endD = parseEventEndDate(all[i]);
+            if (startD) {
+                // Map every day from start to end (inclusive)
+                var cursor = new Date(startD.getTime());
+                var limit = endD ? endD : startD;
+                // Safety cap: max 60 days per event
+                var maxDays = 60, count = 0;
+                while (cursor <= limit && count < maxDays) {
+                    var key = cursor.getFullYear() + '-' + String(cursor.getMonth() + 1).padStart(2, '0') + '-' + String(cursor.getDate()).padStart(2, '0');
+                    if (!allEventDates[key]) allEventDates[key] = [];
+                    allEventDates[key].push(all[i]);
+                    cursor.setDate(cursor.getDate() + 1);
+                    count++;
+                }
+            }
+        }
+    }
+
+    function navigateCalendarToEvent(ev) {
+        var d = parseEventDate(ev.date, ev);
+        if (d) {
+            calMonth = d.getMonth();
+            calYear = d.getFullYear();
+            var key = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            selectedDateKey = key;
+            renderCalendar();
+        }
+    }
+
+    function getNextEvent() {
+        var now = new Date();
+        var current = eventsData.current || [];
+        if (current.length > 0) return current[0];
+        var upcoming = eventsData.upcoming || [];
+        if (upcoming.length > 0) return upcoming[0];
+        // Find nearest future event from all
+        var all = getUniqueEvents();
+        var nearest = null, nearestDiff = Infinity;
+        for (var i = 0; i < all.length; i++) {
+            var d = parseEventDate(all[i].date, all[i]);
+            if (d) {
+                var diff = d.getTime() - now.getTime();
+                if (diff > 0 && diff < nearestDiff) {
+                    nearestDiff = diff;
+                    nearest = all[i];
+                }
+            }
+        }
+        return nearest;
+    }
+
+    function updateCountdown() {
+        var container = document.getElementById('cal-countdown');
+        var targetEvent = getNextEvent();
+        if (!targetEvent) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = 'block';
+        var d = parseEventDate(targetEvent.date, targetEvent);
+        if (!d) { container.style.display = 'none'; return; }
+        var now = new Date();
+        var diff = d.getTime() - now.getTime();
+        var label, days, hours, mins, secs;
+
+        if (targetEvent._category === 'current' || diff <= 0) {
+            label = '&#128308; HAPPENING NOW';
+            days = 0; hours = 0; mins = 0; secs = 0;
+            // Show time since start
+            var elapsed = Math.abs(diff);
+            days = Math.floor(elapsed / 86400000);
+            hours = Math.floor((elapsed % 86400000) / 3600000);
+            mins = Math.floor((elapsed % 3600000) / 60000);
+            secs = Math.floor((elapsed % 60000) / 1000);
+            container.innerHTML = '<div class="cal-countdown-label">' + label + '</div>'
+                + '<div class="cal-countdown-event">' + targetEvent.title + '</div>'
+                + '<div class="cal-countdown-timer">'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + days + '</span><span class="cal-countdown-text">Days</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + hours + '</span><span class="cal-countdown-text">Hrs</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + mins + '</span><span class="cal-countdown-text">Min</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + secs + '</span><span class="cal-countdown-text">Sec</span></div>'
+                + '</div>';
+        } else {
+            label = '&#9203; NEXT EVENT IN';
+            days = Math.floor(diff / 86400000);
+            hours = Math.floor((diff % 86400000) / 3600000);
+            mins = Math.floor((diff % 3600000) / 60000);
+            secs = Math.floor((diff % 60000) / 1000);
+            container.innerHTML = '<div class="cal-countdown-label">' + label + '</div>'
+                + '<div class="cal-countdown-event">' + targetEvent.title + '</div>'
+                + '<div class="cal-countdown-timer">'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + days + '</span><span class="cal-countdown-text">Days</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + hours + '</span><span class="cal-countdown-text">Hrs</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + mins + '</span><span class="cal-countdown-text">Min</span></div>'
+                + '<div class="cal-countdown-unit"><span class="cal-countdown-value">' + secs + '</span><span class="cal-countdown-text">Sec</span></div>'
+                + '</div>';
+        }
+    }
+
+    function renderCalendar() {
+        var title = document.getElementById('cal-title');
+        var grid = document.getElementById('cal-grid');
+        title.textContent = MONTHS[calMonth] + ' ' + calYear;
+
+        var html = '';
+        var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        for (var d = 0; d < 7; d++) {
+            html += '<span class="cal-day-name">' + dayNames[d] + '</span>';
+        }
+
+        var firstDay = new Date(calYear, calMonth, 1).getDay();
+        var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+        var daysInPrev = new Date(calYear, calMonth, 0).getDate();
+        var today = new Date();
+
+        for (var i = firstDay - 1; i >= 0; i--) {
+            html += '<span class="cal-day other-month">' + (daysInPrev - i) + '</span>';
+        }
+
+        for (var day = 1; day <= daysInMonth; day++) {
+            var key = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+            var isToday = (day === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear());
+            var eventsForDay = allEventDates[key];
+            var classes = 'cal-day';
+            if (isToday) classes += ' today';
+            if (eventsForDay) {
+                classes += ' has-event';
+                if (eventsForDay.length > 1) classes += ' has-multi';
+                var hasLive = eventsForDay.some(function(e) { return e._category === 'current'; });
+                var hasUpcoming = eventsForDay.some(function(e) { return e._category === 'upcoming'; });
+                var hasPast = eventsForDay.some(function(e) { return e._category === 'past'; });
+                if (hasLive) classes += ' has-live';
+                else if (hasUpcoming) classes += ' has-upcoming';
+                else if (hasPast) classes += ' has-past';
+            }
+            if (key === selectedDateKey) classes += ' selected';
+            var tooltipAttr = eventsForDay ? ' title="' + eventsForDay.map(function(e){return e.title;}).join(', ').replace(/"/g,'&quot;') + '"' : '';
+            html += '<span class="' + classes + '"' + tooltipAttr + ' data-date="' + key + '">' + day + '</span>';
+        }
+
+        var totalCells = firstDay + daysInMonth;
+        var remaining = (7 - (totalCells % 7)) % 7;
+        for (var n = 1; n <= remaining; n++) {
+            html += '<span class="cal-day other-month">' + n + '</span>';
+        }
+
+        grid.innerHTML = html;
+
+        // Click handler
+        var eventDays = grid.querySelectorAll('.cal-day.has-event');
+        for (var e = 0; e < eventDays.length; e++) {
+            eventDays[e].addEventListener('click', function() {
+                var dateKey = this.getAttribute('data-date');
+                if (selectedDateKey === dateKey) {
+                    selectedDateKey = null;
+                } else {
+                    selectedDateKey = dateKey;
+                }
+                visibleEventCount = EVENTS_PER_PAGE;
+                renderCalendar();
+                renderEventPanel();
+            });
+        }
+    }
+
+    // ===== Event Panel =====
+    function getFilteredEvents() {
+        var category = document.getElementById('filter-category').value;
+        var search = document.getElementById('search-input').value.trim().toLowerCase();
+        var events;
+
+        if (category === 'all') {
+            events = getUniqueEvents();
+        } else {
+            events = (eventsData[category] || []).map(function(e) {
+                return Object.assign({}, e, { _category: category });
+            });
+        }
+
+        // Search filter
+        if (search) {
+            events = events.filter(function(ev) {
+                var text = (ev.title + ' ' + ev.description + ' ' + ev.location + ' ' + ev.type + ' ' + ev.date).toLowerCase();
+                return text.indexOf(search) !== -1;
+            });
+        }
+
+        // Tab filter
+        if (currentPanelTab === 'current') {
+            events = events.filter(function(ev) { return ev._category === 'current' || ev.countdown === 'Happening Now'; });
+        } else if (currentPanelTab === 'upcoming') {
+            events = events.filter(function(ev) { return ev._category === 'upcoming' || (ev.status === 'open' && ev._category !== 'current' && ev._category !== 'past'); });
+        } else if (currentPanelTab === 'past') {
+            events = events.filter(function(ev) { return ev.status === 'past' || ev._category === 'past'; });
+        }
+
+        // Date selection filter
+        if (selectedDateKey) {
+            var dateEvents = allEventDates[selectedDateKey] || [];
+            var dateIds = dateEvents.map(function(e) { return e.id; });
+            events = events.filter(function(ev) { return dateIds.indexOf(ev.id) !== -1; });
+        }
+
+        return sortByPriority(events);
+    }
+
+    var EVENTS_PER_PAGE = 5;
+    var visibleEventCount = EVENTS_PER_PAGE;
+
+    function renderEventPanel() {
+        var events = getFilteredEvents();
+        var list = document.getElementById('event-list');
+        var countEl = document.getElementById('panel-count');
+        var filterCountEl = document.getElementById('filter-count');
+        var paginationEl = document.getElementById('event-pagination');
+
+        countEl.textContent = events.length;
+        filterCountEl.textContent = events.length + ' event' + (events.length !== 1 ? 's' : '');
+
+        // Selected date info
+        var dateInfo = document.getElementById('selected-date-info');
+        var dateText = document.getElementById('selected-date-text');
+        if (selectedDateKey) {
+            var parts = selectedDateKey.split('-');
+            var dateObj = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+            dateText.textContent = MONTHS[dateObj.getMonth()] + ' ' + dateObj.getDate() + ', ' + dateObj.getFullYear();
+            dateInfo.classList.add('visible');
+        } else {
+            dateInfo.classList.remove('visible');
+        }
+
+        if (events.length === 0) {
+            list.innerHTML = '<div class="event-list-empty">No events found' + (selectedDateKey ? ' on this date' : '') + '. Try a different filter or date.</div>';
+            paginationEl.innerHTML = '';
+            return;
+        }
+
+        // Show only up to visibleEventCount
+        var showing = Math.min(visibleEventCount, events.length);
+        var html = '';
+        for (var i = 0; i < showing; i++) {
+            var ev = events[i];
+            var badgeCls = 'badge-conf';
+            var badgeText = ev.type;
+            if (ev._category === 'current' || ev.countdown === 'Happening Now') {
+                badgeCls = 'badge-live'; badgeText = 'LIVE';
+            } else if (ev._category === 'upcoming') {
+                badgeCls = 'badge-upcoming'; badgeText = 'UPCOMING';
+            } else if (ev.status === 'past' || ev._category === 'past') {
+                badgeCls = 'badge-past'; badgeText = 'PAST';
+            } else if (ev.type === 'workshop') {
+                badgeCls = 'badge-work';
+            } else if (ev.type === 'webinar') {
+                badgeCls = 'badge-web';
+            }
+
+            html += '<div class="spotlight-card" data-event-id="' + ev.id + '">'
+                + '<img src="' + ev.image + '" alt="' + (ev.imageAlt || ev.title) + '" loading="lazy">'
+                + '<div class="spotlight-card-body">'
+                + '<div class="spotlight-card-title">' + ev.title + '</div>'
+                + '<div class="spotlight-card-meta"><span>' + ev.date + '</span><span>' + ev.location + '</span></div>'
+                + '</div>'
+                + '<span class="spotlight-card-badge ' + badgeCls + '">' + badgeText + '</span>'
+                + '</div>';
+        }
+        list.innerHTML = html;
+
+        // Pagination
+        var pagHtml = '<span class="pagination-info">Showing ' + showing + ' of ' + events.length + '</span>';
+        if (showing < events.length) {
+            pagHtml += '<button class="view-more-btn" id="view-more-btn">View More &#8595;</button>';
+        } else if (events.length > EVENTS_PER_PAGE) {
+            pagHtml += '<button class="view-more-btn" id="view-less-btn">Show Less &#8593;</button>';
+        }
+        paginationEl.innerHTML = pagHtml;
+
+        // View More click
+        var moreBtn = document.getElementById('view-more-btn');
+        if (moreBtn) {
+            moreBtn.addEventListener('click', function() {
+                visibleEventCount += EVENTS_PER_PAGE;
+                renderEventPanel();
+            });
+        }
+        // View Less click
+        var lessBtn = document.getElementById('view-less-btn');
+        if (lessBtn) {
+            lessBtn.addEventListener('click', function() {
+                visibleEventCount = EVENTS_PER_PAGE;
+                renderEventPanel();
+                // Scroll to top of event list
+                var panelEl = document.querySelector('.event-panel');
+                if (panelEl) panelEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+    }
+
+    // ===== Hero Dynamic Slides — home-page style =====
+    var heroSlideIndex = 0;
+    var heroSlides = []; // array of {title, desc, pills, image, statusBadge, statusCls, pulse, stats, event}
+    var heroTimer = null;
+
+    function buildHeroSlides() {
+        var container = document.getElementById('heroContent');
+        var all = getUniqueEvents();
+        var currentEvents = eventsData.current || [];
+        var upcomingEvents = eventsData.upcoming || [];
+        var pastEvents = eventsData.past || [];
+        var activeCount = currentEvents.length + upcomingEvents.length;
+        var types = {};
+        for (var i = 0; i < all.length; i++) types[all[i].type] = true;
+        var typeCount = Object.keys(types).length;
+        heroSlides = [];
+
+        // Slide 0: Default overview (always present)
+        var overviewDesc = '';
+        if (currentEvents.length > 0 && upcomingEvents.length > 0) {
+            overviewDesc = currentEvents.length + ' event' + (currentEvents.length > 1 ? 's' : '') + ' happening now and ' + upcomingEvents.length + ' upcoming. Join leading oncology professionals advancing cancer care across East Africa and beyond.';
+        } else if (currentEvents.length > 0) {
+            overviewDesc = currentEvents.length + ' event' + (currentEvents.length > 1 ? 's' : '') + ' happening right now! Join leading oncology professionals at our conferences, workshops, and webinars.';
+        } else if (upcomingEvents.length > 0) {
+            overviewDesc = upcomingEvents.length + ' upcoming event' + (upcomingEvents.length > 1 ? 's' : '') + ' to look forward to. Join oncology professionals at our conferences, workshops, and webinars.';
+        } else {
+            overviewDesc = 'Join leading oncology professionals at our conferences, workshops, and webinars advancing cancer care and research across East Africa and beyond.';
+        }
+        heroSlides.push({
+            title: 'Events & Conferences',
+            desc: overviewDesc,
+            pills: ['&#127891; Conferences', '&#128104;&#8205;&#128300; Workshops', '&#128187; Webinars'],
+            image: 'img/IMG_8005.jpg',
+            statusBadge: '',
+            statusCls: '',
+            pulse: false,
+            stats: [
+                { value: all.length, label: 'Total Events', id: 'stat-total' },
+                { value: activeCount, label: activeCount > 0 ? 'Current & Upcoming' : 'Past Events', id: 'stat-active' },
+                { value: typeCount, label: 'Event Types', id: 'stat-types' }
+            ],
+            event: null
+        });
+
+        // Dynamic slides for current events
+        for (var c = 0; c < currentEvents.length; c++) {
+            var ev = currentEvents[c];
+            heroSlides.push({
+                title: ev.title,
+                desc: ev.description,
+                pills: ['&#128308; Live Now', '&#128197; ' + ev.date, '&#128205; ' + ev.location],
+                image: ev.image,
+                statusBadge: 'Happening Now',
+                statusCls: 'live',
+                pulse: true,
+                stats: null,
+                event: ev
+            });
+        }
+
+        // Dynamic slides for upcoming events (max 3)
+        var upSlice = upcomingEvents.slice(0, 3);
+        for (var u = 0; u < upSlice.length; u++) {
+            var ev2 = upSlice[u];
+            heroSlides.push({
+                title: ev2.title,
+                desc: ev2.description,
+                pills: ['&#128197; ' + ev2.date, '&#128205; ' + ev2.location, '&#127915; ' + ev2.type],
+                image: ev2.image,
+                statusBadge: 'Coming Up Next',
+                statusCls: 'upcoming-status',
+                pulse: false,
+                stats: null,
+                event: ev2
+            });
+        }
+
+        // If no current/upcoming, add one past event slide
+        if (currentEvents.length === 0 && upcomingEvents.length === 0 && pastEvents.length > 0) {
+            var ev3 = pastEvents[0];
+            heroSlides.push({
+                title: ev3.title,
+                desc: ev3.description,
+                pills: ['&#128197; ' + ev3.date, '&#128205; ' + ev3.location, '&#127915; ' + ev3.type],
+                image: ev3.image,
+                statusBadge: 'Recent Event',
+                statusCls: 'past-status',
+                pulse: false,
+                stats: null,
+                event: ev3
+            });
+        }
+
+        // Build background images inside hero-image-container — identical to home page
+        var imgContainer = document.getElementById('heroImageContainer');
+        var existingBgs = imgContainer.querySelectorAll('.hero-background');
+        existingBgs.forEach(function(bg) { bg.remove(); });
+        for (var b = 0; b < heroSlides.length; b++) {
+            var bgDiv = document.createElement('div');
+            bgDiv.className = 'hero-background' + (b === 0 ? ' active' : '');
+            bgDiv.id = 'heroBg' + b;
+            bgDiv.style.backgroundImage = "url('" + heroSlides[b].image + "')";
+            imgContainer.appendChild(bgDiv);
+        }
+
+        // Build slides HTML
+        var html = '';
+        for (var s = 0; s < heroSlides.length; s++) {
+            var slide = heroSlides[s];
+            var activeClass = s === 0 ? ' active' : '';
+
+            html += '<div class="hero-slide' + activeClass + '" data-slide="' + s + '">';
+
+            // Status badge for dynamic event slides
+            if (slide.statusBadge) {
+                var pulseHtml = slide.pulse ? '<span class="pulse"></span>' : '';
+                html += '<div class="hero-status-badge ' + slide.statusCls + '">' + pulseHtml + slide.statusBadge + '</div>';
+            }
+
+            // Pills
+            html += '<div class="hero-pills">';
+            for (var p = 0; p < slide.pills.length; p++) {
+                html += '<span class="hero-pill">' + slide.pills[p] + '</span>';
+            }
+            html += '</div>';
+
+            // Title
+            html += '<h1>' + slide.title + '</h1>';
+
+            // Description
+            html += '<p>' + slide.desc + '</p>';
+
+            // Stats (only on overview slide)
+            if (slide.stats) {
+                html += '<div class="hero-stats">';
+                for (var st = 0; st < slide.stats.length; st++) {
+                    html += '<div class="hero-stat">'
+                        + '<span class="hero-stat-number" data-target="' + slide.stats[st].value + '">0</span>'
+                        + '<span class="hero-stat-label">' + slide.stats[st].label + '</span>'
+                        + '</div>';
+                }
+                html += '</div>';
+            }
+
+            // Register button for non-past event slides
+            if (slide.event && slide.event.status !== 'past' && slide.event._category !== 'past') {
+                html += '<button onclick="openRegModal(\'' + slide.event.id + '\')" class="hero-register-btn">&#128221; Register Now</button>';
+            }
+
+            html += '</div>';
+        }
+
+        // Dot indicators
+        html += '<div class="hero-indicators">';
+        for (var d = 0; d < heroSlides.length; d++) {
+            html += '<span class="hero-dot' + (d === 0 ? ' active' : '') + '" data-index="' + d + '"></span>';
+        }
+        html += '</div>';
+
+        container.innerHTML = html;
+
+        // Animate counters on first slide
+        animateVisibleCounters(0);
+
+        // Dot click handlers
+        var dots = container.querySelectorAll('.hero-dot');
+        for (var dk = 0; dk < dots.length; dk++) {
+            dots[dk].addEventListener('click', function() {
+                showHeroSlide(parseInt(this.getAttribute('data-index')));
+                resetHeroTimer();
+            });
+        }
+
+
+
+        // Start auto-cycling
+        if (heroSlides.length > 1) {
+            heroTimer = setInterval(function() {
+                showHeroSlide((heroSlideIndex + 1) % heroSlides.length);
+            }, 6000);
+        }
+    }
+
+    function showHeroSlide(index) {
+        var container = document.getElementById('heroContent');
+        var imgContainer = document.getElementById('heroImageContainer');
+        var slides = container.querySelectorAll('.hero-slide');
+        var dots = container.querySelectorAll('.hero-dot');
+        var bgs = imgContainer ? imgContainer.querySelectorAll('.hero-background') : [];
+
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        bgs.forEach(function(b) { b.classList.remove('active'); });
+
+        if (slides[index]) slides[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        if (bgs[index]) bgs[index].classList.add('active');
+        heroSlideIndex = index;
+
+        animateVisibleCounters(index);
+    }
+
+    function resetHeroTimer() {
+        clearInterval(heroTimer);
+        if (heroSlides.length > 1) {
+            heroTimer = setInterval(function() {
+                showHeroSlide((heroSlideIndex + 1) % heroSlides.length);
+            }, 6000);
+        }
+    }
+
+    function animateVisibleCounters(slideIndex) {
+        var container = document.getElementById('heroContent');
+        var slides = container.querySelectorAll('.hero-slide');
+        if (!slides[slideIndex]) return;
+        var counters = slides[slideIndex].querySelectorAll('.hero-stat-number');
+        counters.forEach(function(el) {
+            var target = parseInt(el.getAttribute('data-target')) || 0;
+            var current = 0;
+            var step = Math.max(1, Math.ceil(target / 30));
+            el.textContent = '0';
+            var timer = setInterval(function() {
+                current += step;
+                if (current >= target) { current = target; clearInterval(timer); }
+                el.textContent = current;
+            }, 40);
+        });
+    }
+
+    // updateHeroContent is now handled by buildHeroSlides
+    function updateHeroContent() { /* no-op, stats built into slides */ }
+
+    // ===== Event Detail Popup =====
+    function findEventById(id) {
+        var all = getUniqueEvents();
+        for (var i = 0; i < all.length; i++) {
+            if (all[i].id === id) return all[i];
+        }
+        return null;
+    }
+
+    function openEventDetail(eventId) {
+        var ev = findEventById(eventId);
+        if (!ev) return;
+
+        // Sync calendar to this event's date
+        navigateCalendarToEvent(ev);
+
+        var typeClass = ev.type === 'conference' ? 'type-conf' : ev.type === 'workshop' ? 'type-work' : 'type-web';
+        var statusClass = 'status-open';
+        var statusLabel = ev.status === 'open' ? 'Registration Open' : ev.status === 'closing' ? 'Closing Soon' : 'Past Event';
+        if (ev._category === 'current' || ev.countdown === 'Happening Now') { statusClass = 'status-live'; statusLabel = 'Happening Now'; }
+        else if (ev.status === 'closing') statusClass = 'status-closing';
+        else if (ev.status === 'past') statusClass = 'status-past';
+
+        var countdownHtml = ev.countdown ? '<div class="edp-meta-item"><strong>&#9200;</strong> ' + ev.countdown + '</div>' : '';
+        var actions = ev.status !== 'past'
+            ? '<button class="edp-btn edp-btn-primary" onclick="openRegModal(\'' + ev.id + '\')">&#128221; Register Now</button>'
+              + '<button class="edp-btn edp-btn-secondary" onclick="addToCalendarFromPopup()">&#128197; Add to Calendar</button>'
+            : '<a href="#" class="edp-btn edp-btn-secondary">&#128194; View Resources</a>';
+
+        var html = '<img class="edp-image" src="' + ev.image + '" alt="' + (ev.imageAlt || ev.title) + '">'
+            + '<div class="edp-body">'
+            + '<div class="edp-badges">'
+            + '<span class="edp-badge ' + typeClass + '">' + ev.type + '</span>'
+            + '<span class="edp-badge ' + statusClass + '">' + statusLabel + '</span>'
+            + (ev.featured ? '<span class="edp-badge" style="background:rgba(230,57,70,0.12);color:var(--primary-color);">&#11088; Featured</span>' : '')
+            + '</div>'
+            + '<h2 class="edp-title">' + ev.title + '</h2>'
+            + '<div class="edp-meta">'
+            + '<div class="edp-meta-item"><strong>&#128197;</strong> ' + ev.date + '</div>'
+            + '<div class="edp-meta-item"><strong>&#128205;</strong> ' + ev.location + '</div>'
+            + countdownHtml
+            + '</div>'
+            + '<p class="edp-desc">' + ev.description + '</p>'
+            + '<div class="edp-actions">' + actions + '</div>'
+            + '</div>';
+
+        document.getElementById('edp-content').innerHTML = html;
+        document.getElementById('eventDetailOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        window._currentDetailEvent = ev;
+    }
+
+    function closeEventDetail() {
+        document.getElementById('eventDetailOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ===== Registration Modal =====
+    function openRegModal(eventId) {
+        // Close detail popup if open
+        document.getElementById('eventDetailOverlay').classList.remove('active');
+
+        var ev = findEventById(eventId);
+        if (!ev) return;
+
+        // Populate banner
+        var img = document.getElementById('reg-event-img');
+        img.src = ev.image || ''; img.alt = ev.title;
+        document.getElementById('reg-event-title').textContent = ev.title;
+        document.getElementById('reg-event-badge').textContent = ev.type || 'Event';
+        var metaParts = [];
+        if (ev.date) metaParts.push('&#128197; ' + ev.date);
+        if (ev.location) metaParts.push('&#128205; ' + ev.location);
+        document.getElementById('reg-event-meta').innerHTML = metaParts.join('<span style="opacity:0.4"> | </span>');
+
+        // Determine free/paid
+        var isFree = ev.is_free === undefined ? true : !!parseInt(ev.is_free);
+        var fee = parseFloat(ev.event_fee) || 0;
+        if (isFree || fee <= 0) {
+            // Free event — hide payment, show notice
+            document.getElementById('reg-payment-section').style.display = 'none';
+            document.getElementById('reg-free-notice').style.display = 'block';
+        } else {
+            // Paid event — show payment methods and fee
+            document.getElementById('reg-payment-section').style.display = 'block';
+            document.getElementById('reg-free-notice').style.display = 'none';
+            document.getElementById('reg-fee-display').style.display = 'block';
+            document.getElementById('reg-fee-amount').textContent = 'UGX ' + fee.toLocaleString();
+        }
+
+        // Reset form
+        document.getElementById('reg-form').reset();
+        document.getElementById('reg-form-area').style.display = 'block';
+        document.getElementById('reg-success').style.display = 'none';
+        document.getElementById('reg-confirmed-title').textContent = ev.title;
+        var receiptLink = document.getElementById('reg-receipt-link');
+        if (receiptLink) { receiptLink.style.display = 'none'; receiptLink.href = '#'; }
+        var errMsg = document.getElementById('reg-error-msg');
+        if (errMsg) errMsg.style.display = 'none';
+        _regCurrentEvent = ev;
+
+        document.getElementById('regOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeRegModal() {
+        document.getElementById('regOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ===== Init =====
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show loading indicator in event list while fetching
+        var listEl = document.getElementById('event-list');
+        if (listEl) listEl.innerHTML = '<div class="event-list-empty" style="text-align:center;padding:2rem;">&#8987; Loading events…</div>';
+
+        fetch('api.php?action=get_events')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data && data.eventsData) {
+                    // Merge DB data into our eventsData object
+                    var cats = Object.keys(eventsData);
+                    cats.forEach(function(c) { eventsData[c] = data.eventsData[c] || []; });
+                }
+                initPage();
+            })
+            .catch(function() {
+                // Fallback: just init with empty data
+                initPage();
+            });
     });
-}
-// Function to create an event card
-function createEventCard(event, isCarousel = false) {
-    const featuredBadge = event.featured ? '<div class="featured-badge">Featured</div>' : '';
-    const statusTag = event.status !== 'past' 
-        ? `<span class="event-status" data-status="${event.status}">${event.status === 'open' ? 'Registration Open' : 'Closing Soon'}</span>` 
-        : '';
-    const countdownTag = event.countdown 
-        ? `<span class="event-countdown">${event.countdown}</span>` 
-        : '';
 
-        const actionButton = event.status !== 'past' 
-    ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-       <a href="register.html?eventId=${event.id}" class="register-button">Register</a>`
-    : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${
-        event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
-    // const actionButton = event.status !== 'past' 
-    //     ? `<button class="action-button" aria-label="Add to calendar" title="Add to calendar">📅</button>
-    //        <button id="register-button" class="register-button">Register</button>`
-    //     : `<a href="${event.type === 'webinar' ? '#recording' : '#resources'}" class="register-button">${event.type === 'webinar' ? 'Recording' : 'Resources'}</a>`;
-    // Define card dimensions to match other sections
-    const cardWidth = '280px'; // Match --card-width from CSS
-    const cardHeight = '360px'; // Match --card-height from CSS
+    function initPage() {
+        buildEventDatesMap();
 
-    // Add inline style to event-card
-    const cardHtml = `
-        <article class="event-card scroll-target" id="${event.id}" style="width: ${cardWidth}; height: ${cardHeight}; flex-shrink: 0;">
-            ${featuredBadge}
-            <span class="event-type" data-type="${event.type}">${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>
-            ${statusTag}
-            <div class="event-image">
-                <img src="${event.image}" alt="${event.imageAlt}">
-            </div>
-            ${countdownTag}
-            <div class="event-content">
-                <div class="event-date">${event.date}</div>
-                <h3 class="event-title">${event.title}</h3>
-                <p class="event-description">${event.description}</p>
-                <div class="event-footer">
-                    <div class="event-location">${event.location}</div>
-                    <div class="event-actions">
-                        ${actionButton}
-                    </div>
-                </div>
-            </div>
-        </article>
-    `;
-
-    // If this card is for the carousel, wrap it in a carousel-slide with inline style
-    return isCarousel 
-        ? `<div class="carousel-slide" style="width: ${cardWidth}; flex: 0 0 ${cardWidth}; margin-right: 1.5rem;">${cardHtml}</div>` 
-        : cardHtml;
-}
-
-// Function to populate webinar events
-function populateWebinarEvents() {
-
-
-            // Featured Events (Carousel)
-            const featuredCarousel = document.getElementById('featured-carousel');
-        const carouselDotsContainer = document.getElementById('carousel-dots');
-        eventsData.featured.forEach((event, index) => {
-            featuredCarousel.innerHTML += createEventCard(event, true);
-            carouselDotsContainer.innerHTML += `<span class="carousel-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>`;
-        });
-
-    const webinarEventsGrid = document.getElementById('webinar-events-grid');
-    eventsData.webinars.forEach(event => {
-        webinarEventsGrid.innerHTML += createEventCard(event);
-    });
-
-        // Workshop Events
-        const workshopEventsGrid = document.getElementById('workshop-events-grid');
-        eventsData.workshops.forEach(event => {
-            workshopEventsGrid.innerHTML += createEventCard(event);
-        });
-
-                // Conference Events
-                const conferenceEventsGrid = document.getElementById('conference-events-grid');
-        eventsData.conferences.forEach(event => {
-            conferenceEventsGrid.innerHTML += createEventCard(event);
-        });
-
-
-              // Past Events
-              const pastEventsGrid = document.getElementById('past-events-grid');
-        eventsData.past.forEach(event => {
-            pastEventsGrid.innerHTML += createEventCard(event);
-        });
-
-            const currentEventsGrid = document.getElementById('current-events-grid');
-    eventsData.current.forEach(event => {
-        currentEventsGrid.innerHTML += createEventCard(event);
-    });
-
-    // Populate upcoming events
-    const upcomingEventsGrid = document.getElementById('upcoming-events-grid');
-    eventsData.upcoming.forEach(event => {
-        upcomingEventsGrid.innerHTML += createEventCard(event);
-    });
-
-}
-
-
-// Call the function when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    populateWebinarEvents();
-});
-    </script>
-
-    <!-- <script>events-data.js</script> -->
-    <!-- <script src="events-data.js" defer></script>
-        <script>events-data.js</script> -->
-    <script src="data.js" defer></script>
-
-
-    <script>
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
-        });
-
-        // Back to top button
-        const backToTopButton = document.querySelector('.back-to-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('visible');
+        // Default calendar to nearest event (current > upcoming > today)
+        var targetEv = getNextEvent();
+        if (targetEv) {
+            var td = parseEventDate(targetEv.date, targetEv);
+            if (td) {
+                calMonth = td.getMonth();
+                calYear = td.getFullYear();
             } else {
-                backToTopButton.classList.remove('visible');
+                var now = new Date();
+                calMonth = now.getMonth();
+                calYear = now.getFullYear();
+            }
+        } else {
+            var now = new Date();
+            calMonth = now.getMonth();
+            calYear = now.getFullYear();
+        }
+        renderCalendar();
+        renderEventPanel();
+        updateHeroContent();
+        buildHeroSlides();
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Filter events
+        document.getElementById('filter-category').addEventListener('change', function() {
+            visibleEventCount = EVENTS_PER_PAGE;
+            renderEventPanel();
+        });
+        document.getElementById('search-input').addEventListener('input', function() {
+            visibleEventCount = EVENTS_PER_PAGE;
+            renderEventPanel();
+        });
+        document.getElementById('filter-reset').addEventListener('click', function() {
+            document.getElementById('filter-category').value = 'all';
+            document.getElementById('search-input').value = '';
+            selectedDateKey = null;
+            currentPanelTab = 'all';
+            visibleEventCount = EVENTS_PER_PAGE;
+            var tabs = document.querySelectorAll('.panel-tab');
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            tabs[0].classList.add('active');
+            renderCalendar();
+            renderEventPanel();
+        });
+
+        // Calendar nav
+        document.getElementById('cal-prev').addEventListener('click', function() {
+            calMonth--;
+            if (calMonth < 0) { calMonth = 11; calYear--; }
+            renderCalendar();
+        });
+        document.getElementById('cal-next').addEventListener('click', function() {
+            calMonth++;
+            if (calMonth > 11) { calMonth = 0; calYear++; }
+            renderCalendar();
+        });
+
+        // Panel tabs
+        document.getElementById('panel-tabs').addEventListener('click', function(e) {
+            var tab = e.target.closest('.panel-tab');
+            if (!tab) return;
+            document.querySelectorAll('.panel-tab').forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            currentPanelTab = tab.getAttribute('data-tab');
+            visibleEventCount = EVENTS_PER_PAGE;
+            renderEventPanel();
+        });
+
+        // Clear selected date
+        document.getElementById('clear-date').addEventListener('click', function() {
+            selectedDateKey = null;
+            visibleEventCount = EVENTS_PER_PAGE;
+            renderCalendar();
+            renderEventPanel();
+        });
+
+        // Spotlight card click → open detail popup + sync calendar
+        document.addEventListener('click', function(e) {
+            var card = e.target.closest('.spotlight-card');
+            if (card) {
+                var id = card.getAttribute('data-event-id');
+                if (id) {
+                    var ev = findEventById(id);
+                    if (ev) navigateCalendarToEvent(ev);
+                    openEventDetail(id);
+                }
+                return;
+            }
+            var heroCard = e.target.closest('.hero-event-card');
+            if (heroCard) {
+                var hid = heroCard.getAttribute('data-event-id');
+                if (hid) openEventDetail(hid);
+                return;
             }
         });
 
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        // Close event detail popup
+        document.getElementById('edp-close').addEventListener('click', closeEventDetail);
+        document.getElementById('eventDetailOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeEventDetail();
         });
 
-        // Filter functionality
-        const filterButtons = document.querySelectorAll('.filter-button');
-        const eventCards = document.querySelectorAll('.event-card');
+        // Registration modal listeners
+        document.getElementById('reg-close').addEventListener('click', closeRegModal);
+        document.getElementById('regOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeRegModal();
+        });
+        document.getElementById('reg-back-btn').addEventListener('click', closeRegModal);
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                
-                // Add active class to clicked button
-                button.classList.add('active');
-                
-                const filterValue = button.getAttribute('data-filter');
-                
-                // Filter events
-                if (filterValue === 'all') {
-                    eventCards.forEach(card => {
-                        card.style.display = 'flex';
-                    });
-                } else {
-                    eventCards.forEach(card => {
-                        const cardType = card.querySelector('.event-type').getAttribute('data-type');
-                        const isPast = !card.querySelector('.event-countdown');
-                        
-                        if ((filterValue === cardType) || 
-                            (filterValue === 'upcoming' && !isPast) || 
-                            (filterValue === 'past' && isPast)) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
+        // --- Payment chip selection ---
+        var _regSelectedPay = null;
+        var _regReceiptToken = null;
+        var _regPaymentId = null;
+        var _regPollActive = false;
+
+        window._regSelectPay = function(method) {
+            _regSelectedPay = method;
+            document.querySelectorAll('.reg-pay-chip').forEach(function(c) { c.classList.remove('selected'); });
+            var chip = document.querySelector('.reg-pay-chip[data-method="' + method + '"]');
+            if (chip) chip.classList.add('selected');
+            var bi = document.getElementById('reg-bank-info');
+            if (bi) bi.style.display = method === 'bank' ? 'block' : 'none';
+        };
+
+        window._regBackToForm = function() {
+            _regPollActive = false;
+            document.getElementById('reg-form-area').style.display = '';
+            document.getElementById('reg-process').style.display = 'none';
+            document.getElementById('reg-spinner').style.display = '';
+            document.getElementById('reg-proc-close').style.display = 'none';
+            document.getElementById('reg-countdown').style.display = 'none';
+            document.getElementById('reg-proc-msg').style.color = '';
+        };
+
+        function _regSetStep(n) {
+            [1,2,3].forEach(function(i) {
+                var dot = document.getElementById('reg-pd' + i);
+                var line = document.getElementById('reg-pl' + i);
+                if (dot) dot.className = 'reg-proc-dot' + (i < n ? ' done' : i === n ? ' active' : '');
+                if (line) line.className = 'reg-proc-line' + (i < n ? ' done' : i === n ? ' active' : '');
+            });
+        }
+
+        function _regShowError(msg) {
+            _regPollActive = false;
+            document.getElementById('reg-spinner').style.display = 'none';
+            document.getElementById('reg-countdown').style.display = 'none';
+            document.getElementById('reg-proc-msg').textContent = msg;
+            document.getElementById('reg-proc-msg').style.color = '#e63946';
+            document.getElementById('reg-proc-sub').textContent = '';
+            document.getElementById('reg-proc-close').style.display = '';
+        }
+
+        async function _regShowSuccess(ev) {
+            _regPollActive = false;
+            _regSetStep(3);
+            document.getElementById('reg-countdown').style.display = 'none';
+            document.getElementById('reg-proc-msg').textContent = 'Confirming payment…';
+            document.getElementById('reg-proc-msg').style.color = '';
+            document.getElementById('reg-proc-sub').textContent = '';
+
+            if (_regReceiptToken && _regPaymentId) {
+                try {
+                    var cfd = new FormData();
+                    cfd.append('payment_id', _regPaymentId);
+                    cfd.append('receipt_token', _regReceiptToken);
+                    await fetch('api.php?action=confirm_payment', { method: 'POST', body: cfd });
+                } catch(e) {}
+                document.getElementById('reg-spinner').style.display = 'none';
+                document.getElementById('reg-proc-msg').textContent = '\u2705 Payment confirmed! Opening receipt…';
+                document.getElementById('reg-proc-msg').style.color = '#27ae60';
+                setTimeout(function() { window.location.href = 'receipt.php?token=' + _regReceiptToken; }, 700);
+            } else {
+                document.getElementById('reg-spinner').style.display = 'none';
+                document.getElementById('reg-proc-msg').textContent = '\u2705 Registration confirmed!';
+                document.getElementById('reg-proc-msg').style.color = '#27ae60';
+                document.getElementById('reg-proc-close').style.display = '';
+            }
+        }
+
+        async function _regGetToken() {
+            var cached = localStorage.getItem('_reg_paytoken');
+            if (cached) {
+                try {
+                    var payload = JSON.parse(atob(cached.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+                    if (payload.exp * 1000 > Date.now()) return cached;
+                } catch(e) {}
+            }
+            var res = await fetch('https://api.zatuxe.com/get-paytoken');
+            var data = await res.json();
+            var token = data.token || data.access_token || '';
+            localStorage.setItem('_reg_paytoken', token);
+            return token;
+        }
+
+        async function _regCheckAirtel(transactionId, ev) {
+            _regPollActive = true;
+            var MAX_POLLS = 18, INTERVAL = 10000;
+            document.getElementById('reg-proc-msg').textContent = 'Waiting for your approval…';
+            document.getElementById('reg-proc-sub').textContent = 'Enter your Airtel Money PIN on your phone';
+
+            for (var i = 0; i < MAX_POLLS; i++) {
+                if (!_regPollActive) return;
+                var secsLeft = (MAX_POLLS - i) * (INTERVAL / 1000);
+                var cd = document.getElementById('reg-countdown');
+                if (cd) { cd.style.display = ''; cd.textContent = 'Time remaining: ' + Math.floor(secsLeft / 60) + 'm ' + (secsLeft % 60) + 's'; }
+
+                await new Promise(function(r) { setTimeout(r, INTERVAL); });
+                if (!_regPollActive) return;
+
+                try {
+                    var tok = await _regGetToken();
+                    var result = await fetch('https://api.zatuxe.com/api/airtel/CheckStatus?id=' + transactionId + '&country=UG&currency=UGX', {
+                        headers: { 'clientId': '70b982fe984e472ba1a1f2177901ed89', 'Authorization': 'Bearer ' + tok }
+                    }).then(function(r) { return r.json(); });
+
+                    var txStatus = result.data && result.data.transaction && result.data.transaction.status;
+                    if (result.status && result.status.success && txStatus === 'TS') {
+                        _regPollActive = false; _regShowSuccess(ev); return;
+                    } else if (txStatus === 'TF' || txStatus === 'TE') {
+                        _regPollActive = false; _regShowError('Payment was declined. Please try again.'); return;
+                    }
+                } catch(e) {}
+            }
+            _regPollActive = false;
+            _regShowError('Payment timed out. If you approved it, please contact support.');
+        }
+
+        document.getElementById('reg-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            // Validate required fields
+            var required = this.querySelectorAll('[required]');
+            var valid = true;
+            required.forEach(function(f) {
+                if (!f.value.trim()) { f.style.borderColor = 'var(--primary-color)'; valid = false; }
+                else { f.style.borderColor = ''; }
+            });
+            if (!valid) return;
+
+            var ev = _regCurrentEvent || {};
+            var evIsFree = ev.is_free === undefined ? true : !!parseInt(ev.is_free);
+            var amount = (!evIsFree && ev.event_fee) ? Number(ev.event_fee) : 0;
+            var fullName = (document.getElementById('reg-firstName').value + ' ' + document.getElementById('reg-lastName').value).trim();
+            var email = document.getElementById('reg-email').value.trim();
+            var phone = document.getElementById('reg-phone').value.trim();
+            var phoneClean = phone.replace(/\D/g, '');
+
+            // --- FREE events: direct register ---
+            if (evIsFree) {
+                var submitBtn = this.querySelector('[type=submit]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = '⏳ Registering...';
+
+                var fd = new FormData();
+                fd.append('fullName', fullName);
+                fd.append('email', email);
+                fd.append('phone', phone);
+                fd.append('profession', document.getElementById('reg-position').value.trim() || 'Attendee');
+                fd.append('institution', document.getElementById('reg-institution').value.trim());
+                fd.append('paymentMethod', 'free');
+                fd.append('paymentType', 'event_registration');
+                fd.append('eventId', ev.id || '');
+                fd.append('eventTitle', ev.title || '');
+                fd.append('eventDate', ev.date || '');
+                fd.append('amount', 0);
+
+                try {
+                    var data = await fetch('api.php?action=register_member', { method: 'POST', body: fd }).then(function(r){ return r.json(); });
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📝 Complete Registration';
+                    if (data.success) {
+                        document.getElementById('reg-form-area').style.display = 'none';
+                        document.getElementById('reg-success').style.display = 'block';
+                        document.getElementById('reg-confirmed-title').textContent = ev.title || 'the event';
+                        document.getElementById('reg-confirmed-msg').textContent = 'A confirmation email has been sent to your inbox.';
+                        var receiptArea = document.getElementById('reg-receipt-link');
+                        if (receiptArea && data.receipt_token) {
+                            receiptArea.href = 'receipt.php?token=' + data.receipt_token;
+                            receiptArea.style.display = 'inline-flex';
                         }
-                    });
-                }
-                
-                // Update filter count
-                const visibleCards = document.querySelectorAll('.event-card[style="display: flex;"]');
-                document.querySelector('.filter-count').textContent = `Showing ${visibleCards.length} events`;
-                
-                // Update URL without reloading the page
-                if (filterValue !== 'all') {
-                    const newUrl = new URL(window.location);
-                    newUrl.searchParams.set('filter', filterValue);
-                    window.history.pushState({}, '', newUrl);
-                    
-                    // Scroll to the relevant section if it exists
-                    const sectionId = `${filterValue}-events`;
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        setTimeout(() => {
-                            section.scrollIntoView({ behavior: 'smooth' });
-                        }, 300);
+                    } else {
+                        var errDiv = document.getElementById('reg-error-msg');
+                        if (errDiv) { errDiv.textContent = data.error || 'Registration failed.'; errDiv.style.display = 'block'; setTimeout(function(){ errDiv.style.display = 'none'; }, 6000); }
                     }
-                } else {
-                    // Remove filter parameter if "All Events" is selected
-                    const newUrl = new URL(window.location);
-                    newUrl.searchParams.delete('filter');
-                    window.history.pushState({}, '', newUrl);
+                } catch(err) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📝 Complete Registration';
+                    alert('Network error. Please try again.');
                 }
-            });
-        });
+                return;
+            }
 
-        // Past events toggle
-        const pastEventsHeader = document.querySelector('.past-events-header');
-        
-        pastEventsHeader.addEventListener('click', () => {
-            pastEventsHeader.classList.toggle('collapsed');
-        });
+            // --- PAID events: require payment method ---
+            if (!_regSelectedPay) { alert('Please select a payment method.'); return; }
 
-        // Featured events carousel with conditional auto-scroll
-        const carousel = document.getElementById('featured-carousel');
-        const slides = carousel.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-        const prevButton = document.querySelector('.carousel-arrow.prev');
-        const nextButton = document.querySelector('.carousel-arrow.next');
-        const progressBar = document.querySelector('.carousel-progress');
-        
-        let currentSlide = 0;
-        let autoScrollInterval;
-        const totalSlides = slides.length;
-        let isAutoScrollPaused = false;
-        
-        // Function to check if carousel needs auto-scroll
-        function shouldAutoScroll() {
-            // Only auto-scroll if there are more slides than can fit in the viewport
-            const carouselWidth = carousel.parentElement.clientWidth;
-            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
-            const visibleSlides = Math.floor(carouselWidth / slideWidth);
-            
-            return totalSlides > visibleSlides;
-        }
-        
-        // Function to show a specific slide
-        function showSlide(index) {
-            // Handle looping
-            if (index < 0) index = totalSlides - 1;
-            if (index >= totalSlides) index = 0;
-            
-            currentSlide = index;
-            
-            // Calculate slide position
-            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
-            const offset = -currentSlide * slideWidth;
-            
-            // Apply transform with smooth transition
-            carousel.style.transition = 'transform 0.5s ease';
-            carousel.style.transform = `translateX(${offset}px)`;
-            
-            // Update dots
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide);
-            });
-        }
-        
-        // Initialize auto-scrolling if needed
-        function startAutoScroll() {
-            // Clear any existing interval
-            if (autoScrollInterval) clearInterval(autoScrollInterval);
-            
-            // Only start auto-scroll if needed
-            if (shouldAutoScroll()) {
-                // Reset and start progress animation
-                progressBar.style.width = '0%';
-                progressBar.style.transition = 'width 5s linear';
-                progressBar.style.width = '100%';
-                
-                // Set new interval - 5 seconds per slide
-                autoScrollInterval = setInterval(() => {
-                    if (!isAutoScrollPaused) {
-                        // Reset progress bar
-                        progressBar.style.width = '0%';
-                        progressBar.style.transition = 'width 5s linear';
-                        progressBar.style.width = '100%';
-                        
-                        showSlide(currentSlide + 1);
-                    }
-                }, 5000);
+            // Bank — show details
+            if (_regSelectedPay === 'bank') {
+                document.getElementById('reg-form-area').style.display = 'none';
+                document.getElementById('reg-process').style.display = '';
+                _regSetStep(1);
+                document.getElementById('reg-spinner').style.display = 'none';
+                document.getElementById('reg-proc-msg').textContent = 'Transfer UGX ' + amount.toLocaleString() + ' to:';
+                document.getElementById('reg-proc-sub').innerHTML = '<strong>HOSU Limited</strong><br>A/C: 9030025235214<br>Stanbic Bank, Mulago Branch<br><br>Contact us after transferring.';
+                document.getElementById('reg-proc-close').style.display = '';
+                return;
+            }
+
+            // Visa — placeholder
+            if (_regSelectedPay === 'visa') {
+                alert('Visa card payments coming soon. Please use MTN or Airtel Mobile Money.');
+                return;
+            }
+
+            // --- MTN / Airtel real gateway ---
+            document.getElementById('reg-form-area').style.display = 'none';
+            document.getElementById('reg-process').style.display = '';
+            _regSetStep(1);
+            _regReceiptToken = null;
+            _regPaymentId = null;
+            document.getElementById('reg-proc-msg').textContent = 'Preparing registration…';
+            document.getElementById('reg-proc-sub').textContent = '';
+
+            var paymentmode = _regSelectedPay === 'mtn' ? 'UGMTNMOMODIR' : 'UGAIRTELMODIR';
+            var methodLabel = _regSelectedPay === 'mtn' ? 'MTN Mobile Money' : 'Airtel Money';
+            var txnId = 'EVT-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            var jsonBody;
+
+            if (paymentmode === 'UGMTNMOMODIR') {
+                jsonBody = { requestReference: txnId, amount: amount, customerId: phoneClean };
             } else {
-                // Hide progress bar if auto-scroll is not needed
-                progressBar.style.display = 'none';
+                jsonBody = { msisdn: parseFloat(phoneClean), country: 'UG', currency: 'UGX', amount: amount, id: txnId };
             }
-        }
-        
-        // Pause auto-scroll
-        function pauseAutoScroll() {
-            isAutoScrollPaused = true;
-            
-            // Pause progress bar animation
-            const width = getComputedStyle(progressBar).width;
-            progressBar.style.transition = 'none';
-            progressBar.style.width = width;
-        }
-        
-        // Resume auto-scroll
-        function resumeAutoScroll() {
-            isAutoScrollPaused = false;
-            
-            // Only resume if auto-scroll is needed
-            if (shouldAutoScroll()) {
-                // Calculate remaining time based on progress bar width
-                const progressWidth = parseInt(getComputedStyle(progressBar).width) / 
-                                    parseInt(getComputedStyle(progressBar.parentElement).width) * 100;
-                const remainingTime = (100 - progressWidth) / 100 * 5000;
-                
-                // Complete current progress animation
-                progressBar.style.transition = `width ${remainingTime}ms linear`;
-                progressBar.style.width = '100%';
-                
-                // Set timeout to start next slide after remaining time
-                setTimeout(() => {
-                    if (!isAutoScrollPaused) {
-                        showSlide(currentSlide + 1);
-                        startAutoScroll();
+
+            // Step 1: Pre-register
+            try {
+                var preFd = new FormData();
+                preFd.append('fullName', fullName);
+                preFd.append('email', email);
+                preFd.append('phone', phone);
+                preFd.append('profession', document.getElementById('reg-position').value.trim() || 'Attendee');
+                preFd.append('institution', document.getElementById('reg-institution').value.trim());
+                preFd.append('paymentMethod', methodLabel);
+                preFd.append('paymentType', 'event_registration');
+                preFd.append('eventId', ev.id || '');
+                preFd.append('eventTitle', ev.title || '');
+                preFd.append('eventDate', ev.date || '');
+                preFd.append('membershipPeriod', '');
+                preFd.append('amount', amount);
+                preFd.append('transactionId', txnId);
+                preFd.append('transactionRef', txnId);
+                var preRes = await fetch('api.php?action=pre_register', { method: 'POST', body: preFd }).then(function(r) { return r.json(); });
+                if (preRes.success) {
+                    _regReceiptToken = preRes.receipt_token;
+                    _regPaymentId = preRes.payment_id;
+                }
+            } catch(e) {}
+
+            // Step 2: Gateway call
+            _regSetStep(2);
+            document.getElementById('reg-proc-msg').textContent = 'Sending payment request to ' + (_regSelectedPay === 'mtn' ? 'MTN' : 'Airtel') + '…';
+            document.getElementById('reg-proc-sub').textContent = 'Check your phone for the payment prompt';
+
+            try {
+                var token = await _regGetToken();
+                var url = paymentmode === 'UGMTNMOMODIR'
+                    ? 'https://api.zatuxe.com/api/isw/MTNCollection'
+                    : 'https://api.zatuxe.com/api/Airtel/RequestToPay';
+
+                var response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'clientId': '70b982fe984e472ba1a1f2177901ed89',
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonBody)
+                }).then(function(r) { return r.json(); });
+
+                if (paymentmode === 'UGMTNMOMODIR') {
+                    if (response.responseCode === 90000) { _regShowSuccess(ev); }
+                    else if (response.responseCode === 90052) { _regShowError('Invalid MTN number. Please check and try again.'); }
+                    else { _regShowError(response.responseMessage || 'Payment failed. Please try again.'); }
+                } else {
+                    if (response.status && response.status.responseReason && response.status.responseReason.includes('pending')) {
+                        _regCheckAirtel(response.data.transaction.id, ev);
+                    } else if (response.status && response.status.responseReason && response.status.responseReason.includes('successful')) {
+                        _regShowSuccess(ev);
+                    } else {
+                        _regShowError((response.status && response.status.responseReason) || 'Payment failed.');
                     }
-                }, remainingTime);
+                }
+            } catch(e) {
+                _regShowError('Network error. Please check your connection and try again.');
             }
-        }
-        
-        // Event listeners for navigation
-        prevButton.addEventListener('click', () => {
-            showSlide(currentSlide - 1);
-            pauseAutoScroll();
-            setTimeout(resumeAutoScroll, 5000);
-        });
-        
-        nextButton.addEventListener('click', () => {
-            showSlide(currentSlide + 1);
-            pauseAutoScroll();
-            setTimeout(resumeAutoScroll, 5000);
-        });
-        
-        // Dot navigation
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-                pauseAutoScroll();
-                setTimeout(resumeAutoScroll, 5000);
-            });
-        });
-        
-        // Pause auto-scroll when hovering over carousel
-        carousel.parentElement.addEventListener('mouseenter', pauseAutoScroll);
-        carousel.parentElement.addEventListener('mouseleave', resumeAutoScroll);
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            // Recalculate if auto-scroll is needed
-            if (shouldAutoScroll()) {
-                if (!autoScrollInterval) startAutoScroll();
-                progressBar.style.display = 'block';
-            } else {
-                clearInterval(autoScrollInterval);
-                autoScrollInterval = null;
-                progressBar.style.display = 'none';
-            }
-            
-            // Reposition slides without animation
-            const slideWidth = slides[0].clientWidth + parseInt(getComputedStyle(slides[0]).marginRight);
-            const offset = -currentSlide * slideWidth;
-            
-            carousel.style.transition = 'none';
-            carousel.style.transform = `translateX(${offset}px)`;
-        });
-        
-        // Initialize carousel
-        showSlide(0);
-        startAutoScroll();
-        
-        // Search functionality
-        const searchInput = document.querySelector('.search-input');
-        
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            eventCards.forEach(card => {
-                const title = card.querySelector('.event-title').textContent.toLowerCase();
-                const description = card.querySelector('.event-description').textContent.toLowerCase();
-                const location = card.querySelector('.event-location').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || description.includes(searchTerm) || location.includes(searchTerm)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            // Update filter count
-            const visibleCards = document.querySelectorAll('.event-card[style="display: flex;"]');
-            document.querySelector('.filter-count').textContent = `Showing ${visibleCards.length} events`;
-        });
-        
-        // Add to calendar functionality
-        const calendarButtons = document.querySelectorAll('.action-button[title="Add to calendar"]');
-        
-        calendarButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                const card = button.closest('.event-card');
-                const title = card.querySelector('.event-title').textContent;
-                const dateText = card.querySelector('.event-date').textContent;
-                const location = card.querySelector('.event-location').textContent;
-                
-                // Parse date
-                const months = {
-                    'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
-                    'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
-                };
-                
-                // Extract month, day, and year
-                const dateMatch = dateText.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
-                if (dateMatch) {
-                    const [_, month, day, year] = dateMatch;
-                    const eventDate = new Date(parseInt(year), months[month], parseInt(day));
-                    
-                    // Format for Google Calendar
-                    const startDate = eventDate.toISOString().replace(/-|:|\.\d+/g, '');
-                    const endDate = new Date(eventDate.getTime() + 24 * 60 * 60 * 1000)
-                                    .toISOString().replace(/-|:|\.\d+/g, '');
-                    
-                    // Create Google Calendar URL
-                    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}`;
-                    
-                    // Open in new tab
-                    window.open(googleUrl, '_blank');
-                }
-            });
-        });
-        
-        // View options
-        const viewButtons = document.querySelectorAll('.view-button');
-        const eventsGrids = document.querySelectorAll('.events-grid');
-        
-        viewButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                if (button.getAttribute('aria-label') === 'List view') {
-                    eventsGrids.forEach(grid => {
-                        grid.style.gridTemplateColumns = '1fr';
-                    });
-                    document.documentElement.style.setProperty('--card-height', 'auto');
-                    document.documentElement.style.setProperty('--card-image-height', '120px');
-                    
-                    // Adjust card layout for list view
-                    eventCards.forEach(card => {
-                        card.style.display = 'grid';
-                        card.style.gridTemplateColumns = '200px 1fr';
-                        card.style.gridTemplateAreas = '"image content"';
-                        card.querySelector('.event-image').style.gridArea = 'image';
-                        card.querySelector('.event-content').style.gridArea = 'content';
-                    });
-                } else {
-                    eventsGrids.forEach(grid => {
-                        grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(var(--card-width), 1fr))';
-                    });
-                    document.documentElement.style.setProperty('--card-height', '360px');
-                    document.documentElement.style.setProperty('--card-image-height', '160px');
-                    
-                    // Reset card layout for grid view
-                    eventCards.forEach(card => {
-                        card.style.display = 'flex';
-                        card.style.gridTemplateColumns = '';
-                        card.style.gridTemplateAreas = '';
-                        card.querySelector('.event-image').style.gridArea = '';
-                        card.querySelector('.event-content').style.gridArea = '';
-                    });
-                }
-            });
         });
 
-        // Check for hash in URL to scroll to specific event
-        window.addEventListener('load', () => {
-            if (window.location.hash) {
-                const targetElement = document.querySelector(window.location.hash);
-                if (targetElement) {
-                    // Slight delay to ensure proper scrolling after page load
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                        
-                        // Add highlight effect
-                        targetElement.classList.add('highlight-target');
-                        
-                        // Remove highlight after animation completes
-                        setTimeout(() => {
-                            targetElement.classList.remove('highlight-target');
-                        }, 3000);
-                    }, 500);
-                }
-            }
-            
-            // Check URL parameters for filter type on page load
-            const urlParams = new URLSearchParams(window.location.search);
-            const filterParam = urlParams.get('filter');
-            
-            if (filterParam) {
-                // Find and click the corresponding filter button
-                const filterButton = document.querySelector(`.filter-button[data-filter="${filterParam}"]`);
-                if (filterButton) {
-                    filterButton.click();
-                }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeEventDetail();
+                closeRegModal();
             }
         });
-        
-        // Make event cards with data-event-id clickable
-        document.querySelectorAll('.event-card[data-event-id]').forEach(card => {
-            card.addEventListener('click', function(e) {
-                // Only handle click if it's not on a button or link inside the card
-                if (!e.target.closest('button') && !e.target.closest('a:not(.event-card)')) {
-                    const eventId = this.getAttribute('data-event-id');
-                    if (eventId) {
-                        // Navigate to the events page with the specific event ID
-                        window.location.href = `events.html#${eventId}`;
-                    }
+    }
+
+    // ===== Navbar scroll =====
+    var navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', function() {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ===== Mobile menu =====
+    var menuToggle = document.querySelector('.menu-toggle');
+    var navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        menuToggle.innerHTML = navLinks.classList.contains('active') ? '&#10005;' : '&#9776;';
+    });
+
+    // ===== Back to top =====
+    var topBtn = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', function() {
+        topBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    topBtn.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    // Expose functions used by inline onclick attributes to global scope
+    window.openRegModal = openRegModal;
+    window.openEventDetail = openEventDetail;
+})();
+
+// Global: add to calendar from popup
+function addToCalendarFromPopup() {
+    var ev = window._currentDetailEvent;
+    if (!ev) return;
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var m = ev.date.match(/(\w+)\s+(\d+)(?:-\d+)?,\s+(\d{4})/);
+    if (m) {
+        var d = new Date(+m[3], MONTHS.indexOf(m[1]), +m[2]);
+        var s = d.toISOString().replace(/-|:|\.\d+/g, '');
+        var end = new Date(d.getTime() + 86400000).toISOString().replace(/-|:|\.\d+/g, '');
+        window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(ev.title) + '&dates=' + s + '/' + end + '&location=' + encodeURIComponent(ev.location), '_blank', 'noopener');
+    }
+}
+</script>
+
+<!-- Login popup -->
+<style>
+.login-trigger-wrap { position: relative; display: inline-block; }
+.login-float-popup {
+    display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 300;
+    width: 280px; background: rgba(255,255,255,0.92); -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4); border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 14px; padding: 1.2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    animation: floatPopDown 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+.login-float-popup.active { display: block; }
+.login-float-popup .lfp-close {
+    position: absolute; top: 0.5rem; right: 0.55rem; width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.05); border: none; border-radius: 50%;
+    font-size: 0.9rem; cursor: pointer; color: var(--text-light);
+}
+.login-float-popup .lfp-close:hover { background: var(--primary-color); color: white; }
+.login-float-popup h3 { font-size: 0.95rem; color: var(--secondary-color); margin-bottom: 0.15rem; }
+</style>
+<script>
+(function() {
+    var _loginState = null;
+
+    function renderLoginPopup(popup) {
+        if (_loginState && _loginState.loggedIn) {
+            var u = _loginState.user;
+            var isAdmin = u.role === 'admin';
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<div style="text-align:center;padding-bottom:0.5rem;">'
+                + '<div style="width:42px;height:42px;border-radius:50%;background:var(--secondary-color);color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">'
+                + u.username.charAt(0).toUpperCase() + '</div>'
+                + '<div style="font-weight:700;font-size:0.9rem;color:var(--secondary-color);">' + u.username + '</div>'
+                + '<div style="font-size:0.72rem;color:var(--text-light);text-transform:capitalize;">' + u.role + ' Account</div>'
+                + '</div>'
+                + (isAdmin ? '<a href="admin.html" style="display:block;margin:0.75rem 0 0.3rem;width:100%;text-align:center;padding:0.5rem;background:var(--secondary-color);color:#fff;border-radius:6px;font-weight:600;font-size:0.82rem;text-decoration:none;">&#9881; Admin Dashboard</a>' : '')
+                + '<button onclick="doLogout()" style="width:100%;margin-top:0.4rem;padding:0.45rem;background:rgba(230,57,70,0.08);color:var(--primary-color);border:1px solid rgba(230,57,70,0.2);border-radius:6px;font-weight:600;font-size:0.82rem;cursor:pointer;">Sign Out</button>';
+        } else {
+            popup.innerHTML =
+                '<button class="lfp-close" onclick="this.closest(\'.login-float-popup\').classList.remove(\'active\')">&times;</button>'
+                + '<h3>&#128274; Member Portal</h3>'
+                + '<p style="font-size:0.73rem;color:var(--text-light);margin-bottom:0.75rem;">Sign in to your HOSU account</p>'
+                + '<div id="lfp-error" style="display:none;font-size:0.75rem;color:var(--primary-color);background:rgba(230,57,70,0.07);border-radius:5px;padding:0.35rem 0.6rem;margin-bottom:0.5rem;"></div>'
+                + '<label for="lfp-identity" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Username or Email</label>'
+                + '<input type="text" id="lfp-identity" placeholder="username or email" autocomplete="username" style="width:100%;padding:0.45rem 0.65rem;border:1px solid var(--gray-300);border-radius:6px;font-size:0.82rem;margin-bottom:0.5rem;font-family:inherit;">'
+                + '<label for="lfp-pass" style="font-size:0.72rem;font-weight:600;color:var(--text-color);display:block;margin-bottom:0.2rem;">Password</label>'
+                + '<input type="password" id="lfp-pass" placeholder="Enter password" autocomplete="current-password" style="width:100%;padding:0.45rem 0.65rem;border:1px solid var(--gray-300);border-radius:6px;font-size:0.82rem;margin-bottom:0.65rem;font-family:inherit;">'
+                + '<button id="lfp-submit" onclick="doLogin()" style="width:100%;padding:0.5rem;background:var(--primary-color);color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;font-size:0.82rem;">Sign In</button>'
+                + '<div style="text-align:center;margin-top:0.6rem;font-size:0.72rem;color:var(--text-light);">New member? <a href="register.html" style="color:var(--secondary-color);font-weight:600;">Register</a></div>';
+        }
+    }
+
+    window.toggleLoginPopup = function(e) {
+        e.preventDefault();
+        var popup = document.getElementById('loginPopup');
+        var isActive = popup.classList.contains('active');
+        if (isActive) { popup.classList.remove('active'); return; }
+        renderLoginPopup(popup);
+        popup.classList.add('active');
+        // Check session state async
+        fetch('auth.php?action=check_session')
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                _loginState = d.logged_in ? { loggedIn: true, user: d.user } : { loggedIn: false };
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    window.doLogin = function() {
+        var identity = document.getElementById('lfp-identity').value.trim();
+        var password = document.getElementById('lfp-pass').value;
+        var errEl = document.getElementById('lfp-error');
+        var btn = document.getElementById('lfp-submit');
+        if (!identity || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display='block'; return; }
+        btn.textContent = 'Signing in\u2026'; btn.disabled = true;
+        var fd = new FormData();
+        fd.append('action','login'); fd.append('identity',identity); fd.append('password',password);
+        fetch('auth.php', { method:'POST', body:fd, credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.success) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var popup = document.getElementById('loginPopup');
+                    renderLoginPopup(popup);
+                    // Update navbar button text
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
+                } else {
+                    errEl.textContent = d.error || 'Invalid credentials.'; errEl.style.display='block';
+                    btn.textContent = 'Sign In'; btn.disabled = false;
                 }
+            }).catch(function() {
+                errEl.textContent = 'Connection error. Please try again.'; errEl.style.display='block';
+                btn.textContent = 'Sign In'; btn.disabled = false;
             });
-            
-            // Add keyboard accessibility
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    const eventId = this.getAttribute('data-event-id');
-                    if (eventId) {
-                        window.location.href = `events.html#${eventId}`;
-                    }
+    };
+
+    window.doLogout = function() {
+        fetch('auth.php?action=logout', { credentials:'same-origin' })
+            .then(function() {
+                _loginState = { loggedIn: false };
+                var trigger = document.querySelector('.login-trigger');
+                if (trigger) trigger.textContent = 'Member Portal';
+                var popup = document.getElementById('loginPopup');
+                renderLoginPopup(popup);
+            }).catch(function(){});
+    };
+
+    document.addEventListener('click', function(e) {
+        var popup = document.getElementById('loginPopup');
+        if (popup && popup.classList.contains('active') && !e.target.closest('.login-trigger-wrap')) {
+            popup.classList.remove('active');
+        }
+    });
+
+    // Check session on load to update navbar button
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('auth.php?action=check_session', { credentials:'same-origin' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.logged_in) {
+                    _loginState = { loggedIn: true, user: d.user };
+                    var trigger = document.querySelector('.login-trigger');
+                    if (trigger) trigger.textContent = d.user.username;
                 }
-            });
-        });
-    </script>
+            }).catch(function(){});
+    });
+})();
+</script>
+<script src="donate-float.js"></script>
 </body>
 </html>
