@@ -746,24 +746,27 @@ textarea.ld-input{resize:vertical;min-height:100px;}
             <input type="hidden" id="ev-edit-id">
             <div class="prog-wrap prog-wrap-sm"><div class="prog-fill" id="eprog"></div></div>
 
-            <!-- 1 — Image -->
+            <!-- 1 — Images (Gallery) -->
             <div class="aef-sec">
-                <div class="aef-lbl">🖼 Event Image</div>
+                <div class="aef-lbl">🖼 Event Images <small style="font-weight:400;color:var(--text-light);">(upload multiple — first image is the primary)</small></div>
                 <div class="aef-upload-row">
                     <div class="upload-zone upload-zone-compact" id="ev-upload">
-                        <input type="file" id="ev-img-file" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <input type="file" id="ev-img-file" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
                         <div class="upload-inner">
                             <span class="upload-icon">📷</span>
-                            <p class="upload-text"><strong>Click to upload</strong> or drag &amp; drop<br><span class="upload-hint">JPG, PNG, WebP — max 5 MB</span></p>
+                            <p class="upload-text"><strong>Click to upload</strong> or drag &amp; drop<br><span class="upload-hint">JPG, PNG, WebP — max 5 MB each, multiple allowed</span></p>
                         </div>
                     </div>
                     <div class="ff">
-                        <label>Or image URL</label>
-                        <input type="url" id="ev-img-url" placeholder="https://…/image.jpg">
-                        <small>Leave blank if uploading a file</small>
+                        <label>Add image URL</label>
+                        <div style="display:flex;gap:.4rem;">
+                            <input type="url" id="ev-img-url" placeholder="https://…/image.jpg" style="flex:1;">
+                            <button type="button" class="btn-sm" onclick="addEvImgUrl()" style="white-space:nowrap;">+ Add</button>
+                        </div>
+                        <small>Add multiple URLs one at a time</small>
                     </div>
                 </div>
-                <div class="img-pre img-pre-mt" id="ev-img-pre"><img id="ev-img-thumb" src="" alt=""><span class="img-pre-rm" onclick="clearEvImg()">✕ Remove</span></div>
+                <div id="ev-gallery-grid" style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem;"></div>
             </div>
 
             <!-- 2 — Core Details -->
@@ -1531,7 +1534,7 @@ function buildDate(){
 function updateProg(){
     var ids=['ev-title','ev-slug','ev-type','ev-alt','ev-date','ev-loc','ev-desc'];
     var filled=ids.filter(i=>document.getElementById(i).value.trim()).length;
-    if(_hasEvImg||document.getElementById('ev-img-url').value.trim())filled++;
+    if(_evGallery.length>0)filled++;
     if(!document.getElementById('ev-is-free').checked&&document.getElementById('ev-fee').value)filled++;
     var total=ids.length+1+(document.getElementById('ev-is-free').checked?0:1);
     document.getElementById('eprog').style.width=Math.round(filled/total*100)+'%';
@@ -1539,23 +1542,91 @@ function updateProg(){
 
 function opts(arr,selected){return arr.map(v=>'<option value="'+v+'"'+(v===selected?' selected':'')+'>'+v+'</option>').join('');}
 
+/* ── Multi-image gallery state for event form ── */
+/* Each entry: {kind:'file', file:File, preview:string} | {kind:'url', url:string} | {kind:'existing', path:string} */
+var _evGallery=[];
+
+function renderEvGallery(){
+    var grid=document.getElementById('ev-gallery-grid');
+    if(!grid)return;
+    if(_evGallery.length===0){grid.innerHTML='<div style="color:var(--text-light);font-size:.78rem;padding:.5rem;">No images added yet. Upload files or add URLs above.</div>';return;}
+    var html='';
+    for(var i=0;i<_evGallery.length;i++){
+        var item=_evGallery[i];
+        var src=item.kind==='file'?item.preview:(item.kind==='url'?item.url:item.path);
+        var label=item.kind==='file'?'📁 New file':(item.kind==='url'?'🔗 URL':'✓ Saved');
+        var primary=i===0?'<span style="position:absolute;top:4px;left:4px;background:var(--primary-color);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:3px;font-weight:600;">PRIMARY</span>':'';
+        html+='<div style="position:relative;width:120px;border:1px solid var(--gray-200);border-radius:6px;overflow:hidden;background:#fff;">'
+            +primary
+            +'<img src="'+esc(src)+'" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">'
+            +'<div style="padding:.3rem;font-size:.65rem;color:var(--text-light);text-align:center;">'+label+'</div>'
+            +'<div style="display:flex;border-top:1px solid var(--gray-200);">'
+            +(i>0?'<button type="button" onclick="moveEvImg('+i+',-1)" style="flex:1;border:none;background:none;cursor:pointer;padding:.3rem;font-size:.7rem;" title="Move left">←</button>':'')
+            +(i<_evGallery.length-1?'<button type="button" onclick="moveEvImg('+i+',1)" style="flex:1;border:none;background:none;cursor:pointer;padding:.3rem;font-size:.7rem;" title="Move right">→</button>':'')
+            +'<button type="button" onclick="removeEvImg('+i+')" style="flex:1;border:none;background:none;cursor:pointer;padding:.3rem;font-size:.7rem;color:#c00;" title="Remove">✕</button>'
+            +'</div>'
+            +'</div>';
+    }
+    grid.innerHTML=html;
+}
+
+function addEvImgUrl(){
+    var input=document.getElementById('ev-img-url');
+    var v=input.value.trim();
+    if(!v){toast('Enter an image URL first.','error');return;}
+    _evGallery.push({kind:'url',url:v});
+    input.value='';
+    renderEvGallery();updateProg();
+}
+
+function removeEvImg(i){
+    _evGallery.splice(i,1);
+    renderEvGallery();updateProg();
+}
+
+function moveEvImg(i,dir){
+    var j=i+dir;
+    if(j<0||j>=_evGallery.length)return;
+    var t=_evGallery[i];_evGallery[i]=_evGallery[j];_evGallery[j]=t;
+    renderEvGallery();updateProg();
+}
+
 document.getElementById('ev-img-file').addEventListener('change',function(){
-    var f=this.files[0];if(!f)return;
-    if(f.size>5*1024*1024){toast('Max 5 MB.','error');this.value='';return;}
-    var r=new FileReader();r.onload=e=>{document.getElementById('ev-img-thumb').src=e.target.result;document.getElementById('ev-img-pre').style.display='block';document.getElementById('ev-img-url').value='';_hasEvImg=true;updateProg();};r.readAsDataURL(f);
+    var files=this.files;if(!files||!files.length)return;
+    var added=0;
+    for(var i=0;i<files.length;i++){
+        var f=files[i];
+        if(!f.type.startsWith('image/')){toast('Skipped non-image: '+f.name,'error');continue;}
+        if(f.size>5*1024*1024){toast('Skipped (over 5 MB): '+f.name,'error');continue;}
+        (function(file){
+            var r=new FileReader();
+            r.onload=function(e){
+                _evGallery.push({kind:'file',file:file,preview:e.target.result});
+                renderEvGallery();updateProg();
+            };
+            r.readAsDataURL(file);
+        })(f);
+        added++;
+    }
+    this.value='';
+    if(added)toast('Added '+added+' image'+(added>1?'s':'')+' to gallery.','success');
 });
 document.getElementById('ev-upload').addEventListener('dragover',function(e){e.preventDefault();this.classList.add('drag');});
 document.getElementById('ev-upload').addEventListener('dragleave',function(){this.classList.remove('drag');});
 document.getElementById('ev-upload').addEventListener('drop',function(e){
     e.preventDefault();this.classList.remove('drag');
-    var f=e.dataTransfer.files[0];
-    if(f&&f.type.startsWith('image/')){var dt=new DataTransfer();dt.items.add(f);document.getElementById('ev-img-file').files=dt.files;document.getElementById('ev-img-file').dispatchEvent(new Event('change'));}
+    var files=e.dataTransfer.files;
+    if(!files||!files.length)return;
+    var dt=new DataTransfer();
+    for(var i=0;i<files.length;i++){if(files[i].type.startsWith('image/'))dt.items.add(files[i]);}
+    document.getElementById('ev-img-file').files=dt.files;
+    document.getElementById('ev-img-file').dispatchEvent(new Event('change'));
 });
 document.querySelectorAll('#event-modal input,#event-modal select,#event-modal textarea').forEach(el=>{
     el.addEventListener('input',updateProg);el.addEventListener('change',updateProg);
 });
 
-function clearEvImg(){document.getElementById('ev-img-file').value='';document.getElementById('ev-img-thumb').src='';document.getElementById('ev-img-pre').style.display='none';_hasEvImg=false;updateProg();}
+function clearEvImg(){_evGallery=[];document.getElementById('ev-img-file').value='';document.getElementById('ev-img-url').value='';renderEvGallery();updateProg();}
 
 var _fpEvStart=null, _fpEvEnd=null;
 function initEvDatePickers(){
@@ -1610,8 +1681,13 @@ function openEditEvent(id){
     // Featured flag - handle string "0"/"1" or boolean
     var isFeatured = ev.featured === true || ev.featured === 1 || ev.featured === '1';
     document.getElementById('ev-featured').checked=isFeatured;
-    // Image — show URL for edit, admin can replace
-    if(ev.image){document.getElementById('ev-img-url').value=ev.image;_hasEvImg=false;}
+    // Gallery — preload existing images so admin can keep/remove/reorder, and add more
+    _evGallery=[];
+    var existingPaths=(ev.gallery&&ev.gallery.length)?ev.gallery:(ev.image?[ev.image]:[]);
+    for(var gi=0;gi<existingPaths.length;gi++){
+        if(existingPaths[gi])_evGallery.push({kind:'existing',path:existingPaths[gi]});
+    }
+    renderEvGallery();
     // Pricing - handle string "0"/"1" or boolean
     var isFree = ev.is_free === undefined || ev.is_free === true || ev.is_free === 1 || ev.is_free === '1';
     document.getElementById('ev-is-free').checked=isFree;
@@ -1658,7 +1734,7 @@ function saveEvent(){
     var dateEnd=document.getElementById('ev-date-end').value;
     var isFree=document.getElementById('ev-is-free').checked;
     var fee=isFree?0:parseFloat(document.getElementById('ev-fee').value)||0;
-    var hasImg=_hasEvImg||document.getElementById('ev-img-url').value.trim();
+    var hasImg=_evGallery.length>0;
     var isEdit=!!_editingEvId;
 
     if(!title||!slug||!type||!alt||!date||!loc||!desc){toast('Please fill in all required fields.','error');return;}
@@ -1694,9 +1770,16 @@ function saveEvent(){
     fd.append('is_free',isFree?'1':'0');
     fd.append('event_fee',fee);
     fd.append('featured',document.getElementById('ev-featured').checked?'1':'0');
-    var imgFile=document.getElementById('ev-img-file').files[0];
-    if(imgFile)fd.append('imageFile',imgFile);
-    else if(document.getElementById('ev-img-url').value.trim())fd.append('image',document.getElementById('ev-img-url').value.trim());
+    // ── Gallery: send ordered existing paths, URL list, and new file uploads ──
+    for(var gi=0;gi<_evGallery.length;gi++){
+        var it=_evGallery[gi];
+        if(it.kind==='existing')fd.append('existingGallery[]',it.path);
+        else if(it.kind==='url')fd.append('imageUrls[]',it.url);
+        else if(it.kind==='file')fd.append('imageFiles[]',it.file,it.file.name);
+    }
+    // Also include any URL still typed in the box but not yet "+ Added"
+    var pendingUrl=document.getElementById('ev-img-url').value.trim();
+    if(pendingUrl)fd.append('imageUrls[]',pendingUrl);
 
     if(isEdit){
         fd.append('action','update_event');

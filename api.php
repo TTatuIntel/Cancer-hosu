@@ -330,8 +330,8 @@ case 'create_post':
 
     case 'get_events':
         try {
-            // Ensure date_start / date_end / is_free / event_fee columns exist (safe migration)
-            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0'] as $colDef) {
+            // Ensure date_start / date_end / is_free / event_fee / gallery_images columns exist
+            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0', 'gallery_images TEXT NULL'] as $colDef) {
                 $colName = explode(' ', $colDef)[0];
                 try { $pdo->exec("ALTER TABLE events ADD COLUMN $colName " . substr($colDef, strlen($colName) + 1)); } catch (Exception $_e) {}
             }
@@ -363,6 +363,21 @@ case 'create_post':
                 $ev['event_fee'] = (float)($ev['event_fee'] ?? 0);
                 // Normalize image path for browser use
                 $ev['image'] = str_replace('\\', '/', $ev['image']);
+
+                // Decode gallery_images JSON → always expose `gallery` as an array
+                $gallery = [];
+                if (!empty($ev['gallery_images'])) {
+                    $decoded = json_decode($ev['gallery_images'], true);
+                    if (is_array($decoded)) {
+                        foreach ($decoded as $p) {
+                            if (is_string($p) && $p !== '') $gallery[] = str_replace('\\', '/', $p);
+                        }
+                    }
+                }
+                // Fall back to the primary image so consumers always have something
+                if (empty($gallery) && !empty($ev['image'])) $gallery[] = $ev['image'];
+                $ev['gallery'] = $gallery;
+                unset($ev['gallery_images']);
 
                 // ── Auto-compute countdown from date_start / date_end ──
                 if (!empty($ev['date_start'])) {
@@ -411,12 +426,20 @@ case 'create_post':
         $id = $_POST['id'] ?? '';
         if (!$id) { http_response_code(400); echo json_encode(['error' => 'ID required']); break; }
         try {
-            // Remove image file if it exists in uploads
-            $stmt = $pdo->prepare("SELECT image FROM events WHERE id = ?");
+            // Remove primary image and any gallery files in uploads
+            $stmt = $pdo->prepare("SELECT image, gallery_images FROM events WHERE id = ?");
             $stmt->execute([$id]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($row && !empty($row['image']) && strpos($row['image'], 'uploads/') === 0 && file_exists($row['image'])) {
-                @unlink($row['image']);
+            if ($row) {
+                $paths = [];
+                if (!empty($row['image'])) $paths[] = $row['image'];
+                if (!empty($row['gallery_images'])) {
+                    $decoded = json_decode($row['gallery_images'], true);
+                    if (is_array($decoded)) $paths = array_merge($paths, $decoded);
+                }
+                foreach (array_unique($paths) as $p) {
+                    if (is_string($p) && strpos($p, 'uploads/') === 0 && file_exists($p)) @unlink($p);
+                }
             }
             $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
             $stmt->execute([$id]);
@@ -432,8 +455,8 @@ case 'create_post':
             http_response_code(401); echo json_encode(['error' => 'Admin access required']); break;
         }
         try {
-            // Ensure date_start / date_end / is_free / event_fee columns exist (safe migration)
-            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0'] as $colDef) {
+            // Ensure date_start / date_end / is_free / event_fee / gallery_images columns exist
+            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0', 'gallery_images TEXT NULL'] as $colDef) {
                 $colName = explode(' ', $colDef)[0];
                 try { $pdo->exec("ALTER TABLE events ADD COLUMN $colName " . substr($colDef, strlen($colName) + 1)); } catch (Exception $_e) {}
             }
@@ -449,8 +472,24 @@ case 'create_post':
                    OR (date_end   IS NULL     AND date_start IS NOT NULL AND date_start < CURDATE())
                   )
             ");
-            $stmt = $pdo->query("SELECT id, title, type, status, category, date, date_start, date_end, location, image, imageAlt, description, countdown, featured, is_free, event_fee, created_at FROM events ORDER BY created_at DESC");
-            echo json_encode(['success' => true, 'events' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+            $stmt = $pdo->query("SELECT id, title, type, status, category, date, date_start, date_end, location, image, imageAlt, description, countdown, featured, is_free, event_fee, gallery_images, created_at FROM events ORDER BY created_at DESC");
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows as &$ev) {
+                $gallery = [];
+                if (!empty($ev['gallery_images'])) {
+                    $decoded = json_decode($ev['gallery_images'], true);
+                    if (is_array($decoded)) {
+                        foreach ($decoded as $p) {
+                            if (is_string($p) && $p !== '') $gallery[] = str_replace('\\', '/', $p);
+                        }
+                    }
+                }
+                if (empty($gallery) && !empty($ev['image'])) $gallery[] = str_replace('\\', '/', $ev['image']);
+                $ev['gallery'] = $gallery;
+                unset($ev['gallery_images']);
+            }
+            unset($ev);
+            echo json_encode(['success' => true, 'events' => $rows]);
         } catch (PDOException $e) {
             http_response_code(500); echo json_encode(['error' => $e->getMessage()]);
         }
@@ -1197,8 +1236,8 @@ case 'create_post':
             $id = trim($_POST['id'] ?? '');
             if (!$id) { http_response_code(400); echo json_encode(['error' => 'ID required']); break; }
 
-            // Ensure is_free / event_fee / date_start / date_end columns exist (safe migration)
-            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0'] as $colDef) {
+            // Ensure date / pricing / gallery columns exist (safe migration)
+            foreach (['date_start DATE NULL', 'date_end DATE NULL', 'is_free TINYINT(1) NOT NULL DEFAULT 1', 'event_fee DECIMAL(12,2) NOT NULL DEFAULT 0', 'gallery_images TEXT NULL'] as $colDef) {
                 $colName = explode(' ', $colDef)[0];
                 try { $pdo->exec("ALTER TABLE events ADD COLUMN $colName " . substr($colDef, strlen($colName) + 1)); } catch (Exception $_e) {}
             }
@@ -1226,24 +1265,63 @@ case 'create_post':
                 }
             }
 
-            // Handle optional new image upload
-            $imagePath = null;
-            if (isset($_FILES['imageFile']) && $_FILES['imageFile']['error'] === UPLOAD_ERR_OK) {
-                $allowed = ['image/jpeg','image/png','image/gif','image/webp'];
-                $fi = finfo_open(FILEINFO_MIME_TYPE);
-                $ft = finfo_file($fi, $_FILES['imageFile']['tmp_name']);
-                finfo_close($fi);
-                if (in_array($ft, $allowed) && $_FILES['imageFile']['size'] <= 5000000) {
-                    $dir = 'uploads/events/';
-                    if (!is_dir($dir)) mkdir($dir, 0755, true);
-                    $fname = uniqid() . '_' . basename($_FILES['imageFile']['name']);
-                    if (move_uploaded_file($_FILES['imageFile']['tmp_name'], $dir . $fname)) {
-                        $imagePath = $dir . $fname;
-                    }
+            // ── Build gallery from existing kept paths + new URLs + new uploads ──
+            $allowed = ['image/jpeg','image/png','image/gif','image/webp'];
+            $uploadDir = 'uploads/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+            $gallery = [];
+
+            if (!empty($_POST['existingGallery']) && is_array($_POST['existingGallery'])) {
+                foreach ($_POST['existingGallery'] as $p) {
+                    $p = trim((string)$p);
+                    if ($p !== '') $gallery[] = $p;
                 }
-            } elseif (!empty($_POST['image'])) {
-                $imagePath = filter_var($_POST['image'], FILTER_SANITIZE_URL);
             }
+            if (!empty($_POST['imageUrls']) && is_array($_POST['imageUrls'])) {
+                foreach ($_POST['imageUrls'] as $u) {
+                    $u = filter_var(trim((string)$u), FILTER_SANITIZE_URL);
+                    if ($u !== '') $gallery[] = $u;
+                }
+            }
+            if (!empty($_POST['image'])) {
+                $u = filter_var(trim((string)$_POST['image']), FILTER_SANITIZE_URL);
+                if ($u !== '') $gallery[] = $u;
+            }
+
+            $saveUpload = function($tmp, $orig, $size, $errCode) use ($allowed, $uploadDir) {
+                if ($errCode !== UPLOAD_ERR_OK) return null;
+                $fi = finfo_open(FILEINFO_MIME_TYPE);
+                $ft = finfo_file($fi, $tmp);
+                finfo_close($fi);
+                if (!in_array($ft, $allowed, true) || $size > 5000000) return null;
+                $safe = preg_replace('/[^A-Za-z0-9._-]/', '_', basename($orig));
+                $fname = uniqid('', true) . '_' . $safe;
+                return move_uploaded_file($tmp, $uploadDir . $fname) ? ($uploadDir . $fname) : null;
+            };
+
+            if (!empty($_FILES['imageFiles']) && is_array($_FILES['imageFiles']['name'])) {
+                $files = $_FILES['imageFiles'];
+                for ($i = 0; $i < count($files['name']); $i++) {
+                    if (($files['error'][$i] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) continue;
+                    $p = $saveUpload($files['tmp_name'][$i], $files['name'][$i], $files['size'][$i], $files['error'][$i]);
+                    if ($p) $gallery[] = $p;
+                }
+            }
+            if (!empty($_FILES['imageFile']) && ($_FILES['imageFile']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+                $p = $saveUpload($_FILES['imageFile']['tmp_name'], $_FILES['imageFile']['name'], $_FILES['imageFile']['size'], $_FILES['imageFile']['error']);
+                if ($p) $gallery[] = $p;
+            }
+
+            $gallery = array_values(array_unique($gallery));
+
+            // If admin didn't send anything image-related, preserve whatever's in DB.
+            $hasImageChanges = !empty($gallery)
+                || isset($_POST['existingGallery'])
+                || isset($_POST['imageUrls'])
+                || isset($_POST['image'])
+                || !empty($_FILES['imageFiles']['name'][0] ?? null)
+                || !empty($_FILES['imageFile']['name'] ?? null);
 
             $fields = "type=?, status=?, imageAlt=?, countdown=?, date=?, title=?, description=?, location=?, featured=?, category=?, is_free=?, event_fee=?, date_start=?, date_end=?";
             $isFree = !empty($_POST['is_free']) ? 1 : 0;
@@ -1255,10 +1333,14 @@ case 'create_post':
                 (!empty($_POST['featured']) && $_POST['featured'] !== '0') ? 1 : 0, $category,
                 $isFree, $eventFee, $dateStart, $dateEnd,
             ];
-            if ($imagePath !== null) { $fields .= ", image=?"; $vals[] = $imagePath; }
+            if ($hasImageChanges && !empty($gallery)) {
+                $fields .= ", image=?, gallery_images=?";
+                $vals[] = $gallery[0];
+                $vals[] = json_encode($gallery, JSON_UNESCAPED_SLASHES);
+            }
             $vals[] = $id;
             $pdo->prepare("UPDATE events SET $fields WHERE id=?")->execute($vals);
-            echo json_encode(['success' => true]);
+            echo json_encode(['success' => true, 'gallery_count' => count($gallery)]);
         } catch (PDOException $e) { http_response_code(500); echo json_encode(['error' => $e->getMessage()]); }
         break;
 
@@ -1836,12 +1918,28 @@ case 'create_post':
     // ── Home Featured Content ─────────────────────────────────────────
     case 'get_home_featured':
         try {
+            // Ensure gallery_images column exists (safe)
+            try { $pdo->exec("ALTER TABLE events ADD COLUMN gallery_images TEXT NULL"); } catch (Exception $_e) {}
+
             // Get featured events (using existing featured flag)
-            $evStmt = $pdo->query("SELECT id, title, description, date, date_start, date_end, location, image, type, countdown FROM events WHERE featured = 1 ORDER BY date_start ASC LIMIT 3");
+            $evStmt = $pdo->query("SELECT id, title, description, date, date_start, date_end, location, image, imageAlt, type, countdown, gallery_images FROM events WHERE featured = 1 ORDER BY date_start ASC LIMIT 3");
             $events = $evStmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($events as &$ev) {
                 $ev['image'] = str_replace('\\', '/', $ev['image']);
+                $gallery = [];
+                if (!empty($ev['gallery_images'])) {
+                    $decoded = json_decode($ev['gallery_images'], true);
+                    if (is_array($decoded)) {
+                        foreach ($decoded as $p) {
+                            if (is_string($p) && $p !== '') $gallery[] = str_replace('\\', '/', $p);
+                        }
+                    }
+                }
+                if (empty($gallery) && !empty($ev['image'])) $gallery[] = $ev['image'];
+                $ev['gallery'] = $gallery;
+                unset($ev['gallery_images']);
             }
+            unset($ev);
             
             // Get publications shown on home
             $pubStmt = $pdo->query("SELECT id, title, authors, pub_type, pub_date, link, link_label FROM publications WHERE show_on_home = 1 ORDER BY sort_order ASC, created_at DESC LIMIT 3");

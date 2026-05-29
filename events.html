@@ -1656,53 +1656,68 @@ footer {
             event: null
         });
 
-        // Dynamic slides for current events
-        for (var c = 0; c < currentEvents.length; c++) {
-            var ev = currentEvents[c];
-            heroSlides.push({
-                title: ev.title,
-                desc: ev.description,
-                pills: ['&#128308; Live Now', '&#128197; ' + ev.date, '&#128205; ' + ev.location],
-                image: ev.image,
-                statusBadge: 'Happening Now',
-                statusCls: 'live',
-                pulse: true,
-                stats: null,
-                event: ev
-            });
+        // Helper: returns an event's gallery (falls back to single image)
+        function evImages(ev) {
+            if (ev.gallery && ev.gallery.length) return ev.gallery;
+            return ev.image ? [ev.image] : [];
         }
 
-        // Dynamic slides for upcoming events (max 3)
+        // Dynamic slides for current events — one slide per gallery image
+        for (var c = 0; c < currentEvents.length; c++) {
+            var ev = currentEvents[c];
+            var imgs = evImages(ev);
+            for (var ci = 0; ci < imgs.length; ci++) {
+                heroSlides.push({
+                    title: ev.title,
+                    desc: ev.description,
+                    pills: ['&#128308; Live Now', '&#128197; ' + ev.date, '&#128205; ' + ev.location],
+                    image: imgs[ci],
+                    statusBadge: 'Happening Now',
+                    statusCls: 'live',
+                    pulse: true,
+                    stats: null,
+                    event: ev
+                });
+            }
+        }
+
+        // Dynamic slides for upcoming events (max 3 events; each event contributes one slide per gallery image)
         var upSlice = upcomingEvents.slice(0, 3);
         for (var u = 0; u < upSlice.length; u++) {
             var ev2 = upSlice[u];
-            heroSlides.push({
-                title: ev2.title,
-                desc: ev2.description,
-                pills: ['&#128197; ' + ev2.date, '&#128205; ' + ev2.location, '&#127915; ' + ev2.type],
-                image: ev2.image,
-                statusBadge: 'Coming Up Next',
-                statusCls: 'upcoming-status',
-                pulse: false,
-                stats: null,
-                event: ev2
-            });
+            var imgs2 = evImages(ev2);
+            for (var ui = 0; ui < imgs2.length; ui++) {
+                heroSlides.push({
+                    title: ev2.title,
+                    desc: ev2.description,
+                    pills: ['&#128197; ' + ev2.date, '&#128205; ' + ev2.location, '&#127915; ' + ev2.type],
+                    image: imgs2[ui],
+                    statusBadge: 'Coming Up Next',
+                    statusCls: 'upcoming-status',
+                    pulse: false,
+                    stats: null,
+                    event: ev2
+                });
+            }
         }
 
-        // If no current/upcoming, add one past event slide
+        // If no current/upcoming, add one past event — also rotate through its gallery
         if (currentEvents.length === 0 && upcomingEvents.length === 0 && pastEvents.length > 0) {
             var ev3 = pastEvents[0];
-            heroSlides.push({
-                title: ev3.title,
-                desc: ev3.description,
-                pills: ['&#128197; ' + ev3.date, '&#128205; ' + ev3.location, '&#127915; ' + ev3.type],
-                image: ev3.image,
-                statusBadge: 'Recent Event',
-                statusCls: 'past-status',
-                pulse: false,
-                stats: null,
-                event: ev3
-            });
+            var imgs3 = evImages(ev3);
+            for (var pi = 0; pi < imgs3.length; pi++) {
+                heroSlides.push({
+                    title: ev3.title,
+                    desc: ev3.description,
+                    pills: ['&#128197; ' + ev3.date, '&#128205; ' + ev3.location, '&#127915; ' + ev3.type],
+                    image: imgs3[pi],
+                    statusBadge: 'Recent Event',
+                    statusCls: 'past-status',
+                    pulse: false,
+                    stats: null,
+                    event: ev3
+                });
+            }
         }
 
         // Build background images inside hero-image-container — identical to home page

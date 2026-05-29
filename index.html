@@ -5104,41 +5104,84 @@ document.addEventListener('DOMContentLoaded', function() {
                 var bgContainer = document.querySelector('.hero-image-container');
                 if (!heroContent || !indicators) return;
 
-                var slidesAdded = 0;
+                // ── 1. Build a flat list of featured "ad" slides ──
+                // Each entry: { html, imageUrl, bgClass }
+                var featured = [];
 
-                // Add featured events as hero slides with their own images
                 if (data.featured.events && data.featured.events.length > 0) {
                     data.featured.events.forEach(function(ev) {
-                        var slideHtml = createEventSlide(ev);
-                        var imageUrl = ev.image || null;
-                        // Events use their own image, or a default event-themed background
-                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, imageUrl, 'event-bg');
-                        slidesAdded++;
+                        var images = (ev.gallery && ev.gallery.length) ? ev.gallery : (ev.image ? [ev.image] : [null]);
+                        for (var gi = 0; gi < images.length; gi++) {
+                            featured.push({
+                                html: createEventSlide(ev),
+                                imageUrl: images[gi],
+                                bgClass: 'event-bg'
+                            });
+                        }
                     });
                 }
-
-                // Add featured publications as hero slides
                 if (data.featured.publications && data.featured.publications.length > 0) {
                     data.featured.publications.forEach(function(pub) {
-                        var slideHtml = createPublicationSlide(pub);
-                        // Publications use a default research-themed background
-                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, null, 'publication-bg');
-                        slidesAdded++;
+                        featured.push({ html: createPublicationSlide(pub), imageUrl: null, bgClass: 'publication-bg' });
                     });
                 }
-
-                // Add featured grants as hero slides
                 if (data.featured.grants && data.featured.grants.length > 0) {
                     data.featured.grants.forEach(function(grant) {
-                        var slideHtml = createGrantSlide(grant);
-                        // Grants use a default funding-themed background
-                        insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, null, 'grant-bg');
-                        slidesAdded++;
+                        featured.push({ html: createGrantSlide(grant), imageUrl: null, bgClass: 'grant-bg' });
                     });
                 }
 
-                // Reinitialize hero slideshow if slides were added
-                if (slidesAdded > 0 && typeof HeroSlideshow !== 'undefined') {
+                if (featured.length === 0) return;
+
+                // ── 2. Shuffle so the rotation is non-deterministic each page load ──
+                shuffleInPlace(featured);
+
+                // ── 3. Snapshot the existing static slides + their backgrounds ──
+                var staticSlides = Array.from(heroContent.querySelectorAll('.hero-slide'));
+                var staticBgs = bgContainer ? Array.from(bgContainer.querySelectorAll('.hero-background')) : [];
+
+                // ── 4. Interleave: place one featured slide AFTER each static slide,
+                //      cycling through the featured list. The intro stays first; everything
+                //      else alternates static → featured → static → featured → …
+                // If we have more featured than static gaps, the remaining featured items
+                // are appended at the end so nothing is dropped.
+                var insertedSlides = [];
+                var insertedBgs = [];
+                var fi = 0;
+
+                for (var si = 0; si < staticSlides.length; si++) {
+                    if (fi >= featured.length) break;
+                    var item = featured[fi++];
+                    var pair = buildSlidePair(item);
+                    // insert AFTER the current static slide
+                    var nextStatic = staticSlides[si].nextSibling;
+                    heroContent.insertBefore(pair.slide, nextStatic);
+                    if (bgContainer) bgContainer.appendChild(pair.bg);
+                    insertedSlides.push(pair.slide);
+                    if (pair.bg) insertedBgs.push(pair.bg);
+                }
+                // Any leftover featured items (more featured than static slots) — append at end
+                while (fi < featured.length) {
+                    var leftover = featured[fi++];
+                    var pair2 = buildSlidePair(leftover);
+                    heroContent.insertBefore(pair2.slide, indicators);
+                    if (bgContainer) bgContainer.appendChild(pair2.bg);
+                    insertedSlides.push(pair2.slide);
+                    if (pair2.bg) insertedBgs.push(pair2.bg);
+                }
+
+                // ── 5. Rebuild dot indicators to match the new total slide count ──
+                var allSlides = heroContent.querySelectorAll('.hero-slide');
+                indicators.innerHTML = '';
+                for (var di = 0; di < allSlides.length; di++) {
+                    var dot = document.createElement('span');
+                    dot.className = 'hero-dot' + (di === 0 ? ' active' : '');
+                    dot.setAttribute('data-index', di);
+                    indicators.appendChild(dot);
+                }
+
+                // ── 6. Reinitialize the slideshow so it picks up the new order ──
+                if (typeof HeroSlideshow !== 'undefined') {
                     HeroSlideshow.init();
                 }
             })
@@ -5147,39 +5190,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function insertHeroSlide(heroContent, indicators, bgContainer, slideHtml, imageUrl, bgClass) {
-        // Create slide element
-        var temp = document.createElement('div');
-        temp.innerHTML = slideHtml;
-        var newSlide = temp.firstElementChild;
-        
-        // Insert before indicators
-        heroContent.insertBefore(newSlide, indicators);
-
-        // Add new dot indicator
-        var dotCount = indicators.querySelectorAll('.hero-dot').length;
-        var newDot = document.createElement('span');
-        newDot.className = 'hero-dot';
-        newDot.setAttribute('data-index', dotCount);
-        indicators.appendChild(newDot);
-
-        // Add background image if container exists
-        if (bgContainer) {
-            var newBg = document.createElement('div');
-            newBg.className = 'hero-background';
-            if (imageUrl) {
-                // Use the actual event/content image (quote URL for paths with spaces)
-                newBg.style.backgroundImage = "url('" + imageUrl + "')";
-                newBg.style.backgroundSize = 'cover';
-                newBg.style.backgroundPosition = 'center';
-            } else if (bgClass) {
-                newBg.classList.add(bgClass);
-            } else {
-                // Default gradient background for content without images
-                newBg.classList.add('dynamic-bg');
-            }
-            bgContainer.appendChild(newBg);
+    // Fisher–Yates shuffle, in place
+    function shuffleInPlace(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
         }
+    }
+
+    // Build a slide DOM node + its matching background DOM node from a featured item
+    function buildSlidePair(item) {
+        var temp = document.createElement('div');
+        temp.innerHTML = item.html;
+        var slide = temp.firstElementChild;
+
+        var bg = document.createElement('div');
+        bg.className = 'hero-background';
+        if (item.imageUrl) {
+            bg.style.backgroundImage = "url('" + item.imageUrl + "')";
+            bg.style.backgroundSize = 'cover';
+            bg.style.backgroundPosition = 'center';
+        } else if (item.bgClass) {
+            bg.classList.add(item.bgClass);
+        } else {
+            bg.classList.add('dynamic-bg');
+        }
+        return { slide: slide, bg: bg };
     }
 
     function escHtml(str) {
